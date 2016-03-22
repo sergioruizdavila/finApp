@@ -1,0 +1,19 @@
+{
+  "name": "FinApp",
+  "version": "0.0.0",
+  "private": "true",
+  "dependencies": {
+    "underscore": "~1.8.3",
+    "moment": "~2.10.6",
+    "lodash": "~4.0.0",
+    "globalize": "~1.0.0"
+  },
+  "devDependencies": {
+    "ionic": "driftyco/ionic-bower#1.2.4",
+    "angular-mocks": "~1.4.8",
+    "jasmine-expect": "~1.22.3"
+  },
+  "resolutions": {
+    "angular": "1.4.10"
+  }
+}
