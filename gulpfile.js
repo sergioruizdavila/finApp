@@ -21,7 +21,7 @@ var paths = {
     appTypescript: ['src/**/*.ts', '!src/typings/**/*.*'],
     outputJs: 'www/js/',
     appSass: ['src/**/**/*.scss'],
-    inputSass: 'src/app/ionic.app.scss',
+    inputSass: 'src/app/theme/finApp.scss',
     outputSass: 'www/css',
     sassdocOptions: {dest: './www/css/doc'}
 };

@@ -15,20 +15,15 @@
 
     function config($stateProvider: angular.ui.IStateProvider) {
 
-        //angular-ui-router for multiple views
         $stateProvider
-            .state('page.tutorialPage', {
+            .state('page.tutorial', {
                 url: '/tutorial',
                 views: {
-                    'container@': {
+                    'container': {
                         templateUrl: 'templates/app/pages/tutorialPage/tutorialPage.html',
                         controller: 'finApp.pages.tutorialPage.TutorialPageController',
                         controllerAs: 'vm'
                     }
-                },
-                data: {
-                    displayName: 'Tutorial',
-                    title : 'Tutorial'
                 }
             });
     }

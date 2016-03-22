@@ -13,7 +13,7 @@ module app.pages.tutorialPage {
 
         static controllerId = 'finApp.pages.tutorialPage.TutorialPageController';
 
-        static $inject = [''];
+        //static $inject = [''];
 
         constructor() {
             this.init();
@@ -25,7 +25,7 @@ module app.pages.tutorialPage {
         }
 
         activate(): void {
-
+            console.log('tutorialPage controller actived');
         }
 
         /*-- METHODS --*/
