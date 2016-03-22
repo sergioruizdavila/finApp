@@ -8,7 +8,7 @@
     'use strict';
 
     angular
-        .module('finApp.pages.tutorialPage',[])
+        .module('finApp.pages.tutorialPage', [])
         .config(config);
 
     //config.$inject = ['ionic'];
@@ -21,7 +21,7 @@
                 url: '/tutorial',
                 views: {
                     'container@': {
-                        templateUrl: "templates/app/pages/tutorialPage/tutorialPage.html",
+                        templateUrl: 'templates/app/pages/tutorialPage/tutorialPage.html',
                         controller: 'finApp.pages.tutorialPage.TutorialPageController',
                         controllerAs: 'vm'
                     }

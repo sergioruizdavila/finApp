@@ -15,7 +15,7 @@
         .module('finApp')
         .run(run);
 
-    run.$inject = ['ionic'];
+    //run.$inject = ['ionic'];
 
     function run($ionicPlatform): void {
 
