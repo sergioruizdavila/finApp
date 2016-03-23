@@ -37,7 +37,7 @@ var sassOptions = {
     errLogToConsole: true
 };
 
-gulp.task('sass', function(done) {
+gulp.task('sass', function() {
   gulp
     .src(paths.inputSass)
     .pipe(sourcemaps.init())

@@ -1,33 +1,8 @@
-///FinApp Theme
-/// @author Sergio Ruiz
 
-///NavBar
-$FA_NAVBAR: #FFF;
-
-///ProgressivePage Background Color
-$FA_PROGRESSIVE_PAGE: #F4F4F4;
-
-/// Buttons Color
-$FA_BTN_FORM: #6696C8;
-$FA_BTN_FORM_SHADOW: #467FD7;
-$FA_BTN_FORM_SUCCESS: #7CD175;
-$FA_BTN_FORM_SUCCESS_SHADOW: #54C242;
-$FA_BTN_ADD: #FA7470;
-
-/// Progress Bar
-$FA_PROGRESS_BAR: #7CD175;
-
-/// Button Next, Cancel, Back
-$FA_BTN_ICON: #8D8D8D;
-
-/// Text Titles and Subtitles
-$FA_TEXT: #717171;
-
-/// Text Paragraph
-$FA_TEXT_P: shade($FA_TEXT, 20%);
-
-/// Text Value List
-$FA_TEXT_LIST_VALUE: #FA7470;
+///Body
+body {
+    font-family: $FA-FONT-FAMILY;
+}
 
 ///BUTTONS
 .fa_btn {
@@ -73,7 +48,7 @@ $FA_TEXT_LIST_VALUE: #FA7470;
         display: block;
         clear: both;
         width: 100%;
-        line-height: 50px;
+        line-height: 55px;
     }
 
     .button-inner {
@@ -198,4 +173,14 @@ $FA_TEXT_LIST_VALUE: #FA7470;
         background-color: $FA_PROGRESSIVE_PAGE;
     }
 
+}
+
+
+///FONT TYPES
+@font-face {
+ font-family: $FA-FONT-FAMILY;
+ src:url("#{$FA-FONT-PATH}/ProximaNovaSoft-Regular.otf");
+ src: url("#{$FA-FONT-PATH}/ProximaNovaSoft-Regular.otf") format('opentype');
+ font-weight: normal;
+ font-style: normal;
 }
