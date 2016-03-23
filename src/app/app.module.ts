@@ -19,8 +19,23 @@
         ])
         .config(config);
 
-    function config($urlRouterProvider: angular.ui.IUrlRouterProvider) {
+    function config($urlRouterProvider: angular.ui.IUrlRouterProvider,
+                    $translateProvider: angular.translate.ITranslateProvider) {
+
         $urlRouterProvider.otherwise('/page/tutorial');
+
+        /* Translate Provider */
+        let prefix = 'assets/i18n/';
+        let suffix = '.json';
+
+        $translateProvider.useStaticFilesLoader({
+            prefix: prefix,
+            suffix: suffix
+        });
+
+        //$translateProvider.translations('en');
+
+        $translateProvider.preferredLanguage('es');
     }
 
 })();

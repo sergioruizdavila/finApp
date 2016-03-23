@@ -11,7 +11,10 @@
   "devDependencies": {
     "ionic": "driftyco/ionic-bower#1.2.4",
     "angular-mocks": "~1.4.8",
-    "jasmine-expect": "~1.22.3"
+    "jasmine-expect": "~1.22.3",
+    "angular-translate": "^2.11.0",
+    "angular-translate-loader-url": "^2.11.0",
+    "angular-translate-loader-static-files": "^2.11.0"
   },
   "resolutions": {
     "angular": "1.4.10"
