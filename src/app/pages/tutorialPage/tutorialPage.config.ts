@@ -24,7 +24,8 @@
                         controller: 'finApp.pages.tutorialPage.TutorialPageController',
                         controllerAs: 'vm'
                     }
-                }
+                },
+                parent: 'page'
             });
     }
 })();

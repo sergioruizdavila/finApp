@@ -1,0 +1,128 @@
+<!--<ion-navbar *navbar class="navBar">
+    <!--<ion-row center>
+
+    <ion-col width-60>
+    <div class="progressBar">
+    <div class="progressBar__progressLine progressBar__progressLine--20Percent"></div>
+    <div class="progressBar__innerLine"></div>
+    <div class="progressBar__circle"></div>
+</div>
+</ion-col>
+
+<ion-col width-20></ion-col>
+</ion-row>-->
+
+<!--<div class="row row-center">
+
+    <div class="col-60">
+        <div class="progressBar">
+            <div class="progressBar__progressLine progressBar__progressLine--20Percent"></div>
+            <div class="progressBar__innerLine"></div>
+            <div class="progressBar__circle"></div>
+        </div>
+    </div>
+
+    <div class="col-20"></div>
+
+</div>
+
+</ion-navbar>
+
+<ion-content class="progressivePage__contentPage">
+    <div class="progressivePage__contentPage__title">
+        Sueldo
+    </div>
+
+    <div class="progressivePage__contentPage__input">
+        <input  type="text"
+        ng-model="model.salary"
+        ng-keypress="formatCurrency($event)"
+        name="salary"
+        value=""
+        placeholder="$0"
+        class="fa-input fa-input--small fa-input--money">
+    </div>
+
+    <div class="progressivePage__contentPage__helpText">
+        Especifica cuanto es tu sueldo mensual, no incluyas los aportes a pensión, jubilación o salud. En otras palabras, especifica solo el dinero que puedes usar para tus gastos.
+    </div>
+</ion-content>
+
+<ion-footer-bar class="progressivePage__footer">
+    <div class="fa_btn fa_btn--block fa_btn--large fa_btn__3d padding" ng-click="goToInvestmentPage()">
+        <span class="button-inner">CONTINUAR</span>
+    </div>
+</ion-footer-bar>-->
+
+
+<!----------------------------------------------------------------->
+
+<!-- The nav bar that will be updated as we navigate -->
+<!--<ion-nav-bar class="navBar">
+    <div class="row row-center">
+
+        <div class="col-60">
+            <div class="progressBar">
+                <div class="progressBar__progressLine progressBar__progressLine--20Percent"></div>
+                <div class="progressBar__innerLine"></div>
+                <div class="progressBar__circle"></div>
+            </div>
+        </div>
+
+        <div class="col-20"></div>
+
+    </div>
+</ion-nav-bar>-->
+
+<div class="bar bar-header navBar">
+    <div class="row row-center">
+
+        <div class="col-20">
+            <button class="button button-icon icon ion-arrow-left-c"
+                    style="color: #8C8C8C;"
+                    ng-click="vm.goToBack()"></button>
+        </div>
+
+        <div class="col-60">
+            <div class="progressBar">
+                <div class="progressBar__progressLine progressBar__progressLine--20Percent"></div>
+                <div class="progressBar__innerLine"></div>
+                <div class="progressBar__circle"></div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<!-- where the initial view template will be rendered -->
+<ion-nav-view>
+
+    <ion-view>
+        <ion-content class="progressivePage__contentPage">
+            <div class="progressivePage__contentPage__title">
+                Sueldo
+            </div>
+
+            <div class="progressivePage__contentPage__input">
+                <input  type="text"
+                ng-model="model.salary"
+                ng-keypress="formatCurrency($event)"
+                name="salary"
+                value=""
+                placeholder="$0"
+                class="fa-input fa-input--small fa-input--money">
+            </div>
+
+            <div class="progressivePage__contentPage__helpText">
+                Especifica cuanto es tu sueldo mensual, no incluyas los aportes a pensión, jubilación o salud. En otras palabras, especifica solo el dinero que puedes usar para tus gastos.
+            </div>
+        </ion-content>
+    </ion-view>
+
+    <ion-footer-bar class="progressivePage__footer" style="padding: 20px; height: 100px;">
+        <a class="fa_btn fa_btn--block fa_btn--large fa_btn__3d padding" href="#/page/salary">
+            <span class="button-inner">{{ '%tutorial.signup.button.text' | translate }}</span>
+        </a>
+    </ion-footer-bar>
+
+</ion-nav-view>

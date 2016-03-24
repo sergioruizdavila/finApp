@@ -14,7 +14,8 @@
             /*dependencies of App modules (i.e. controllers, services, etc)*/
             'finApp.core',
             'finApp.pages.main',
-            'finApp.pages.tutorialPage'
+            'finApp.pages.tutorialPage',
+            'finApp.pages.addSalaryPage'
 
         ])
         .config(config);
