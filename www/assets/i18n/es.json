@@ -1,4 +1,23 @@
 {
+    "__GLOBAL__":"",
+    "%global.continue.button.text": "CONTINUAR",
+
+    "__TUTORIAL__":"",
     "%tutorial.signup.button.text" : "REGISTRARSE",
+
+    "__SALARY__":"",
+    "%salary.title.text": "Sueldo",
+    "%salary.help_text.text": "Especifica cuanto es tu sueldo mensual, no incluyas los aportes a pensión, jubilación o salud. En otras palabras, especifica solo el dinero que puedes usar para tus gastos.",
+
+    "__INVESTMENT__":"",
+    "%investment.title.text": "Ingresos por inversión",
+    "%investment.help_text.text": "Especifica si tienes ingresos mensuales por inversiones (prestamos, acciones, renta, etc).",
+
+    "__BUSINESS__":"",
+    "%business.title.text": "Ingresos por negocios",
+    "%business.help_text.text": "Especifica si tienes ingresos mensuales por negocios (empresa, tienda, venta de ropa etc).",
+
+
+
     "": ""
 }

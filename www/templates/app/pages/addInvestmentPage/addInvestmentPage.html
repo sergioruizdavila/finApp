@@ -9,7 +9,7 @@
 
         <div class="col-60">
             <div class="progressBar">
-                <div class="progressBar__progressLine progressBar__progressLine--20Percent"></div>
+                <div class="progressBar__progressLine progressBar__progressLine--40Percent"></div>
                 <div class="progressBar__innerLine"></div>
                 <div class="progressBar__circle"></div>
             </div>
@@ -18,37 +18,33 @@
     </div>
 </div>
 
-
+<!-- where the initial view template will be rendered -->
 <ion-nav-view>
 
     <ion-view>
         <ion-content class="progressivePage__contentPage">
             <div class="progressivePage__contentPage__title">
-                {{ '%salary.title.text' | translate }}
+                {{ '%investment.title.text' | translate }}
             </div>
 
             <div class="progressivePage__contentPage__input">
                 <input  type="text"
-                ng-model="vm.form.salary.formatted"
-                ng-change="vm.formatCurrency()"
-                name="salary"
+                ng-model="model.investment"
+                ng-keypress="formatCurrency($event)"
+                name="investment"
                 value=""
                 placeholder="$0"
                 class="fa-input fa-input--small fa-input--money">
             </div>
 
-            <span>Value: {{vm.form.salary.formatted}}</span>
-            <br>
-            <span>Value without format: {{vm.form.salary.num}}</span>
-
             <div class="progressivePage__contentPage__helpText">
-                {{ '%salary.help_text.text' | translate }}
+                {{ '%investment.help_text.text' | translate }}
             </div>
         </ion-content>
     </ion-view>
 
     <ion-footer-bar class="progressivePage__footer" style="padding: 20px; height: 100px;">
-        <a class="fa_btn fa_btn--block fa_btn--large fa_btn__3d padding" href="#/page/investment">
+        <a class="fa_btn fa_btn--block fa_btn--large fa_btn__3d padding" href="#/page/business">
             <span class="button-inner">{{ '%global.continue.button.text' | translate }}</span>
         </a>
     </ion-footer-bar>

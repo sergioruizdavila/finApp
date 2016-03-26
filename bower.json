@@ -6,7 +6,8 @@
     "underscore": "~1.8.3",
     "moment": "~2.10.6",
     "lodash": "~4.0.0",
-    "globalize": "~1.0.0"
+    "globalize": "~1.0.0",
+    "accounting": "^0.3.2"
   },
   "devDependencies": {
     "ionic": "driftyco/ionic-bower#1.2.4",
