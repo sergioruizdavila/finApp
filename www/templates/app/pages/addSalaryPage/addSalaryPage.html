@@ -30,16 +30,12 @@
             <div class="progressivePage__contentPage__input">
                 <input  type="text"
                 ng-model="vm.form.salary.formatted"
-                ng-change="vm.formatCurrency()"
+                ng-change="vm.formatSalary()"
                 name="salary"
                 value=""
                 placeholder="$0"
                 class="fa-input fa-input--small fa-input--money">
             </div>
-
-            <span>Value: {{vm.form.salary.formatted}}</span>
-            <br>
-            <span>Value without format: {{vm.form.salary.num}}</span>
 
             <div class="progressivePage__contentPage__helpText">
                 {{ '%salary.help_text.text' | translate }}

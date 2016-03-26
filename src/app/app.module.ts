@@ -17,7 +17,8 @@
             'finApp.pages.tutorialPage',
             'finApp.pages.addSalaryPage',
             'finApp.pages.addInvestmentPage',
-            'finApp.pages.addBusinessPage'
+            'finApp.pages.addBusinessPage',
+            'finApp.core.util'
 
         ])
         .config(config);
@@ -35,8 +36,6 @@
             prefix: prefix,
             suffix: suffix
         });
-
-        //$translateProvider.translations('en');
 
         $translateProvider.preferredLanguage('es');
     }

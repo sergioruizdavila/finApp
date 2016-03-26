@@ -11,12 +11,7 @@ module app.pages.addSalaryPage {
     }
 
     export interface IAddSalaryForm {
-        salary: ISalary;
-    }
-
-    export interface ISalary {
-        num: number;
-        formatted: string;
+        salary: app.models.IMoney;
     }
 
     export class AddSalaryPageController implements IAddSalaryPageController {
@@ -25,12 +20,11 @@ module app.pages.addSalaryPage {
 
         form: IAddSalaryForm;
         user: app.models.User;
-        value: string;
-        valueWithoutFormat: number;
 
-        static $inject = ['$ionicHistory'];
+        static $inject = ['$ionicHistory', 'finApp.core.util.FunctionsUtilService'];
 
-        constructor(private $ionicHistory: ionic.navigation.IonicHistoryService) {
+        constructor(private $ionicHistory: ionic.navigation.IonicHistoryService,
+                    private FunctionsUtilService: app.core.util.functionsUtil.FunctionsUtilService) {
             this.init();
         }
 
@@ -43,8 +37,6 @@ module app.pages.addSalaryPage {
                     formatted: ''
                 }
             };
-            this.value = '';
-            this.valueWithoutFormat = null;
 
             this.activate();
         }
@@ -58,13 +50,11 @@ module app.pages.addSalaryPage {
             this.$ionicHistory.goBack();
         }
 
-        formatCurrency(): void {
-
-            if(this.form.salary.formatted){
-                this.form.salary.num = accounting.unformat(this.form.salary.formatted);
-            }
-
-            this.form.salary.formatted = accounting.formatMoney(this.form.salary.num, '$', 0);
+        formatSalary(): void {
+            let currencyObj: app.models.IMoney =
+            this.FunctionsUtilService.formatCurrency(this.form.salary.num, this.form.salary.formatted);
+            this.form.salary.num = currencyObj.num;
+            this.form.salary.formatted = currencyObj.formatted;
         }
 
     }

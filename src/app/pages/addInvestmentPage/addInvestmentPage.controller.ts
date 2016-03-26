@@ -9,18 +9,33 @@ module app.pages.addInvestmentPage {
         activate: () => void;
     }
 
+    export interface IAddInvestmentForm {
+        investment: app.models.IMoney;
+    }
+
     export class AddInvestmentPageController implements IAddInvestmentPageController {
 
         static controllerId = 'finApp.pages.addInvestmentPage.AddInvestmentPageController';
 
-        static $inject = ['$ionicHistory'];
+        form: IAddInvestmentForm;
+        user: app.models.User;
 
-        constructor(private $ionicHistory: ionic.navigation.IonicHistoryService) {
+        static $inject = ['$ionicHistory', 'finApp.core.util.FunctionsUtilService'];
+
+        constructor(private $ionicHistory: ionic.navigation.IonicHistoryService,
+        private FunctionsUtilService: app.core.util.functionsUtil.FunctionsUtilService) {
             this.init();
         }
 
         //Init Properties
         private init() {
+            //Init form
+            this.form = {
+                investment: {
+                    num: null,
+                    formatted: ''
+                }
+            };
             this.activate();
         }
 
@@ -33,6 +48,12 @@ module app.pages.addInvestmentPage {
             this.$ionicHistory.goBack();
         }
 
+        formatInvestment(): void {
+            let currencyObj: app.models.IMoney = this.FunctionsUtilService.formatCurrency(this.form.investment.num, this.form.investment.formatted);
+
+            this.form.investment.num = currencyObj.num;
+            this.form.investment.formatted = currencyObj.formatted;
+        }
     }
 
     angular

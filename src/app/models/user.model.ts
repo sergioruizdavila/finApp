@@ -6,17 +6,22 @@ module app.models {
 
     export interface IUser {
         username: string;
-        salary: number;
-        investment: number;
-        business: number;
+        salary: IMoney;
+        investment: IMoney;
+        business: IMoney;
+    }
+
+    export interface IMoney {
+        num: number;
+        formatted: string;
     }
 
     export class User implements IUser {
 
         username: string;
-        salary: number;
-        investment: number;
-        business: number;
+        salary: IMoney;
+        investment: IMoney;
+        business: IMoney;
 
         constructor(data?) {
             if (data) {

@@ -29,8 +29,8 @@
 
             <div class="progressivePage__contentPage__input">
                 <input  type="text"
-                ng-model="model.investment"
-                ng-keypress="formatCurrency($event)"
+                ng-model="vm.form.investment.formatted"
+                ng-change="vm.formatInvestment()"
                 name="investment"
                 value=""
                 placeholder="$0"
