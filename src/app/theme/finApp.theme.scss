@@ -90,9 +90,9 @@ input[type="color"] {
     border-radius: 5px;
     border: 1px solid #CCC!important;
 
-    &--small {
+    &--medium {
         padding: 15px!important;
-        width: 50%;
+        width: 55%;
     }
 
     &--money {
@@ -196,6 +196,7 @@ input[type="color"] {
 
     &__footer {
         padding: 20px;
+        height: 100px;
         background-color: $FA_PROGRESSIVE_PAGE;
     }
 
