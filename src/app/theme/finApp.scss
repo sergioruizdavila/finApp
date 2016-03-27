@@ -16,7 +16,13 @@
 @import "www/lib/ionic/scss/ionic";
 
 
-// App Material Design Only Sass
+// FinApp Theme
 // --------------------------------------------------
-// CSS that should only apply to the Material Design app
+// All FinApp Style
 @import 'finApp.theme';
+
+
+// FinApp Pages
+// --------------------------------------------------
+// All FinApp Pages Style
+@import '../pages/logInPage/logInPage';

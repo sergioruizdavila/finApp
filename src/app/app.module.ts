@@ -16,6 +16,7 @@
             'finApp.pages.main',
             'finApp.pages.tutorialPage',
             'finApp.pages.signUpPage',
+            'finApp.pages.logInPage',
             'finApp.pages.addSalaryPage',
             'finApp.pages.addInvestmentPage',
             'finApp.pages.addBusinessPage',
