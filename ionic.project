@@ -1,5 +1,5 @@
 {
   "name": "finApp",
   "app_id": "",
-  "gulpStartupTasks": ["copy-html", "sass", "ts", "ts-lint", "watch"]
+  "gulpStartupTasks": ["copy-html", "sass", "ts", "watch"]
 }

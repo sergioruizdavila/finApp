@@ -1,3 +1,12 @@
+///MODIFIERS
+.text-center {
+    text-align: center;
+}
+
+.text-right {
+    text-align: right;
+}
+
 
 ///Body
 body {
@@ -11,20 +20,23 @@ body {
     white-space: nowrap;
     text-overflow: ellipsis;
     overflow: hidden;
-    text-align: center;
     border: 0;
-    -webkit-border-radius: 5px;
-    -moz-border-radius: 5px;
-    border-radius: 5px;
-    text-decoration: none;
-    color: #FFF;
-    background-color: $FA_BTN_FORM;
+
+    &__header {
+        color: $FA_NAVBAR_TEXT!important;
+        font-size: 20px!important;
+    }
 
     &__3d {
         display: inline-block;
         -webkit-box-shadow: 0 5px 0 $FA_BTN_FORM_SHADOW, 0 15px 20px rgba(0,0,0,0);
         -moz-box-shadow: 0 5px 0 $FA_BTN_FORM_SHADOW, 0 15px 20px rgba(0,0,0,0);
         box-shadow: 0 5px 0 $FA_BTN_FORM_SHADOW,0 15px 20px rgba(0,0,0,0);
+        -webkit-border-radius: 5px;
+        -moz-border-radius: 5px;
+        border-radius: 5px;
+        text-decoration: none;
+        text-align: center;
     }
 
     &__3d:active {
@@ -36,6 +48,11 @@ body {
         -webkit-box-shadow: none;
         -moz-box-shadow: none;
         box-shadow: none;
+    }
+
+    &--progressive {
+        background-color: $FA_BTN_FORM;
+        color: #FFF;
     }
 
     &--large {
@@ -73,7 +90,7 @@ input[type="url"],
 input[type="search"],
 input[type="tel"],
 input[type="color"] {
-  display: inline-block;;
+  display: inline-block;
   padding-top: 0;
   padding-left: 0;
   height: inherit;
@@ -86,17 +103,28 @@ input[type="color"] {
 
 ///Input Text
 .fa-input {
-    font-size: 25px;
+
     border-radius: 5px;
     border: 1px solid #CCC!important;
 
     &--medium {
+        font-size: 25px!important;
         padding: 15px!important;
         width: 55%;
     }
 
+    &--large {
+        font-size: 20px!important;
+        padding: 10px!important;
+        width: 95%;
+    }
+
     &--money {
         text-align: right;
+    }
+
+    &--email {
+        text-align: center;
     }
 }
 
@@ -116,6 +144,12 @@ input[type="color"] {
     &__backButton {
         padding: 0;
         margin: 0;
+    }
+
+    &__title {
+        position: relative !important;
+        font-size: 25px!important;
+        line-height: 41px!important;
     }
 }
 
@@ -187,8 +221,7 @@ input[type="color"] {
         }
 
         &__helpText {
-            margin-top: 20%;
-            margin: 20% auto 0 auto;
+            margin: 15% auto 0 auto;
             width: 70%;
             font-size: 2.3vh;
         }

@@ -49,7 +49,8 @@ module app.pages.addInvestmentPage {
         }
 
         formatInvestment(): void {
-            let currencyObj: app.models.IMoney = this.FunctionsUtilService.formatCurrency(this.form.investment.num, this.form.investment.formatted);
+            let currencyObj: app.models.IMoney =
+            this.FunctionsUtilService.formatCurrency(this.form.investment.num, this.form.investment.formatted);
 
             this.form.investment.num = currencyObj.num;
             this.form.investment.formatted = currencyObj.formatted;

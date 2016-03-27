@@ -8,7 +8,7 @@
 
 /*--  INTERFACE --*/
 interface IDataConfig {
-    apiServiceBaseUri: string;
+    baseUrl: string;
     userId: string;
 }
 
@@ -18,7 +18,7 @@ interface IDataConfig {
     'use strict';
 
     var dataConfig: IDataConfig = {
-        apiServiceBaseUri: 'baseUrl',
+        baseUrl: 'https://shining-fire-8072.firebaseio.com/',
         userId: ''
     };
 
