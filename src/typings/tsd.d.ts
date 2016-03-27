@@ -37,3 +37,5 @@
 /// <reference path="angular-translate/angular-translate.d.ts" />
 /// <reference path="ionic/ionic.d.ts" />
 /// <reference path="accounting/accounting.d.ts" />
+/// <reference path="firebase/firebase.d.ts" />
+/// <reference path="angularfire/angularfire.d.ts" />

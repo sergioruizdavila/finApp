@@ -6,10 +6,10 @@
   "bundle": "src/typings/tsd.d.ts",
   "installed": {
     "angularjs/angular.d.ts": {
-      "commit": "a44529fcb1e1cdc0355e71c42a6048de99b57c34"
+      "commit": "299b5caa22876ef27dc8e9a5b7fd7bf93457b6f4"
     },
     "jquery/jquery.d.ts": {
-      "commit": "a44529fcb1e1cdc0355e71c42a6048de99b57c34"
+      "commit": "299b5caa22876ef27dc8e9a5b7fd7bf93457b6f4"
     },
     "lodash/lodash.d.ts": {
       "commit": "a44529fcb1e1cdc0355e71c42a6048de99b57c34"
@@ -118,6 +118,12 @@
     },
     "accounting/accounting.d.ts": {
       "commit": "a44529fcb1e1cdc0355e71c42a6048de99b57c34"
+    },
+    "firebase/firebase.d.ts": {
+      "commit": "299b5caa22876ef27dc8e9a5b7fd7bf93457b6f4"
+    },
+    "angularfire/angularfire.d.ts": {
+      "commit": "299b5caa22876ef27dc8e9a5b7fd7bf93457b6f4"
     }
   }
 }
