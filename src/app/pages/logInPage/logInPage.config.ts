@@ -28,17 +28,17 @@
                 params: {
                     user: null
                 },
-                resolve: {
-                    requireNoAuth: function($state, $firebaseAuth, FirebaseFactory) {
-                        let ref = FirebaseFactory.createFirebase();
-                        let auth = $firebaseAuth(ref);
-                        return auth.$requireAuth().then(function(auth) {
-                            $state.go('home');
-                        }, function(error) {
-                            return;
-                        });
-                    }
-                },
+                // resolve: {
+                //     requireNoAuth: function($state, $firebaseAuth, FirebaseFactory) {
+                //         let ref = FirebaseFactory.createFirebase();
+                //         let auth = $firebaseAuth(ref);
+                //         return auth.$requireAuth().then(function(auth) {
+                //             $state.go('home');
+                //         }, function(error) {
+                //             return;
+                //         });
+                //     }
+                // },
                 parent: 'page'
             });
     }

@@ -9,7 +9,7 @@ module app.core.firebase {
     'use strict';
 
     export interface IFirebaseFactory {
-
+        createFirebase: () => Firebase;
     }
 
     export class FirebaseFactory implements IFirebaseFactory {

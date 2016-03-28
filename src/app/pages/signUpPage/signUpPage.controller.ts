@@ -31,17 +31,15 @@ module app.pages.signUpPage {
         error: ISignUpError;
         signUpDataConfig: ISignUpDataConfig;
 
-        static $inject = ['$ionicHistory',
-                            '$firebaseAuth',
-                            'finApp.core.firebase.FirebaseFactory',
-                            '$state',
-                            '$stateParams'];
+        public static $inject = ['$ionicHistory',
+                                '$state',
+                                '$stateParams',
+                                'finApp.auth.AuthService'];
 
         constructor(private $ionicHistory: ionic.navigation.IonicHistoryService,
-                    private $firebaseAuth: AngularFireAuthService,
-                    private FirebaseFactory: app.core.firebase.FirebaseFactory,
                     private $state: ng.ui.IStateService,
-                    private $stateParams: ISignUpDataConfig) {
+                    private $stateParams: ISignUpDataConfig,
+                    private AuthService) {
             this.init();
         }
 
@@ -89,12 +87,10 @@ module app.pages.signUpPage {
         /*-- METHODS --*/
 
         register(): void {
-            //let auth = this.AuthService.createAuth();
-            this.user.email = this.form.email;
             let self = this;
-            this.ref = this.FirebaseFactory.createFirebase();
-            let auth = this.$firebaseAuth(this.ref);
-            auth.$createUser(this.user).then(function (user){
+
+            this.user.email = this.form.email;
+            this.AuthService().$createUser(this.user).then(function (user){
                 //TODO: Mostrar un popUp diciendo: te crearemos una nueva cuenta: Si o No
                 //Si presiona SI, lo deberia llevar a la funcion login()
                 console.log('new user: ', user);

@@ -32,16 +32,14 @@ module app.pages.logInPage {
         logInDataConfig: ILogInDataConfig;
 
         static $inject = ['$ionicHistory',
-                            '$firebaseAuth',
-                            'finApp.core.firebase.FirebaseFactory',
-                            '$state',
-                            '$stateParams'];
+                          '$state',
+                          '$stateParams',
+                          'finApp.auth.AuthService'];
 
         constructor(private $ionicHistory: ionic.navigation.IonicHistoryService,
-                    private $firebaseAuth: AngularFireAuthService,
-                    private FirebaseFactory: app.core.firebase.FirebaseFactory,
                     private $state: ng.ui.IStateService,
-                    private $stateParams: ILogInDataConfig) {
+                    private $stateParams: ILogInDataConfig,
+                    private AuthService) {
 
             this.init();
 
@@ -88,12 +86,10 @@ module app.pages.logInPage {
         /*-- METHODS --*/
 
         login(): void {
-            this.user.password = this.form.password;
             let self = this;
-            this.ref = this.FirebaseFactory.createFirebase();
-            let auth = this.$firebaseAuth(this.ref);
 
-            auth.$authWithPassword(this.user).then(function (response){
+            this.user.password = this.form.password;
+            this.AuthService().$authWithPassword(this.user).then(function (response){
                 //TODO: Si se loguea exitosamente debe llevarlo directamente a: 1. addSalaryPage
                 // si es la primera vez que usa la App, 2. dashboard o pantalla principal, donde le
                 // muestre los meses, las tarejtas, etc etc.
