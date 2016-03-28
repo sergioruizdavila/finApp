@@ -13,6 +13,10 @@ module app.pages.signUpPage {
         email: string;
     }
 
+    export interface ISignUpError {
+        message: string;
+    }
+
     export interface ISignUpDataConfig extends ng.ui.IStateParamsService {
         user: app.models.User;
     }
@@ -24,6 +28,7 @@ module app.pages.signUpPage {
         ref: Firebase;
         form: ISignUpForm;
         user: app.models.User;
+        error: ISignUpError;
         signUpDataConfig: ISignUpDataConfig;
 
         static $inject = ['$ionicHistory',
@@ -70,6 +75,10 @@ module app.pages.signUpPage {
                 }
             };
 
+            this.error = {
+                message: ''
+            };
+
             this.activate();
         }
 
@@ -93,6 +102,8 @@ module app.pages.signUpPage {
                 //Llevar a la pagina de Logging si ese mail ya esta registrado
                 if (error.code === 'EMAIL_TAKEN') {
                     self.$state.go('page.logIn', { user: self.user});
+                } else {
+                    self.error = error;
                 }
             });
         };

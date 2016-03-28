@@ -13,6 +13,10 @@ module app.pages.logInPage {
         password: string;
     }
 
+    export interface ILogInError {
+        message: string;
+    }
+
     export interface ILogInDataConfig extends ng.ui.IStateParamsService {
         user: app.models.User;
     }
@@ -24,6 +28,7 @@ module app.pages.logInPage {
         form: ILogInForm;
         user: app.models.User;
         ref: Firebase;
+        error: ILogInError;
         logInDataConfig: ILogInDataConfig;
 
         static $inject = ['$ionicHistory',
@@ -70,6 +75,9 @@ module app.pages.logInPage {
                 }
             };
 
+            this.error = {
+                message: ''
+            };
             this.activate();
         }
 
@@ -93,7 +101,7 @@ module app.pages.logInPage {
                 console.log('Response after Auth: ', response);
             }, function (error){
                 //TODO: Validar si tiene mal el password, mostrando un mensaje o popUp nativo del dispositivo
-
+                self.error = error;
                 console.log('Error after Auth: ', error);
             });
 

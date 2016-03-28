@@ -45,6 +45,10 @@
                 class="fa-input fa-input--large fa-input--email">
             </div>
 
+            <div ng-show="vm.error">
+                <span style="color: red;">{{ vm.error.message }}</span>
+            </div>
+
             <div class="progressivePage__contentPage__helpText progressivePage__contentPage--block">
                 <p>¿Cansado de las contraseñas?</p>
                 <a class="fa_btn fa_btn--progressive fa_btn--block fa_btn--large fa_btn--with_icon fa_btn__3d padding" href="#/page/investment">
