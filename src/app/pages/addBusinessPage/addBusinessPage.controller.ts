@@ -20,7 +20,8 @@ module app.pages.addBusinessPage {
         form: IAddBusinessForm;
         user: app.models.User;
 
-        static $inject = ['$ionicHistory', 'finApp.core.util.FunctionsUtilService'];
+        static $inject = ['$ionicHistory',
+                            'finApp.core.util.FunctionsUtilService'];
 
         constructor(private $ionicHistory: ionic.navigation.IonicHistoryService,
         private FunctionsUtilService: app.core.util.functionsUtil.FunctionsUtilService) {

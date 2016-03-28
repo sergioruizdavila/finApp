@@ -25,6 +25,9 @@
                         controllerAs: 'vm'
                     }
                 },
+                params: {
+                    user: null
+                },
                 parent: 'page'
             });
     }

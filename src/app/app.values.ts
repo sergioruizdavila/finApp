@@ -18,7 +18,7 @@ interface IDataConfig {
     'use strict';
 
     var dataConfig: IDataConfig = {
-        baseUrl: 'https://shining-fire-8072.firebaseio.com/',
+        baseUrl: 'https://shining-fire-8072.firebaseio.com/users',
         userId: ''
     };
 

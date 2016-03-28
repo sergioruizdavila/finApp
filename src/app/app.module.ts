@@ -11,17 +11,18 @@
 
     angular
         .module('finApp', [
-            /*dependencies of App modules (i.e. controllers, services, etc)*/
+            /* Core */
+            'finApp.auth',
             'finApp.core',
             'finApp.pages.main',
+            'finApp.core.util',
+            'finApp.core.firebase',
             'finApp.pages.tutorialPage',
             'finApp.pages.signUpPage',
             'finApp.pages.logInPage',
             'finApp.pages.addSalaryPage',
             'finApp.pages.addInvestmentPage',
-            'finApp.pages.addBusinessPage',
-            'finApp.core.util'
-
+            'finApp.pages.addBusinessPage'
         ])
         .config(config);
 

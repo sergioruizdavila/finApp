@@ -6,6 +6,8 @@ module app.models {
 
     export interface IUser {
         username: string;
+        email: string;
+        password: string;
         salary: IMoney;
         investment: IMoney;
         business: IMoney;
@@ -19,6 +21,8 @@ module app.models {
     export class User implements IUser {
 
         username: string;
+        email: string;
+        password: string;
         salary: IMoney;
         investment: IMoney;
         business: IMoney;
@@ -26,6 +30,8 @@ module app.models {
         constructor(data?) {
             if (data) {
                 this.username = data.username;
+                this.email = data.email;
+                this.password = data.password;
                 this.salary = data.salary;
                 this.investment = data.investment;
                 this.business = data.business;
