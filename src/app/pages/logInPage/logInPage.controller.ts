@@ -5,7 +5,15 @@
 
 module app.pages.logInPage {
 
+    /**********************************/
+    /*           INTERFACES           */
+    /**********************************/
     export interface ILogInPageController {
+        form: ILogInForm;
+        user: app.models.User;
+        ref: Firebase;
+        error: ILogInError;
+        logInDataConfig: ILogInDataConfig;
         activate: () => void;
     }
 
@@ -21,21 +29,32 @@ module app.pages.logInPage {
         user: app.models.User;
     }
 
+    /****************************************/
+    /*           CLASS DEFINITION           */
+    /****************************************/
     export class LogInPageController implements ILogInPageController {
 
         static controllerId = 'finApp.pages.logInPage.LogInPageController';
 
+        /**********************************/
+        /*           PROPERTIES           */
+        /**********************************/
         form: ILogInForm;
         user: app.models.User;
         ref: Firebase;
         error: ILogInError;
         logInDataConfig: ILogInDataConfig;
+        // --------------------------------
 
+        /*-- INJECT DEPENDENCIES --*/
         static $inject = ['$ionicHistory',
                           '$state',
                           '$stateParams',
                           'finApp.auth.AuthService'];
 
+        /**********************************/
+        /*           CONSTRUCTOR          */
+        /**********************************/
         constructor(private $ionicHistory: ionic.navigation.IonicHistoryService,
                     private $state: ng.ui.IStateService,
                     private $stateParams: ILogInDataConfig,
@@ -45,7 +64,7 @@ module app.pages.logInPage {
 
         }
 
-        //Init Properties
+        /*-- INITIALIZE METHOD --*/
         private init() {
             //Get state params
             this.logInDataConfig = this.$stateParams;
@@ -79,12 +98,19 @@ module app.pages.logInPage {
             this.activate();
         }
 
+        /*-- ACTIVATE METHOD --*/
         activate(): void {
             console.log('logInPage controller actived');
         }
 
-        /*-- METHODS --*/
+        /**********************************/
+        /*            METHODS             */
+        /**********************************/
 
+        /*
+        * Login Method
+        * @description If current user has an account, it asks a valid password in order to give authorization
+        */
         login(): void {
             let self = this;
 
@@ -103,12 +129,17 @@ module app.pages.logInPage {
 
         }
 
+        /*
+        * Go to back method
+        * @description this method is launched when user press back button
+        */
         goToBack(): void {
             this.$ionicHistory.goBack();
         }
 
     }
 
+    /*-- MODULE DEFINITION --*/
     angular
         .module('finApp.pages.logInPage')
         .controller(LogInPageController.controllerId, LogInPageController);

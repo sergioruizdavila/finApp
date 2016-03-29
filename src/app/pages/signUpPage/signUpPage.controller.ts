@@ -5,7 +5,15 @@
 
 module app.pages.signUpPage {
 
+    /**********************************/
+    /*           INTERFACES           */
+    /**********************************/
     export interface ISignUpPageController {
+        ref: Firebase;
+        form: ISignUpForm;
+        user: app.models.User;
+        error: ISignUpError;
+        signUpDataConfig: ISignUpDataConfig;
         activate: () => void;
     }
 
@@ -21,29 +29,43 @@ module app.pages.signUpPage {
         user: app.models.User;
     }
 
+    /****************************************/
+    /*           CLASS DEFINITION           */
+    /****************************************/
     export class SignUpPageController implements ISignUpPageController {
 
         static controllerId = 'finApp.pages.signUpPage.SignUpPageController';
 
+        /**********************************/
+        /*           PROPERTIES           */
+        /**********************************/
         ref: Firebase;
         form: ISignUpForm;
         user: app.models.User;
         error: ISignUpError;
         signUpDataConfig: ISignUpDataConfig;
+        // --------------------------------
 
+
+        /*-- INJECT DEPENDENCIES --*/
         public static $inject = ['$ionicHistory',
                                 '$state',
                                 '$stateParams',
                                 'finApp.auth.AuthService'];
 
+        /**********************************/
+        /*           CONSTRUCTOR          */
+        /**********************************/
         constructor(private $ionicHistory: ionic.navigation.IonicHistoryService,
                     private $state: ng.ui.IStateService,
                     private $stateParams: ISignUpDataConfig,
                     private AuthService) {
+
             this.init();
+
         }
 
-        //Init Properties
+        /*-- INITIALIZE METHOD --*/
         private init() {
             //Get state params
             this.signUpDataConfig = this.$stateParams;
@@ -80,12 +102,19 @@ module app.pages.signUpPage {
             this.activate();
         }
 
+        /*-- ACTIVATE METHOD --*/
         activate(): void {
             console.log('signUpPage controller actived');
         }
 
-        /*-- METHODS --*/
+        /**********************************/
+        /*            METHODS             */
+        /**********************************/
 
+        /*
+        * Register Method
+        * @description Create new user if current user doesn`t have an account
+        */
         register(): void {
             let self = this;
 
@@ -104,12 +133,17 @@ module app.pages.signUpPage {
             });
         };
 
+        /*
+        * Go to back method
+        * @description this method is launched when user press back button
+        */
         goToBack(): void {
             this.$ionicHistory.goBack();
         }
 
     }
 
+    /*-- MODULE DEFINITION --*/
     angular
         .module('finApp.pages.signUpPage')
         .controller(SignUpPageController.controllerId, SignUpPageController);
