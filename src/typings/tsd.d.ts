@@ -1,4 +1,3 @@
-
 /// <reference path="angular-ui-router/angular-ui-router.d.ts" />
 /// <reference path="angularjs/angular-resource.d.ts" />
 /// <reference path="angularjs/angular.d.ts" />
@@ -37,3 +36,5 @@
 /// <reference path="angular-translate/angular-translate.d.ts" />
 /// <reference path="ionic/ionic.d.ts" />
 /// <reference path="accounting/accounting.d.ts" />
+/// <reference path="firebase/firebase.d.ts" />
+/// <reference path="angularfire/angularfire.d.ts" />

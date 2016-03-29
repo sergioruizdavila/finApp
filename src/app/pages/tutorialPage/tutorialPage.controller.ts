@@ -5,33 +5,40 @@
 
 module app.pages.tutorialPage {
 
+    /**********************************/
+    /*           INTERFACES           */
+    /**********************************/
     export interface ITutorialPageController {
         activate: () => void;
     }
 
+    /****************************************/
+    /*           CLASS DEFINITION           */
+    /****************************************/
     export class TutorialPageController implements ITutorialPageController {
 
         static controllerId = 'finApp.pages.tutorialPage.TutorialPageController';
 
-        //static $inject = [''];
-
+        /**********************************/
+        /*           CONSTRUCTOR          */
+        /**********************************/
         constructor() {
             this.init();
         }
 
-        //Init Properties
+        /*-- INITIALIZE METHOD --*/
         private init() {
             this.activate();
         }
 
+        /*-- ACTIVATE METHOD --*/
         activate(): void {
             console.log('tutorialPage controller actived');
         }
 
-        /*-- METHODS --*/
-
     }
 
+    /*-- MODULE DEFINITION --*/
     angular
         .module('finApp.pages.tutorialPage')
         .controller(TutorialPageController.controllerId, TutorialPageController);

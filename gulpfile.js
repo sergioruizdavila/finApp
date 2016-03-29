@@ -18,7 +18,7 @@ var karma = require('gulp-karma');
 /*Path Files*/
 var paths = {
     htmlTemplates: 'src/**/*.html',
-    appTypescript: ['src/**/*.ts', '!src/typings/**/*.*'],
+    appTypescript: ['src/**/*.ts', '!src/typings/**/*.*', '!platforms/**/*.*'],
     outputJs: 'www/js/',
     appSass: ['src/**/**/*.scss'],
     inputSass: 'src/app/theme/finApp.scss',
@@ -103,7 +103,7 @@ gulp.task('watch', function() {
     gulp.watch(paths.appSass, ['sass']).on('change', function (event) {
         console.log('File ' + event.path + ' was ' + event.type + ', running tasks...');
     });
-    gulp.watch(paths.appTypescript, ['ts-lint', 'ts']).on('change', function (event) {
+    gulp.watch(paths.appTypescript, ['ts']).on('change', function (event) {
         console.log('File ' + event.path + ' was ' + event.type + ', running tasks...');
     });
     gulp.watch(paths.htmlTemplates, ['copy-html']).on('change', function (event){

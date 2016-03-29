@@ -4,15 +4,14 @@
  * @constructor
  */
 
-
 module app.core.util.functionsUtil {
     'use strict';
 
+    /**********************************/
+    /*           INTERFACES           */
+    /**********************************/
     export interface IFunctionsUtilService {
-        //properties
         dateFormatted: IDateFormatted;
-
-        //methods
         splitDateFormat: (date: any) => IDateFormatted;
     }
 
@@ -22,15 +21,34 @@ module app.core.util.functionsUtil {
         year: string;
     }
 
+    /****************************************/
+    /*           CLASS DEFINITION           */
+    /****************************************/
     export class FunctionsUtilService implements IFunctionsUtilService {
 
         static serviceId = 'finApp.core.util.FunctionsUtilService';
-        dateFormatted: IDateFormatted;
 
+        /**********************************/
+        /*           PROPERTIES           */
+        /**********************************/
+        dateFormatted: IDateFormatted;
+        // --------------------------------
+
+        /**********************************/
+        /*           CONSTRUCTOR          */
+        /**********************************/
         constructor() {
             console.log('functionsUtil service called');
         }
 
+        /**********************************/
+        /*            METHODS             */
+        /**********************************/
+
+        /*
+        * Split Date Format Method
+        * @description Split Date in 3 parts: day, month and year
+        */
         splitDateFormat(date): IDateFormatted {
             //Format date to MM/DD/YYYY
             let dateString = moment(date).format('YYYY/MMM/DD').split('/');
@@ -72,6 +90,7 @@ module app.core.util.functionsUtil {
 
     }
 
+    /*-- MODULE DEFINITION --*/
     angular
         .module('finApp.core.util', [])
         .service(FunctionsUtilService.serviceId, FunctionsUtilService);
