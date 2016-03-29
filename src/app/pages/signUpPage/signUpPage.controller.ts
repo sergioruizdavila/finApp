@@ -14,6 +14,8 @@ module app.pages.signUpPage {
         user: app.models.User;
         error: ISignUpError;
         signUpDataConfig: ISignUpDataConfig;
+        register: () => void;
+        goToBack: () => void;
         activate: () => void;
     }
 

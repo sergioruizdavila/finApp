@@ -95,6 +95,7 @@ module app.pages.logInPage {
             this.error = {
                 message: ''
             };
+            
             this.activate();
         }
 

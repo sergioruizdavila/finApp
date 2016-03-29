@@ -5,33 +5,40 @@
 
 module app.pages.main {
 
+    /**********************************/
+    /*           INTERFACES           */
+    /**********************************/
     export interface IMainController {
         activate: () => void;
     }
 
+    /****************************************/
+    /*           CLASS DEFINITION           */
+    /****************************************/
     export class MainController implements IMainController {
 
         static controllerId = 'finApp.pages.main.MainController';
 
-        //static $inject = [''];
-
+        /**********************************/
+        /*           CONSTRUCTOR          */
+        /**********************************/
         constructor() {
             this.init();
         }
 
-        //Init Properties
+        /*-- INITIALIZE METHOD --*/
         private init() {
             this.activate();
         }
 
+        /*-- ACTIVATE METHOD --*/
         activate(): void {
             console.log('main controller actived');
         }
 
-        /*-- METHODS --*/
-
     }
 
+    /*-- MODULE DEFINITION --*/
     angular
         .module('finApp.pages.main')
         .controller(MainController.controllerId, MainController);

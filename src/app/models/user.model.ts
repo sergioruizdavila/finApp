@@ -4,6 +4,9 @@
 
 module app.models {
 
+    /**********************************/
+    /*           INTERFACES           */
+    /**********************************/
     export interface IUser {
         username: string;
         email: string;
@@ -18,6 +21,9 @@ module app.models {
         formatted: string;
     }
 
+    /****************************************/
+    /*           CLASS DEFINITION           */
+    /****************************************/
     export class User implements IUser {
 
         username: string;
@@ -26,7 +32,10 @@ module app.models {
         salary: IMoney;
         investment: IMoney;
         business: IMoney;
-
+        
+        /**********************************/
+        /*           CONSTRUCTOR          */
+        /**********************************/
         constructor(data?) {
             if (data) {
                 this.username = data.username;

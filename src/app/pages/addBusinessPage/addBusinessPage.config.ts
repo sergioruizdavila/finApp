@@ -3,7 +3,6 @@
 * @description - add business page config file
 */
 
-
 (function() {
     'use strict';
 
