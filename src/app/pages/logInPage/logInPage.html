@@ -8,20 +8,18 @@
         </div>
 
         <div class="col-60">
-            <div class="h1 navBar__title title">
-                FinApp
+            <div class="h1 navBar__title title" translate>
+                %navbar.title.text
             </div>
         </div>
 
         <div class="col-20 text-right">
-            <!--<a class="button button-clear fa_btn fa_btn__header"
+            <button class="button button-clear fa_btn fa_btn__header"
                     type="button"
                     name="button"
-                    href="#/page/salary">OK</a>-->
-                <button class="button button-clear fa_btn fa_btn__header"
-                        type="button"
-                        name="button"
-                        ng-click="vm.login()">OK</button>
+                    ng-click="vm.login()" translate>
+                %navbar.button_ok.text
+            </button>
         </div>
 
     </div>
@@ -32,8 +30,8 @@
 
     <ion-view>
         <ion-content id="content_logInPage" class="progressivePage__contentPage" scroll="false">
-            <div class="progressivePage__contentPage__title">
-                ¡Bienvenido de nuevo!
+            <div class="progressivePage__contentPage__title" translate>
+                %login.title.text
             </div>
 
             <div class="progressivePage__contentPage__input">
@@ -41,7 +39,8 @@
                 ng-model="vm.form.password"
                 name="password"
                 value=""
-                placeholder="Introduce tu contraseña"
+                placeholder=""
+                translate translate-attr-placeholder="%login.input_password.placeholder.text"
                 class="fa-input fa-input--large fa-input--email">
             </div>
 
@@ -50,12 +49,19 @@
             </div>
 
             <div class="progressivePage__contentPage__helpText progressivePage__contentPage--block">
-                <p>¿Cansado de las contraseñas?</p>
+                <p translate>%login.help_text.text</p>
                 <a class="fa_btn fa_btn--progressive fa_btn--block fa_btn--large fa_btn--with_icon fa_btn__3d padding" href="#/page/investment">
                     <i class="icon ion-social-facebook fa_btn--with_icon__icon"></i>
-                    <span class="button_inner fa_btn--with_icon__button_inner">Iniciar sesión con Facebook</span>
+                    <span class="button_inner fa_btn--with_icon__button_inner"
+                          translate>
+                          %login.login_facebook.button.text
+                    </span>
                 </a>
-                <a class="progressivePage__contentPage__helpText__recover_password" href="#">o haz clic aquí para recuperarla</a>
+                <a class="progressivePage__contentPage__helpText__recover_password"
+                   href="#"
+                   translate>
+                   %login.help_text.recover_password.text
+               </a>
             </div>
         </ion-content>
     </ion-view>
