@@ -22,7 +22,7 @@
             'finApp.pages.addSalaryPage',
             'finApp.pages.addInvestmentPage',
             'finApp.pages.addBusinessPage',
-            'finApp.models'
+            'finApp.models.user'
         ])
         .config(config);
 

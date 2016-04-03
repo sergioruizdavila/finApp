@@ -10,14 +10,13 @@ module app.pages.addInvestmentPage {
     /**********************************/
     export interface IAddInvestmentPageController {
         form: IAddInvestmentForm;
-        user: app.models.User;
         formatInvestment: () => void;
         activate: () => void;
         goToBack: () => void;
     }
 
     export interface IAddInvestmentForm {
-        investment: app.models.IMoney;
+        investment: app.models.user.IMoney;
     }
 
     /****************************************/
@@ -31,7 +30,6 @@ module app.pages.addInvestmentPage {
         /*           PROPERTIES           */
         /**********************************/
         form: IAddInvestmentForm;
-        user: app.models.User;
         // --------------------------------
 
         /*-- INJECT DEPENDENCIES --*/
@@ -72,8 +70,9 @@ module app.pages.addInvestmentPage {
         * @description Format the investment value with default currency
         */
         formatInvestment(): void {
-            let currencyObj: app.models.IMoney =
-            this.FunctionsUtilService.formatCurrency(this.form.investment.num, this.form.investment.formatted);
+            let currencyObj: app.models.user.IMoney =
+            this.FunctionsUtilService.formatCurrency(this.form.investment.num,
+                                                     this.form.investment.formatted);
 
             this.form.investment.num = currencyObj.num;
             this.form.investment.formatted = currencyObj.formatted;

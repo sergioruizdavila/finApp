@@ -9,7 +9,6 @@ module app.pages.addSalaryPage {
     /*           INTERFACES           */
     /**********************************/
     export interface IAddSalaryPageController {
-        user: app.models.User;
         form: IAddSalaryForm;
         formatSalary: () => void;
         activate: () => void;
@@ -17,7 +16,7 @@ module app.pages.addSalaryPage {
     }
 
     export interface IAddSalaryForm {
-        salary: app.models.IMoney;
+        salary: app.models.user.IMoney;
     }
 
     /****************************************/
@@ -31,7 +30,6 @@ module app.pages.addSalaryPage {
         /*           PROPERTIES           */
         /**********************************/
         form: IAddSalaryForm;
-        user: app.models.User;
         // --------------------------------
 
         /*-- INJECT DEPENDENCIES --*/
@@ -72,8 +70,9 @@ module app.pages.addSalaryPage {
         * @description Format the salary value with default currency
         */
         formatSalary(): void {
-            let currencyObj: app.models.IMoney =
-            this.FunctionsUtilService.formatCurrency(this.form.salary.num, this.form.salary.formatted);
+            let currencyObj: app.models.user.IMoney =
+            this.FunctionsUtilService.formatCurrency(this.form.salary.num,
+                                                     this.form.salary.formatted);
             this.form.salary.num = currencyObj.num;
             this.form.salary.formatted = currencyObj.formatted;
         }

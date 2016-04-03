@@ -1,12 +1,13 @@
 /**
- * userService
- * @description - Some description
+ * UserService
+ * @description - Services related on User Model.
  * @constructor
- * @param {type} title - The title of the book.
- * @param {type} author - The author of the book.
+ * @param {app.core.firebase.IFirebaseFactory} FirebaseFactory - instance Firebase services.
+ * @param {AngularFireObjectService} $firebaseObject - firebase provider that let create three binding objects.
+ * @param {AngularFireArrayService} $firebaseArray - firebase provider that let create three binding array objects.
  */
 
-module app.models {
+module app.models.user {
 
     'use strict';
 
@@ -20,7 +21,7 @@ module app.models {
     }
 
     export interface IUserRootScope extends angular.IRootScopeService {
-        User: app.models.User;
+        User: app.models.user.User;
     }
 
     /****************************************/
@@ -28,7 +29,7 @@ module app.models {
     /****************************************/
     class UserService implements IUserService {
 
-        static serviceId = 'finApp.models.UserService';
+        static serviceId = 'finApp.models.user.UserService';
 
         /**********************************/
         /*           PROPERTIES           */
@@ -111,7 +112,7 @@ module app.models {
 
     /*-- MODULE DEFINITION --*/
     angular
-        .module('finApp.models', [])
+        .module('finApp.models.user', [])
         .factory(UserService.serviceId, ['finApp.core.firebase.FirebaseFactory',
             '$firebaseObject',
             '$firebaseArray', UserService.instance]);

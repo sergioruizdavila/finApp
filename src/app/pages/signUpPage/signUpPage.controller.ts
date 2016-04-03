@@ -12,7 +12,6 @@ module app.pages.signUpPage {
         ref: Firebase;
         form: ISignUpForm;
         error: ISignUpError;
-        signUpDataConfig: ISignUpDataConfig;
         register: () => void;
         goToBack: () => void;
         activate: () => void;
@@ -24,10 +23,6 @@ module app.pages.signUpPage {
 
     export interface ISignUpError {
         message: string;
-    }
-
-    export interface ISignUpDataConfig extends ng.ui.IStateParamsService {
-        user: AngularFireObject;
     }
 
     /****************************************/
@@ -43,7 +38,6 @@ module app.pages.signUpPage {
         ref: Firebase;
         form: ISignUpForm;
         error: ISignUpError;
-        signUpDataConfig: ISignUpDataConfig;
         // --------------------------------
 
 
@@ -64,12 +58,11 @@ module app.pages.signUpPage {
         constructor(private $ionicHistory: ionic.navigation.IonicHistoryService,
             private $ionicPopup: ionic.popup.IonicPopupService,
             private $state: ng.ui.IStateService,
-            private $stateParams: ISignUpDataConfig,
             private AuthService,
             private $filter: angular.IFilterService,
-            private User: app.models.IUserService,
+            private User: app.models.user.IUserService,
             private $scope: angular.IScope,
-            private $rootScope: app.models.IUserRootScope) {
+            private $rootScope: app.models.user.IUserRootScope) {
 
             this.init();
 
@@ -78,10 +71,7 @@ module app.pages.signUpPage {
         /*-- INITIALIZE METHOD --*/
         private init() {
             //Create User Object
-            this.$rootScope.User = new app.models.User();
-
-            //Get state params
-            this.signUpDataConfig = this.$stateParams;
+            this.$rootScope.User = new app.models.user.User();
 
             //Init form
             this.form = {

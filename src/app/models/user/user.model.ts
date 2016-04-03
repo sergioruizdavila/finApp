@@ -2,7 +2,7 @@
  * Specifies the Classes and Interfaces related to Users in our Model
  */
 
-module app.models {
+module app.models.user {
 
     /**********************************/
     /*           INTERFACES           */

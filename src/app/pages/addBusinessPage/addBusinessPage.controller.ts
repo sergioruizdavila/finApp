@@ -10,14 +10,13 @@ module app.pages.addBusinessPage {
     /**********************************/
     export interface IAddBusinessPageController {
         form: IAddBusinessForm;
-        user: app.models.User;
         formatBusiness: () => void;
         goToBack: () => void;
         activate: () => void;
     }
 
     export interface IAddBusinessForm {
-        business: app.models.IMoney;
+        business: app.models.user.IMoney;
     }
 
     /****************************************/
@@ -31,7 +30,6 @@ module app.pages.addBusinessPage {
         /*           PROPERTIES           */
         /**********************************/
         form: IAddBusinessForm;
-        user: app.models.User;
         // --------------------------------
 
         /*-- INJECT DEPENDENCIES --*/
@@ -55,7 +53,7 @@ module app.pages.addBusinessPage {
                     formatted: ''
                 }
             };
-            
+
             this.activate();
         }
 
@@ -73,8 +71,9 @@ module app.pages.addBusinessPage {
         * @description Format the business value with default currency
         */
         formatBusiness(): void {
-            let currencyObj: app.models.IMoney =
-            this.FunctionsUtilService.formatCurrency(this.form.business.num, this.form.business.formatted);
+            let currencyObj: app.models.user.IMoney =
+            this.FunctionsUtilService.formatCurrency(this.form.business.num,
+                                                     this.form.business.formatted);
 
             this.form.business.num = currencyObj.num;
             this.form.business.formatted = currencyObj.formatted;
