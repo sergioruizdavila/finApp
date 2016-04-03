@@ -50,7 +50,8 @@ module app.pages.logInPage {
         static $inject = ['$ionicHistory',
                           '$state',
                           '$stateParams',
-                          'finApp.auth.AuthService'];
+                          'finApp.auth.AuthService',
+                          '$rootScope'];
 
         /**********************************/
         /*           CONSTRUCTOR          */
@@ -58,7 +59,8 @@ module app.pages.logInPage {
         constructor(private $ionicHistory: ionic.navigation.IonicHistoryService,
                     private $state: ng.ui.IStateService,
                     private $stateParams: ILogInDataConfig,
-                    private AuthService) {
+                    private AuthService,
+                    private $rootScope: app.models.IUserRootScope) {
 
             this.init();
 
@@ -74,28 +76,28 @@ module app.pages.logInPage {
                 password: ''
             };
 
-            this.user = {
-                username: '',
-                email: this.logInDataConfig.user.email,
-                password: this.form.password,
-                salary: {
-                    num: null,
-                    formatted: ''
-                },
-                investment: {
-                    num: null,
-                    formatted: ''
-                },
-                business: {
-                    num: null,
-                    formatted: ''
-                }
-            };
+            // this.user = {
+            //     username: '',
+            //     email: this.logInDataConfig.user.email,
+            //     password: this.form.password,
+            //     salary: {
+            //         num: null,
+            //         formatted: ''
+            //     },
+            //     investment: {
+            //         num: null,
+            //         formatted: ''
+            //     },
+            //     business: {
+            //         num: null,
+            //         formatted: ''
+            //     }
+            // };
 
             this.error = {
                 message: ''
             };
-            
+
             this.activate();
         }
 
@@ -116,16 +118,16 @@ module app.pages.logInPage {
             let self = this;
 
             this.user.password = this.form.password;
-            this.AuthService().$authWithPassword(this.user).then(function (response){
+            this.AuthService.getRef().$authWithPassword(this.user).then(function (authData){
                 //TODO: Si se loguea exitosamente debe llevarlo directamente a: 1. addSalaryPage
                 // si es la primera vez que usa la App, 2. dashboard o pantalla principal, donde le
                 // muestre los meses, las tarejtas, etc etc.
                 self.$state.go('page.salary');
-                console.log('Response after Auth: ', response);
+                console.log('Authenticated successfully with payload:', authData);
             }, function (error){
                 //TODO: Validar si tiene mal el password, mostrando un mensaje o popUp nativo del dispositivo
                 self.error = error;
-                console.log('Error after Auth: ', error);
+                console.log('Login Failed!', error);
             });
 
         }

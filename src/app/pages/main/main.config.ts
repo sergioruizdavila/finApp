@@ -23,5 +23,7 @@
                 controller: 'finApp.pages.main.MainController',
                 controllerAs: 'vm'
             });
+
+
     }
 })();
