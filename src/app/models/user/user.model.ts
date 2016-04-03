@@ -20,7 +20,6 @@ module app.models.user {
 
         private _username: string = null;
         private _email: string = null;
-        private _password: string = 'temporalPassword';
         private _salary: IMoney = {num: 0, formatted: '$0'};
         private _investment: IMoney = {num: 0, formatted: '$0'};
         private _business: IMoney = {num: 0, formatted: '$0'};
@@ -46,14 +45,6 @@ module app.models.user {
 
         set email(email: string) {
             this._email = email;
-        }
-
-        get password() {
-            return this._username;
-        }
-
-        set password(password: string) {
-            this._password = password;
         }
 
         get salary() {

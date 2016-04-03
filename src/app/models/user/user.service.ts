@@ -86,11 +86,23 @@ module app.models.user {
         existUserByEmail(email): angular.IPromise<boolean> {
 
             let promise = this.$firebaseArray(this.ref).$loaded().then(function(users) {
+
                 for (let i = 0; i < users.length; i++) {
-                    if (users[i].email === email) {
-                        return true;
+
+                    for (let key in users[i]) {
+
+                        let obj = users[i][key] || { email: null };
+
+                        if (obj.email === email) {
+                            return true;
+                        }
+
                     }
+
+                    return false;
+
                 }
+
                 return false;
             });
 

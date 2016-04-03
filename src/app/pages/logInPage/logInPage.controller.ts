@@ -41,7 +41,6 @@ module app.pages.logInPage {
         /*-- INJECT DEPENDENCIES --*/
         static $inject = ['$ionicHistory',
                           '$state',
-                          '$stateParams',
                           'finApp.auth.AuthService',
                           '$rootScope'];
 
@@ -88,8 +87,12 @@ module app.pages.logInPage {
         login(): void {
             let self = this;
 
-            this.$rootScope.User.password = this.form.password;
-            this.AuthService.getRef().$authWithPassword(this.$rootScope.User).then(
+            //Create temporal User object with email and password data
+            let currentDataUser = {
+                email: this.$rootScope.User.email,
+                password: this.form.password
+            };
+            this.AuthService.getRef().$authWithPassword(currentDataUser).then(
                 function (authData){
                     //TODO: Si se loguea exitosamente debe llevarlo directamente a: 1. addSalaryPage
                     // si es la primera vez que usa la App, 2. dashboard o pantalla principal, donde le

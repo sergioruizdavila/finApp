@@ -45,10 +45,9 @@ module app.pages.signUpPage {
         public static $inject = ['$ionicHistory',
             '$ionicPopup',
             '$state',
-            '$stateParams',
             'finApp.auth.AuthService',
             '$filter',
-            'finApp.models.UserService',
+            'finApp.models.user.UserService',
             '$scope',
             '$rootScope'];
 
@@ -71,7 +70,7 @@ module app.pages.signUpPage {
         /*-- INITIALIZE METHOD --*/
         private init() {
             //Create User Object
-            this.$rootScope.User = new app.models.user.User();
+            //this.$rootScope.User = new app.models.user.User();
 
             //Init form
             this.form = {
@@ -133,10 +132,9 @@ module app.pages.signUpPage {
             this.User.existUserByEmail(this.$rootScope.User.email).then(function(isExist){
                 //user exist in database
                 if (isExist) {
-                    //TODO:Deberia llevarme a loguearme.
                     self.$state.go('page.logIn');
                 } else {
-                    //TODO: mostrar el popUp para preguntar si quiere crear una nueva cuenta
+
                     //Show popUp in order to warn the user that if he/she doesn't have account, we are going to create new one
                     let confirmInstance = self.$ionicPopup.show({
                         title: POPUP_TITLE,
@@ -147,18 +145,7 @@ module app.pages.signUpPage {
                                 text: POPUP_OK_BUTTON_TEXT,
                                 type: POPUP_OK_BUTTON_TYPE,
                                 onTap: function(e) {
-                                    console.log('onTap Button Event: ', e);
-                                    //TODO: Si presiona Ok, deberia crear el usuario en la base,
-                                    self.AuthService.getRef().$createUser(self.$rootScope.User).then(function(user) {
-                                        console.log('new user: ', user);
-                                    }, function(error) {
-                                        //Llevar a la pagina de Logging si ese mail ya esta registrado
-                                        if (error.code === 'EMAIL_TAKEN') {
-                                            self.$state.go('page.logIn');
-                                        } else {
-                                            self.error = error;
-                                        }
-                                    });
+                                    self._createAccount(e);
                                 }
                             }
                         ]
@@ -176,6 +163,57 @@ module app.pages.signUpPage {
             });
 
         };
+
+        /*
+        * Create Account
+        * @description Create Account on FireBase
+        */
+        _createAccount(event): void {
+            //LOG
+            console.log('onTap Button Event: ', event);
+            //VARIABLES
+            let self = this;
+            let currentDataUser = {
+                email: this.$rootScope.User.email,
+                password: 'temporalPassword'
+            };
+
+            let auth = self.AuthService.getRef();
+
+            //Create Account on Firebase Accounting System
+            auth.$createUser(currentDataUser).then(function(user) {
+                //LOG
+                console.log('created new user in FireBase Auth System: ', user);
+
+                //TODO: Crear Usuario en la base de datos, tomando el objeto User del $rootScope
+
+                /*  After created successfully account, authenticates the client using
+                    email / password combination */
+                auth.$authWithPassword(currentDataUser).then(
+                    function (authData){
+                        //LOG
+                        console.log('Authenticated successfully with payload:', authData);
+
+                        self.$state.go('page.salary');
+
+                    }, function (error){
+                        //TODO: Validar si tiene mal el password, mostrando un mensaje o popUp
+                        //nativo del dispositivo
+                        self.error = error;
+                        console.log('Login Failed!', error);
+                    }
+                );
+
+            }, function(error) {
+                //Llevar a la pagina de Logging si ese mail ya esta registrado
+                if (error.code === 'EMAIL_TAKEN') {
+                    console.log('this user already has an account');
+                    self.$state.go('page.logIn');
+                } else {
+                    self.error = error;
+                }
+            });
+        }
 
         /*
         * Go to back method
