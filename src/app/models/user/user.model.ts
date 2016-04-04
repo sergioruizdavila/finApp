@@ -4,41 +4,41 @@
 
 module app.models.user {
 
-    /**********************************/
-    /*           INTERFACES           */
-    /**********************************/
-
-    export interface IMoney {
-        num: number;
-        formatted: string;
-    }
 
     /****************************************/
     /*           CLASS DEFINITION           */
     /****************************************/
     export class User {
 
-        private username: string = null;
-        private email: string = null;
-        private salary: IMoney = {num: 0, formatted: '$0'};
-        private investment: IMoney = {num: 0, formatted: '$0'};
-        private business: IMoney = {num: 0, formatted: '$0'};
+        /*-- PROPERTIES --*/
+        private username: string;
+        private email: string;
+        private finance: app.models.finance.Finance;
 
         /**********************************/
         /*           CONSTRUCTOR          */
         /**********************************/
         constructor() {
+            //LOG
             console.log('User Model instanced');
+
+            //init properties
+            this.username = null;
+            this.email = null;
+            this.finance = new app.models.finance.Finance();
+
         }
 
         /**********************************/
         /*             METHODS            */
         /**********************************/
+        
         get Username() {
             return this.username;
         }
 
         set Username(username: string) {
+            if (username === undefined) { throw 'Please supply username'; }
             this.username = username;
         }
 
@@ -47,34 +47,16 @@ module app.models.user {
         }
 
         set Email(email: string) {
+            if (email === undefined) { throw 'Please supply email'; }
             this.email = email;
         }
 
-        get Salary() {
-            return this.salary;
-        }
-
-        set Salary(salary: IMoney) {
-            this.salary = salary;
-        }
-
-        get Investment() {
-            return this.investment;
-        }
-
-        set Investment(investment: IMoney) {
-            this.investment = investment;
-        }
-
-        get Business() {
-            return this.business;
-        }
-
-        set Business(business: IMoney) {
-            this.business = business;
+        get Finance() {
+            return this.finance;
         }
 
     }
+
 
 
 
@@ -98,6 +80,7 @@ module app.models.user {
         }
 
         set Provider(provider: string) {
+            if (provider === undefined) { throw 'Please supply provider'; }
             this.provider = provider;
         }
 

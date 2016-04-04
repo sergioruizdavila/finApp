@@ -18,6 +18,9 @@ module app.models.user {
         ref: any;
         existUserByEmail: (email: string) => any;
         getUserByEmail: (email: string) => AngularFireObject;
+        getUsers: () => AngularFireArray;
+        bindingUser: (uid: string, $rootScope: app.interfaces.IFinAppRootScope) => any;
+        createUser: (newUser) => angular.IPromise<number>;
     }
 
 
@@ -37,8 +40,8 @@ module app.models.user {
 
         /*-- INJECT DEPENDENCIES --*/
         static $inject = ['finApp.core.firebase.FirebaseFactory',
-            '$firebaseObject',
-            '$firebaseArray'];
+                          '$firebaseObject',
+                          '$firebaseArray'];
 
 
         /**********************************/
@@ -61,13 +64,57 @@ module app.models.user {
         * @description - get an expecific User by Email
         * @function
         * @params {string} email - valid email string
+        * @return {AngularFireObjectService} firebaseObject - Return a AngularFireArray object
+        */
+        getUserByEmail(email): AngularFireObject {
+            let userRef = this.ref.child(email);
+            // return it as a synchronized object
+            return this.$firebaseObject(userRef);
+        }
+
+        /**
+        * getUsers
+        * @description - get all Users
+        * @function
+        * @return {AngularFireArrayService} firebaseArray - Return a AngularFireArray object
+        */
+        getUsers(): AngularFireArray {
+            // return it as a synchronized object
+            return this.$firebaseArray(this.ref);
+        }
+
+
+        /**
+        * getUsers
+        * @description - get all Users
+        * @function
+        * @return {AngularFireArrayService} firebaseArray - Return a AngularFireArray object
+        */
+        createUser(newUser): angular.IPromise<number> {
+            let usersRef = this.$firebaseArray(this.ref.child('users'));
+            //TODO: Revisar ya que crea al user con un id no uid, verificar que se puede hacer
+            return usersRef.$add(newUser).then(function(ref) {
+                var id = ref.key();
+                console.log('added user with id ' + id);
+                // returns location in the array, return -1 if not found
+                return usersRef.$indexFor(id);
+            });
+        }
+
+
+        /**
+        * bindingUser
+        * @description - Bind a new User in dataBase and make three binding ways
+        * @function
+        * @params {string} uid - user logged uid
+        * @params {app.interfaces.IFinAppRootScope} $rootScope
         * @return {AngularFireObjectService} firebaseObject - Return an Element as a
         *                                    synchronized three bind object.
         */
-        getUserByEmail(email): AngularFireObject {
-            var userRef = this.ref.child(email);
-            // return it as a synchronized object
-            return this.$firebaseObject(userRef);
+        bindingUser(uid, $rootScope): any {
+            //TODO: Analizar si esta la mejor manera de crear datos ( creando un bindeo de 3 caminos)
+            let newUserRef = this.ref.child('users').child(uid);
+            return this.$firebaseObject(newUserRef).$bindTo($rootScope, 'User');
         }
 
 
