@@ -50,7 +50,7 @@ module app.pages.logInPage {
         constructor(private $ionicHistory: ionic.navigation.IonicHistoryService,
                     private $state: ng.ui.IStateService,
                     private AuthService,
-                    private $rootScope: app.models.user.IUserRootScope) {
+                    private $rootScope: app.interfaces.IFinAppRootScope) {
 
             this.init();
 
@@ -89,7 +89,7 @@ module app.pages.logInPage {
 
             //Create temporal User object with email and password data
             let currentDataUser = {
-                email: this.$rootScope.User.email,
+                email: this.$rootScope.User.Email,
                 password: this.form.password
             };
             this.AuthService.getRef().$authWithPassword(currentDataUser).then(

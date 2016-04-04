@@ -9,7 +9,8 @@
 module app.auth {
 
     export function AuthService(FirebaseFactory: app.core.firebase.IFirebaseFactory,
-        $firebaseAuth: AngularFireAuthService) {
+        $firebaseAuth: AngularFireAuthService,
+        $rootScope: app.interfaces.IFinAppRootScope) {
 
         var ref = null;
 
@@ -29,10 +30,9 @@ module app.auth {
                     console.log('AUTH LOG: User ' + authData.uid + ' is logged in with: ' + authData.provider);
                     // save the user's profile into the database so we can list users,
                     // use them in Security and Firebase Rules, and show profiles
-                    ref.child('users').child(authData.uid).set({
-                        provider: authData.provider,
-                        email: authData.password.email
-                    });
+                    //Add provider into User object
+                    $rootScope.User.Provider = authData.provider;
+                    ref.child('users').child(authData.uid).set($rootScope.User);
                 } else {
                     console.log('AUTH LOG: User is logged out');
                 }
@@ -51,38 +51,11 @@ module app.auth {
 
         return service;
 
-        // return function() {
-        //
-        //     function getRef() {
-        //         this.ref = FirebaseFactory.createFirebase();
-        //         //check Auth Status
-        //         this.ref.onAuth(authDataCallback);
-        //         return $firebaseAuth(this.ref);
-        //     }
-        //
-        //     // Create a callback which logs the current auth state
-        //     function authDataCallback(authData) {
-        //         if (authData) {
-        //             console.log('AUTH LOG: User ' + authData.uid + ' is logged in with: ' + authData.provider);
-        //         } else {
-        //             console.log('AUTH LOG: User is logged out');
-        //         }
-        //     }
-        //
-        //     // Create a callback to handle the result of the authentication
-        //     function authHandler(error, authData) {
-        //         if (error) {
-        //             console.log('Login Failed!', error);
-        //         } else {
-        //             console.log('Authenticated successfully with payload:', authData);
-        //         }
-        //     }
-        //
-        // };
-
     }
 
-    AuthService.$inject = ['finApp.core.firebase.FirebaseFactory', '$firebaseAuth'];
+    AuthService.$inject = ['finApp.core.firebase.FirebaseFactory',
+                           '$firebaseAuth',
+                           '$rootScope'];
 
     angular
         .module('finApp.auth', [])

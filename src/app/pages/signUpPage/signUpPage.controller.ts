@@ -61,7 +61,7 @@ module app.pages.signUpPage {
             private $filter: angular.IFilterService,
             private User: app.models.user.IUserService,
             private $scope: angular.IScope,
-            private $rootScope: app.models.user.IUserRootScope) {
+            private $rootScope: app.interfaces.IFinAppRootScope) {
 
             this.init();
 
@@ -126,10 +126,10 @@ module app.pages.signUpPage {
             });*/
 
             //Save new email in User object
-            this.$rootScope.User.email = this.form.email;
+            this.$rootScope.User.Email = this.form.email;
 
             //Validate if the email already exist on database
-            this.User.existUserByEmail(this.$rootScope.User.email).then(function(isExist){
+            this.User.existUserByEmail(this.$rootScope.User.Email).then(function(isExist){
                 //user exist in database
                 if (isExist) {
                     self.$state.go('page.logIn');
@@ -174,7 +174,7 @@ module app.pages.signUpPage {
             //VARIABLES
             let self = this;
             let currentDataUser = {
-                email: this.$rootScope.User.email,
+                email: this.$rootScope.User.Email,
                 password: 'temporalPassword'
             };
 

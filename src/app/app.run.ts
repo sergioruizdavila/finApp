@@ -7,6 +7,7 @@
  * @return {void}
  */
 
+
 (function(): void {
 
     'use strict';
@@ -17,7 +18,7 @@
 
     //run.$inject = ['$ionicPlatform', '$rootScope'];
 
-    function run($ionicPlatform, $rootScope): void {
+    function run($ionicPlatform, $rootScope: app.interfaces.IFinAppRootScope): void {
 
         $ionicPlatform.ready(function() {
             if (window.cordova && window.cordova.plugins.Keyboard) {
@@ -35,8 +36,7 @@
             }
 
             //Create User object
-            $rootScope.User = new app.models.user.User();
-            $rootScope.test = 'test';
+            $rootScope.User = new app.models.user.UserFirebase();
 
         });
     }

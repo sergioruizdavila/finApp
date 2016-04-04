@@ -20,9 +20,6 @@ module app.models.user {
         getUserByEmail: (email: string) => AngularFireObject;
     }
 
-    export interface IUserRootScope extends angular.IRootScopeService {
-        User: app.models.user.User;
-    }
 
     /****************************************/
     /*           CLASS DEFINITION           */
