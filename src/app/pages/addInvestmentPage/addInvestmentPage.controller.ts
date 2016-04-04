@@ -16,7 +16,7 @@ module app.pages.addInvestmentPage {
     }
 
     export interface IAddInvestmentForm {
-        investment: app.models.user.IMoney;
+        investment: app.models.finance.IMoney;
     }
 
     /****************************************/
@@ -70,7 +70,7 @@ module app.pages.addInvestmentPage {
         * @description Format the investment value with default currency
         */
         formatInvestment(): void {
-            let currencyObj: app.models.user.IMoney =
+            let currencyObj: app.models.finance.IMoney =
             this.FunctionsUtilService.formatCurrency(this.form.investment.num,
                                                      this.form.investment.formatted);
 

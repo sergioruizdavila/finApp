@@ -41,7 +41,8 @@ module app.models.user {
         /*-- INJECT DEPENDENCIES --*/
         static $inject = ['finApp.core.firebase.FirebaseFactory',
                           '$firebaseObject',
-                          '$firebaseArray'];
+                          '$firebaseArray',
+                          '$rootScope'];
 
 
         /**********************************/
@@ -49,7 +50,8 @@ module app.models.user {
         /**********************************/
         constructor(private FirebaseFactory: app.core.firebase.IFirebaseFactory,
             private $firebaseObject: AngularFireObjectService,
-            private $firebaseArray: AngularFireArrayService) {
+            private $firebaseArray: AngularFireArrayService,
+            private $rootScope: app.interfaces.IFinAppRootScope) {
 
             this.ref = this.FirebaseFactory.createFirebase();
 
@@ -114,7 +116,11 @@ module app.models.user {
         bindingUser(uid, $rootScope): any {
             //TODO: Analizar si esta la mejor manera de crear datos ( creando un bindeo de 3 caminos)
             let newUserRef = this.ref.child('users').child(uid);
-            return this.$firebaseObject(newUserRef).$bindTo($rootScope, 'User');
+            return this.$firebaseObject(newUserRef).$bindTo($rootScope, 'User').then(function() {
+                console.log($rootScope.User); // { foo: "bar" }
+                $rootScope.User.foo = 'baz';  // will be saved to the database
+                this.ref.set({ foo: 'baz' });  // this would update the database and $scope.data
+            });
         }
 
 
@@ -158,9 +164,10 @@ module app.models.user {
         /**********************************/
         static instance(FirebaseFactory: app.core.firebase.IFirebaseFactory,
             $firebaseObject: AngularFireObjectService,
-            $firebaseArray: AngularFireArrayService): IUserService {
+            $firebaseArray: AngularFireArrayService,
+            $rootScope: app.interfaces.IFinAppRootScope): IUserService {
 
-            return new UserService(FirebaseFactory, $firebaseObject, $firebaseArray);
+            return new UserService(FirebaseFactory, $firebaseObject, $firebaseArray, $rootScope);
 
         }
 
@@ -171,6 +178,8 @@ module app.models.user {
         .module('finApp.models.user', [])
         .factory(UserService.serviceId, ['finApp.core.firebase.FirebaseFactory',
             '$firebaseObject',
-            '$firebaseArray', UserService.instance]);
+            '$firebaseArray',
+            '$rootScope',
+            UserService.instance]);
 
 }

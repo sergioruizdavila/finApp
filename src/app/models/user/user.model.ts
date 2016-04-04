@@ -32,7 +32,7 @@ module app.models.user {
         /**********************************/
         /*             METHODS            */
         /**********************************/
-        
+
         get Username() {
             return this.username;
         }
@@ -58,8 +58,13 @@ module app.models.user {
     }
 
 
+    /**
+     * Specifies the Classes and Interfaces related to UserFirebase in our Model
+     */
 
-
+    /****************************************/
+    /*           CLASS DEFINITION           */
+    /****************************************/
     export class UserFirebase extends User {
 
         private provider: string = null;

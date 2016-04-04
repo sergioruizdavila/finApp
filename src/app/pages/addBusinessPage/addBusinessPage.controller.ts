@@ -16,7 +16,7 @@ module app.pages.addBusinessPage {
     }
 
     export interface IAddBusinessForm {
-        business: app.models.user.IMoney;
+        business: app.models.finance.IMoney;
     }
 
     /****************************************/
@@ -71,7 +71,7 @@ module app.pages.addBusinessPage {
         * @description Format the business value with default currency
         */
         formatBusiness(): void {
-            let currencyObj: app.models.user.IMoney =
+            let currencyObj: app.models.finance.IMoney =
             this.FunctionsUtilService.formatCurrency(this.form.business.num,
                                                      this.form.business.formatted);
 

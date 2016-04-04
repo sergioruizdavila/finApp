@@ -12,11 +12,12 @@ module app.pages.addSalaryPage {
         form: IAddSalaryForm;
         formatSalary: () => void;
         activate: () => void;
+        goToNext: () => void;
         goToBack: () => void;
     }
 
     export interface IAddSalaryForm {
-        salary: app.models.user.IMoney;
+        salary: app.models.finance.IMoney;
     }
 
     /****************************************/
@@ -33,13 +34,18 @@ module app.pages.addSalaryPage {
         // --------------------------------
 
         /*-- INJECT DEPENDENCIES --*/
-        static $inject = ['$ionicHistory', 'finApp.core.util.FunctionsUtilService'];
+        static $inject = ['$ionicHistory',
+                          'finApp.core.util.FunctionsUtilService',
+                          '$state',
+                          '$rootScope'];
 
         /**********************************/
         /*           CONSTRUCTOR          */
         /**********************************/
         constructor(private $ionicHistory: ionic.navigation.IonicHistoryService,
-                    private FunctionsUtilService: app.core.util.functionsUtil.FunctionsUtilService) {
+                    private FunctionsUtilService: app.core.util.functionsUtil.FunctionsUtilService,
+                    private $state: ng.ui.IStateService,
+                    private $rootScope: app.interfaces.IFinAppRootScope) {
             this.init();
         }
 
@@ -70,11 +76,20 @@ module app.pages.addSalaryPage {
         * @description Format the salary value with default currency
         */
         formatSalary(): void {
-            let currencyObj: app.models.user.IMoney =
+            let currencyObj: app.models.finance.IMoney =
             this.FunctionsUtilService.formatCurrency(this.form.salary.num,
                                                      this.form.salary.formatted);
             this.form.salary.num = currencyObj.num;
             this.form.salary.formatted = currencyObj.formatted;
+        }
+
+        /*
+        * Go to investment page
+        * @description this method is launched when user press OK button
+        */
+        goToNext(): void {
+            this.$rootScope.User.Finance.Salary = this.form.salary;
+            this.$state.go('page.investment');
         }
 
         /*

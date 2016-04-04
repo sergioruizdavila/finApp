@@ -28,11 +28,9 @@ module app.auth {
             authDataCallback: function(authData) {
                 if (authData) {
                     console.log('AUTH LOG: User ' + authData.uid + ' is logged in with: ' + authData.provider);
-                    // save the user's profile into the database so we can list users,
-                    // use them in Security and Firebase Rules, and show profiles
-                    //Add provider into User object
-                    $rootScope.User.Provider = authData.provider;
-                    ref.child('users').child(authData.uid).set($rootScope.User);
+                    /*NOTE:Ejemplo de otra forma de crear un dato en la base*/
+                    /*$rootScope.User.Provider = authData.provider;
+                    ref.child('users').child(authData.uid).set($rootScope.User);*/
                 } else {
                     console.log('AUTH LOG: User is logged out');
                 }
