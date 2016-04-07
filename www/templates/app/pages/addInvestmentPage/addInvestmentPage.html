@@ -23,8 +23,8 @@
 
     <ion-view>
         <ion-content class="progressivePage__contentPage" scroll="false">
-            <div class="progressivePage__contentPage__title">
-                {{ '%investment.title.text' | translate }}
+            <div class="progressivePage__contentPage__title" translate>
+                %investment.title.text
             </div>
 
             <div class="progressivePage__contentPage__input">
@@ -37,15 +37,17 @@
                 class="fa-input fa-input--medium fa-input--money">
             </div>
 
-            <div class="progressivePage__contentPage__helpText">
-                {{ '%investment.help_text.text' | translate }}
+            <div class="progressivePage__contentPage__helpText" translate>
+                %investment.help_text.text
             </div>
         </ion-content>
     </ion-view>
 
     <ion-footer-bar class="progressivePage__footer">
         <a class="fa_btn fa_btn--progressive fa_btn--block fa_btn--large fa_btn__3d padding" href="#/page/business">
-            <span class="button-inner">{{ '%global.continue.button.text' | translate }}</span>
+            <span class="button-inner" translate>
+                %global.continue.button.text
+            </span>
         </a>
     </ion-footer-bar>
 

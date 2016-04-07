@@ -20,7 +20,7 @@ module app.core.firebase {
         //inject dependencies
         static $inject = ['dataConfig'];
 
-        constructor(private dataConfig: IDataConfig) {
+        constructor(dataConfig: IDataConfig) {
             this.url = dataConfig.baseUrl;
         }
 
@@ -42,6 +42,6 @@ module app.core.firebase {
     }
 
     angular.module('finApp.core.firebase', [])
-    .factory(FirebaseFactory.serviceId, FirebaseFactory.instance);
+    .factory(FirebaseFactory.serviceId, ['dataConfig', FirebaseFactory.instance]);
 
 }

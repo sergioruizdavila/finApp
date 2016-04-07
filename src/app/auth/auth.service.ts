@@ -8,16 +8,52 @@
 
 module app.auth {
 
-    export function AuthService (FirebaseFactory: app.core.firebase.IFirebaseFactory,
-                                $firebaseAuth: AngularFireAuthService) {
+    export function AuthService(FirebaseFactory: app.core.firebase.IFirebaseFactory,
+        $firebaseAuth: AngularFireAuthService,
+        $rootScope: app.interfaces.IFinAppRootScope) {
 
-        return function () {
-            this.ref = FirebaseFactory.createFirebase();
-            return $firebaseAuth(this.ref);
+        var ref = null;
+
+        var service = {
+
+            // Return a Firebase reference
+            getRef: function() {
+                ref = FirebaseFactory.createFirebase();
+                //check Auth Status
+                ref.onAuth(this.authDataCallback);
+                return $firebaseAuth(ref);
+            },
+
+            // Create a callback which logs the current auth state
+            authDataCallback: function(authData) {
+                if (authData) {
+                    console.log('AUTH LOG: User ' + authData.uid + ' is logged in with: ' + authData.provider);
+                    /*NOTE:Ejemplo de otra forma de crear un dato en la base*/
+                    /*$rootScope.User.Provider = authData.provider;
+                    ref.child('users').child(authData.uid).set($rootScope.User);*/
+                } else {
+                    console.log('AUTH LOG: User is logged out');
+                }
+            },
+
+            // Create a callback to handle the result of the authentication
+            authHandler: function (error, authData) {
+                if (error) {
+                    console.log('Login Failed!', error);
+                } else {
+                    console.log('Authenticated successfully with payload:', authData);
+                }
+            }
+
         };
+
+        return service;
+
     }
 
-    AuthService.$inject = ['finApp.core.firebase.FirebaseFactory', '$firebaseAuth'];
+    AuthService.$inject = ['finApp.core.firebase.FirebaseFactory',
+                           '$firebaseAuth',
+                           '$rootScope'];
 
     angular
         .module('finApp.auth', [])

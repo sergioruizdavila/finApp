@@ -11,9 +11,7 @@ module app.pages.signUpPage {
     export interface ISignUpPageController {
         ref: Firebase;
         form: ISignUpForm;
-        user: app.models.User;
         error: ISignUpError;
-        signUpDataConfig: ISignUpDataConfig;
         register: () => void;
         goToBack: () => void;
         activate: () => void;
@@ -25,10 +23,6 @@ module app.pages.signUpPage {
 
     export interface ISignUpError {
         message: string;
-    }
-
-    export interface ISignUpDataConfig extends ng.ui.IStateParamsService {
-        user: app.models.User;
     }
 
     /****************************************/
@@ -43,25 +37,31 @@ module app.pages.signUpPage {
         /**********************************/
         ref: Firebase;
         form: ISignUpForm;
-        user: app.models.User;
         error: ISignUpError;
-        signUpDataConfig: ISignUpDataConfig;
         // --------------------------------
 
 
         /*-- INJECT DEPENDENCIES --*/
         public static $inject = ['$ionicHistory',
-                                '$state',
-                                '$stateParams',
-                                'finApp.auth.AuthService'];
+            '$ionicPopup',
+            '$state',
+            'finApp.auth.AuthService',
+            '$filter',
+            'finApp.models.user.UserService',
+            '$scope',
+            '$rootScope'];
 
         /**********************************/
         /*           CONSTRUCTOR          */
         /**********************************/
         constructor(private $ionicHistory: ionic.navigation.IonicHistoryService,
-                    private $state: ng.ui.IStateService,
-                    private $stateParams: ISignUpDataConfig,
-                    private AuthService) {
+            private $ionicPopup: ionic.popup.IonicPopupService,
+            private $state: ng.ui.IStateService,
+            private AuthService,
+            private $filter: angular.IFilterService,
+            private UserService: app.models.user.IUserService,
+            private $scope: angular.IScope,
+            private $rootScope: app.interfaces.IFinAppRootScope) {
 
             this.init();
 
@@ -69,32 +69,10 @@ module app.pages.signUpPage {
 
         /*-- INITIALIZE METHOD --*/
         private init() {
-            //Get state params
-            this.signUpDataConfig = this.$stateParams;
 
             //Init form
             this.form = {
                 email: ''
-            };
-            //TODO: AngularFire no me permite crear un Usuario nuevo sin una password valida
-            // Asi que le asignaremos una temporal para poder permitir crear el user. Buscar
-            // Una solucion màs optima
-            this.user = {
-                username: '',
-                email: '',
-                password: 'finAppTemporalPassword',
-                salary: {
-                    num: null,
-                    formatted: ''
-                },
-                investment: {
-                    num: null,
-                    formatted: ''
-                },
-                business: {
-                    num: null,
-                    formatted: ''
-                }
             };
 
             this.error = {
@@ -106,6 +84,7 @@ module app.pages.signUpPage {
 
         /*-- ACTIVATE METHOD --*/
         activate(): void {
+            //LOG
             console.log('signUpPage controller actived');
         }
 
@@ -118,22 +97,122 @@ module app.pages.signUpPage {
         * @description Create new user if current user doesn`t have an account
         */
         register(): void {
-            let self = this;
 
-            this.user.email = this.form.email;
-            this.AuthService().$createUser(this.user).then(function (user){
-                //TODO: Mostrar un popUp diciendo: te crearemos una nueva cuenta: Si o No
-                //Si presiona SI, lo deberia llevar a la funcion login()
-                console.log('new user: ', user);
-            }, function (error){
-                //Llevar a la pagina de Logging si ese mail ya esta registrado
+            let self = this;
+            //CONSTANTS
+            const POPUP_TITLE = this.$filter('translate')('%popup.create_user.title.text');
+            const POPUP_BODY_TEXT = this.$filter('translate')('%popup.create_user.body_message.text');
+            const POPUP_CANCEL_BUTTON_TEXT = this.$filter('translate')('%popup.general.cancel_button.text');
+            const POPUP_OK_BUTTON_TEXT = this.$filter('translate')('%popup.create_user.ok_button.text');
+            const POPUP_OK_BUTTON_TYPE = 'button-positive';
+            /********************/
+
+            //Save new email in User object
+            this.$rootScope.User.Email = this.form.email;
+
+            //Validate if the email already exist on database
+            this.UserService.existUserByEmail(this.$rootScope.User.Email).then(function(isExist){
+
+                //user exist in database
+                if (isExist) {
+                    self.$state.go('page.logIn');
+                } else {
+                    /*  Show popUp in order to warn the user that if he/she doesn't have account,
+                        we are going to create new one */
+                    let confirmInstance = self.$ionicPopup.show({
+                        title: POPUP_TITLE,
+                        template: POPUP_BODY_TEXT,
+                        buttons: [
+                            { text: POPUP_CANCEL_BUTTON_TEXT },
+                            {
+                                text: POPUP_OK_BUTTON_TEXT,
+                                type: POPUP_OK_BUTTON_TYPE,
+                                onTap: function(e) {
+                                    self._createAccount(e);
+                                }
+                            }
+                        ]
+                    });
+
+                    confirmInstance.then(function(res) {
+                        if (res) {
+                            //LOG
+                            console.log('confirmInstance res: ', res);
+
+                        } else {
+                            //LOG
+                            console.log('You are not sure');
+                        }
+                    });
+                }
+            });
+
+        };
+
+        /*
+        * Create Account
+        * @description Create Account on FireBase
+        */
+        _createAccount(event): void {
+            //LOG
+            console.log('onTap Button Event: ', event);
+            //VARIABLES
+            let self = this;
+            let currentDataUser = {
+                email: this.$rootScope.User.Email,
+                password: 'temporalPassword'
+            };
+            let auth = self.AuthService.getRef();
+
+            //Create Account on Firebase Accounting System
+            auth.$createUser(currentDataUser).then(function(user) {
+                //LOG
+                console.log('created new user in FireBase Auth System: ', user);
+                //Authenticate user
+                self._authWithPassword(auth, currentDataUser);
+
+            }, function(error) {
+
                 if (error.code === 'EMAIL_TAKEN') {
-                    self.$state.go('page.logIn', { user: self.user});
+                    console.log('this user already has an account');
+                    self.$state.go('page.logIn');
                 } else {
                     self.error = error;
                 }
             });
-        };
+        }
+
+        /*
+        * authWithPassword
+        * @description Authenticated User with password method
+        */
+        _authWithPassword(authRef, user): void {
+            let self = this;
+            /*  After created successfully account, authenticates the client using
+                email / password combination */
+            authRef.$authWithPassword(user).then(
+                function (authData){
+                    //LOG
+                    console.log('Authenticated successfully with payload:', authData);
+                    //Add provider property
+                    self.$rootScope.User.Provider = authData.provider;
+                    //Create new User in dataBase and make three binding ways
+                    self.UserService.createUser(self.$rootScope.User).then(function(response){
+                        if (response === -1) {
+                            //LOG
+                            console.log('Error: Not created user');
+                        } else {
+                            self.$state.go('page.salary');
+                        }
+                    });
+
+                }, function (error){
+                    self.error = error;
+                    //LOG
+                    console.log('Login Failed!', error);
+                }
+            );
+        }
 
         /*
         * Go to back method
@@ -151,3 +230,12 @@ module app.pages.signUpPage {
         .controller(SignUpPageController.controllerId, SignUpPageController);
 
 }
+
+
+/* -- IMPORTANT NOTE -- */
+//Bindea el 'user' con la vista y la base de datos
+/*this.$scope.user = new app.models.User();
+var _this = this;
+this.User.getUserByEmail('sergioruizdavila22').$bindTo(this.$scope, 'user').then(function(){
+    _this.$scope.user.username = 'Pablo Pedro';
+});*/

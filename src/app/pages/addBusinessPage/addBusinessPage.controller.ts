@@ -10,14 +10,14 @@ module app.pages.addBusinessPage {
     /**********************************/
     export interface IAddBusinessPageController {
         form: IAddBusinessForm;
-        user: app.models.User;
         formatBusiness: () => void;
+        goToNext: () => void;
         goToBack: () => void;
         activate: () => void;
     }
 
     export interface IAddBusinessForm {
-        business: app.models.IMoney;
+        business: app.models.finance.IMoney;
     }
 
     /****************************************/
@@ -31,18 +31,21 @@ module app.pages.addBusinessPage {
         /*           PROPERTIES           */
         /**********************************/
         form: IAddBusinessForm;
-        user: app.models.User;
         // --------------------------------
 
         /*-- INJECT DEPENDENCIES --*/
         static $inject = ['$ionicHistory',
-                            'finApp.core.util.FunctionsUtilService'];
+                            'finApp.core.util.FunctionsUtilService',
+                            '$state',
+                            '$rootScope'];
 
         /**********************************/
         /*           CONSTRUCTOR          */
         /**********************************/
         constructor(private $ionicHistory: ionic.navigation.IonicHistoryService,
-        private FunctionsUtilService: app.core.util.functionsUtil.FunctionsUtilService) {
+        private FunctionsUtilService: app.core.util.functionsUtil.FunctionsUtilService,
+        private $state: ng.ui.IStateService,
+        private $rootScope: app.interfaces.IFinAppRootScope) {
             this.init();
         }
 
@@ -55,7 +58,7 @@ module app.pages.addBusinessPage {
                     formatted: ''
                 }
             };
-            
+
             this.activate();
         }
 
@@ -73,11 +76,21 @@ module app.pages.addBusinessPage {
         * @description Format the business value with default currency
         */
         formatBusiness(): void {
-            let currencyObj: app.models.IMoney =
-            this.FunctionsUtilService.formatCurrency(this.form.business.num, this.form.business.formatted);
+            let currencyObj: app.models.finance.IMoney =
+            this.FunctionsUtilService.formatCurrency(this.form.business.num,
+                                                     this.form.business.formatted);
 
             this.form.business.num = currencyObj.num;
             this.form.business.formatted = currencyObj.formatted;
+        }
+
+        /*
+        * Go to necessary expenses page
+        * @description this method is launched when user press OK button
+        */
+        goToNext(): void {
+            this.$rootScope.User.Finance.Business = this.form.business;
+            this.$state.go('page.necessaryExpenses');
         }
 
         /*

@@ -12,16 +12,17 @@
     angular
         .module('finApp', [
             'finApp.core',
-            'finApp.pages.main',
             'finApp.core.util',
             'finApp.core.firebase',
             'finApp.auth',
+            'finApp.pages.main',
             'finApp.pages.tutorialPage',
             'finApp.pages.signUpPage',
             'finApp.pages.logInPage',
             'finApp.pages.addSalaryPage',
             'finApp.pages.addInvestmentPage',
-            'finApp.pages.addBusinessPage'
+            'finApp.pages.addBusinessPage',
+            'finApp.models.user'
         ])
         .config(config);
 

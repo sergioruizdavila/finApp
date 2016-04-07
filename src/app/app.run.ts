@@ -7,6 +7,7 @@
  * @return {void}
  */
 
+
 (function(): void {
 
     'use strict';
@@ -15,9 +16,9 @@
         .module('finApp')
         .run(run);
 
-    //run.$inject = ['ionic'];
+    //run.$inject = ['$ionicPlatform', '$rootScope'];
 
-    function run($ionicPlatform): void {
+    function run($ionicPlatform, $rootScope: app.interfaces.IFinAppRootScope): void {
 
         $ionicPlatform.ready(function() {
             if (window.cordova && window.cordova.plugins.Keyboard) {
@@ -33,9 +34,11 @@
             if (window.StatusBar) {
                 StatusBar.styleDefault();
             }
+
+            //Create User object
+            $rootScope.User = new app.models.user.UserFirebase();
+
         });
-        //TODO: Get these values from the logged user
-        //dataConfig.userId = 'id1234';
     }
 
 })();

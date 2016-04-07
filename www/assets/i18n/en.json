@@ -1,12 +1,34 @@
 {
     "__GLOBAL__":"",
-    "%global.continue.button.text": "CONTINUE",
+    "%global.continue.button.text": "CONTINUAR",
+
+    "__NAVBAR__":"",
+    "%navbar.title.text": "FinApp",
+    "%navbar.button_ok.text": "OK",
+
+    "__POPUPS__":"",
+    "%popup.general.cancel_button.text": "CANCELAR",
+    "%popup.create_user.ok_button.text": "CREAR",
+    "%popup.create_user.title.text": "¿Crear una nueva cuenta?",
+    "%popup.create_user.body_message.text": "Vamos a crear una nueva cuenta. Si ya tienes una, cancela e inicia sesión con tu email.",
 
     "__TUTORIAL__":"",
-    "%tutorial.signup.button.text" : "SIGN UP",
+    "%tutorial.signup.button.text" : "REGISTRARSE",
+
+    "__SIGNUP__":"",
+    "%signup.title.text": "Introduce tu email",
+    "%signup.help_text.text": "Si todavía no tienes una cuenta, te crearemos una automáticamente",
+    "%signup.input_email.placeholder.text": "Email",
+
+    "__LOGIN__":"",
+    "%login.title.text": "¡Bienvenido de nuevo!",
+    "%login.help_text.text": "¿Cansado de las contraseñas?",
+    "%login.help_text.recover_password.text": "o haz clic aquí para recuperarla",
+    "%login.input_password.placeholder.text": "Introduce tu contraseña",
+    "%login.login_facebook.button.text": "Iniciar sesión con Facebook",
 
     "__SALARY__":"",
-    "%salary.title.text": "Salary",
+    "%salary.title.text": "Sueldo",
     "%salary.help_text.text": "Especifica cuanto es tu sueldo mensual, no incluyas los aportes a pensión, jubilación o salud. En otras palabras, especifica solo el dinero que puedes usar para tus gastos.",
 
     "__INVESTMENT__":"",
