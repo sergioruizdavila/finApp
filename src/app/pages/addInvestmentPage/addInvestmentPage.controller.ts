@@ -12,6 +12,7 @@ module app.pages.addInvestmentPage {
         form: IAddInvestmentForm;
         formatInvestment: () => void;
         activate: () => void;
+        goToNext: () => void;
         goToBack: () => void;
     }
 
@@ -33,13 +34,18 @@ module app.pages.addInvestmentPage {
         // --------------------------------
 
         /*-- INJECT DEPENDENCIES --*/
-        static $inject = ['$ionicHistory', 'finApp.core.util.FunctionsUtilService'];
+        static $inject = ['$ionicHistory',
+                          'finApp.core.util.FunctionsUtilService',
+                          '$state',
+                          '$rootScope'];
 
         /**********************************/
         /*           CONSTRUCTOR          */
         /**********************************/
         constructor(private $ionicHistory: ionic.navigation.IonicHistoryService,
-        private FunctionsUtilService: app.core.util.functionsUtil.FunctionsUtilService) {
+        private FunctionsUtilService: app.core.util.functionsUtil.FunctionsUtilService,
+        private $state: ng.ui.IStateService,
+        private $rootScope: app.interfaces.IFinAppRootScope) {
             this.init();
         }
 
@@ -76,6 +82,15 @@ module app.pages.addInvestmentPage {
 
             this.form.investment.num = currencyObj.num;
             this.form.investment.formatted = currencyObj.formatted;
+        }
+
+        /*
+        * Go to business page
+        * @description this method is launched when user press OK button
+        */
+        goToNext(): void {
+            this.$rootScope.User.Finance.Investment = this.form.investment;
+            this.$state.go('page.business');
         }
 
         /*

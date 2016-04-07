@@ -13,6 +13,11 @@ module app.models.finance {
         formatted: string;
     }
 
+    export interface IExpenses {
+        title: string;
+        expense: IMoney;
+    }
+
 
     /****************************************/
     /*           CLASS DEFINITION           */
@@ -23,6 +28,7 @@ module app.models.finance {
         private salary: IMoney;
         private investment: IMoney;
         private business: IMoney;
+        private necessaryExpenses: Array<IExpenses>;
 
 
         /**********************************/
@@ -36,6 +42,7 @@ module app.models.finance {
             this.salary = {num: 0, formatted: '$0'};
             this.investment = {num: 0, formatted: '$0'};
             this.business = {num: 0, formatted: '$0'};
+            this.necessaryExpenses = [];
         }
 
         /**********************************/

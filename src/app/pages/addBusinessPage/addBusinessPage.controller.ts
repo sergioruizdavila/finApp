@@ -11,6 +11,7 @@ module app.pages.addBusinessPage {
     export interface IAddBusinessPageController {
         form: IAddBusinessForm;
         formatBusiness: () => void;
+        goToNext: () => void;
         goToBack: () => void;
         activate: () => void;
     }
@@ -34,13 +35,17 @@ module app.pages.addBusinessPage {
 
         /*-- INJECT DEPENDENCIES --*/
         static $inject = ['$ionicHistory',
-                            'finApp.core.util.FunctionsUtilService'];
+                            'finApp.core.util.FunctionsUtilService',
+                            '$state',
+                            '$rootScope'];
 
         /**********************************/
         /*           CONSTRUCTOR          */
         /**********************************/
         constructor(private $ionicHistory: ionic.navigation.IonicHistoryService,
-        private FunctionsUtilService: app.core.util.functionsUtil.FunctionsUtilService) {
+        private FunctionsUtilService: app.core.util.functionsUtil.FunctionsUtilService,
+        private $state: ng.ui.IStateService,
+        private $rootScope: app.interfaces.IFinAppRootScope) {
             this.init();
         }
 
@@ -77,6 +82,15 @@ module app.pages.addBusinessPage {
 
             this.form.business.num = currencyObj.num;
             this.form.business.formatted = currencyObj.formatted;
+        }
+
+        /*
+        * Go to necessary expenses page
+        * @description this method is launched when user press OK button
+        */
+        goToNext(): void {
+            this.$rootScope.User.Finance.Business = this.form.business;
+            this.$state.go('page.necessaryExpenses');
         }
 
         /*
