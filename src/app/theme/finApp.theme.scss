@@ -209,7 +209,6 @@ body.finApp {
 
     ///INPUT TEXTBOX
     .fa-input {
-
         border-radius: 5px;
         //border: 1px solid #CCC;
         @include shadowBlock();
@@ -242,7 +241,6 @@ body.finApp {
     /*               NAVBAR                */
     /*-------------------------------------*/
     .navBar {
-
         border-bottom: 1px solid #C1C1C1;
         -webkit-box-shadow: 0px -9px 30px 14px rgba(0,0,0,0.10);
         -moz-box-shadow: 0px -9px 30px 14px rgba(0,0,0,0.10);
@@ -340,10 +338,6 @@ body.finApp {
 
         &__content {
             padding: 15px;
-
-            &--gray {
-                background-color: $FA-PROGRESSIVE-PAGE;
-            }
         }
 
         &__footer {
@@ -400,6 +394,10 @@ body.finApp {
         // POPUP BODY
         .popup-body {
             padding: 10px 18px 10px;
+
+            &--gray {
+                background-color: $FA-PROGRESSIVE-PAGE;
+            }
 
             span {
                 color: #929292;
@@ -512,8 +510,8 @@ body.finApp {
   src: url(MaterialIcons-Regular.eot); /* For IE6-8 */
   src: local('Material Icons'),
        local('MaterialIcons-Regular'),
-       url('#{$FA-FONT-PATH}/MaterialIcons-Regular.woff2') format('woff2'),
-       url('#{$FA-FONT-PATH}/MaterialIcons-Regular.woff') format('woff'),
-       url('#{$FA-FONT-PATH}/MaterialIcons-Regular.ttf') format('truetype');
+       url('#{$FA-FONT-PATH}/materialDesign/MaterialIcons-Regular.woff2') format('woff2'),
+       url('#{$FA-FONT-PATH}/materialDesign/MaterialIcons-Regular.woff') format('woff'),
+       url('#{$FA-FONT-PATH}/materialDesign/MaterialIcons-Regular.ttf') format('truetype');
 }
 /******************** END - FONT FACES ********************/
