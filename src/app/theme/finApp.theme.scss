@@ -1,4 +1,6 @@
-///MODIFIERS
+/**********************************************************/
+/*                       MODIFIERS                        */
+/**********************************************************/
 .text-center {
     text-align: center;
 }
@@ -6,15 +8,73 @@
 .text-right {
     text-align: right;
 }
+/******************** END - MODIFIERS *********************/
 
 
-///Body
+/**********************************************************/
+/*                         ICONS                          */
+/**********************************************************/
+///MATERIAL DESIGN ICONS
+.material-icons {
+  font-family: 'Material Icons';
+  font-weight: normal;
+  font-style: normal;
+  font-size: 24px;  /* Preferred icon size */
+  display: inline-block;
+  width: 1em;
+  height: 1em;
+  line-height: 1;
+  text-transform: none;
+  letter-spacing: normal;
+  word-wrap: normal;
+  white-space: nowrap;
+  direction: ltr;
+
+  /* Support for all WebKit browsers. */
+  -webkit-font-smoothing: antialiased;
+  /* Support for Safari and Chrome. */
+  text-rendering: optimizeLegibility;
+
+  /* Support for Firefox. */
+  -moz-osx-font-smoothing: grayscale;
+
+  /* Support for IE. */
+  font-feature-settings: 'liga';
+
+  /* Rules for sizing the icon. */
+  &.md-18 { font-size: 18px; }
+  &.md-24 { font-size: 24px; }
+  &.md-36 { font-size: 36px; }
+  &.md-48 { font-size: 48px; }
+
+  /* Rules for using icons as black on a light background. */
+  &.md-dark { color: rgba(0, 0, 0, 0.54); }
+  &.md-dark.md-inactive { color: rgba(0, 0, 0, 0.26); }
+
+  /* Rules for using icons as white on a dark background. */
+  &.md-light { color: rgba(255, 255, 255, 1); }
+  &.md-light.md-inactive { color: rgba(255, 255, 255, 0.3); }
+
+  /* Rules for using icons as red-light on a red-dark background. */
+  &.md-red_light { color: $FA_BTN_ADD;}
+  &.md-red_light.md-inactive { color: shade($FA_BTN_ADD, 10);}
+
+}
+
+
+/********************** END - ICONS ***********************/
+
+
+/**********************************************************/
+/*                 BODY MAIN FINAPP STYLES                */
+/**********************************************************/
 body.finApp {
 
     font-family: $FA-FONT-FAMILY;
 
 
-    ///BUTTONS
+    /*               BUTTONS               */
+    /*-------------------------------------*/
     .fa_btn {
         position: relative;
         z-index: 0;
@@ -45,7 +105,6 @@ body.finApp {
         }
 
         ///COLOR_BUTTON
-
         &--blue {
             background-color: $FA_BTN_FORM;
             color: #FFF;
@@ -57,7 +116,6 @@ body.finApp {
         }
 
         ///TYPE_BUTTON
-
         &__3d {
             display: inline-block;
             -webkit-border-radius: 5px;
@@ -105,7 +163,6 @@ body.finApp {
         }
 
         ///BUTTONS_HEADER
-
         &__header {
             color: $FA_NAVBAR_TEXT;
             font-size: 20px;
@@ -122,8 +179,11 @@ body.finApp {
         }
 
     }
+    /*---------- END -  BUTTONS -----------*/
 
-    ///INPUTS
+
+    /*               INPUTS                */
+    /*-------------------------------------*/
     textarea,
     input[type="text"],
     input[type="password"],
@@ -147,7 +207,7 @@ body.finApp {
     }
 
 
-    ///Input Text
+    ///INPUT TEXTBOX
     .fa-input {
 
         border-radius: 5px;
@@ -175,7 +235,12 @@ body.finApp {
         }
     }
 
-    ///NavBar
+    /*---------- END -  INPUTS ------------*/
+
+
+
+    /*               NAVBAR                */
+    /*-------------------------------------*/
     .navBar {
 
         border-bottom: 1px solid #C1C1C1;
@@ -200,8 +265,12 @@ body.finApp {
             line-height: 41px!important;
         }
     }
+    /*---------- END -  NAVBAR ------------*/
 
-    ///Progress Bar
+
+
+    /*            PROGRESS BAR             */
+    /*-------------------------------------*/
     .progressBar {
 
         position: relative;
@@ -249,8 +318,12 @@ body.finApp {
         }
 
     }
+    /*------- END -  PROGRESS BAR ---------*/
 
-    ///BLOCK 3D
+
+
+    /*              3D BLOCKS              */
+    /*-------------------------------------*/
     .block_3d {
         background-color: #FFF;
         border-radius: 10px;
@@ -294,7 +367,12 @@ body.finApp {
         }
 
     }
+    /*--------- END -  3D BLOCKS ----------*/
 
+
+
+    /*                POPUP                */
+    /*-------------------------------------*/
     /// BACKDROP
     .backdrop {
         background-color: rgba(0, 0, 0, 0.8);
@@ -355,9 +433,14 @@ body.finApp {
         }
 
     }
-    /// PAGES
+    /*----------- END -  POPUP ------------*/
 
-    /// ProgressivePage
+
+
+    /*                PAGES                */
+    /*-------------------------------------*/
+
+    /// PROGRESSIVE PAGE
     .progressivePage {
 
         &__contentPage {
@@ -382,6 +465,16 @@ body.finApp {
                 font-size: 2.3vh;
             }
 
+            &__helpText_with_icon {
+                width: 90%;
+                margin: 10% auto 0 auto;
+
+                p {
+                    font-size: 2.3vh;
+                    text-align: left;
+                }
+            }
+
             &--block {
                 width: 95%;
             }
@@ -394,10 +487,16 @@ body.finApp {
         }
 
     }
+    /*----------- END -  PAGES ------------*/
 
 }
+/******************** END - BODY **************************/
 
-///FONT TYPES
+
+
+/**********************************************************/
+/*                       FONT FACES                       */
+/**********************************************************/
 @font-face {
     font-family: $FA-FONT-FAMILY;
     src:url("#{$FA-FONT-PATH}/ProximaNovaSoft-Regular.otf");
@@ -405,3 +504,16 @@ body.finApp {
     font-weight: normal;
     font-style: normal;
 }
+
+@font-face {
+  font-family: 'Material Icons';
+  font-style: normal;
+  font-weight: 400;
+  src: url(MaterialIcons-Regular.eot); /* For IE6-8 */
+  src: local('Material Icons'),
+       local('MaterialIcons-Regular'),
+       url('#{$FA-FONT-PATH}/MaterialIcons-Regular.woff2') format('woff2'),
+       url('#{$FA-FONT-PATH}/MaterialIcons-Regular.woff') format('woff'),
+       url('#{$FA-FONT-PATH}/MaterialIcons-Regular.ttf') format('truetype');
+}
+/******************** END - FONT FACES ********************/
