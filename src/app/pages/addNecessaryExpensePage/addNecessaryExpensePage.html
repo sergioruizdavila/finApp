@@ -1,0 +1,92 @@
+<div class="bar bar-header navBar">
+    <div class="row row-center">
+
+        <div class="col-20">
+            <button class="button button-icon icon ion-arrow-left-c"
+                    style="color: #8C8C8C;"
+                    ng-click="vm.goToBack()"></button>
+        </div>
+
+        <div class="col-60">
+            <div class="progressBar">
+                <div class="progressBar__progressLine progressBar__progressLine--80Percent"></div>
+                <div class="progressBar__innerLine"></div>
+                <div class="progressBar__circle"></div>
+            </div>
+        </div>
+
+        <div class="col-20 text-right">
+            <button class="fa_btn fa_btn--red_light fa_btn--mini fa_btn__3d fa_btn__3d--red_light fa_btn__header--mini padding"
+             ng-click="vm.goToNext()">
+                <span class="button-inner" translate>
+                    +
+                </span>
+            </button>
+        </div>
+
+    </div>
+</div>
+
+<!-- where the initial view template will be rendered -->
+<ion-nav-view>
+
+    <ion-view>
+        <ion-content class="progressivePage__contentPage" scroll="false">
+
+            <div class="block_3d">
+                <div class="block_3d__title" translate>
+                    Gastos Necesarios
+                </div>
+                <div class="block_3d__content block_3d__content--gray">
+                    <div style="height: 100px">
+
+                    </div>
+                </div>
+                <div class="block_3d__footer">
+                    <div class="block_3d__footer__total">
+                        <div class="row row-center">
+                            <div class="block_3d__footer__total__text col-33">
+                                TOTAL
+                            </div>
+                            <div class=" block_3d__footer__total__value col-60">
+                                $ 3'000.000
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="progressivePage__contentPage__input">
+
+                <!--<input  type="text"
+                name="expense_title"
+                value=""
+                placeholder="Agrega nombre del gasto"
+                class="fa-input fa-input--medium fa-input--">
+
+                <input  type="text"
+                ng-model="vm.form.investment.formatted"
+                ng-change="vm.formatInvestment()"
+                name="investment"
+                value=""
+                placeholder="$0"
+                class="fa-input fa-input--medium fa-input--money">-->
+
+            </div>
+
+            <div class="progressivePage__contentPage__helpText" translate>
+                Agrega todos los gastos que afectarian tu vida si no los pagaras (por ejemplo alquiler, servicios, internet, etc.)
+            </div>
+        </ion-content>
+    </ion-view>
+
+    <ion-footer-bar class="progressivePage__footer">
+        <button class="fa_btn fa_btn--blue fa_btn--block fa_btn--large fa_btn__3d fa_btn__3d--blue padding"
+         ng-click="vm.goToNext()">
+            <span class="button-inner" translate>
+                %global.continue.button.text
+            </span>
+        </button>
+    </ion-footer-bar>
+
+</ion-nav-view>

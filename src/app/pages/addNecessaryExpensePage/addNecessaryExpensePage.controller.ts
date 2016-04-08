@@ -1,43 +1,43 @@
 /**
- * AddBusinessPageController
- * @description - Add Business Page Controller
+ * AddNecessaryExpensePageController
+ * @description - Add Necessary Expense Page Controller
  */
 
-module app.pages.addBusinessPage {
+module app.pages.addNecessaryExpensePage {
 
     /**********************************/
     /*           INTERFACES           */
     /**********************************/
-    export interface IAddBusinessPageController {
-        form: IAddBusinessForm;
-        formatBusiness: () => void;
+    export interface IAddNecessaryExpensePageController {
+        form: IAddNecessaryExpenseForm;
+        formatInvestment: () => void;
+        activate: () => void;
         goToNext: () => void;
         goToBack: () => void;
-        activate: () => void;
     }
 
-    export interface IAddBusinessForm {
-        business: app.models.finance.IMoney;
+    export interface IAddNecessaryExpenseForm {
+        investment: app.models.finance.IMoney;
     }
 
     /****************************************/
     /*           CLASS DEFINITION           */
     /****************************************/
-    export class AddBusinessPageController implements IAddBusinessPageController {
+    export class AddNecessaryExpensePageController implements IAddNecessaryExpensePageController {
 
-        static controllerId = 'finApp.pages.addBusinessPage.AddBusinessPageController';
+        static controllerId = 'finApp.pages.addNecessaryExpensePage.AddNecessaryExpensePageController';
 
         /**********************************/
         /*           PROPERTIES           */
         /**********************************/
-        form: IAddBusinessForm;
+        form: IAddNecessaryExpenseForm;
         // --------------------------------
 
         /*-- INJECT DEPENDENCIES --*/
         static $inject = ['$ionicHistory',
-                            'finApp.core.util.FunctionsUtilService',
-                            '$state',
-                            '$rootScope'];
+                          'finApp.core.util.FunctionsUtilService',
+                          '$state',
+                          '$rootScope'];
 
         /**********************************/
         /*           CONSTRUCTOR          */
@@ -53,7 +53,7 @@ module app.pages.addBusinessPage {
         private init() {
             //Init form
             this.form = {
-                business: {
+                investment: {
                     num: null,
                     formatted: ''
                 }
@@ -64,7 +64,7 @@ module app.pages.addBusinessPage {
 
         /*-- ACTIVATE METHOD --*/
         activate(): void {
-            console.log('addBusinessPage controller actived');
+            console.log('addNecessaryExpensePage controller actived');
         }
 
         /**********************************/
@@ -72,25 +72,25 @@ module app.pages.addBusinessPage {
         /**********************************/
 
         /*
-        * Format Business Method
-        * @description Format the business value with default currency
+        * Format Investment Method
+        * @description Format the investment value with default currency
         */
-        formatBusiness(): void {
+        formatInvestment(): void {
             let currencyObj: app.models.finance.IMoney =
-            this.FunctionsUtilService.formatCurrency(this.form.business.num,
-                                                     this.form.business.formatted);
+            this.FunctionsUtilService.formatCurrency(this.form.investment.num,
+                                                     this.form.investment.formatted);
 
-            this.form.business.num = currencyObj.num;
-            this.form.business.formatted = currencyObj.formatted;
+            this.form.investment.num = currencyObj.num;
+            this.form.investment.formatted = currencyObj.formatted;
         }
 
         /*
-        * Go to necessary expenses page
+        * Go to business page
         * @description this method is launched when user press OK button
         */
         goToNext(): void {
-            this.$rootScope.User.Finance.Business = this.form.business;
-            this.$state.go('page.necessaryExpense');
+            this.$rootScope.User.Finance.Investment = this.form.investment;
+            this.$state.go('page.business');
         }
 
         /*
@@ -105,7 +105,7 @@ module app.pages.addBusinessPage {
 
     /*-- MODULE DEFINITION --*/
     angular
-        .module('finApp.pages.addBusinessPage')
-        .controller(AddBusinessPageController.controllerId, AddBusinessPageController);
+        .module('finApp.pages.addInvestmentPage')
+        .controller(AddNecessaryExpensePageController.controllerId, AddNecessaryExpensePageController);
 
 }
