@@ -12,6 +12,7 @@ module app.pages.addNecessaryExpensePage {
         form: IAddNecessaryExpenseForm;
         formatInvestment: () => void;
         activate: () => void;
+        showExpenseDetailPopup: () => void;
         showTipPopup: () => void;
         goToNext: () => void;
         goToBack: () => void;
@@ -111,6 +112,45 @@ module app.pages.addNecessaryExpensePage {
                     }
                 ]
             });
+        }
+
+        /*
+        * show expense detail popup
+        * @description this method is launched when user press Add button in the header
+        */
+        showExpenseDetailPopup(): void {
+            //VARIABLES
+            let self = this;
+            //CONSTANTS
+            //const POPUP_TITLE = this.$filter('translate')('%popup.create_user.title.text');
+            const POPUP_BODY_TEXT = this.$filter('translate')('%popup.create_user.body_message.text');
+            const POPUP_CANCEL_BUTTON_TEXT = this.$filter('translate')('%popup.general.cancel_button.text');
+            //const POPUP_OK_BUTTON_TEXT = this.$filter('translate')('%popup.create_user.ok_button.text');
+            const POPUP_OK_BUTTON_TYPE = 'button-positive';
+
+            let expenseDetailInstance = this.$ionicPopup.show({
+                title: 'Agrega un nuevo gasto',
+                templateUrl: 'templates/components/popup/expenseDetailPopup/expenseDetailPopup.html',
+                cssClass: 'expenseDetailPopup',
+                buttons: [
+                    { text: POPUP_CANCEL_BUTTON_TEXT },
+                    {
+                        text: 'AGREGAR',
+                        type: POPUP_OK_BUTTON_TYPE,
+                        onTap: function(e) {
+                            self._addNewExpense(e);
+                        }
+                    }
+                ]
+            });
+        }
+
+        /*
+        * Add New Expense
+        * @description this method is launched when user press Add button on expenseDetailPopup
+        */
+        _addNewExpense($event): void {
+            console.log($event);
         }
 
         /*

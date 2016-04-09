@@ -17,8 +17,8 @@
 
         <div class="col-20 text-right">
             <button class="fa_btn fa_btn--red_light fa_btn--mini fa_btn__3d fa_btn__3d--red_light fa_btn__header--mini padding"
-             ng-click="vm.goToNext()">
-                <span class="button-inner" translate>
+             ng-click="vm.showExpenseDetailPopup()">
+                <span class="button-inner">
                     +
                 </span>
             </button>
@@ -56,24 +56,6 @@
                 </div>
             </div>
 
-            <!--<div class="progressivePage__contentPage__input">
-
-                <input  type="text"
-                name="expense_title"
-                value=""
-                placeholder="Agrega nombre del gasto"
-                class="fa-input fa-input--medium fa-input--">
-
-                <input  type="text"
-                ng-model="vm.form.investment.formatted"
-                ng-change="vm.formatInvestment()"
-                name="investment"
-                value=""
-                placeholder="$0"
-                class="fa-input fa-input--medium fa-input--money">
-
-            </div>-->
-
             <div class="progressivePage__contentPage__helpText_with_icon">
                 <div class="row row-center">
                     <div class="col-80">
@@ -90,9 +72,7 @@
                 </div>
 
             </div>
-            <!--<div class="progressivePage__contentPage__helpText" translate>
-                Agrega todos los gastos que afectarian tu vida si no los pagaras (por ejemplo alquiler, servicios, internet, etc.)
-            </div>-->
+
         </ion-content>
     </ion-view>
 
