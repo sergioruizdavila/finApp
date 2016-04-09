@@ -12,6 +12,7 @@ module app.pages.addNecessaryExpensePage {
         form: IAddNecessaryExpenseForm;
         formatInvestment: () => void;
         activate: () => void;
+        showTipPopup: () => void;
         goToNext: () => void;
         goToBack: () => void;
     }
@@ -35,6 +36,8 @@ module app.pages.addNecessaryExpensePage {
 
         /*-- INJECT DEPENDENCIES --*/
         static $inject = ['$ionicHistory',
+                          '$ionicPopup',
+                          '$filter',
                           'finApp.core.util.FunctionsUtilService',
                           '$state',
                           '$rootScope'];
@@ -43,6 +46,8 @@ module app.pages.addNecessaryExpensePage {
         /*           CONSTRUCTOR          */
         /**********************************/
         constructor(private $ionicHistory: ionic.navigation.IonicHistoryService,
+        private $ionicPopup: ionic.popup.IonicPopupService,
+        private $filter: angular.IFilterService,
         private FunctionsUtilService: app.core.util.functionsUtil.FunctionsUtilService,
         private $state: ng.ui.IStateService,
         private $rootScope: app.interfaces.IFinAppRootScope) {
@@ -82,6 +87,30 @@ module app.pages.addNecessaryExpensePage {
 
             this.form.investment.num = currencyObj.num;
             this.form.investment.formatted = currencyObj.formatted;
+        }
+
+        /*
+        *
+        *
+        */
+        showTipPopup(): void {
+            //CONSTANTS
+            //const POPUP_TITLE = this.$filter('translate')('%popup.create_user.title.text');
+            const POPUP_BODY_TEXT = this.$filter('translate')('%popup.create_user.body_message.text');
+            //const POPUP_CANCEL_BUTTON_TEXT = this.$filter('translate')('%popup.general.cancel_button.text');
+            //const POPUP_OK_BUTTON_TEXT = this.$filter('translate')('%popup.create_user.ok_button.text');
+            const POPUP_OK_BUTTON_TYPE = 'button-positive';
+
+            let tipInstance = this.$ionicPopup.show({
+                title: 'Algunos ejemplos',
+                templateUrl: 'templates/components/popup/listPopup.html',
+                buttons: [
+                    {
+                        text: 'GRACIAS',
+                        type: POPUP_OK_BUTTON_TYPE
+                    }
+                ]
+            });
         }
 
         /*

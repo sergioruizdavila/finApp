@@ -1,0 +1,23 @@
+.listPopup {
+
+    &__title {
+
+    }
+
+    &__row {
+        margin-bottom: 10px;
+
+        &__item {
+            font-size: 20px;
+            text-align: center;
+            color: #929292;
+            font-weight: bold;
+        }
+
+    }
+
+    &__row:nth-of-type(1) {
+        margin-top: 20px;
+    }
+
+}
