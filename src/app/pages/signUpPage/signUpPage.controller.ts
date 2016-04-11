@@ -119,7 +119,7 @@ module app.pages.signUpPage {
                 } else {
                     /*  Show popUp in order to warn the user that if he/she doesn't have account,
                         we are going to create new one */
-                    let confirmInstance = self.$ionicPopup.show({
+                    self.$ionicPopup.show({
                         title: POPUP_TITLE,
                         template: POPUP_BODY_TEXT,
                         buttons: [
@@ -132,17 +132,6 @@ module app.pages.signUpPage {
                                 }
                             }
                         ]
-                    });
-
-                    confirmInstance.then(function(res) {
-                        if (res) {
-                            //LOG
-                            console.log('confirmInstance res: ', res);
-
-                        } else {
-                            //LOG
-                            console.log('You are not sure');
-                        }
                     });
                 }
             });

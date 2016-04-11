@@ -1,20 +1,19 @@
-
-// App Shared Variables
-// --------------------------------------------------
-// Shared Sass variables go in the app.varialbes.scss file
-@import 'app.variables';
-
 // App Shared Sass
 // --------------------------------------------------
 // All Sass files that make up this app goes into the app.core.scss file.
 // For simpler CSS overrides, custom app CSS must come after Ionic's CSS.
 @import 'app.core';
 
+
+// App Shared Variables
+// --------------------------------------------------
+// Shared Sass variables go in the app.varialbes.scss file
+@import 'app.variables';
+
 // Ionic Styles
 // --------------------------------------------------
 // All Ionic Style
-@import "www/lib/ionic/scss/ionic";
-
+@import 'www/lib/ionic/scss/ionic';
 
 // FinApp Theme
 // --------------------------------------------------
@@ -24,5 +23,9 @@
 
 // FinApp Pages
 // --------------------------------------------------
-// All FinApp Pages Style
+// logIn Pages Style
 @import '../pages/logInPage/logInPage';
+// listPopup Component Style
+@import '../../components/popup/listPopup/listPopup';
+// expenseDetailPopup Component Style
+@import '../../components/popup/expenseDetailPopup/expenseDetailPopup';

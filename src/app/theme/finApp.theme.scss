@@ -1,4 +1,6 @@
-///MODIFIERS
+/**********************************************************/
+/*                       MODIFIERS                        */
+/**********************************************************/
 .text-center {
     text-align: center;
 }
@@ -6,15 +8,73 @@
 .text-right {
     text-align: right;
 }
+/******************** END - MODIFIERS *********************/
 
 
-///Body
+/**********************************************************/
+/*                         ICONS                          */
+/**********************************************************/
+///MATERIAL DESIGN ICONS
+.material-icons {
+  font-family: 'Material Icons';
+  font-weight: normal;
+  font-style: normal;
+  font-size: 24px;  /* Preferred icon size */
+  display: inline-block;
+  width: 1em;
+  height: 1em;
+  line-height: 1;
+  text-transform: none;
+  letter-spacing: normal;
+  word-wrap: normal;
+  white-space: nowrap;
+  direction: ltr;
+
+  /* Support for all WebKit browsers. */
+  -webkit-font-smoothing: antialiased;
+  /* Support for Safari and Chrome. */
+  text-rendering: optimizeLegibility;
+
+  /* Support for Firefox. */
+  -moz-osx-font-smoothing: grayscale;
+
+  /* Support for IE. */
+  font-feature-settings: 'liga';
+
+  /* Rules for sizing the icon. */
+  &.md-18 { font-size: 18px; }
+  &.md-24 { font-size: 24px; }
+  &.md-36 { font-size: 36px; }
+  &.md-48 { font-size: 48px; }
+
+  /* Rules for using icons as black on a light background. */
+  &.md-dark { color: rgba(0, 0, 0, 0.54); }
+  &.md-dark.md-inactive { color: rgba(0, 0, 0, 0.26); }
+
+  /* Rules for using icons as white on a dark background. */
+  &.md-light { color: rgba(255, 255, 255, 1); }
+  &.md-light.md-inactive { color: rgba(255, 255, 255, 0.3); }
+
+  /* Rules for using icons as red-light on a red-dark background. */
+  &.md-red_light { color: $FA_BTN_ADD;}
+  &.md-red_light.md-inactive { color: shade($FA_BTN_ADD, 10);}
+
+}
+
+
+/********************** END - ICONS ***********************/
+
+
+/**********************************************************/
+/*                 BODY MAIN FINAPP STYLES                */
+/**********************************************************/
 body.finApp {
 
     font-family: $FA-FONT-FAMILY;
 
 
-    ///BUTTONS
+    /*               BUTTONS               */
+    /*-------------------------------------*/
     .fa_btn {
         position: relative;
         z-index: 0;
@@ -23,16 +83,41 @@ body.finApp {
         overflow: hidden;
         border: 0;
 
-        &__header {
-            color: $FA_NAVBAR_TEXT;
-            font-size: 20px;
+        ///BUTTON_SIZE
+        &--mini {
+            height: 1.2em;
+            width: 1.2em;
+            font-size: 2.2rem;
+            font-weight: bold;
         }
 
+        &--large {
+            padding: 0 1em;
+            height: 2.3em;
+            font-size: 1.4rem;
+        }
+
+        &--block {
+            display: block;
+            clear: both;
+            width: 100%;
+            line-height: 55px;
+        }
+
+        ///COLOR_BUTTON
+        &--blue {
+            background-color: $FA_BTN_FORM;
+            color: #FFF;
+        }
+
+        &--red_light {
+            background-color: $FA_BTN_ADD;
+            color: #FFF;
+        }
+
+        ///TYPE_BUTTON
         &__3d {
             display: inline-block;
-            -webkit-box-shadow: 0 5px 0 $FA_BTN_FORM_SHADOW, 0 15px 20px rgba(0,0,0,0);
-            -moz-box-shadow: 0 5px 0 $FA_BTN_FORM_SHADOW, 0 15px 20px rgba(0,0,0,0);
-            box-shadow: 0 5px 0 $FA_BTN_FORM_SHADOW,0 15px 20px rgba(0,0,0,0);
             -webkit-border-radius: 5px;
             -moz-border-radius: 5px;
             border-radius: 5px;
@@ -51,22 +136,12 @@ body.finApp {
             box-shadow: none;
         }
 
-        &--progressive {
-            background-color: $FA_BTN_FORM;
-            color: #FFF;
+        &__3d--blue {
+            @include ThreeDEffect(shade($FA_BTN_FORM_SHADOW, 10));
         }
 
-        &--large {
-            padding: 0 1em;
-            height: 2.3em;
-            font-size: 1.4rem;
-        }
-
-        &--block {
-            display: block;
-            clear: both;
-            width: 100%;
-            line-height: 55px;
+        &__3d--red_light {
+            @include ThreeDEffect(shade($FA_BTN_ADD, 10));
         }
 
         &--with_icon {
@@ -87,13 +162,28 @@ body.finApp {
             }
         }
 
-        .button_inner {
-            font-weight: bold;
+        ///BUTTONS_HEADER
+        &__header {
+            color: $FA_NAVBAR_TEXT;
+            font-size: 20px;
+        }
+
+        &__header--mini {
+            position: relative;
+            bottom: 3px;
+
+            .button-inner {
+                font-weight: bold;
+                vertical-align: text-top;
+            }
         }
 
     }
+    /*---------- END -  BUTTONS -----------*/
 
-    ///INPUTS
+
+    /*               INPUTS                */
+    /*-------------------------------------*/
     textarea,
     input[type="text"],
     input[type="password"],
@@ -117,11 +207,11 @@ body.finApp {
     }
 
 
-    ///Input Text
+    ///INPUT TEXTBOX
     .fa-input {
-
         border-radius: 5px;
-        border: 1px solid #CCC;
+        //border: 1px solid #CCC;
+        @include shadowBlock();
 
         &--medium {
             font-size: 25px;
@@ -144,9 +234,13 @@ body.finApp {
         }
     }
 
-    ///NavBar
-    .navBar {
+    /*---------- END -  INPUTS ------------*/
 
+
+
+    /*               NAVBAR                */
+    /*-------------------------------------*/
+    .navBar {
         border-bottom: 1px solid #C1C1C1;
         -webkit-box-shadow: 0px -9px 30px 14px rgba(0,0,0,0.10);
         -moz-box-shadow: 0px -9px 30px 14px rgba(0,0,0,0.10);
@@ -169,8 +263,12 @@ body.finApp {
             line-height: 41px!important;
         }
     }
+    /*---------- END -  NAVBAR ------------*/
 
-    ///Progress Bar
+
+
+    /*            PROGRESS BAR             */
+    /*-------------------------------------*/
     .progressBar {
 
         position: relative;
@@ -218,8 +316,58 @@ body.finApp {
         }
 
     }
+    /*------- END -  PROGRESS BAR ---------*/
 
-    // BACKDROP
+
+
+    /*              3D BLOCKS              */
+    /*-------------------------------------*/
+    .block_3d {
+        background-color: #FFF;
+        border-radius: 10px;
+        width: 90%;
+        margin: 25% auto 0 auto;
+        @include shadowBlock();
+
+        &__title {
+            color: $FA_TEXT_LIST_VALUE;
+            text-align: center;
+            font-size: 25px;
+            padding: 20px;
+        }
+
+        &__content {
+            padding: 15px;
+        }
+
+        &__footer {
+            padding: 15px;
+
+            &__total {
+
+                &__text {
+                    font-size: 18px;
+                    text-align: center;
+                    font-weight: bold;
+                    color: $FA_TEXT_LIST_VALUE;
+                }
+
+                &__value {
+                    font-size: 20px;
+                    text-align: right;
+                    color: $FA-TEXT-P;
+                }
+            }
+        }
+
+    }
+    /*--------- END -  3D BLOCKS ----------*/
+
+
+
+    /*                POPUP                */
+    /*-------------------------------------*/
+    /// BACKDROP
     .backdrop {
         background-color: rgba(0, 0, 0, 0.8);
     }
@@ -246,6 +394,12 @@ body.finApp {
         // POPUP BODY
         .popup-body {
             padding: 10px 18px 10px;
+
+            &--gray {
+                background-color: $FA-PROGRESSIVE-PAGE;
+                border-top: 1px solid #DDD;
+                border-bottom: 1px solid #DDD;
+            }
 
             span {
                 color: #929292;
@@ -279,13 +433,21 @@ body.finApp {
         }
 
     }
-    /// PAGES
+    /*----------- END -  POPUP ------------*/
 
-    /// ProgressivePage
+
+
+    /*                PAGES                */
+    /*-------------------------------------*/
+
+    /// PROGRESSIVE PAGE
     .progressivePage {
 
         &__contentPage {
-            background-color: $FA_PROGRESSIVE_PAGE;
+            //Original Color
+            //background-color: $FA_PROGRESSIVE_PAGE;
+            //Temporal Color
+            background-color: #F2F2F2;
             text-align: center;
 
             &__title {
@@ -303,6 +465,16 @@ body.finApp {
                 font-size: 2.3vh;
             }
 
+            &__helpText_with_icon {
+                width: 90%;
+                margin: 10% auto 0 auto;
+
+                p {
+                    font-size: 2.3vh;
+                    text-align: left;
+                }
+            }
+
             &--block {
                 width: 95%;
             }
@@ -315,10 +487,16 @@ body.finApp {
         }
 
     }
+    /*----------- END -  PAGES ------------*/
 
 }
+/******************** END - BODY **************************/
 
-///FONT TYPES
+
+
+/**********************************************************/
+/*                       FONT FACES                       */
+/**********************************************************/
 @font-face {
     font-family: $FA-FONT-FAMILY;
     src:url("#{$FA-FONT-PATH}/ProximaNovaSoft-Regular.otf");
@@ -326,3 +504,16 @@ body.finApp {
     font-weight: normal;
     font-style: normal;
 }
+
+@font-face {
+  font-family: 'Material Icons';
+  font-style: normal;
+  font-weight: 400;
+  src: url(MaterialIcons-Regular.eot); /* For IE6-8 */
+  src: local('Material Icons'),
+       local('MaterialIcons-Regular'),
+       url('#{$FA-FONT-PATH}/materialDesign/MaterialIcons-Regular.woff2') format('woff2'),
+       url('#{$FA-FONT-PATH}/materialDesign/MaterialIcons-Regular.woff') format('woff'),
+       url('#{$FA-FONT-PATH}/materialDesign/MaterialIcons-Regular.ttf') format('truetype');
+}
+/******************** END - FONT FACES ********************/

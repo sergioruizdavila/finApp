@@ -90,7 +90,7 @@ module app.pages.addBusinessPage {
         */
         goToNext(): void {
             this.$rootScope.User.Finance.Business = this.form.business;
-            this.$state.go('page.necessaryExpenses');
+            this.$state.go('page.necessaryExpense');
         }
 
         /*

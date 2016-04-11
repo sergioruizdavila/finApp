@@ -1,0 +1,19 @@
+.expenseDetailPopup {
+
+    .popup-body {
+        background-color: $FA-PROGRESSIVE-PAGE;
+        border-top: 1px solid #DDD;
+        border-bottom: 1px solid #DDD;
+
+        &__content {
+            text-align: center;
+            margin-top: 10px;
+            margin-bottom: 10px;
+
+            &__row__input {
+                margin-top: 15px;
+            }
+        }
+
+    }
+}

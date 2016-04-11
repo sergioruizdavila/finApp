@@ -1,0 +1,26 @@
+<div class="popup-body__content">
+
+    <span class="popup-body__content__title" translate>
+        %popup.add_expense.subtitle.text
+    </span>
+
+    <div class="popup-body__content__row__input">
+        <input  type="text"
+                ng-model="vm.form.expense.description"
+                name="text"
+                value=""
+                translate translate-attr-placeholder="%popup.add_expense.input_expense_name.placeholder.text"
+                class="fa-input fa-input--large fa-input--email">
+    </div>
+
+    <div class="popup-body__content__row__input">
+        <input  type="text"
+                ng-model="vm.form.expense.value.formatted"
+                ng-change="vm.formatExpense()"
+                name="expense"
+                value=""
+                placeholder="$0"
+                class="fa-input fa-input--medium fa-input--money">
+    </div>
+
+</div>
