@@ -13,22 +13,21 @@ module app.models.finance {
         formatted: string;
     }
 
-    export interface IExpenses {
+    export interface IExpense {
         title: string;
-        expense: IMoney;
+        value: IMoney;
     }
 
 
     /****************************************/
     /*           CLASS DEFINITION           */
     /****************************************/
+
     export class Finance {
 
         /*-- PROPERTIES --*/
-        private salary: IMoney;
-        private investment: IMoney;
-        private business: IMoney;
-        private necessaryExpenses: Array<IExpenses>;
+        private income: Income;
+        private necessaryExpenses: Array<IExpense>;
 
 
         /**********************************/
@@ -39,10 +38,43 @@ module app.models.finance {
             console.log('init finances');
 
             //init properties
+            this.income = new Income();
+            this.necessaryExpenses = [];
+        }
+
+        /**********************************/
+        /*             METHODS            */
+        /**********************************/
+
+        get Income() {
+            return this.income;
+        }
+
+    }
+
+
+    /****************************************/
+    /*             INCOME CLASS             */
+    /****************************************/
+
+    export class Income {
+
+        /*-- PROPERTIES --*/
+        private salary: IMoney;
+        private investment: IMoney;
+        private business: IMoney;
+
+        /**********************************/
+        /*           CONSTRUCTOR          */
+        /**********************************/
+        constructor() {
+            //LOG
+            console.log('init income');
+
+            //init properties
             this.salary = {num: 0, formatted: '$0'};
             this.investment = {num: 0, formatted: '$0'};
             this.business = {num: 0, formatted: '$0'};
-            this.necessaryExpenses = [];
         }
 
         /**********************************/
@@ -75,6 +107,37 @@ module app.models.finance {
             if (business === undefined) { throw 'Please supply business value'; }
             this.business = business;
         }
+    }
+
+
+
+    /****************************************/
+    /*             EXPENSE CLASS            */
+    /****************************************/
+
+    export class Expense {
+
+        /*-- PROPERTIES --*/
+        private necessaryExpenses: Array<IExpense>;
+        private unnecessaryExpenses: Array<IExpense>;
+
+        /**********************************/
+        /*           CONSTRUCTOR          */
+        /**********************************/
+        constructor() {
+            //LOG
+            console.log('init expense');
+
+            //init properties
+            this.necessaryExpenses = [];
+            this.unnecessaryExpenses = [];
+        }
+
+        /**********************************/
+        /*             METHODS            */
+        /**********************************/
+
+
     }
 
 }

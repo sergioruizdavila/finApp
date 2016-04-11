@@ -79,7 +79,7 @@ module components.expenseDetailPopup {
     }
 
     export interface IExpenseDetailPopupForm {
-        expense: any;
+        expense: app.models.finance.IExpense;
     }
 
     /****************************************/

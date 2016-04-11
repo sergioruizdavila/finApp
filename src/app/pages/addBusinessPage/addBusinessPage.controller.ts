@@ -36,6 +36,7 @@ module app.pages.addBusinessPage {
         /*-- INJECT DEPENDENCIES --*/
         static $inject = ['$ionicHistory',
                             'finApp.core.util.FunctionsUtilService',
+                            'finApp.models.finance.FinanceService',
                             '$state',
                             '$rootScope'];
 
@@ -44,6 +45,7 @@ module app.pages.addBusinessPage {
         /**********************************/
         constructor(private $ionicHistory: ionic.navigation.IonicHistoryService,
         private FunctionsUtilService: app.core.util.functionsUtil.FunctionsUtilService,
+        private FinanceService: app.models.finance.IFinanceService,
         private $state: ng.ui.IStateService,
         private $rootScope: app.interfaces.IFinAppRootScope) {
             this.init();
@@ -89,7 +91,15 @@ module app.pages.addBusinessPage {
         * @description this method is launched when user press OK button
         */
         goToNext(): void {
-            this.$rootScope.User.Finance.Business = this.form.business;
+            //Update User model
+            this.$rootScope.User.Finance.Income.Business = this.form.business;
+            //Save business on firebase
+            // TODO: Esta funcion se puede reutilizar mucho (ya que es la misma funcion para todo Income)
+            // Analizar la forma màs optima de llamar a esta funcion sin tener que estarle mandando
+            // tantos parametros.
+            this.FinanceService.saveIncome(this.$rootScope.User.Id,
+                                                 'business',
+                                                 this.$rootScope.User.Finance.Income.Business);
             this.$state.go('page.necessaryExpense');
         }
 

@@ -36,6 +36,7 @@ module app.pages.addInvestmentPage {
         /*-- INJECT DEPENDENCIES --*/
         static $inject = ['$ionicHistory',
                           'finApp.core.util.FunctionsUtilService',
+                          'finApp.models.finance.FinanceService',
                           '$state',
                           '$rootScope'];
 
@@ -44,6 +45,7 @@ module app.pages.addInvestmentPage {
         /**********************************/
         constructor(private $ionicHistory: ionic.navigation.IonicHistoryService,
         private FunctionsUtilService: app.core.util.functionsUtil.FunctionsUtilService,
+        private FinanceService: app.models.finance.IFinanceService,
         private $state: ng.ui.IStateService,
         private $rootScope: app.interfaces.IFinAppRootScope) {
             this.init();
@@ -89,7 +91,12 @@ module app.pages.addInvestmentPage {
         * @description this method is launched when user press OK button
         */
         goToNext(): void {
-            this.$rootScope.User.Finance.Investment = this.form.investment;
+            //Update User model
+            this.$rootScope.User.Finance.Income.Investment = this.form.investment;
+            //Save investment on firebase
+            this.FinanceService.saveIncome(this.$rootScope.User.Id,
+                                                 'investment',
+                                                 this.$rootScope.User.Finance.Income.Investment);
             this.$state.go('page.business');
         }
 

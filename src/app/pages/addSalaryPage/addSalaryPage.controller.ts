@@ -36,6 +36,7 @@ module app.pages.addSalaryPage {
         /*-- INJECT DEPENDENCIES --*/
         static $inject = ['$ionicHistory',
                           'finApp.core.util.FunctionsUtilService',
+                          'finApp.models.finance.FinanceService',
                           '$state',
                           '$rootScope'];
 
@@ -44,6 +45,7 @@ module app.pages.addSalaryPage {
         /**********************************/
         constructor(private $ionicHistory: ionic.navigation.IonicHistoryService,
                     private FunctionsUtilService: app.core.util.functionsUtil.FunctionsUtilService,
+                    private FinanceService: app.models.finance.IFinanceService,
                     private $state: ng.ui.IStateService,
                     private $rootScope: app.interfaces.IFinAppRootScope) {
             this.init();
@@ -88,7 +90,12 @@ module app.pages.addSalaryPage {
         * @description this method is launched when user press OK button
         */
         goToNext(): void {
-            this.$rootScope.User.Finance.Salary = this.form.salary;
+            //Update User model
+            this.$rootScope.User.Finance.Income.Salary = this.form.salary;
+            //Save salary on firebase
+            this.FinanceService.saveIncome(this.$rootScope.User.Id,
+                                                 'salary',
+                                                 this.$rootScope.User.Finance.Income.Salary);
             this.$state.go('page.investment');
         }
 
@@ -99,6 +106,8 @@ module app.pages.addSalaryPage {
         goToBack(): void {
             this.$ionicHistory.goBack();
         }
+
+
 
     }
 

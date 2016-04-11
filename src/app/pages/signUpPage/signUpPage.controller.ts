@@ -186,12 +186,13 @@ module app.pages.signUpPage {
                     //Add provider property
                     self.$rootScope.User.Provider = authData.provider;
                     //Create new User in dataBase and make three binding ways
-                    self.UserService.createUser(self.$rootScope.User).then(function(response){
-                        if (response === -1) {
+                    self.UserService.createUser(self.$rootScope.User).then(function(id){
+                        if (id) {
+                            self.$rootScope.User.Id = id;
+                            self.$state.go('page.salary');
+                        } else {
                             //LOG
                             console.log('Error: Not created user');
-                        } else {
-                            self.$state.go('page.salary');
                         }
                     });
 
