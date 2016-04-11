@@ -1,20 +1,22 @@
 <div class="popup-body__content">
-    <span class="popup-body__content__title">
-        Agrega el nombre de tu gasto obligatorio, y su correspondiente valor
+
+    <span class="popup-body__content__title" translate>
+        %popup.add_expense.subtitle.text
     </span>
 
     <div class="popup-body__content__row__input">
         <input  type="text"
-                ng-model="vm.form.password"
+                ng-model="vm.form.expense.description"
                 name="text"
                 value=""
-                placeholder="Nombre de tu gasto"
+                translate translate-attr-placeholder="%popup.add_expense.input_expense_name.placeholder.text"
                 class="fa-input fa-input--large fa-input--email">
     </div>
 
     <div class="popup-body__content__row__input">
         <input  type="text"
-                ng-model="vm.form.investment.formatted"
+                ng-model="vm.form.expense.value.formatted"
+                ng-change="vm.formatExpense()"
                 name="expense"
                 value=""
                 placeholder="$0"

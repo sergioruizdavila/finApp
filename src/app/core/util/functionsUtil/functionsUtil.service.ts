@@ -71,7 +71,7 @@ module app.core.util.functionsUtil {
         * @return {object} currency - Returns an object with 2 properties: num - number without format
         * and formatted - number formatted.
         */
-        formatCurrency(num: number, formatted: string): app.models.IMoney {
+        formatCurrency(num: number, formatted: string): app.models.finance.IMoney {
 
             let currency = {
                 num: num,

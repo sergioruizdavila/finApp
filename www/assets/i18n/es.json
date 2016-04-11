@@ -1,6 +1,7 @@
 {
     "__GLOBAL__":"",
     "%global.continue.button.text": "CONTINUAR",
+    "%global.total.text": "TOTAL",
 
     "__NAVBAR__":"",
     "%navbar.title.text": "FinApp",
@@ -8,9 +9,24 @@
 
     "__POPUPS__":"",
     "%popup.general.cancel_button.text": "CANCELAR",
+    "%popup.tip.example.title.text": "Algunos ejemplos",
+    "%popup.tip.example.new_necessary_expense.title.text": "Estos son algunos de los ejemplos de gastos obligatorios:",
+    "%popup.tip.example.new_necessary_expense.rent.text": "Arriendo",
+    "%popup.tip.example.new_necessary_expense.services.text": "Servicios",
+    "%popup.tip.example.new_necessary_expense.market.text": "Mercado",
+    "%popup.tip.example.new_necessary_expense.university.text": "Universidad",
+    "%popup.tip.example.new_necessary_expense.health.text": "Salud",
+    "%popup.tip.example.new_necessary_expense.school.text": "Colegio de tus hijos",
+    "%popup.tip.example.new_necessary_expense.taxes.text": "Impuestos",
+    "%popup.tip.example.new_necessary_expense.fuel.text": "Gasolina",
+    "%popup.tip.example.ok_button.text": "GRACIAS",
     "%popup.create_user.ok_button.text": "CREAR",
     "%popup.create_user.title.text": "¿Crear una nueva cuenta?",
     "%popup.create_user.body_message.text": "Vamos a crear una nueva cuenta. Si ya tienes una, cancela e inicia sesión con tu email.",
+    "%popup.add_expense.title.text": "Agrega un nuevo gasto",
+    "%popup.add_expense.subtitle.text": "Agrega el nombre de tu gasto obligatorio, y su correspondiente valor",
+    "%popup.add_expense.input_expense_name.placeholder.text": "Nombre de tu gasto",
+    "%popup.add_expense.add_button.text": "AGREGAR",
 
     "__TUTORIAL__":"",
     "%tutorial.signup.button.text" : "REGISTRARSE",
@@ -39,6 +55,9 @@
     "%business.title.text": "Ingresos por negocios",
     "%business.help_text.text": "Especifica si tienes ingresos mensuales por negocios (empresa, tienda, venta de ropa etc).",
 
+    "__NECESSARY_EXPENSE__":"",
+    "%necessary_expense.title.text": "Gastos Necesarios",
+    "%necessary_expense.help_text.text": "Agrega todos los gastos que afectarian tu vida si no los pagaras (por ejemplo alquiler, servicios, internet, etc.)",
 
 
     "": ""

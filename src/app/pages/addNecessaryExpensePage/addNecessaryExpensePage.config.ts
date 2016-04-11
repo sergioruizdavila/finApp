@@ -11,8 +11,6 @@
         .module('finApp.pages.addNecessaryExpensePage', [])
         .config(config);
 
-    //config.$inject = ['ionic'];
-
     function config($stateProvider: angular.ui.IStateProvider) {
 
         $stateProvider

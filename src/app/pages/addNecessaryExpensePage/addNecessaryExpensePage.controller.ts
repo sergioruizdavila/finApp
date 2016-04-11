@@ -10,16 +10,15 @@ module app.pages.addNecessaryExpensePage {
     /**********************************/
     export interface IAddNecessaryExpensePageController {
         form: IAddNecessaryExpenseForm;
-        formatInvestment: () => void;
-        activate: () => void;
         showExpenseDetailPopup: () => void;
+        activate: () => void;
         showTipPopup: () => void;
         goToNext: () => void;
         goToBack: () => void;
     }
 
     export interface IAddNecessaryExpenseForm {
-        investment: app.models.finance.IMoney;
+        expense: any;
     }
 
     /****************************************/
@@ -41,6 +40,7 @@ module app.pages.addNecessaryExpensePage {
                           '$filter',
                           'finApp.core.util.FunctionsUtilService',
                           '$state',
+                          '$scope',
                           '$rootScope'];
 
         /**********************************/
@@ -51,6 +51,7 @@ module app.pages.addNecessaryExpensePage {
         private $filter: angular.IFilterService,
         private FunctionsUtilService: app.core.util.functionsUtil.FunctionsUtilService,
         private $state: ng.ui.IStateService,
+        private $scope: any,
         private $rootScope: app.interfaces.IFinAppRootScope) {
             this.init();
         }
@@ -59,9 +60,12 @@ module app.pages.addNecessaryExpensePage {
         private init() {
             //Init form
             this.form = {
-                investment: {
-                    num: null,
-                    formatted: ''
+                expense: {
+                    value: {
+                        num: null,
+                        formatted: ''
+                    },
+                    title: ''
                 }
             };
 
@@ -78,36 +82,21 @@ module app.pages.addNecessaryExpensePage {
         /**********************************/
 
         /*
-        * Format Investment Method
-        * @description Format the investment value with default currency
-        */
-        formatInvestment(): void {
-            let currencyObj: app.models.finance.IMoney =
-            this.FunctionsUtilService.formatCurrency(this.form.investment.num,
-                                                     this.form.investment.formatted);
-
-            this.form.investment.num = currencyObj.num;
-            this.form.investment.formatted = currencyObj.formatted;
-        }
-
-        /*
-        *
-        *
+        * Show tip example expenses popup
+        * @description this method is launched when user press Gift icon in order to receive more information
         */
         showTipPopup(): void {
             //CONSTANTS
-            //const POPUP_TITLE = this.$filter('translate')('%popup.create_user.title.text');
-            const POPUP_BODY_TEXT = this.$filter('translate')('%popup.create_user.body_message.text');
-            //const POPUP_CANCEL_BUTTON_TEXT = this.$filter('translate')('%popup.general.cancel_button.text');
-            //const POPUP_OK_BUTTON_TEXT = this.$filter('translate')('%popup.create_user.ok_button.text');
+            const POPUP_TITLE = this.$filter('translate')('%popup.tip.example.title.text');
+            const POPUP_OK_BUTTON_TEXT = this.$filter('translate')('%popup.tip.example.ok_button.text');
             const POPUP_OK_BUTTON_TYPE = 'button-positive';
 
-            let tipInstance = this.$ionicPopup.show({
-                title: 'Algunos ejemplos',
-                templateUrl: 'templates/components/popup/listPopup.html',
+            this.$ionicPopup.show({
+                title: POPUP_TITLE,
+                templateUrl: 'templates/components/popup/listPopup/listPopup.html',
                 buttons: [
                     {
-                        text: 'GRACIAS',
+                        text: POPUP_OK_BUTTON_TEXT,
                         type: POPUP_OK_BUTTON_TYPE
                     }
                 ]
@@ -122,23 +111,25 @@ module app.pages.addNecessaryExpensePage {
             //VARIABLES
             let self = this;
             //CONSTANTS
-            //const POPUP_TITLE = this.$filter('translate')('%popup.create_user.title.text');
-            const POPUP_BODY_TEXT = this.$filter('translate')('%popup.create_user.body_message.text');
+            const POPUP_BODY_CLASS = 'expenseDetailPopup';
+            const POPUP_TITLE = this.$filter('translate')('%popup.add_expense.title.text');
             const POPUP_CANCEL_BUTTON_TEXT = this.$filter('translate')('%popup.general.cancel_button.text');
-            //const POPUP_OK_BUTTON_TEXT = this.$filter('translate')('%popup.create_user.ok_button.text');
-            const POPUP_OK_BUTTON_TYPE = 'button-positive';
+            const POPUP_ADD_BUTTON_TEXT = this.$filter('translate')('%popup.add_expense.add_button.text');
+            const POPUP_ADD_BUTTON_TYPE = 'button-positive';
 
-            let expenseDetailInstance = this.$ionicPopup.show({
-                title: 'Agrega un nuevo gasto',
-                templateUrl: 'templates/components/popup/expenseDetailPopup/expenseDetailPopup.html',
-                cssClass: 'expenseDetailPopup',
+            this.$ionicPopup.show({
+                title: POPUP_TITLE,
+                template: '<fa-expense-detail-popup></fa-expense-detail-popup>',
+                cssClass: POPUP_BODY_CLASS,
+                scope: self.$scope,
                 buttons: [
                     { text: POPUP_CANCEL_BUTTON_TEXT },
                     {
-                        text: 'AGREGAR',
-                        type: POPUP_OK_BUTTON_TYPE,
+                        text: POPUP_ADD_BUTTON_TEXT,
+                        type: POPUP_ADD_BUTTON_TYPE,
                         onTap: function(e) {
-                            self._addNewExpense(e);
+                            let expense = this.scope.vm.form.expense;
+                            self._addOrEditExpense(expense);
                         }
                     }
                 ]
@@ -146,11 +137,16 @@ module app.pages.addNecessaryExpensePage {
         }
 
         /*
-        * Add New Expense
+        * Add or Edit Expense
         * @description this method is launched when user press Add button on expenseDetailPopup
         */
-        _addNewExpense($event): void {
-            console.log($event);
+        _addOrEditExpense(expense): void {
+            //TODO: Preguntar si este gasto ya existe, si ya existe toca llamar al servicio que
+            // que edite un gasto en firebase, y actualizarlo inmediatamente en la lista. Si es
+            // un nuevo gasto, lo que deberia hacer es crear un nuevo gasto en Firebase, e inmediatamente
+            // despues agregarlo a las lista de gastos de la visual.
+
+            console.log(expense);
         }
 
         /*
@@ -158,8 +154,9 @@ module app.pages.addNecessaryExpensePage {
         * @description this method is launched when user press OK button
         */
         goToNext(): void {
-            this.$rootScope.User.Finance.Investment = this.form.investment;
-            this.$state.go('page.business');
+            //TODO: Asignar los gastos necesarios al objeto User.Finance
+            //this.$rootScope.User.Finance.Investment = this.form.expenses;
+            this.$state.go('page.innecessaryExpense');
         }
 
         /*
@@ -176,5 +173,4 @@ module app.pages.addNecessaryExpensePage {
     angular
         .module('finApp.pages.addInvestmentPage')
         .controller(AddNecessaryExpensePageController.controllerId, AddNecessaryExpensePageController);
-
 }
