@@ -34,18 +34,20 @@ module app.pages.addSalaryPage {
         // --------------------------------
 
         /*-- INJECT DEPENDENCIES --*/
-        static $inject = ['$ionicHistory',
-                          'finApp.core.util.FunctionsUtilService',
+        static $inject = ['dataConfig',
+                          '$ionicHistory',
                           'finApp.models.finance.FinanceService',
+                          'finApp.core.util.FunctionsUtilService',
                           '$state',
                           '$rootScope'];
 
         /**********************************/
         /*           CONSTRUCTOR          */
         /**********************************/
-        constructor(private $ionicHistory: ionic.navigation.IonicHistoryService,
-                    private FunctionsUtilService: app.core.util.functionsUtil.FunctionsUtilService,
+        constructor(private dataConfig: IDataConfig,
+                    private $ionicHistory: ionic.navigation.IonicHistoryService,
                     private FinanceService: app.models.finance.IFinanceService,
+                    private FunctionsUtilService: app.core.util.functionsUtil.FunctionsUtilService,
                     private $state: ng.ui.IStateService,
                     private $rootScope: app.interfaces.IFinAppRootScope) {
             this.init();
@@ -93,9 +95,8 @@ module app.pages.addSalaryPage {
             //Update User model
             this.$rootScope.User.Finance.Income.Salary = this.form.salary;
             //Save salary on firebase
-            this.FinanceService.saveIncome(this.$rootScope.User.Id,
-                                                 'salary',
-                                                 this.$rootScope.User.Finance.Income.Salary);
+            this.FinanceService.saveSalary(this.$rootScope.User.Finance.Income.Salary);
+
             this.$state.go('page.investment');
         }
 

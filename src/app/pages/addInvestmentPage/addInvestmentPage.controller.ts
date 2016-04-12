@@ -34,18 +34,20 @@ module app.pages.addInvestmentPage {
         // --------------------------------
 
         /*-- INJECT DEPENDENCIES --*/
-        static $inject = ['$ionicHistory',
-                          'finApp.core.util.FunctionsUtilService',
+        static $inject = ['dataConfig',
+                          '$ionicHistory',
                           'finApp.models.finance.FinanceService',
+                          'finApp.core.util.FunctionsUtilService',
                           '$state',
                           '$rootScope'];
 
         /**********************************/
         /*           CONSTRUCTOR          */
         /**********************************/
-        constructor(private $ionicHistory: ionic.navigation.IonicHistoryService,
-        private FunctionsUtilService: app.core.util.functionsUtil.FunctionsUtilService,
+        constructor(private dataConfig: IDataConfig,
+        private $ionicHistory: ionic.navigation.IonicHistoryService,
         private FinanceService: app.models.finance.IFinanceService,
+        private FunctionsUtilService: app.core.util.functionsUtil.FunctionsUtilService,
         private $state: ng.ui.IStateService,
         private $rootScope: app.interfaces.IFinAppRootScope) {
             this.init();
@@ -94,9 +96,8 @@ module app.pages.addInvestmentPage {
             //Update User model
             this.$rootScope.User.Finance.Income.Investment = this.form.investment;
             //Save investment on firebase
-            this.FinanceService.saveIncome(this.$rootScope.User.Id,
-                                                 'investment',
-                                                 this.$rootScope.User.Finance.Income.Investment);
+            this.FinanceService.saveInvestment(this.$rootScope.User.Finance.Income.Investment);
+
             this.$state.go('page.business');
         }
 

@@ -35,9 +35,11 @@ module app.pages.addNecessaryExpensePage {
         // --------------------------------
 
         /*-- INJECT DEPENDENCIES --*/
-        static $inject = ['$ionicHistory',
+        static $inject = ['dataConfig',
+                          '$ionicHistory',
                           '$ionicPopup',
                           '$filter',
+                          'finApp.core.firebase.FirebaseFactory',
                           'finApp.core.util.FunctionsUtilService',
                           '$state',
                           '$scope',
@@ -46,9 +48,11 @@ module app.pages.addNecessaryExpensePage {
         /**********************************/
         /*           CONSTRUCTOR          */
         /**********************************/
-        constructor(private $ionicHistory: ionic.navigation.IonicHistoryService,
+        constructor(private dataConfig: IDataConfig,
+        private $ionicHistory: ionic.navigation.IonicHistoryService,
         private $ionicPopup: ionic.popup.IonicPopupService,
         private $filter: angular.IFilterService,
+        private FirebaseFactory: app.core.firebase.IFirebaseFactory,
         private FunctionsUtilService: app.core.util.functionsUtil.FunctionsUtilService,
         private $state: ng.ui.IStateService,
         private $scope: any,

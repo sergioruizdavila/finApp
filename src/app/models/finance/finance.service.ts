@@ -16,7 +16,9 @@ module app.models.finance {
     /**********************************/
     export interface IFinanceService {
         ref: any;
-        saveIncome: (userId, type, value) => angular.IPromise<string>;
+        saveSalary: (newSalary) => void;
+        saveInvestment: (newInvestment) => void;
+        saveBusiness: (newBusiness) => void;
     }
 
 
@@ -35,7 +37,8 @@ module app.models.finance {
 
 
         /*-- INJECT DEPENDENCIES --*/
-        static $inject = ['finApp.core.firebase.FirebaseFactory',
+        static $inject = ['dataConfig',
+                          'finApp.core.firebase.FirebaseFactory',
                           '$firebaseObject',
                           '$firebaseArray',
                           '$rootScope'];
@@ -44,10 +47,11 @@ module app.models.finance {
         /**********************************/
         /*           CONSTRUCTOR          */
         /**********************************/
-        constructor(private FirebaseFactory: app.core.firebase.IFirebaseFactory,
-            private $firebaseObject: AngularFireObjectService,
-            private $firebaseArray: AngularFireArrayService,
-            private $rootScope: app.interfaces.IFinAppRootScope) {
+        constructor(private dataConfig: IDataConfig,
+                    private FirebaseFactory: app.core.firebase.IFirebaseFactory,
+                    private $firebaseObject: AngularFireObjectService,
+                    private $firebaseArray: AngularFireArrayService,
+                    private $rootScope: app.interfaces.IFinAppRootScope) {
 
             this.ref = this.FirebaseFactory.createFirebase();
 
@@ -58,39 +62,49 @@ module app.models.finance {
         /**********************************/
 
         /**
-        * saveIncome
-        * @description - save user salary, investment or business income on firebase
+        * saveSalary
+        * @description - save user salary on firebase
         * @function
-        * @return {angular.IPromise<string>} ref - Return a ref of saving newSalary value
+        * @parameter {string} newSalary - new value for user salary property
         */
-        saveIncome(userId, type, value): angular.IPromise<string> {
-            let userRef = this.ref.child('users')
-                                  .child(userId)
-                                  .child('finance')
-                                  .child('income')
-                                  .child(type);
-
-            return userRef.update(value, function(error) {
-                if (error) {
-                    return error;
-                } else {
-                    return 'OK';
-                }
-            });
-
+        saveSalary(newSalary): void {
+            let url = '/users/' + this.$rootScope.User.Id + this.dataConfig.salaryIncomeUrl;
+            this.FirebaseFactory.update(url, newSalary);
         }
 
+        /**
+        * saveInvestment
+        * @description - save user investment income on firebase
+        * @function
+        * @parameter {string} newSalary - new value for user investment property
+        */
+        saveInvestment(newInvestment): void {
+            let url = '/users/' + this.$rootScope.User.Id + this.dataConfig.investmentIncomeUrl;
+            this.FirebaseFactory.update(url, newInvestment);
+        }
+
+        /**
+        * saveBusiness
+        * @description - save user business income on firebase
+        * @function
+        * @parameter {string} newBusiness - new value for user business property
+        */
+        saveBusiness(newBusiness): void {
+            let url = '/users/' + this.$rootScope.User.Id + this.dataConfig.businessIncomeUrl;
+            this.FirebaseFactory.update(url, newBusiness);
+        }
 
 
         /**********************************/
         /*        INSTANCE FACTORY        */
         /**********************************/
-        static instance(FirebaseFactory: app.core.firebase.IFirebaseFactory,
+        static instance(dataConfig: IDataConfig,
+            FirebaseFactory: app.core.firebase.IFirebaseFactory,
             $firebaseObject: AngularFireObjectService,
             $firebaseArray: AngularFireArrayService,
             $rootScope: app.interfaces.IFinAppRootScope): IFinanceService {
 
-            return new FinanceService(FirebaseFactory, $firebaseObject, $firebaseArray, $rootScope);
+            return new FinanceService(dataConfig, FirebaseFactory, $firebaseObject, $firebaseArray, $rootScope);
 
         }
 
@@ -99,7 +113,8 @@ module app.models.finance {
     /*-- MODULE DEFINITION --*/
     angular
         .module('finApp.models.finance', [])
-        .factory(FinanceService.serviceId, ['finApp.core.firebase.FirebaseFactory',
+        .factory(FinanceService.serviceId, ['dataConfig',
+            'finApp.core.firebase.FirebaseFactory',
             '$firebaseObject',
             '$firebaseArray',
             '$rootScope',
