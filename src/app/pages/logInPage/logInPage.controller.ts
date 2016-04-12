@@ -96,7 +96,8 @@ module app.pages.logInPage {
                 function (authData){
                     //TODO: Si se loguea exitosamente debe llevarlo directamente a: 1. addSalaryPage
                     // si es la primera vez que usa la App, 2. dashboard o pantalla principal, donde le
-                    // muestre los meses, las tarejtas, etc etc.
+                    // muestre los meses, las tarjetas, etc etc.                    
+                    self.$rootScope.User.Uid = authData.uid;
                     self.$state.go('page.salary');
                     console.log('Authenticated successfully with payload:', authData);
                 }, function (error){

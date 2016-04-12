@@ -11,7 +11,7 @@ module app.models.user {
     export class User {
 
         /*-- PROPERTIES --*/
-        private id: string;
+        private uid: string;
         private username: string;
         private email: string;
         private finance: app.models.finance.Finance;
@@ -24,7 +24,7 @@ module app.models.user {
             console.log('User Model instanced');
 
             //init properties
-            this.id = null;
+            this.uid = null;
             this.username = null;
             this.email = null;
             this.finance = new app.models.finance.Finance();
@@ -35,13 +35,13 @@ module app.models.user {
         /*             METHODS            */
         /**********************************/
 
-        get Id() {
-            return this.id;
+        get Uid() {
+            return this.uid;
         }
 
-        set Id(id: string) {
-            if (id === undefined) { throw 'Please supply id'; }
-            this.id = id;
+        set Uid(uid: string) {
+            if (uid === undefined) { throw 'Please supply id'; }
+            this.uid = uid;
         }
 
         get Username() {

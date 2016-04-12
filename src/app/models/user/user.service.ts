@@ -20,7 +20,7 @@ module app.models.user {
         getUserByEmail: (email: string) => AngularFireObject;
         getUsers: () => AngularFireArray;
         bindingUser: (uid: string, $rootScope: app.interfaces.IFinAppRootScope) => any;
-        createUser: (newUser) => angular.IPromise<string>;
+        createUser: (newUser: app.models.user.User, callback: (err) => void) => void;
     }
 
 
@@ -87,21 +87,15 @@ module app.models.user {
 
 
         /**
-        * getUsers
-        * @description - get all Users
+        * createUser
+        * @description - create new User
         * @function
-        * @return {AngularFireArrayService} firebaseArray - Return a AngularFireArray object
+        * @parameters {app.model.user.User} newUser - include the user information object
+        * @parameters {function} callback - function callback required to know if create new user was Ok
         */
-        createUser(newUser): angular.IPromise<string> {
-            let usersRef = this.$firebaseArray(this.ref.child('users'));
-            //TODO: Revisar ya que crea al user con un id no uid, verificar que se puede hacer
-            return usersRef.$add(newUser).then(function(ref) {
-                let id: string = ref.key();
-                console.log('added user with id ' + id);
-                // returns location in the array, return -1 if not found
-                //return usersRef.$indexFor(id);
-                return id;
-            });
+        createUser(newUser, callback): void {
+            let userRef = this.ref.child('users/' + newUser.Uid);
+            userRef.set(newUser, callback);
         }
 
 

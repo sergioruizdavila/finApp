@@ -16,9 +16,9 @@ module app.models.finance {
     /**********************************/
     export interface IFinanceService {
         ref: any;
-        saveSalary: (newSalary) => void;
-        saveInvestment: (newInvestment) => void;
-        saveBusiness: (newBusiness) => void;
+        saveSalary: (newSalary: IMoney) => void;
+        saveInvestment: (newInvestment: IMoney) => void;
+        saveBusiness: (newBusiness: IMoney) => void;
     }
 
 
@@ -68,7 +68,7 @@ module app.models.finance {
         * @parameter {string} newSalary - new value for user salary property
         */
         saveSalary(newSalary): void {
-            let url = '/users/' + this.$rootScope.User.Id + this.dataConfig.salaryIncomeUrl;
+            let url = '/users/' + this.$rootScope.User.Uid + this.dataConfig.salaryIncomeUrl;
             this.FirebaseFactory.update(url, newSalary);
         }
 
@@ -79,7 +79,7 @@ module app.models.finance {
         * @parameter {string} newSalary - new value for user investment property
         */
         saveInvestment(newInvestment): void {
-            let url = '/users/' + this.$rootScope.User.Id + this.dataConfig.investmentIncomeUrl;
+            let url = '/users/' + this.$rootScope.User.Uid + this.dataConfig.investmentIncomeUrl;
             this.FirebaseFactory.update(url, newInvestment);
         }
 
@@ -90,7 +90,7 @@ module app.models.finance {
         * @parameter {string} newBusiness - new value for user business property
         */
         saveBusiness(newBusiness): void {
-            let url = '/users/' + this.$rootScope.User.Id + this.dataConfig.businessIncomeUrl;
+            let url = '/users/' + this.$rootScope.User.Uid + this.dataConfig.businessIncomeUrl;
             this.FirebaseFactory.update(url, newBusiness);
         }
 
