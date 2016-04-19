@@ -1,3 +1,5 @@
+/// <reference path="./finance.service.ts"/>
+
 /**
  * Specifies the Classes and Interfaces related to Users in our Model
  */
@@ -27,8 +29,7 @@ module app.models.finance {
 
         /*-- PROPERTIES --*/
         private income: Income;
-        private necessaryExpenses: Array<IExpense>;
-
+        private expense: Expense;
 
         /**********************************/
         /*           CONSTRUCTOR          */
@@ -39,7 +40,7 @@ module app.models.finance {
 
             //init properties
             this.income = new Income();
-            this.necessaryExpenses = [];
+            this.expense = new Expense();
         }
 
         /**********************************/
@@ -48,6 +49,10 @@ module app.models.finance {
 
         get Income() {
             return this.income;
+        }
+
+        get Expense(){
+            return this.expense;
         }
 
     }
@@ -137,6 +142,15 @@ module app.models.finance {
         /*             METHODS            */
         /**********************************/
 
+        addNecessaryExpense(expense: IExpense): void {
+            if (expense === undefined) { throw 'Please supply neccesary expense value'; }
+            this.necessaryExpenses.push(expense);
+        }
+
+        addUnnecessaryExpense(expense: IExpense): void {
+            if (expense === undefined) { throw 'Please supply unnecesary expense value'; }
+            this.unnecessaryExpenses.push(expense);
+        }
 
     }
 

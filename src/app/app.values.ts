@@ -12,6 +12,8 @@ interface IDataConfig {
     salaryIncomeUrl: string;
     investmentIncomeUrl: string;
     businessIncomeUrl: string;
+    neccesaryExpenseUrl: string;
+    unneccesaryExpenseUrl: string;
     userId: string;
 }
 
@@ -25,6 +27,8 @@ interface IDataConfig {
         salaryIncomeUrl: '/finance/income/salary',
         investmentIncomeUrl: '/finance/income/investment',
         businessIncomeUrl: '/finance/income/business',
+        neccesaryExpenseUrl: '/finance/expense/necessaries',
+        unneccesaryExpenseUrl: '/finance/expense/unnecessaries',
         userId: ''
     };
 

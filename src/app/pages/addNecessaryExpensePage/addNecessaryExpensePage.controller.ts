@@ -39,7 +39,7 @@ module app.pages.addNecessaryExpensePage {
                           '$ionicHistory',
                           '$ionicPopup',
                           '$filter',
-                          'finApp.core.firebase.FirebaseFactory',
+                          'finApp.models.finance.FinanceService',
                           'finApp.core.util.FunctionsUtilService',
                           '$state',
                           '$scope',
@@ -52,7 +52,7 @@ module app.pages.addNecessaryExpensePage {
         private $ionicHistory: ionic.navigation.IonicHistoryService,
         private $ionicPopup: ionic.popup.IonicPopupService,
         private $filter: angular.IFilterService,
-        private FirebaseFactory: app.core.firebase.IFirebaseFactory,
+        private FinanceService: app.models.finance.IFinanceService,
         private FunctionsUtilService: app.core.util.functionsUtil.FunctionsUtilService,
         private $state: ng.ui.IStateService,
         private $scope: any,
@@ -149,6 +149,11 @@ module app.pages.addNecessaryExpensePage {
             // que edite un gasto en firebase, y actualizarlo inmediatamente en la lista. Si es
             // un nuevo gasto, lo que deberia hacer es crear un nuevo gasto en Firebase, e inmediatamente
             // despues agregarlo a las lista de gastos de la visual.
+
+            //Update User model
+            this.$rootScope.User.Finance.Expense.addNecessaryExpense(expense);
+            //Save necessary expense on firebase
+            this.FinanceService.addNewNecessaryExpense(expense);
 
             console.log(expense);
         }

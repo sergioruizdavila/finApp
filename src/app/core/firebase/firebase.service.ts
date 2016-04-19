@@ -11,6 +11,7 @@ module app.core.firebase {
     export interface IFirebaseFactory {
         createFirebase: () => Firebase;
         update: (url: string, data: any) => void;
+        add: (url: string, data: any) => void;
     }
 
     export class FirebaseFactory implements IFirebaseFactory {
@@ -45,6 +46,18 @@ module app.core.firebase {
         update(url, data): void {
             let ref = new Firebase(this.baseUrl + url);
             ref.update(data);
+        }
+
+        /**
+        * add
+        * @description - add item on Array against Firebase
+        * @function
+        * @params {string} url - uri of firebase
+        * @params {any} data - item to send in order to add object on firebase
+        */
+        add(url, data): void {
+            let ref = new Firebase(this.baseUrl + url);
+            ref.push().set(data);
         }
 
 

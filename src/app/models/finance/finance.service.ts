@@ -19,6 +19,7 @@ module app.models.finance {
         saveSalary: (newSalary: IMoney) => void;
         saveInvestment: (newInvestment: IMoney) => void;
         saveBusiness: (newBusiness: IMoney) => void;
+        addNewNecessaryExpense: (newNecessaryExpense: IExpense) => void;
     }
 
 
@@ -92,6 +93,17 @@ module app.models.finance {
         saveBusiness(newBusiness): void {
             let url = '/users/' + this.$rootScope.User.Uid + this.dataConfig.businessIncomeUrl;
             this.FirebaseFactory.update(url, newBusiness);
+        }
+
+        /**
+        * addNewNecessaryExpense
+        * @description - add new neccesary expense on firebase
+        * @function
+        * @parameter {string} newBusiness - new value for user business property
+        */
+        addNewNecessaryExpense(newNecessaryExpense): void {
+            let url = '/users/' + this.$rootScope.User.Uid + this.dataConfig.neccesaryExpenseUrl;
+            this.FirebaseFactory.add(url, newNecessaryExpense);
         }
 
 
