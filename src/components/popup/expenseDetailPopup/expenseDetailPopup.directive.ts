@@ -76,6 +76,7 @@ module components.expenseDetailPopup {
 
     export interface IExpenseDetailPopupScope extends angular.IScope {
         form: IExpenseDetailPopupForm;
+        $parent: IExpenseDetailPopupScope;
     }
 
     export interface IExpenseDetailPopupForm {
@@ -110,13 +111,7 @@ module components.expenseDetailPopup {
         private init() {
             //Init form
             this.$scope.form = {
-                expense: {
-                    value: {
-                        num: null,
-                        formatted: ''
-                    },
-                    title: ''
-                }
+                expense: this.$scope.$parent.form.expense
             };
 
             this.activate();

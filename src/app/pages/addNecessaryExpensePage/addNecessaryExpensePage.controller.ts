@@ -10,7 +10,7 @@ module app.pages.addNecessaryExpensePage {
     /**********************************/
     export interface IAddNecessaryExpensePageController {
         form: IAddNecessaryExpenseForm;
-        showExpenseDetailPopup: () => void;
+        showExpenseDetailPopup: (expense: app.models.finance.Expense) => void;
         activate: () => void;
         showTipPopup: () => void;
         goToNext: () => void;
@@ -64,13 +64,7 @@ module app.pages.addNecessaryExpensePage {
         private init() {
             //Init form
             this.form = {
-                expense: {
-                    value: {
-                        num: null,
-                        formatted: ''
-                    },
-                    title: ''
-                }
+                expense: new app.models.finance.Expense()
             };
 
             this.activate();
@@ -111,7 +105,7 @@ module app.pages.addNecessaryExpensePage {
         * show expense detail popup
         * @description this method is launched when user press Add button in the header
         */
-        showExpenseDetailPopup(): void {
+        showExpenseDetailPopup(expense: app.models.finance.Expense): void {
             //VARIABLES
             let self = this;
             //CONSTANTS
@@ -120,6 +114,9 @@ module app.pages.addNecessaryExpensePage {
             const POPUP_CANCEL_BUTTON_TEXT = this.$filter('translate')('%popup.general.cancel_button.text');
             const POPUP_ADD_BUTTON_TEXT = this.$filter('translate')('%popup.add_expense.add_button.text');
             const POPUP_ADD_BUTTON_TYPE = 'button-positive';
+
+            //Assign expense value
+            self.$scope.form = expense ? expense : new app.models.finance.Expense();
 
             this.$ionicPopup.show({
                 title: POPUP_TITLE,
@@ -149,7 +146,6 @@ module app.pages.addNecessaryExpensePage {
             // que edite un gasto en firebase, y actualizarlo inmediatamente en la lista. Si es
             // un nuevo gasto, lo que deberia hacer es crear un nuevo gasto en Firebase, e inmediatamente
             // despues agregarlo a las lista de gastos de la visual.
-
             //Update User model
             this.$rootScope.User.Finance.Expense.addNecessaryExpense(expense);
             //Save necessary expense on firebase

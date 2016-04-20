@@ -37,10 +37,23 @@
                 <div class="block_3d__title" translate>
                     %necessary_expense.title.text
                 </div>
-                <div class="block_3d__content block_3d__content--gray">
-                    <div style="height: 100px">
+                <div class="block_3d__content">
+                    <ion-list class="block_3d__content__list_container">
 
-                    </div>
+                        <ion-item class="block_3d__content__list_container__item"
+                                  ng-repeat="expense in vm.$rootScope.User.Finance.Expense.necessaryExpenses"
+                                  ng-click="vm.showExpenseDetailPopup(expense)">
+                            <div class="row row-center">
+                                <div class="block_3d__content__list_container__item__text col-50">
+                                    {{expense.title}}
+                                </div>
+                                <div class="block_3d__content__list_container__item__value col-50">
+                                    {{expense.value.formatted}}
+                                </div>
+                            </div>
+                        </ion-item>
+
+                    </ion-list>
                 </div>
                 <div class="block_3d__footer">
                     <div class="block_3d__footer__total">
