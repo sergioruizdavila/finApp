@@ -10,7 +10,7 @@ module app.pages.addNecessaryExpensePage {
     /**********************************/
     export interface IAddNecessaryExpensePageController {
         form: IAddNecessaryExpenseForm;
-        showExpenseDetailPopup: (expense: app.models.finance.Expense) => void;
+        showExpenseDetailPopup: (expense: app.models.finance.IExpense) => void;
         activate: () => void;
         showTipPopup: () => void;
         goToNext: () => void;
@@ -19,6 +19,7 @@ module app.pages.addNecessaryExpensePage {
 
     export interface IAddNecessaryExpenseForm {
         expense: any;
+        total: app.models.finance.IMoney;
     }
 
     /****************************************/
@@ -64,7 +65,8 @@ module app.pages.addNecessaryExpensePage {
         private init() {
             //Init form
             this.form = {
-                expense: new app.models.finance.Expense()
+                expense: new app.models.finance.Expense(),
+                total: { num: 0, formatted: '$0' }
             };
 
             this.activate();
@@ -105,7 +107,7 @@ module app.pages.addNecessaryExpensePage {
         * show expense detail popup
         * @description this method is launched when user press Add button in the header
         */
-        showExpenseDetailPopup(expense: app.models.finance.Expense): void {
+        showExpenseDetailPopup(expense: app.models.finance.IExpense): void {
             //VARIABLES
             let self = this;
             //CONSTANTS
@@ -116,7 +118,9 @@ module app.pages.addNecessaryExpensePage {
             const POPUP_ADD_BUTTON_TYPE = 'button-positive';
 
             //Assign expense value
-            self.$scope.form = expense ? expense : new app.models.finance.Expense();
+            self.$scope.form = {
+                expense: expense ? expense : new app.models.finance.Expense()
+            };
 
             this.$ionicPopup.show({
                 title: POPUP_TITLE,
@@ -147,11 +151,43 @@ module app.pages.addNecessaryExpensePage {
             // un nuevo gasto, lo que deberia hacer es crear un nuevo gasto en Firebase, e inmediatamente
             // despues agregarlo a las lista de gastos de la visual.
             //Update User model
-            this.$rootScope.User.Finance.Expense.addNecessaryExpense(expense);
+            //this.$rootScope.User.Finance.Expense.addNecessaryExpense(expense);
+            this.$rootScope.User.Finance.addNecessaryExpense(expense);
             //Save necessary expense on firebase
             this.FinanceService.addNewNecessaryExpense(expense);
+            //Calculate Total Expenses
+            this._calculateTotalExpenses(this.$rootScope.User.Finance.NecessaryExpenses);
 
             console.log(expense);
+        }
+
+        /*
+        * Parse Expenses Object in order to calculate Total Expenses
+        * @description this method is launched when user press OK button
+        */
+        _calculateTotalExpenses(expenses): void {
+            //Parse expenses Object
+
+            let expensesArray = expenses.map(function(obj){
+               return obj.value.num;
+            });
+
+            this.form.total.num = this.FinanceService.total(expensesArray);
+            this.form.total.formatted = this.form.total.num.toString();
+            this._formatTotal();
+        }
+
+        /*
+        * Format Business Method
+        * @description Format the business value with default currency
+        */
+        _formatTotal(): void {
+            let currencyObj: app.models.finance.IMoney =
+            this.FunctionsUtilService.formatCurrency(this.form.total.num,
+                                                     this.form.total.formatted);
+
+            this.form.total.num = currencyObj.num;
+            this.form.total.formatted = currencyObj.formatted;
         }
 
         /*
@@ -159,9 +195,7 @@ module app.pages.addNecessaryExpensePage {
         * @description this method is launched when user press OK button
         */
         goToNext(): void {
-            //TODO: Asignar los gastos necesarios al objeto User.Finance
-            //this.$rootScope.User.Finance.Investment = this.form.expenses;
-            this.$state.go('page.innecessaryExpense');
+            this.$state.go('page.unnecessaryExpense');
         }
 
         /*

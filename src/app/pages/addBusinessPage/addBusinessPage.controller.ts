@@ -10,7 +10,6 @@ module app.pages.addBusinessPage {
     /**********************************/
     export interface IAddBusinessPageController {
         form: IAddBusinessForm;
-        formatBusiness: () => void;
         goToNext: () => void;
         goToBack: () => void;
         activate: () => void;
@@ -57,10 +56,7 @@ module app.pages.addBusinessPage {
         private init() {
             //Init form
             this.form = {
-                business: {
-                    num: null,
-                    formatted: ''
-                }
+                business: { num: null, formatted: '' }
             };
 
             this.activate();
@@ -79,7 +75,7 @@ module app.pages.addBusinessPage {
         * Format Business Method
         * @description Format the business value with default currency
         */
-        formatBusiness(): void {
+        _formatBusiness(): void {
             let currencyObj: app.models.finance.IMoney =
             this.FunctionsUtilService.formatCurrency(this.form.business.num,
                                                      this.form.business.formatted);

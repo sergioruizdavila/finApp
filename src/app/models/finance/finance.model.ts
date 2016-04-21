@@ -29,7 +29,9 @@ module app.models.finance {
 
         /*-- PROPERTIES --*/
         private income: Income;
-        private expense: Expense;
+        private necessaryExpenses: Array<Expense>;
+        private unnecessaryExpenses: Array<Expense>;
+
 
         /**********************************/
         /*           CONSTRUCTOR          */
@@ -40,7 +42,8 @@ module app.models.finance {
 
             //init properties
             this.income = new Income();
-            this.expense = new Expense();
+            this.necessaryExpenses = [];
+            this.unnecessaryExpenses = [];
         }
 
         /**********************************/
@@ -51,8 +54,22 @@ module app.models.finance {
             return this.income;
         }
 
-        get Expense(){
-            return this.expense;
+        get NecessaryExpenses() {
+            return this.necessaryExpenses;
+        }
+
+        get UnnecessaryExpenses() {
+            return this.unnecessaryExpenses;
+        }
+
+        addNecessaryExpense(expense: Expense): void {
+            if (expense === undefined) { throw 'Please supply neccesary expense value'; }
+            this.necessaryExpenses.push(expense);
+        }
+
+        addUnnecessaryExpense(expense: Expense): void {
+            if (expense === undefined) { throw 'Please supply unneccesary expense value'; }
+            this.unnecessaryExpenses.push(expense);
         }
 
     }
@@ -77,9 +94,9 @@ module app.models.finance {
             console.log('init income');
 
             //init properties
-            this.salary = {num: 0, formatted: '$0'};
-            this.investment = {num: 0, formatted: '$0'};
-            this.business = {num: 0, formatted: '$0'};
+            this.salary = {num: null, formatted: ''};
+            this.investment = {num: null, formatted: ''};
+            this.business = {num: null, formatted: ''};
         }
 
         /**********************************/
@@ -123,8 +140,8 @@ module app.models.finance {
     export class Expense {
 
         /*-- PROPERTIES --*/
-        private necessaryExpenses: Array<IExpense>;
-        private unnecessaryExpenses: Array<IExpense>;
+        private title: string;
+        private value: IMoney;
 
         /**********************************/
         /*           CONSTRUCTOR          */
@@ -134,22 +151,30 @@ module app.models.finance {
             console.log('init expense');
 
             //init properties
-            this.necessaryExpenses = [];
-            this.unnecessaryExpenses = [];
+            this.title = '';
+            this.value = {num: null, formatted: ''};
         }
 
         /**********************************/
         /*             METHODS            */
         /**********************************/
 
-        addNecessaryExpense(expense: IExpense): void {
-            if (expense === undefined) { throw 'Please supply neccesary expense value'; }
-            this.necessaryExpenses.push(expense);
+        get Title() {
+            return this.title;
         }
 
-        addUnnecessaryExpense(expense: IExpense): void {
-            if (expense === undefined) { throw 'Please supply unnecesary expense value'; }
-            this.unnecessaryExpenses.push(expense);
+        set Title(title: string) {
+            if (title === undefined) { throw 'Please supply title value'; }
+            this.title = title;
+        }
+
+        get Value() {
+            return this.value;
+        }
+
+        set Value(value: IMoney) {
+            if (value === undefined) { throw 'Please supply value'; }
+            this.value = value;
         }
 
     }

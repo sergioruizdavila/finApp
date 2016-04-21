@@ -41,7 +41,7 @@
                     <ion-list class="block_3d__content__list_container">
 
                         <ion-item class="block_3d__content__list_container__item"
-                                  ng-repeat="expense in vm.$rootScope.User.Finance.Expense.necessaryExpenses"
+                                  ng-repeat="expense in vm.$rootScope.User.Finance.NecessaryExpenses"
                                   ng-click="vm.showExpenseDetailPopup(expense)">
                             <div class="row row-center">
                                 <div class="block_3d__content__list_container__item__text col-50">
@@ -62,7 +62,7 @@
                                 %global.total.text
                             </div>
                             <div class=" block_3d__footer__total__value col-60">
-                                $ 3'000.000
+                                {{vm.form.total.formatted}}
                             </div>
                         </div>
                     </div>

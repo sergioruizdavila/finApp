@@ -20,6 +20,8 @@ module app.models.finance {
         saveInvestment: (newInvestment: IMoney) => void;
         saveBusiness: (newBusiness: IMoney) => void;
         addNewNecessaryExpense: (newNecessaryExpense: IExpense) => void;
+        /*-- mathematical calculations --*/
+        total: (numbers: Array<number>) => number;
     }
 
 
@@ -99,11 +101,29 @@ module app.models.finance {
         * addNewNecessaryExpense
         * @description - add new neccesary expense on firebase
         * @function
-        * @parameter {string} newBusiness - new value for user business property
+        * @parameter {string} newNecessaryExpense - new value for user necessary expense property
         */
         addNewNecessaryExpense(newNecessaryExpense): void {
             let url = '/users/' + this.$rootScope.User.Uid + this.dataConfig.neccesaryExpenseUrl;
             this.FirebaseFactory.add(url, newNecessaryExpense);
+        }
+
+        /***********************************/
+        /*    mathematical calculations    */
+        /***********************************/
+
+        /**
+        * total
+        * @description - sum each element and return the total value
+        * @function
+        * @parameter {Array<number>} numbers - numbers Array that we need to sum
+        */
+        total(numbers): number {
+            let total = 0;
+            for(var i = 0; i < numbers.length; i++) {
+                total += numbers[i];
+            }
+            return total;
         }
 
 

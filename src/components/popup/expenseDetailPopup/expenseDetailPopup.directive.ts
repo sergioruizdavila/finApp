@@ -110,7 +110,7 @@ module components.expenseDetailPopup {
         /*-- INITIALIZE METHOD --*/
         private init() {
             //Init form
-            this.$scope.form = {
+            this.form = {
                 expense: this.$scope.$parent.form.expense
             };
 
