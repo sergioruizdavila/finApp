@@ -110,6 +110,10 @@ module app.pages.addNecessaryExpensePage {
         showExpenseDetailPopup(expense: app.models.finance.IExpense): void {
             //VARIABLES
             let self = this;
+            //TODO: CREAR VARIAS CONSTANTES AQUI QUE VAYAS ASOCIADOS A LO QUE ESTA QUEMADO
+            // EN LA DIRECTIVA, PARA ASI ASIGNAR ESTAS CONSTANTES AL SCOPE Y ENVIARLAS PARA
+            // MOSTRAR LOS TEXTOS DINAMICAMENTE Y NO QUEMADOS COMO ESTAN AHORA POR ALLA.
+            
             //CONSTANTS
             const POPUP_BODY_CLASS = 'expenseDetailPopup';
             const POPUP_TITLE = this.$filter('translate')('%popup.add_expense.title.text');
@@ -152,7 +156,7 @@ module app.pages.addNecessaryExpensePage {
             // despues agregarlo a las lista de gastos de la visual.
             //Update User model
             //this.$rootScope.User.Finance.Expense.addNecessaryExpense(expense);
-            this.$rootScope.User.Finance.addNecessaryExpense(expense);
+            this.$rootScope.User.Finance.setNecessaryExpense(expense);
             //Save necessary expense on firebase
             this.FinanceService.addNewNecessaryExpense(expense);
             //Calculate Total Expenses

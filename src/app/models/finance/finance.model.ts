@@ -62,18 +62,17 @@ module app.models.finance {
             return this.unnecessaryExpenses;
         }
 
-        addNecessaryExpense(expense: Expense): void {
+        setNecessaryExpense(expense: Expense): void {
             if (expense === undefined) { throw 'Please supply neccesary expense value'; }
             this.necessaryExpenses.push(expense);
         }
 
-        addUnnecessaryExpense(expense: Expense): void {
+        setUnnecessaryExpense(expense: Expense): void {
             if (expense === undefined) { throw 'Please supply unneccesary expense value'; }
             this.unnecessaryExpenses.push(expense);
         }
 
     }
-
 
     /****************************************/
     /*             INCOME CLASS             */
