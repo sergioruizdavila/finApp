@@ -1,0 +1,101 @@
+<div class="bar bar-header navBar">
+    <div class="row row-center">
+
+        <div class="col-20">
+            <button class="button button-icon icon ion-arrow-left-c"
+                    style="color: #8C8C8C;"
+                    ng-click="vm.goToBack()"></button>
+        </div>
+
+        <div class="col-60">
+            <div class="progressBar">
+                <div class="progressBar__progressLine progressBar__progressLine--90Percent"></div>
+                <div class="progressBar__innerLine"></div>
+                <div class="progressBar__circle"></div>
+            </div>
+        </div>
+
+        <div class="col-20 text-right">
+            <button class="fa_btn fa_btn--red_light fa_btn--mini fa_btn__3d fa_btn__3d--red_light fa_btn__header--mini padding"
+             ng-click="vm.showExpenseDetailPopup()">
+                <span class="button-inner">
+                    +
+                </span>
+            </button>
+        </div>
+
+    </div>
+</div>
+
+<!-- where the initial view template will be rendered -->
+<ion-nav-view>
+
+    <ion-view>
+        <ion-content class="progressivePage__contentPage" scroll="false">
+
+            <div class="block_3d">
+                <div class="block_3d__title" translate>
+                    %unnecessary_expense.title.text
+                </div>
+                <div class="block_3d__content">
+                    <ion-list class="block_3d__content__list_container">
+
+                        <ion-item class="block_3d__content__list_container__item"
+                                  ng-repeat="expense in vm.$rootScope.User.Finance.UnnecessaryExpenses"
+                                  ng-click="vm.showExpenseDetailPopup(expense)">
+                            <div class="row row-center">
+                                <div class="block_3d__content__list_container__item__text col-50">
+                                    {{expense.title}}
+                                </div>
+                                <div class="block_3d__content__list_container__item__value col-50">
+                                    {{expense.value.formatted}}
+                                </div>
+                            </div>
+                        </ion-item>
+
+                    </ion-list>
+                </div>
+                <div class="block_3d__footer">
+                    <div class="block_3d__footer__total">
+                        <div class="row row-center">
+                            <div class="block_3d__footer__total__text col-33" translate>
+                                %global.total.text
+                            </div>
+                            <div class=" block_3d__footer__total__value col-60">
+                                {{vm.form.total.formatted}}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="progressivePage__contentPage__helpText_with_icon">
+                <div class="row row-center">
+                    <div class="col-80">
+                        <p translate>
+                            %unnecessary_expense.help_text.text
+                        </p>
+                    </div>
+
+                    <div class="col-20">
+                        <i class="material-icons md-36 md-red_light"
+                           ng-click="vm.showTipPopup()">card_giftcard</i>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </ion-content>
+    </ion-view>
+
+    <ion-footer-bar class="progressivePage__footer">
+        <button class="fa_btn fa_btn--blue fa_btn--block fa_btn--large fa_btn__3d fa_btn__3d--blue padding"
+         ng-click="vm.goToNext()">
+            <span class="button-inner" translate>
+                %global.continue.button.text
+            </span>
+        </button>
+    </ion-footer-bar>
+
+</ion-nav-view>

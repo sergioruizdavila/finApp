@@ -20,6 +20,7 @@ module app.models.finance {
         saveInvestment: (newInvestment: IMoney) => void;
         saveBusiness: (newBusiness: IMoney) => void;
         addNewNecessaryExpense: (newNecessaryExpense: IExpense) => void;
+        addNewUnnecessaryExpense: (newUnnecessaryExpense: IExpense) => void;
         /*-- mathematical calculations --*/
         total: (numbers: Array<number>) => number;
     }
@@ -106,6 +107,17 @@ module app.models.finance {
         addNewNecessaryExpense(newNecessaryExpense): void {
             let url = '/users/' + this.$rootScope.User.Uid + this.dataConfig.neccesaryExpenseUrl;
             this.FirebaseFactory.add(url, newNecessaryExpense);
+        }
+
+        /**
+        * addNewUnnecessaryExpense
+        * @description - add new unneccesary expense on firebase
+        * @function
+        * @parameter {string} newUnnecessaryExpense - new value for user unnecessary expense property
+        */
+        addNewUnnecessaryExpense(newUnnecessaryExpense): void {
+            let url = '/users/' + this.$rootScope.User.Uid + this.dataConfig.unneccesaryExpenseUrl;
+            this.FirebaseFactory.add(url, newUnnecessaryExpense);
         }
 
         /***********************************/

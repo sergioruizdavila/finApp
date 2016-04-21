@@ -59,6 +59,9 @@
     "%necessary_expense.title.text": "Gastos Necesarios",
     "%necessary_expense.help_text.text": "Agrega todos los gastos que afectarian tu vida si no los pagaras (por ejemplo alquiler, servicios, internet, etc.)",
 
+    "__UNNECESSARY_EXPENSE__":"",
+    "%unnecessary_expense.title.text": "Gastos No Necesarios",
+    "%unnecessary_expense.help_text.text": "Agrega todos los gastos que no afectarian tu vida si no los pagaras (por ejemplo regalos, ropa, fiestas, etc.)",
 
     "": ""
 }

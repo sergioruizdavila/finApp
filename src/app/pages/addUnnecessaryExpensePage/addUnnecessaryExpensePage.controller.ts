@@ -1,15 +1,15 @@
 /**
- * AddNecessaryExpensePageController
- * @description - Add Necessary Expense Page Controller
+ * AddUnnecessaryExpensePageController
+ * @description - Add Unnecessary Expense Page Controller
  */
 
-module app.pages.addNecessaryExpensePage {
+module app.pages.addUnnecessaryExpensePage {
 
     /**********************************/
     /*           INTERFACES           */
     /**********************************/
-    export interface IAddNecessaryExpensePageController {
-        form: IAddNecessaryExpenseForm;
+    export interface IAddUnnecessaryExpensePageController {
+        form: IAddUnnecessaryExpenseForm;
         showExpenseDetailPopup: (expense: app.models.finance.IExpense) => void;
         activate: () => void;
         showTipPopup: () => void;
@@ -17,7 +17,7 @@ module app.pages.addNecessaryExpensePage {
         goToBack: () => void;
     }
 
-    export interface IAddNecessaryExpenseForm {
+    export interface IAddUnnecessaryExpenseForm {
         expense: any;
         total: app.models.finance.IMoney;
     }
@@ -25,14 +25,14 @@ module app.pages.addNecessaryExpensePage {
     /****************************************/
     /*           CLASS DEFINITION           */
     /****************************************/
-    export class AddNecessaryExpensePageController implements IAddNecessaryExpensePageController {
+    export class AddUnnecessaryExpensePageController implements IAddUnnecessaryExpensePageController {
 
-        static controllerId = 'finApp.pages.addNecessaryExpensePage.AddNecessaryExpensePageController';
+        static controllerId = 'finApp.pages.addUnnecessaryExpensePage.AddUnnecessaryExpensePageController';
 
         /**********************************/
         /*           PROPERTIES           */
         /**********************************/
-        form: IAddNecessaryExpenseForm;
+        form: IAddUnnecessaryExpenseForm;
         // --------------------------------
 
         /*-- INJECT DEPENDENCIES --*/
@@ -74,7 +74,7 @@ module app.pages.addNecessaryExpensePage {
 
         /*-- ACTIVATE METHOD --*/
         activate(): void {
-            console.log('addNecessaryExpensePage controller actived');
+            console.log('addUnnecessaryExpensePage controller actived');
         }
 
         /**********************************/
@@ -151,12 +151,11 @@ module app.pages.addNecessaryExpensePage {
             // un nuevo gasto, lo que deberia hacer es crear un nuevo gasto en Firebase, e inmediatamente
             // despues agregarlo a las lista de gastos de la visual.
             //Update User model
-            //this.$rootScope.User.Finance.Expense.addNecessaryExpense(expense);
-            this.$rootScope.User.Finance.addNecessaryExpense(expense);
+            this.$rootScope.User.Finance.addUnnecessaryExpense(expense);
             //Save necessary expense on firebase
-            this.FinanceService.addNewNecessaryExpense(expense);
+            this.FinanceService.addNewUnnecessaryExpense(expense);
             //Calculate Total Expenses
-            this._calculateTotalExpenses(this.$rootScope.User.Finance.NecessaryExpenses);
+            this._calculateTotalExpenses(this.$rootScope.User.Finance.UnnecessaryExpenses);
 
             console.log(expense);
         }
@@ -195,6 +194,8 @@ module app.pages.addNecessaryExpensePage {
         * @description this method is launched when user press OK button
         */
         goToNext(): void {
+            //TODO: Aqui deberia llevarme a la pagina principal donde el usuario va
+            // a gestionar todo, info del user, gastos mensuales, tarjetas, etc
             this.$state.go('page.unnecessaryExpense');
         }
 
@@ -210,6 +211,6 @@ module app.pages.addNecessaryExpensePage {
 
     /*-- MODULE DEFINITION --*/
     angular
-        .module('finApp.pages.addNecessaryExpensePage')
-        .controller(AddNecessaryExpensePageController.controllerId, AddNecessaryExpensePageController);
+        .module('finApp.pages.addUnnecessaryExpensePage')
+        .controller(AddUnnecessaryExpensePageController.controllerId, AddUnnecessaryExpensePageController);
 }
