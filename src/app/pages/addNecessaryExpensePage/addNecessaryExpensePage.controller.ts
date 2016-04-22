@@ -113,7 +113,7 @@ module app.pages.addNecessaryExpensePage {
             //TODO: CREAR VARIAS CONSTANTES AQUI QUE VAYAS ASOCIADOS A LO QUE ESTA QUEMADO
             // EN LA DIRECTIVA, PARA ASI ASIGNAR ESTAS CONSTANTES AL SCOPE Y ENVIARLAS PARA
             // MOSTRAR LOS TEXTOS DINAMICAMENTE Y NO QUEMADOS COMO ESTAN AHORA POR ALLA.
-            
+
             //CONSTANTS
             const POPUP_BODY_CLASS = 'expenseDetailPopup';
             const POPUP_TITLE = this.$filter('translate')('%popup.add_expense.title.text');
@@ -155,10 +155,9 @@ module app.pages.addNecessaryExpensePage {
             // un nuevo gasto, lo que deberia hacer es crear un nuevo gasto en Firebase, e inmediatamente
             // despues agregarlo a las lista de gastos de la visual.
             //Update User model
-            //this.$rootScope.User.Finance.Expense.addNecessaryExpense(expense);
-            this.$rootScope.User.Finance.setNecessaryExpense(expense);
+            let expenseWithUid = this.$rootScope.User.Finance.setNecessaryExpense(expense);
             //Save necessary expense on firebase
-            this.FinanceService.addNewNecessaryExpense(expense);
+            this.FinanceService.addNewNecessaryExpense(expenseWithUid);
             //Calculate Total Expenses
             this._calculateTotalExpenses(this.$rootScope.User.Finance.NecessaryExpenses);
 
@@ -182,8 +181,8 @@ module app.pages.addNecessaryExpensePage {
         }
 
         /*
-        * Format Business Method
-        * @description Format the business value with default currency
+        * Format Total value Method
+        * @description Format the total value with default currency
         */
         _formatTotal(): void {
             let currencyObj: app.models.finance.IMoney =
@@ -195,7 +194,7 @@ module app.pages.addNecessaryExpensePage {
         }
 
         /*
-        * Go to business page
+        * Go to unneccesary page
         * @description this method is launched when user press OK button
         */
         goToNext(): void {

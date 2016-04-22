@@ -16,6 +16,7 @@ module app.models.finance {
     }
 
     export interface IExpense {
+        uid: string;
         title: string;
         value: IMoney;
     }
@@ -44,6 +45,7 @@ module app.models.finance {
             this.income = new Income();
             this.necessaryExpenses = [];
             this.unnecessaryExpenses = [];
+
         }
 
         /**********************************/
@@ -62,9 +64,26 @@ module app.models.finance {
             return this.unnecessaryExpenses;
         }
 
-        setNecessaryExpense(expense: Expense): void {
+        setNecessaryExpense(expense: Expense): Expense {
             if (expense === undefined) { throw 'Please supply neccesary expense value'; }
-            this.necessaryExpenses.push(expense);
+            if(expense.Uid) {
+                var newExpense = expense;
+                this.necessaryExpenses.forEach(function (element, index, array) {
+                    if (newExpense.Uid === element.Uid) {
+                        array[index] = newExpense;
+                    }
+                });
+                return newExpense;
+            } else {
+                var fmt = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx';
+                var guid = fmt.replace(/[xy]/g, function (c) {
+                    var r = Math.random() * 16 | 0, v = c === 'x' ? r : (r & 0x3 | 0x8);
+                    return v.toString(16);
+                });
+                expense.Uid = guid;
+                this.necessaryExpenses.push(expense);
+                return expense;
+            }
         }
 
         setUnnecessaryExpense(expense: Expense): void {
@@ -139,6 +158,7 @@ module app.models.finance {
     export class Expense {
 
         /*-- PROPERTIES --*/
+        private uid: string;
         private title: string;
         private value: IMoney;
 
@@ -150,6 +170,7 @@ module app.models.finance {
             console.log('init expense');
 
             //init properties
+            this.uid = '';
             this.title = '';
             this.value = {num: null, formatted: ''};
         }
@@ -157,6 +178,14 @@ module app.models.finance {
         /**********************************/
         /*             METHODS            */
         /**********************************/
+        get Uid() {
+            return this.uid;
+        }
+
+        set Uid(uid: string) {
+            if (uid === undefined) { throw 'Please supply uid value'; }
+            this.uid = uid;
+        }
 
         get Title() {
             return this.title;

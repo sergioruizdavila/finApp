@@ -19,7 +19,7 @@ module app.models.finance {
         saveSalary: (newSalary: IMoney) => void;
         saveInvestment: (newInvestment: IMoney) => void;
         saveBusiness: (newBusiness: IMoney) => void;
-        addNewNecessaryExpense: (newNecessaryExpense: IExpense) => void;
+        addNewNecessaryExpense: (newNecessaryExpense: Expense) => void;
         addNewUnnecessaryExpense: (newUnnecessaryExpense: IExpense) => void;
         /*-- mathematical calculations --*/
         total: (numbers: Array<number>) => number;
@@ -29,7 +29,7 @@ module app.models.finance {
     /****************************************/
     /*           CLASS DEFINITION           */
     /****************************************/
-    class FinanceService implements IFinanceService {
+    export class FinanceService implements IFinanceService {
 
         static serviceId = 'finApp.models.finance.FinanceService';
 
@@ -105,7 +105,7 @@ module app.models.finance {
         * @parameter {string} newNecessaryExpense - new value for user necessary expense property
         */
         addNewNecessaryExpense(newNecessaryExpense): void {
-            let url = '/users/' + this.$rootScope.User.Uid + this.dataConfig.neccesaryExpenseUrl;
+            let url = '/users/' + this.$rootScope.User.Uid + this.dataConfig.neccesaryExpenseUrl + '/' + newNecessaryExpense.Uid;
             this.FirebaseFactory.add(url, newNecessaryExpense);
         }
 

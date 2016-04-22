@@ -57,7 +57,7 @@ module app.core.firebase {
         */
         add(url, data): void {
             let ref = new Firebase(this.baseUrl + url);
-            ref.push().set(data);
+            ref.set(data);
         }
 
 
