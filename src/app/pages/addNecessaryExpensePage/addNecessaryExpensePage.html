@@ -41,7 +41,7 @@
                     <ion-list class="block_3d__content__list_container">
 
                         <ion-item class="block_3d__content__list_container__item"
-                                  ng-repeat="expense in vm.$rootScope.User.Finance.NecessaryExpenses"
+                                  ng-repeat="expense in vm.expensesList"
                                   ng-click="vm.showExpenseDetailPopup(expense)">
                             <div class="row row-center">
                                 <div class="block_3d__content__list_container__item__text col-50">
@@ -70,6 +70,7 @@
             </div>
 
             <div class="progressivePage__contentPage__helpText_with_icon">
+
                 <div class="row row-center">
                     <div class="col-80">
                         <p translate>

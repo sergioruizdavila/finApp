@@ -3,7 +3,6 @@
 * @description - add necessary expense page config file
 */
 
-
 (function() {
     'use strict';
 

@@ -1,4 +1,3 @@
-/// <reference path="./finance.service.ts"/>
 
 /**
  * Specifies the Classes and Interfaces related to Users in our Model
@@ -65,30 +64,41 @@ module app.models.finance {
         }
 
         setNecessaryExpense(expense: Expense): Expense {
-            if (expense === undefined) { throw 'Please supply neccesary expense value'; }
+            if(expense === undefined) { throw 'Please supply neccesary expense value'; }
+
+            //Update element in Array
             if(expense.Uid) {
-                var newExpense = expense;
                 this.necessaryExpenses.forEach(function (element, index, array) {
-                    if (newExpense.Uid === element.Uid) {
-                        array[index] = newExpense;
+                    if (expense.Uid === element.Uid) {
+                        array[index] = expense;
                     }
                 });
-                return newExpense;
+            //Add new element in Array
             } else {
-                var fmt = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx';
-                var guid = fmt.replace(/[xy]/g, function (c) {
-                    var r = Math.random() * 16 | 0, v = c === 'x' ? r : (r & 0x3 | 0x8);
-                    return v.toString(16);
-                });
-                expense.Uid = guid;
+                expense.Uid = app.core.util.functionsUtil.FunctionsUtilService.generateGuid();
                 this.necessaryExpenses.push(expense);
-                return expense;
             }
+
+            return expense;
         }
 
-        setUnnecessaryExpense(expense: Expense): void {
+        setUnnecessaryExpense(expense: Expense): Expense {
             if (expense === undefined) { throw 'Please supply unneccesary expense value'; }
-            this.unnecessaryExpenses.push(expense);
+
+            //Update element in Array
+            if(expense.Uid){
+                this.unnecessaryExpenses.forEach(function(element, index, array){
+                    if(expense.Uid === element.Uid) {
+                        array[index] = expense;
+                    }
+                });
+            //Add new element in Array
+            } else {
+                expense.Uid = app.core.util.functionsUtil.FunctionsUtilService.generateGuid();
+                this.unnecessaryExpenses.push(expense);
+            }
+
+            return expense;
         }
 
     }

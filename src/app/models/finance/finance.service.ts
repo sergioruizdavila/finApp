@@ -19,8 +19,8 @@ module app.models.finance {
         saveSalary: (newSalary: IMoney) => void;
         saveInvestment: (newInvestment: IMoney) => void;
         saveBusiness: (newBusiness: IMoney) => void;
-        addNewNecessaryExpense: (newNecessaryExpense: Expense) => void;
-        addNewUnnecessaryExpense: (newUnnecessaryExpense: IExpense) => void;
+        saveNecessaryExpense: (necessaryExpense: Expense) => void;
+        saveUnnecessaryExpense: (unnecessaryExpense: IExpense) => void;
         /*-- mathematical calculations --*/
         total: (numbers: Array<number>) => number;
     }
@@ -99,25 +99,25 @@ module app.models.finance {
         }
 
         /**
-        * addNewNecessaryExpense
-        * @description - add new neccesary expense on firebase
+        * saveNecessaryExpense
+        * @description - add/update neccesary expense on firebase
         * @function
-        * @parameter {string} newNecessaryExpense - new value for user necessary expense property
+        * @parameter {string} necessaryExpense - new value for user necessary expense property
         */
-        addNewNecessaryExpense(newNecessaryExpense): void {
-            let url = '/users/' + this.$rootScope.User.Uid + this.dataConfig.neccesaryExpenseUrl + '/' + newNecessaryExpense.Uid;
-            this.FirebaseFactory.add(url, newNecessaryExpense);
+        saveNecessaryExpense(necessaryExpense): void {
+            let url = '/users/' + this.$rootScope.User.Uid + this.dataConfig.neccesaryExpenseUrl + '/' + necessaryExpense.Uid;
+            this.FirebaseFactory.add(url, necessaryExpense);
         }
 
         /**
-        * addNewUnnecessaryExpense
-        * @description - add new unneccesary expense on firebase
+        * saveUnnecessaryExpense
+        * @description - add/update unneccesary expense on firebase
         * @function
-        * @parameter {string} newUnnecessaryExpense - new value for user unnecessary expense property
+        * @parameter {string} unnecessaryExpense - new value for user unnecessary expense property
         */
-        addNewUnnecessaryExpense(newUnnecessaryExpense): void {
-            let url = '/users/' + this.$rootScope.User.Uid + this.dataConfig.unneccesaryExpenseUrl;
-            this.FirebaseFactory.add(url, newUnnecessaryExpense);
+        saveUnnecessaryExpense(unnecessaryExpense): void {
+            let url = '/users/' + this.$rootScope.User.Uid + this.dataConfig.unneccesaryExpenseUrl+ '/' + unnecessaryExpense.Uid;
+            this.FirebaseFactory.add(url, unnecessaryExpense);
         }
 
         /***********************************/

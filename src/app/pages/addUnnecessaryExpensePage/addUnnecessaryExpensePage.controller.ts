@@ -10,8 +10,8 @@ module app.pages.addUnnecessaryExpensePage {
     /**********************************/
     export interface IAddUnnecessaryExpensePageController {
         form: IAddUnnecessaryExpenseForm;
-        showExpenseDetailPopup: (expense: app.models.finance.IExpense) => void;
         activate: () => void;
+        showExpenseDetailPopup: (expense: app.models.finance.Expense) => void;
         showTipPopup: () => void;
         goToNext: () => void;
         goToBack: () => void;
@@ -33,6 +33,7 @@ module app.pages.addUnnecessaryExpensePage {
         /*           PROPERTIES           */
         /**********************************/
         form: IAddUnnecessaryExpenseForm;
+        expensesList: Array<app.models.finance.Expense>;
         // --------------------------------
 
         /*-- INJECT DEPENDENCIES --*/
@@ -68,6 +69,8 @@ module app.pages.addUnnecessaryExpensePage {
                 expense: new app.models.finance.Expense(),
                 total: { num: 0, formatted: '$0' }
             };
+
+            this.expensesList = angular.copy(this.$rootScope.User.Finance.UnnecessaryExpenses);
 
             this.activate();
         }
@@ -107,7 +110,7 @@ module app.pages.addUnnecessaryExpensePage {
         * show expense detail popup
         * @description this method is launched when user press Add button in the header
         */
-        showExpenseDetailPopup(expense: app.models.finance.IExpense): void {
+        showExpenseDetailPopup(expense: app.models.finance.Expense): void {
             //VARIABLES
             let self = this;
             //CONSTANTS
@@ -133,7 +136,7 @@ module app.pages.addUnnecessaryExpensePage {
                         text: POPUP_ADD_BUTTON_TEXT,
                         type: POPUP_ADD_BUTTON_TYPE,
                         onTap: function(e) {
-                            let expense = this.scope.vm.form.expense;
+                            let expense = angular.copy(this.scope.vm.form.expense);
                             self._addOrEditExpense(expense);
                         }
                     }
@@ -146,24 +149,22 @@ module app.pages.addUnnecessaryExpensePage {
         * @description this method is launched when user press Add button on expenseDetailPopup
         */
         _addOrEditExpense(expense): void {
-            //TODO: Preguntar si este gasto ya existe, si ya existe toca llamar al servicio que
-            // que edite un gasto en firebase, y actualizarlo inmediatamente en la lista. Si es
-            // un nuevo gasto, lo que deberia hacer es crear un nuevo gasto en Firebase, e inmediatamente
-            // despues agregarlo a las lista de gastos de la visual.
             //Update User model
-            this.$rootScope.User.Finance.addUnnecessaryExpense(expense);
-            //Save necessary expense on firebase
-            this.FinanceService.addNewUnnecessaryExpense(expense);
+            let expenseWithUid = this.$rootScope.User.Finance.setUnnecessaryExpense(expense);
+            //Save unnecessary expense on firebase
+            this.FinanceService.saveUnnecessaryExpense(expense);
+            //Update expenses List view
+            this.expensesList = angular.copy(this.$rootScope.User.Finance.UnnecessaryExpenses);
             //Calculate Total Expenses
-            this._calculateTotalExpenses(this.$rootScope.User.Finance.UnnecessaryExpenses);
+            this._calculateTotalExpenses(this.expensesList);
 
-            console.log(expense);
         }
 
         /*
         * Parse Expenses Object in order to calculate Total Expenses
         * @description this method is launched when user press OK button
         */
+        //TODO: Codigo duplicado en addNecessaryExpensePage.controller
         _calculateTotalExpenses(expenses): void {
             //Parse expenses Object
 
@@ -180,6 +181,7 @@ module app.pages.addUnnecessaryExpensePage {
         * Format Business Method
         * @description Format the business value with default currency
         */
+        //TODO: Codigo duplicado en addNecessaryExpensePage.controller
         _formatTotal(): void {
             let currencyObj: app.models.finance.IMoney =
             this.FunctionsUtilService.formatCurrency(this.form.total.num,
