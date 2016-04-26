@@ -10,9 +10,13 @@ module app.pages.addBusinessPage {
     /**********************************/
     export interface IAddBusinessPageController {
         form: IAddBusinessForm;
+        activate: () => void;
         goToNext: () => void;
         goToBack: () => void;
-        activate: () => void;
+    }
+
+    export interface IAddBusinessDataConfig extends ng.ui.IStateParamsService {
+        financeId: string;
     }
 
     export interface IAddBusinessForm {
@@ -30,6 +34,7 @@ module app.pages.addBusinessPage {
         /*           PROPERTIES           */
         /**********************************/
         form: IAddBusinessForm;
+        addBusinessDataConfig: IAddBusinessDataConfig;
         // --------------------------------
 
         /*-- INJECT DEPENDENCIES --*/
@@ -38,6 +43,7 @@ module app.pages.addBusinessPage {
                           'finApp.models.finance.FinanceService',
                           'finApp.core.util.FunctionsUtilService',
                           '$state',
+                          '$stateParams',
                           '$rootScope'];
 
         /**********************************/
@@ -48,6 +54,7 @@ module app.pages.addBusinessPage {
                     private FinanceService: app.models.finance.IFinanceService,
                     private FunctionsUtilService: app.core.util.functionsUtil.FunctionsUtilService,
                     private $state: ng.ui.IStateService,
+                    private $stateParams: IAddBusinessDataConfig,
                     private $rootScope: app.interfaces.IFinAppRootScope) {
                 this.init();
         }
@@ -58,6 +65,8 @@ module app.pages.addBusinessPage {
             this.form = {
                 business: { num: null, formatted: '' }
             };
+
+            this.addBusinessDataConfig = this.$stateParams;
 
             this.activate();
         }
@@ -89,12 +98,16 @@ module app.pages.addBusinessPage {
         * @description this method is launched when user press OK button
         */
         goToNext(): void {
-            //Update User model
-            this.$rootScope.User.Finance.Income.Business = this.form.business;
-            //Save business on firebase
-            this.FinanceService.saveBusiness(this.$rootScope.User.Finance.Income.Business);
+            //Get elementPos by Uid
+            var elementPos = this.FunctionsUtilService.getPositionByUid(this.$rootScope.User.Finance,
+                                                                        this.addBusinessDataConfig.financeId);
 
-            this.$state.go('page.necessaryExpense');
+            //Update User model
+            this.$rootScope.User.Finance[elementPos].Income.Business = this.form.business;
+            //Save salary on firebase
+            this.FinanceService.saveFinance(this.$rootScope.User.Finance[elementPos]);
+
+            this.$state.go('page.necessaryExpense', {financeId: this.addBusinessDataConfig.financeId});
         }
 
         /*

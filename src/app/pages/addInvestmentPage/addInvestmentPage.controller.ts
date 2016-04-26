@@ -10,10 +10,13 @@ module app.pages.addInvestmentPage {
     /**********************************/
     export interface IAddInvestmentPageController {
         form: IAddInvestmentForm;
-        formatInvestment: () => void;
         activate: () => void;
         goToNext: () => void;
         goToBack: () => void;
+    }
+
+    export interface IAddInvestmentDataConfig extends ng.ui.IStateParamsService {
+        financeId: string;
     }
 
     export interface IAddInvestmentForm {
@@ -31,6 +34,7 @@ module app.pages.addInvestmentPage {
         /*           PROPERTIES           */
         /**********************************/
         form: IAddInvestmentForm;
+        addInvestmentDataConfig: IAddInvestmentDataConfig;
         // --------------------------------
 
         /*-- INJECT DEPENDENCIES --*/
@@ -39,6 +43,7 @@ module app.pages.addInvestmentPage {
                           'finApp.models.finance.FinanceService',
                           'finApp.core.util.FunctionsUtilService',
                           '$state',
+                          '$stateParams',
                           '$rootScope'];
 
         /**********************************/
@@ -49,6 +54,7 @@ module app.pages.addInvestmentPage {
         private FinanceService: app.models.finance.IFinanceService,
         private FunctionsUtilService: app.core.util.functionsUtil.FunctionsUtilService,
         private $state: ng.ui.IStateService,
+        private $stateParams: IAddInvestmentDataConfig,
         private $rootScope: app.interfaces.IFinAppRootScope) {
             this.init();
         }
@@ -57,11 +63,10 @@ module app.pages.addInvestmentPage {
         private init() {
             //Init form
             this.form = {
-                investment: {
-                    num: null,
-                    formatted: ''
-                }
+                investment: { num: null, formatted: '' }
             };
+
+            this.addInvestmentDataConfig = this.$stateParams;
 
             this.activate();
         }
@@ -79,7 +84,7 @@ module app.pages.addInvestmentPage {
         * Format Investment Method
         * @description Format the investment value with default currency
         */
-        formatInvestment(): void {
+        _formatInvestment(): void {
             let currencyObj: app.models.finance.IMoney =
             this.FunctionsUtilService.formatCurrency(this.form.investment.num,
                                                      this.form.investment.formatted);
@@ -93,12 +98,17 @@ module app.pages.addInvestmentPage {
         * @description this method is launched when user press OK button
         */
         goToNext(): void {
-            //Update User model
-            this.$rootScope.User.Finance.Income.Investment = this.form.investment;
-            //Save investment on firebase
-            this.FinanceService.saveInvestment(this.$rootScope.User.Finance.Income.Investment);
 
-            this.$state.go('page.business');
+            //Get elementPos by Uid
+            var elementPos = this.FunctionsUtilService.getPositionByUid(this.$rootScope.User.Finance,
+                                                                        this.addInvestmentDataConfig.financeId);
+
+            //Update User model
+            this.$rootScope.User.Finance[elementPos].Income.Investment = this.form.investment;
+            //Save salary on firebase
+            this.FinanceService.saveFinance(this.$rootScope.User.Finance[elementPos]);
+
+            this.$state.go('page.business', {financeId: this.addInvestmentDataConfig.financeId});
         }
 
         /*

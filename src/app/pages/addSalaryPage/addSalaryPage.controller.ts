@@ -10,10 +10,13 @@ module app.pages.addSalaryPage {
     /**********************************/
     export interface IAddSalaryPageController {
         form: IAddSalaryForm;
-        formatSalary: () => void;
         activate: () => void;
         goToNext: () => void;
         goToBack: () => void;
+    }
+
+    export interface IAddSalaryDataConfig extends ng.ui.IStateParamsService {
+        financeId: string;
     }
 
     export interface IAddSalaryForm {
@@ -31,6 +34,7 @@ module app.pages.addSalaryPage {
         /*           PROPERTIES           */
         /**********************************/
         form: IAddSalaryForm;
+        addSalaryDataConfig: IAddSalaryDataConfig;
         // --------------------------------
 
         /*-- INJECT DEPENDENCIES --*/
@@ -39,6 +43,7 @@ module app.pages.addSalaryPage {
                           'finApp.models.finance.FinanceService',
                           'finApp.core.util.FunctionsUtilService',
                           '$state',
+                          '$stateParams',
                           '$rootScope'];
 
         /**********************************/
@@ -49,6 +54,7 @@ module app.pages.addSalaryPage {
                     private FinanceService: app.models.finance.IFinanceService,
                     private FunctionsUtilService: app.core.util.functionsUtil.FunctionsUtilService,
                     private $state: ng.ui.IStateService,
+                    private $stateParams: IAddSalaryDataConfig,
                     private $rootScope: app.interfaces.IFinAppRootScope) {
             this.init();
         }
@@ -57,11 +63,10 @@ module app.pages.addSalaryPage {
         private init() {
             //Init form
             this.form = {
-                salary: {
-                    num: null,
-                    formatted: ''
-                }
+                salary: { num: null, formatted: '' }
             };
+
+            this.addSalaryDataConfig = this.$stateParams;
 
             this.activate();
         }
@@ -79,7 +84,7 @@ module app.pages.addSalaryPage {
         * Format Salary Method
         * @description Format the salary value with default currency
         */
-        formatSalary(): void {
+        _formatSalary(): void {
             let currencyObj: app.models.finance.IMoney =
             this.FunctionsUtilService.formatCurrency(this.form.salary.num,
                                                      this.form.salary.formatted);
@@ -92,12 +97,15 @@ module app.pages.addSalaryPage {
         * @description this method is launched when user press OK button
         */
         goToNext(): void {
+            //Get elementPos by Uid
+            var elementPos = this.FunctionsUtilService.getPositionByUid(this.$rootScope.User.Finance,
+                                                                        this.addSalaryDataConfig.financeId);
             //Update User model
-            this.$rootScope.User.Finance.Income.Salary = this.form.salary;
+            this.$rootScope.User.Finance[elementPos].Income.Salary = this.form.salary;
             //Save salary on firebase
-            this.FinanceService.saveSalary(this.$rootScope.User.Finance.Income.Salary);
+            this.FinanceService.saveFinance(this.$rootScope.User.Finance[elementPos]);
 
-            this.$state.go('page.investment');
+            this.$state.go('page.investment', {financeId: this.addSalaryDataConfig.financeId});
         }
 
         /*

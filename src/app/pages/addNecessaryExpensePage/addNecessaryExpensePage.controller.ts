@@ -17,6 +17,10 @@ module app.pages.addNecessaryExpensePage {
         goToBack: () => void;
     }
 
+    export interface IAddNecessaryExpenseDataConfig extends ng.ui.IStateParamsService {
+        financeId: string;
+    }
+
     export interface IAddNecessaryExpenseForm {
         expense: any;
         total: app.models.finance.IMoney;
@@ -33,6 +37,8 @@ module app.pages.addNecessaryExpensePage {
         /*           PROPERTIES           */
         /**********************************/
         form: IAddNecessaryExpenseForm;
+        financePos: number;
+        addNecessaryExpenseDataConfig: IAddNecessaryExpenseDataConfig;
         expensesList: Array<app.models.finance.Expense>;
         // --------------------------------
 
@@ -44,6 +50,7 @@ module app.pages.addNecessaryExpensePage {
                           'finApp.models.finance.FinanceService',
                           'finApp.core.util.FunctionsUtilService',
                           '$state',
+                          '$stateParams',
                           '$scope',
                           '$rootScope'];
 
@@ -57,6 +64,7 @@ module app.pages.addNecessaryExpensePage {
                     private FinanceService: app.models.finance.IFinanceService,
                     private FunctionsUtilService: app.core.util.functionsUtil.FunctionsUtilService,
                     private $state: ng.ui.IStateService,
+                    private $stateParams: IAddNecessaryExpenseDataConfig,
                     private $scope: any,
                     private $rootScope: app.interfaces.IFinAppRootScope) {
 
@@ -72,7 +80,15 @@ module app.pages.addNecessaryExpensePage {
                 total: { num: 0, formatted: '$0' }
             };
 
-            this.expensesList = angular.copy(this.$rootScope.User.Finance.NecessaryExpenses);
+            this.addNecessaryExpenseDataConfig = this.$stateParams;
+
+            //Get Finance Position
+            this.financePos = this.FunctionsUtilService.getPositionByUid(this.$rootScope.User.Finance,
+                                                                        this.addNecessaryExpenseDataConfig.financeId);
+
+            this.expensesList = angular.copy(
+                this.$rootScope.User.Finance[this.financePos].NecessaryExpenses
+            );
 
             this.activate();
         }
@@ -156,14 +172,13 @@ module app.pages.addNecessaryExpensePage {
         */
         _addOrEditExpense(expense): void {
             //Update User model
-            let expenseWithUid = this.$rootScope.User.Finance.setNecessaryExpense(expense);
-            //Save necessary expense on firebase
-            this.FinanceService.saveNecessaryExpense(expenseWithUid);
+            this.$rootScope.User.Finance[this.financePos].setNecessaryExpense(expense);
+            //Update Finance Object on firebase
+            this.FinanceService.saveFinance(this.$rootScope.User.Finance[this.financePos]);
             //Update expenses List view
-            this.expensesList = angular.copy(this.$rootScope.User.Finance.NecessaryExpenses);
+            this.expensesList = angular.copy(this.$rootScope.User.Finance[this.financePos].NecessaryExpenses);
             //Calculate Total Expenses
             this._calculateTotalExpenses(this.expensesList);
-
         }
 
         /*
@@ -202,7 +217,7 @@ module app.pages.addNecessaryExpensePage {
         * @description this method is launched when user press OK button
         */
         goToNext(): void {
-            this.$state.go('page.unnecessaryExpense');
+            this.$state.go('page.unnecessaryExpense', {financeId: this.addNecessaryExpenseDataConfig.financeId});
         }
 
         /*

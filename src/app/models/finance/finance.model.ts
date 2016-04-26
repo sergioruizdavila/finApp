@@ -1,4 +1,3 @@
-
 /**
  * Specifies the Classes and Interfaces related to Users in our Model
  */
@@ -28,9 +27,12 @@ module app.models.finance {
     export class Finance {
 
         /*-- PROPERTIES --*/
+        private uid: string;
         private income: Income;
         private necessaryExpenses: Array<Expense>;
         private unnecessaryExpenses: Array<Expense>;
+        private dateCreated: string;
+        private dateUpdated: string;
 
 
         /**********************************/
@@ -41,15 +43,27 @@ module app.models.finance {
             console.log('init finances');
 
             //init properties
+            this.uid = null;
             this.income = new Income();
             this.necessaryExpenses = [];
             this.unnecessaryExpenses = [];
+            this.dateCreated = new Date().toString();
+            this.dateUpdated = new Date().toString();
 
         }
 
         /**********************************/
         /*             METHODS            */
         /**********************************/
+
+        get Uid() {
+            return this.uid;
+        }
+
+        set Uid(uid: string) {
+            if (uid === undefined) { throw 'Please supply id'; }
+            this.uid = uid;
+        }
 
         get Income() {
             return this.income;
@@ -99,6 +113,20 @@ module app.models.finance {
             }
 
             return expense;
+        }
+
+        get DateUpdated() {
+            return this.dateUpdated;
+        }
+
+        set DateUpdated(date: string) {
+            if (date === undefined) { throw 'Please supply Updated Date'; }
+            this.dateUpdated = date;
+        }
+
+        set DateCreated(date: string) {
+            if (date === undefined) { throw 'Please supply Created Date'; }
+            this.dateCreated = date;
         }
 
     }

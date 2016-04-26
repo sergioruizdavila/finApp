@@ -1,8 +1,8 @@
 /**
- * functionsUtilService
- * @description - Service with util functions used accross the whole application
- * @constructor
- */
+* functionsUtilService
+* @description - Service with util functions used accross the whole application
+* @constructor
+*/
 
 module app.core.util.functionsUtil {
     'use strict';
@@ -13,6 +13,7 @@ module app.core.util.functionsUtil {
     export interface IFunctionsUtilService {
         dateFormatted: IDateFormatted;
         splitDateFormat: (date: any) => IDateFormatted;
+        getPositionByUid: (array: Array<any>, uid: string) => number;
     }
 
     export interface IDateFormatted {
@@ -103,11 +104,26 @@ module app.core.util.functionsUtil {
             return guid;
         }
 
+        /**
+        * getPositionByUid
+        * @description - get Position on Array by Uid
+        * @function
+        * @return {number} index - Returns an index position on Array
+        */
+        //TODO: Hacer esto un metodo de una clase base que hereden todos los Array como Expenses, Finances, etc
+        // Para poder hacer algo como: this.$rootScope.User.Finance.getPositionByUid()
+        getPositionByUid(array, uid): number {
+            let index = array.map(function(element){
+                return element.Uid;
+            }).indexOf(uid);
+            return index;
+        }
+
     }
 
     /*-- MODULE DEFINITION --*/
     angular
-        .module('finApp.core.util', [])
-        .service(FunctionsUtilService.serviceId, FunctionsUtilService);
+    .module('finApp.core.util', [])
+    .service(FunctionsUtilService.serviceId, FunctionsUtilService);
 
 }

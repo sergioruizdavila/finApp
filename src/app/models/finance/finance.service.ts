@@ -16,11 +16,12 @@ module app.models.finance {
     /**********************************/
     export interface IFinanceService {
         ref: any;
+        saveFinance: (finance: Finance) => void;
         saveSalary: (newSalary: IMoney) => void;
         saveInvestment: (newInvestment: IMoney) => void;
         saveBusiness: (newBusiness: IMoney) => void;
         saveNecessaryExpense: (necessaryExpense: Expense) => void;
-        saveUnnecessaryExpense: (unnecessaryExpense: IExpense) => void;
+        saveUnnecessaryExpense: (unnecessaryExpense: Expense) => void;
         /*-- mathematical calculations --*/
         total: (numbers: Array<number>) => number;
     }
@@ -64,6 +65,17 @@ module app.models.finance {
         /**********************************/
         /*            METHODS             */
         /**********************************/
+
+        /**
+        * saveSalary
+        * @description - save user salary on firebase
+        * @function
+        * @parameter {string} newSalary - new value for user salary property
+        */
+        saveFinance(finance): void {
+            let url = '/users/' + this.$rootScope.User.Uid + '/finances/' + finance.Uid;
+            this.FirebaseFactory.add(url, finance);
+        }
 
         /**
         * saveSalary
