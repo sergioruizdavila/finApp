@@ -20,8 +20,8 @@ module app.models.finance {
         saveSalary: (newSalary: IMoney) => void;
         saveInvestment: (newInvestment: IMoney) => void;
         saveBusiness: (newBusiness: IMoney) => void;
-        saveNecessaryExpense: (necessaryExpense: Expense) => void;
-        saveUnnecessaryExpense: (unnecessaryExpense: Expense) => void;
+        saveNecessaryExpense: (necessaryExpense: Expense, financeId: string) => void;
+        saveUnnecessaryExpense: (unnecessaryExpense: Expense, financeId: string) => void;
         /*-- mathematical calculations --*/
         total: (numbers: Array<number>) => number;
     }
@@ -116,8 +116,8 @@ module app.models.finance {
         * @function
         * @parameter {string} necessaryExpense - new value for user necessary expense property
         */
-        saveNecessaryExpense(necessaryExpense): void {
-            let url = '/users/' + this.$rootScope.User.Uid + this.dataConfig.neccesaryExpenseUrl + '/' + necessaryExpense.Uid;
+        saveNecessaryExpense(necessaryExpense, financeId): void {
+            let url = '/users/' + this.$rootScope.User.Uid + '/finances/' + financeId + this.dataConfig.neccesaryExpenseUrl + necessaryExpense.Uid;
             this.FirebaseFactory.add(url, necessaryExpense);
         }
 
@@ -127,8 +127,8 @@ module app.models.finance {
         * @function
         * @parameter {string} unnecessaryExpense - new value for user unnecessary expense property
         */
-        saveUnnecessaryExpense(unnecessaryExpense): void {
-            let url = '/users/' + this.$rootScope.User.Uid + this.dataConfig.unneccesaryExpenseUrl+ '/' + unnecessaryExpense.Uid;
+        saveUnnecessaryExpense(unnecessaryExpense, financeId): void {
+            let url = '/users/' + this.$rootScope.User.Uid + '/finances/' + financeId + this.dataConfig.unneccesaryExpenseUrl + unnecessaryExpense.Uid;
             this.FirebaseFactory.add(url, unnecessaryExpense);
         }
 

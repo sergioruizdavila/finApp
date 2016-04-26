@@ -84,10 +84,10 @@ module app.pages.addNecessaryExpensePage {
 
             //Get Finance Position
             this.financePos = this.FunctionsUtilService.getPositionByUid(this.$rootScope.User.Finance,
-                                                                        this.addNecessaryExpenseDataConfig.financeId);
+                                                                         this.addNecessaryExpenseDataConfig.financeId);
 
             this.expensesList = angular.copy(
-                this.$rootScope.User.Finance[this.financePos].NecessaryExpenses
+                this.$rootScope.User.Finance[this.financePos].TypeOfExpense.Necessaries
             );
 
             this.activate();
@@ -172,13 +172,14 @@ module app.pages.addNecessaryExpensePage {
         */
         _addOrEditExpense(expense): void {
             //Update User model
-            this.$rootScope.User.Finance[this.financePos].setNecessaryExpense(expense);
+            let expenseWithUid = this.$rootScope.User.Finance[this.financePos].TypeOfExpense.setNecessaries(expense);
             //Update Finance Object on firebase
-            this.FinanceService.saveFinance(this.$rootScope.User.Finance[this.financePos]);
+            this.FinanceService.saveNecessaryExpense(expenseWithUid, this.addNecessaryExpenseDataConfig.financeId);
             //Update expenses List view
-            this.expensesList = angular.copy(this.$rootScope.User.Finance[this.financePos].NecessaryExpenses);
+            this.expensesList = angular.copy(this.$rootScope.User.Finance[this.financePos].TypeOfExpense.Necessaries);
             //Calculate Total Expenses
             this._calculateTotalExpenses(this.expensesList);
+
         }
 
         /*

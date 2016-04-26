@@ -29,8 +29,7 @@ module app.models.finance {
         /*-- PROPERTIES --*/
         private uid: string;
         private income: Income;
-        private necessaryExpenses: Array<Expense>;
-        private unnecessaryExpenses: Array<Expense>;
+        private typeOfExpense: TypeOfExpense;
         private dateCreated: string;
         private dateUpdated: string;
 
@@ -45,8 +44,7 @@ module app.models.finance {
             //init properties
             this.uid = null;
             this.income = new Income();
-            this.necessaryExpenses = [];
-            this.unnecessaryExpenses = [];
+            this.typeOfExpense = new TypeOfExpense();
             this.dateCreated = new Date().toString();
             this.dateUpdated = new Date().toString();
 
@@ -69,50 +67,8 @@ module app.models.finance {
             return this.income;
         }
 
-        get NecessaryExpenses() {
-            return this.necessaryExpenses;
-        }
-
-        get UnnecessaryExpenses() {
-            return this.unnecessaryExpenses;
-        }
-
-        setNecessaryExpense(expense: Expense): Expense {
-            if(expense === undefined) { throw 'Please supply neccesary expense value'; }
-
-            //Update element in Array
-            if(expense.Uid) {
-                this.necessaryExpenses.forEach(function (element, index, array) {
-                    if (expense.Uid === element.Uid) {
-                        array[index] = expense;
-                    }
-                });
-            //Add new element in Array
-            } else {
-                expense.Uid = app.core.util.functionsUtil.FunctionsUtilService.generateGuid();
-                this.necessaryExpenses.push(expense);
-            }
-
-            return expense;
-        }
-
-        setUnnecessaryExpense(expense: Expense): Expense {
-            if (expense === undefined) { throw 'Please supply unneccesary expense value'; }
-
-            //Update element in Array
-            if(expense.Uid){
-                this.unnecessaryExpenses.forEach(function(element, index, array){
-                    if(expense.Uid === element.Uid) {
-                        array[index] = expense;
-                    }
-                });
-            //Add new element in Array
-            } else {
-                expense.Uid = app.core.util.functionsUtil.FunctionsUtilService.generateGuid();
-                this.unnecessaryExpenses.push(expense);
-            }
-
-            return expense;
+        get TypeOfExpense() {
+            return this.typeOfExpense;
         }
 
         get DateUpdated() {
@@ -188,6 +144,78 @@ module app.models.finance {
     }
 
 
+
+    /****************************************/
+    /*         TYPE OF EXPENSE CLASS        */
+    /****************************************/
+
+    export class TypeOfExpense {
+        /*-- PROPERTIES --*/
+        private necessaries: Array<Expense>;
+        private unnecessaries: Array<Expense>;
+
+        /**********************************/
+        /*           CONSTRUCTOR          */
+        /**********************************/
+        constructor() {
+            //LOG
+            console.log('init type of expense');
+
+            //init properties
+            this.necessaries = [];
+            this.unnecessaries = [];
+        }
+
+        /**********************************/
+        /*             METHODS            */
+        /**********************************/
+
+        get Necessaries() {
+            return this.necessaries;
+        }
+
+        get Unnecessaries() {
+            return this.unnecessaries;
+        }
+
+        setNecessaries(expense: Expense): Expense {
+            if(expense === undefined) { throw 'Please supply neccesary expense value'; }
+
+            //Update element in Array
+            if(expense.Uid) {
+                this.necessaries.forEach(function (element, index, array) {
+                    if (expense.Uid === element.Uid) {
+                        array[index] = expense;
+                    }
+                });
+            //Add new element in Array
+            } else {
+                expense.Uid = app.core.util.functionsUtil.FunctionsUtilService.generateGuid();
+                this.necessaries.push(expense);
+            }
+
+            return expense;
+        }
+
+        setUnnecessaries(expense: Expense): Expense {
+            if (expense === undefined) { throw 'Please supply unneccesary expense value'; }
+
+            //Update element in Array
+            if(expense.Uid){
+                this.unnecessaries.forEach(function(element, index, array){
+                    if(expense.Uid === element.Uid) {
+                        array[index] = expense;
+                    }
+                });
+            //Add new element in Array
+            } else {
+                expense.Uid = app.core.util.functionsUtil.FunctionsUtilService.generateGuid();
+                this.unnecessaries.push(expense);
+            }
+
+            return expense;
+        }
+    }
 
     /****************************************/
     /*             EXPENSE CLASS            */

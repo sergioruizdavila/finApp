@@ -17,6 +17,10 @@ module app.pages.addUnnecessaryExpensePage {
         goToBack: () => void;
     }
 
+    export interface IAddUnnecessaryExpenseDataConfig extends ng.ui.IStateParamsService {
+        financeId: string;
+    }
+
     export interface IAddUnnecessaryExpenseForm {
         expense: any;
         total: app.models.finance.IMoney;
@@ -33,6 +37,8 @@ module app.pages.addUnnecessaryExpensePage {
         /*           PROPERTIES           */
         /**********************************/
         form: IAddUnnecessaryExpenseForm;
+        financePos: number;
+        addUnnecessaryExpenseDataConfig: IAddUnnecessaryExpenseDataConfig;
         expensesList: Array<app.models.finance.Expense>;
         // --------------------------------
 
@@ -44,6 +50,7 @@ module app.pages.addUnnecessaryExpensePage {
                           'finApp.models.finance.FinanceService',
                           'finApp.core.util.FunctionsUtilService',
                           '$state',
+                          '$stateParams',
                           '$scope',
                           '$rootScope'];
 
@@ -57,6 +64,7 @@ module app.pages.addUnnecessaryExpensePage {
         private FinanceService: app.models.finance.IFinanceService,
         private FunctionsUtilService: app.core.util.functionsUtil.FunctionsUtilService,
         private $state: ng.ui.IStateService,
+        private $stateParams: IAddUnnecessaryExpenseDataConfig,
         private $scope: any,
         private $rootScope: app.interfaces.IFinAppRootScope) {
             this.init();
@@ -70,7 +78,15 @@ module app.pages.addUnnecessaryExpensePage {
                 total: { num: 0, formatted: '$0' }
             };
 
-            this.expensesList = angular.copy(this.$rootScope.User.Finance.UnnecessaryExpenses);
+            this.addUnnecessaryExpenseDataConfig = this.$stateParams;
+
+            //Get Finance Position
+            this.financePos = this.FunctionsUtilService.getPositionByUid(this.$rootScope.User.Finance,
+                                                                         this.addUnnecessaryExpenseDataConfig.financeId);
+
+            this.expensesList = angular.copy(
+                this.$rootScope.User.Finance[this.financePos].TypeOfExpense.Unnecessaries
+            );
 
             this.activate();
         }
@@ -88,6 +104,7 @@ module app.pages.addUnnecessaryExpensePage {
         * Show tip example expenses popup
         * @description this method is launched when user press Gift icon in order to receive more information
         */
+        //TODO: Puedo hacer una clase base, para que los gastos hereden estos metodos como showTipPopup.
         showTipPopup(): void {
             //CONSTANTS
             const POPUP_TITLE = this.$filter('translate')('%popup.tip.example.title.text');
@@ -150,11 +167,11 @@ module app.pages.addUnnecessaryExpensePage {
         */
         _addOrEditExpense(expense): void {
             //Update User model
-            let expenseWithUid = this.$rootScope.User.Finance.setUnnecessaryExpense(expense);
+            let expenseWithUid = this.$rootScope.User.Finance[this.financePos].TypeOfExpense.setUnnecessaries(expense);
             //Save unnecessary expense on firebase
-            this.FinanceService.saveUnnecessaryExpense(expense);
+            this.FinanceService.saveUnnecessaryExpense(expenseWithUid, this.addUnnecessaryExpenseDataConfig.financeId);
             //Update expenses List view
-            this.expensesList = angular.copy(this.$rootScope.User.Finance.UnnecessaryExpenses);
+            this.expensesList = angular.copy(this.$rootScope.User.Finance[this.financePos].TypeOfExpense.Unnecessaries);
             //Calculate Total Expenses
             this._calculateTotalExpenses(this.expensesList);
 
@@ -198,7 +215,7 @@ module app.pages.addUnnecessaryExpensePage {
         goToNext(): void {
             //TODO: Aqui deberia llevarme a la pagina principal donde el usuario va
             // a gestionar todo, info del user, gastos mensuales, tarjetas, etc
-            this.$state.go('page.unnecessaryExpense');
+            this.$state.go('page.unnecessaryExpense', {financeId: this.addUnnecessaryExpenseDataConfig.financeId});
         }
 
         /*

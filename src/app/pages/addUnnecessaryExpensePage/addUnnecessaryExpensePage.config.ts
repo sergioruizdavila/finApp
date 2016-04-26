@@ -23,7 +23,10 @@
                         controllerAs: 'vm'
                     }
                 },
-                parent: 'page'
+                parent: 'page',
+                params: {
+                    financeId: null
+                }
             });
     }
 })();
