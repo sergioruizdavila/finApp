@@ -12,4 +12,11 @@ module app.interfaces {
         User: app.models.user.UserFirebase;
     }
 
+    export interface IDateFormatted {
+        complete: string;
+        day: string;
+        month: string;
+        year: string;
+    }
+
 }

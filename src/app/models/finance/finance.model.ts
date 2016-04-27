@@ -30,7 +30,7 @@ module app.models.finance {
         private uid: string;
         private income: Income;
         private typeOfExpense: TypeOfExpense;
-        private dateCreated: string;
+        private dateCreated: app.interfaces.IDateFormatted;
         private dateUpdated: string;
 
 
@@ -45,7 +45,7 @@ module app.models.finance {
             this.uid = null;
             this.income = new Income();
             this.typeOfExpense = new TypeOfExpense();
-            this.dateCreated = new Date().toString();
+            this.dateCreated = app.core.util.functionsUtil.FunctionsUtilService.splitDateFormat(new Date().toString());
             this.dateUpdated = new Date().toString();
 
         }
@@ -82,7 +82,7 @@ module app.models.finance {
 
         set DateCreated(date: string) {
             if (date === undefined) { throw 'Please supply Created Date'; }
-            this.dateCreated = date;
+            this.dateCreated = app.core.util.functionsUtil.FunctionsUtilService.splitDateFormat(date);
         }
 
     }

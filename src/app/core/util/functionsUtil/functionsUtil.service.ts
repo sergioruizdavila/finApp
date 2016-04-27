@@ -11,16 +11,10 @@ module app.core.util.functionsUtil {
     /*           INTERFACES           */
     /**********************************/
     export interface IFunctionsUtilService {
-        dateFormatted: IDateFormatted;
-        splitDateFormat: (date: any) => IDateFormatted;
+        dateFormatted: app.interfaces.IDateFormatted;
         getPositionByUid: (array: Array<any>, uid: string) => number;
     }
 
-    export interface IDateFormatted {
-        day: string;
-        month: string;
-        year: string;
-    }
 
     /****************************************/
     /*           CLASS DEFINITION           */
@@ -32,7 +26,7 @@ module app.core.util.functionsUtil {
         /**********************************/
         /*           PROPERTIES           */
         /**********************************/
-        dateFormatted: IDateFormatted;
+        dateFormatted: app.interfaces.IDateFormatted;
         // --------------------------------
 
         /**********************************/
@@ -50,11 +44,12 @@ module app.core.util.functionsUtil {
         * Split Date Format Method
         * @description Split Date in 3 parts: day, month and year
         */
-        splitDateFormat(date): IDateFormatted {
+        public static splitDateFormat(date: string): app.interfaces.IDateFormatted {
             //Format date to MM/DD/YYYY
             let dateString = moment(date).format('YYYY/MMM/DD').split('/');
             //Split date to day, month and year
             let dateFormatted = {
+                complete: date,
                 day: dateString[2],
                 month: dateString[1],
                 year: dateString[0]
