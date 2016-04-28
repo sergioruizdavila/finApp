@@ -4,7 +4,7 @@
 * @example - <fa-expense-detail-popup></fa-expense-detail-popup>
 */
 
-module components.expenseDetailPopup {
+module components.popup.expenseDetailPopup {
     'use strict';
 
     /**********************************/
@@ -75,6 +75,7 @@ module components.expenseDetailPopup {
     }
 
     export interface IExpenseDetailPopupScope extends angular.IScope {
+        popupConfig: app.interfaces.IPopup;
         form: IExpenseDetailPopupForm;
         $parent: IExpenseDetailPopupScope;
     }

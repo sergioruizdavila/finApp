@@ -19,4 +19,9 @@ module app.interfaces {
         year: string;
     }
 
+    export interface IPopup {
+        subtitle?: string;
+        textsList?: Array<string>;
+    }
+
 }

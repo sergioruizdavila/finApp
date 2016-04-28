@@ -105,8 +105,6 @@ module app.core.util.functionsUtil {
         * @function
         * @return {number} index - Returns an index position on Array
         */
-        //TODO: Hacer esto un metodo de una clase base que hereden todos los Array como Expenses, Finances, etc
-        // Para poder hacer algo como: this.$rootScope.User.Finance.getPositionByUid()
         getPositionByUid(array, uid): number {
             let index = array.map(function(element){
                 return element.Uid;

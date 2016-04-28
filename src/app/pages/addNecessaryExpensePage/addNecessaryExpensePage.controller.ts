@@ -17,13 +17,18 @@ module app.pages.addNecessaryExpensePage {
         goToBack: () => void;
     }
 
+    export interface IAddNecessaryExpensePageScope extends angular.IScope {
+        form: IAddNecessaryExpenseForm;
+        popupConfig: app.interfaces.IPopup;
+    }
+
     export interface IAddNecessaryExpenseDataConfig extends ng.ui.IStateParamsService {
         financeId: string;
     }
 
     export interface IAddNecessaryExpenseForm {
         expense: any;
-        total: app.models.finance.IMoney;
+        total?: app.models.finance.IMoney;
     }
 
     /****************************************/
@@ -65,7 +70,7 @@ module app.pages.addNecessaryExpensePage {
                     private FunctionsUtilService: app.core.util.functionsUtil.FunctionsUtilService,
                     private $state: ng.ui.IStateService,
                     private $stateParams: IAddNecessaryExpenseDataConfig,
-                    private $scope: any,
+                    private $scope: IAddNecessaryExpensePageScope,
                     private $rootScope: app.interfaces.IFinAppRootScope) {
 
             this.init();
@@ -107,14 +112,42 @@ module app.pages.addNecessaryExpensePage {
         * @description this method is launched when user press Gift icon in order to receive more information
         */
         showTipPopup(): void {
+            //VARIABLES
+            let self = this;
             //CONSTANTS
+            const POPUP_BODY_CLASS = 'listPopup';
             const POPUP_TITLE = this.$filter('translate')('%popup.tip.example.title.text');
             const POPUP_OK_BUTTON_TEXT = this.$filter('translate')('%popup.tip.example.ok_button.text');
+            const POPUP_TIP_SUBTITLE_TEXT = this.$filter('translate')('%popup.tip.example.new_necessary_expense.subtitle.text');
+            const POPUP_TIP_EXAMPLE1_TEXT = this.$filter('translate')('%popup.tip.example.new_necessary_expense.example1.text');
+            const POPUP_TIP_EXAMPLE2_TEXT = this.$filter('translate')('%popup.tip.example.new_necessary_expense.example2.text');
+            const POPUP_TIP_EXAMPLE3_TEXT = this.$filter('translate')('%popup.tip.example.new_necessary_expense.example3.text');
+            const POPUP_TIP_EXAMPLE4_TEXT = this.$filter('translate')('%popup.tip.example.new_necessary_expense.example4.text');
+            const POPUP_TIP_EXAMPLE5_TEXT = this.$filter('translate')('%popup.tip.example.new_necessary_expense.example5.text');
+            const POPUP_TIP_EXAMPLE6_TEXT = this.$filter('translate')('%popup.tip.example.new_necessary_expense.example6.text');
+            const POPUP_TIP_EXAMPLE7_TEXT = this.$filter('translate')('%popup.tip.example.new_necessary_expense.example7.text');
+            const POPUP_TIP_EXAMPLE8_TEXT = this.$filter('translate')('%popup.tip.example.new_necessary_expense.example8.text');
             const POPUP_OK_BUTTON_TYPE = 'button-positive';
+            //Assign popUp's text to $scope
+            self.$scope.popupConfig = {
+                subtitle: POPUP_TIP_SUBTITLE_TEXT,
+                textsList: [
+                    POPUP_TIP_EXAMPLE1_TEXT,
+                    POPUP_TIP_EXAMPLE2_TEXT,
+                    POPUP_TIP_EXAMPLE3_TEXT,
+                    POPUP_TIP_EXAMPLE4_TEXT,
+                    POPUP_TIP_EXAMPLE5_TEXT,
+                    POPUP_TIP_EXAMPLE6_TEXT,
+                    POPUP_TIP_EXAMPLE7_TEXT,
+                    POPUP_TIP_EXAMPLE8_TEXT
+                ]
+            };
 
             this.$ionicPopup.show({
                 title: POPUP_TITLE,
-                templateUrl: 'templates/components/popup/listPopup/listPopup.html',
+                template: '<fa-list-popup></fa-list-popup>',
+                cssClass: POPUP_BODY_CLASS,
+                scope: self.$scope,
                 buttons: [
                     {
                         text: POPUP_OK_BUTTON_TEXT,
@@ -131,20 +164,22 @@ module app.pages.addNecessaryExpensePage {
         showExpenseDetailPopup(expense: app.models.finance.Expense): void {
             //VARIABLES
             let self = this;
-            //TODO: CREAR VARIAS CONSTANTES AQUI QUE VAYAS ASOCIADOS A LO QUE ESTA QUEMADO
-            // EN LA DIRECTIVA, PARA ASI ASIGNAR ESTAS CONSTANTES AL SCOPE Y ENVIARLAS PARA
-            // MOSTRAR LOS TEXTOS DINAMICAMENTE Y NO QUEMADOS COMO ESTAN AHORA POR ALLA.
 
             //CONSTANTS
             const POPUP_BODY_CLASS = 'expenseDetailPopup';
             const POPUP_TITLE = this.$filter('translate')('%popup.add_expense.title.text');
             const POPUP_CANCEL_BUTTON_TEXT = this.$filter('translate')('%popup.general.cancel_button.text');
             const POPUP_ADD_BUTTON_TEXT = this.$filter('translate')('%popup.add_expense.add_button.text');
+            const POPUP_ADD_NECESSARY_EXPENSE_SUBTITLE_TEXT = this.$filter('translate')('%popup.add_necessary_expense.subtitle.text');
             const POPUP_ADD_BUTTON_TYPE = 'button-positive';
 
             //Assign expense value to $scope
             self.$scope.form = {
                 expense: expense ? expense : new app.models.finance.Expense()
+            };
+            //Assign popUp's text to $scope
+            self.$scope.popupConfig = {
+                subtitle: POPUP_ADD_NECESSARY_EXPENSE_SUBTITLE_TEXT
             };
 
             this.$ionicPopup.show({
@@ -218,7 +253,8 @@ module app.pages.addNecessaryExpensePage {
         * @description this method is launched when user press OK button
         */
         goToNext(): void {
-            this.$state.go('page.unnecessaryExpense', {financeId: this.addNecessaryExpenseDataConfig.financeId});
+            this.$state.go('page.unnecessaryExpense',
+                           {financeId: this.addNecessaryExpenseDataConfig.financeId});
         }
 
         /*
@@ -234,5 +270,6 @@ module app.pages.addNecessaryExpensePage {
     /*-- MODULE DEFINITION --*/
     angular
         .module('finApp.pages.addNecessaryExpensePage')
-        .controller(AddNecessaryExpensePageController.controllerId, AddNecessaryExpensePageController);
+        .controller(AddNecessaryExpensePageController.controllerId,
+                    AddNecessaryExpensePageController);
 }

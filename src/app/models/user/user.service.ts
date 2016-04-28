@@ -109,7 +109,6 @@ module app.models.user {
         *                                    synchronized three bind object.
         */
         bindingUser(uid, $rootScope): any {
-            //TODO: Analizar si esta la mejor manera de crear datos ( creando un bindeo de 3 caminos)
             let newUserRef = this.ref.child('users').child(uid);
             return this.$firebaseObject(newUserRef).$bindTo($rootScope, 'User').then(function() {
                 console.log($rootScope.User); // { foo: "bar" }
