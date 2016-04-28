@@ -23,8 +23,11 @@
             'finApp.pages.addInvestmentPage',
             'finApp.pages.addBusinessPage',
             'finApp.pages.addNecessaryExpensePage',
+            'finApp.pages.addUnnecessaryExpensePage',
             'finApp.components.faExpenseDetailPopup',
-            'finApp.models.user'
+            'finApp.components.faListPopup',
+            'finApp.models.user',
+            'finApp.models.finance'
         ])
         .config(config);
 

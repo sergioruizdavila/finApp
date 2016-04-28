@@ -6,6 +6,7 @@ var sass = require('gulp-sass');
 var minifyCss = require('gulp-minify-css');
 var rename = require('gulp-rename');
 var ts = require('gulp-typescript');
+var merge = require('merge2');
 var plumber = require('gulp-plumber');
 var newer = require('gulp-newer');
 var tslint = require('gulp-tslint');
@@ -72,7 +73,11 @@ gulp.task('sassdoc', function () {
 //    appTypescript: ['**/*.ts', '!node_modules/**/*.*', '!App_Web/typings/**/*.*']
 //}
 
-var tsProject = ts.createProject('tsconfig.json'); // loads our configuration
+var tsProject = ts.createProject('tsconfig.json', {
+    declaration: true,
+    noExternalResolve: true,
+    sortOutput: true
+}); // loads our configuration
 
 gulp.task('ts', function() {
     var tsResult = tsProject.src(paths.appTypescript) // load all files from our pathspecification

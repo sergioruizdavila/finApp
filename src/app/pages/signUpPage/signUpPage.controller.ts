@@ -184,14 +184,17 @@ module app.pages.signUpPage {
                     //LOG
                     console.log('Authenticated successfully with payload:', authData);
                     //Add provider property
+                    self.$rootScope.User.Uid = authData.uid;
                     self.$rootScope.User.Provider = authData.provider;
                     //Create new User in dataBase and make three binding ways
-                    self.UserService.createUser(self.$rootScope.User).then(function(response){
-                        if (response === -1) {
+                    self.UserService.createUser(self.$rootScope.User, function(err){
+                        if (err) {
                             //LOG
                             console.log('Error: Not created user');
                         } else {
-                            self.$state.go('page.salary');
+                            //Create User Finance object
+                            let newFinance = self.$rootScope.User.setFinance(new app.models.finance.Finance());
+                            self.$state.go('page.salary', {financeId: newFinance.Uid});
                         }
                     });
 

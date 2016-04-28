@@ -1,15 +1,15 @@
 /**
- * AddNecessaryExpensePageController
- * @description - Add Necessary Expense Page Controller
- */
+* AddUnnecessaryExpensePageController
+* @description - Add Unnecessary Expense Page Controller
+*/
 
-module app.pages.addNecessaryExpensePage {
+module app.pages.addUnnecessaryExpensePage {
 
     /**********************************/
     /*           INTERFACES           */
     /**********************************/
-    export interface IAddNecessaryExpensePageController {
-        form: IAddNecessaryExpenseForm;
+    export interface IAddUnnecessaryExpensePageController {
+        form: IAddUnnecessaryExpenseForm;
         activate: () => void;
         showExpenseDetailPopup: (expense: app.models.finance.Expense) => void;
         showTipPopup: () => void;
@@ -17,16 +17,16 @@ module app.pages.addNecessaryExpensePage {
         goToBack: () => void;
     }
 
-    export interface IAddNecessaryExpensePageScope extends angular.IScope {
-        form: IAddNecessaryExpenseForm;
+    export interface IAddUnnecessaryExpensePageScope extends angular.IScope {
+        form: IAddUnnecessaryExpenseForm;
         popupConfig: app.interfaces.IPopup;
     }
 
-    export interface IAddNecessaryExpenseDataConfig extends ng.ui.IStateParamsService {
+    export interface IAddUnnecessaryExpenseDataConfig extends ng.ui.IStateParamsService {
         financeId: string;
     }
 
-    export interface IAddNecessaryExpenseForm {
+    export interface IAddUnnecessaryExpenseForm {
         expense: any;
         total?: app.models.finance.IMoney;
     }
@@ -34,47 +34,45 @@ module app.pages.addNecessaryExpensePage {
     /****************************************/
     /*           CLASS DEFINITION           */
     /****************************************/
-    export class AddNecessaryExpensePageController implements IAddNecessaryExpensePageController {
+    export class AddUnnecessaryExpensePageController implements IAddUnnecessaryExpensePageController {
 
-        static controllerId = 'finApp.pages.addNecessaryExpensePage.AddNecessaryExpensePageController';
+        static controllerId = 'finApp.pages.addUnnecessaryExpensePage.AddUnnecessaryExpensePageController';
 
         /**********************************/
         /*           PROPERTIES           */
         /**********************************/
-        form: IAddNecessaryExpenseForm;
+        form: IAddUnnecessaryExpenseForm;
         financePos: number;
-        addNecessaryExpenseDataConfig: IAddNecessaryExpenseDataConfig;
+        addUnnecessaryExpenseDataConfig: IAddUnnecessaryExpenseDataConfig;
         expensesList: Array<app.models.finance.Expense>;
         // --------------------------------
 
         /*-- INJECT DEPENDENCIES --*/
         static $inject = ['dataConfig',
-                          '$ionicHistory',
-                          '$ionicPopup',
-                          '$filter',
-                          'finApp.models.finance.FinanceService',
-                          'finApp.core.util.FunctionsUtilService',
-                          '$state',
-                          '$stateParams',
-                          '$scope',
-                          '$rootScope'];
+            '$ionicHistory',
+            '$ionicPopup',
+            '$filter',
+            'finApp.models.finance.FinanceService',
+            'finApp.core.util.FunctionsUtilService',
+            '$state',
+            '$stateParams',
+            '$scope',
+            '$rootScope'];
 
         /**********************************/
         /*           CONSTRUCTOR          */
         /**********************************/
         constructor(private dataConfig: IDataConfig,
-                    private $ionicHistory: ionic.navigation.IonicHistoryService,
-                    private $ionicPopup: ionic.popup.IonicPopupService,
-                    private $filter: angular.IFilterService,
-                    private FinanceService: app.models.finance.IFinanceService,
-                    private FunctionsUtilService: app.core.util.functionsUtil.FunctionsUtilService,
-                    private $state: ng.ui.IStateService,
-                    private $stateParams: IAddNecessaryExpenseDataConfig,
-                    private $scope: IAddNecessaryExpensePageScope,
-                    private $rootScope: app.interfaces.IFinAppRootScope) {
-
+            private $ionicHistory: ionic.navigation.IonicHistoryService,
+            private $ionicPopup: ionic.popup.IonicPopupService,
+            private $filter: angular.IFilterService,
+            private FinanceService: app.models.finance.IFinanceService,
+            private FunctionsUtilService: app.core.util.functionsUtil.FunctionsUtilService,
+            private $state: ng.ui.IStateService,
+            private $stateParams: IAddUnnecessaryExpenseDataConfig,
+            private $scope: IAddUnnecessaryExpensePageScope,
+            private $rootScope: app.interfaces.IFinAppRootScope) {
             this.init();
-
         }
 
         /*-- INITIALIZE METHOD --*/
@@ -85,14 +83,14 @@ module app.pages.addNecessaryExpensePage {
                 total: { num: 0, formatted: '$0' }
             };
 
-            this.addNecessaryExpenseDataConfig = this.$stateParams;
+            this.addUnnecessaryExpenseDataConfig = this.$stateParams;
 
             //Get Finance Position
             this.financePos = this.FunctionsUtilService.getPositionByUid(this.$rootScope.User.Finance,
-                                                                         this.addNecessaryExpenseDataConfig.financeId);
+                this.addUnnecessaryExpenseDataConfig.financeId);
 
             this.expensesList = angular.copy(
-                this.$rootScope.User.Finance[this.financePos].TypeOfExpense.Necessaries
+                this.$rootScope.User.Finance[this.financePos].TypeOfExpense.Unnecessaries
             );
 
             this.activate();
@@ -100,7 +98,7 @@ module app.pages.addNecessaryExpensePage {
 
         /*-- ACTIVATE METHOD --*/
         activate(): void {
-            console.log('addNecessaryExpensePage controller actived');
+            console.log('addUnnecessaryExpensePage controller actived');
         }
 
         /**********************************/
@@ -111,6 +109,7 @@ module app.pages.addNecessaryExpensePage {
         * Show tip example expenses popup
         * @description this method is launched when user press Gift icon in order to receive more information
         */
+        //TODO: Puedo hacer una clase base, para que los gastos hereden estos metodos como showTipPopup.
         showTipPopup(): void {
             //VARIABLES
             let self = this;
@@ -118,15 +117,15 @@ module app.pages.addNecessaryExpensePage {
             const POPUP_BODY_CLASS = 'listPopup';
             const POPUP_TITLE = this.$filter('translate')('%popup.tip.example.title.text');
             const POPUP_OK_BUTTON_TEXT = this.$filter('translate')('%popup.tip.example.ok_button.text');
-            const POPUP_TIP_SUBTITLE_TEXT = this.$filter('translate')('%popup.tip.example.new_necessary_expense.subtitle.text');
-            const POPUP_TIP_EXAMPLE1_TEXT = this.$filter('translate')('%popup.tip.example.new_necessary_expense.example1.text');
-            const POPUP_TIP_EXAMPLE2_TEXT = this.$filter('translate')('%popup.tip.example.new_necessary_expense.example2.text');
-            const POPUP_TIP_EXAMPLE3_TEXT = this.$filter('translate')('%popup.tip.example.new_necessary_expense.example3.text');
-            const POPUP_TIP_EXAMPLE4_TEXT = this.$filter('translate')('%popup.tip.example.new_necessary_expense.example4.text');
-            const POPUP_TIP_EXAMPLE5_TEXT = this.$filter('translate')('%popup.tip.example.new_necessary_expense.example5.text');
-            const POPUP_TIP_EXAMPLE6_TEXT = this.$filter('translate')('%popup.tip.example.new_necessary_expense.example6.text');
-            const POPUP_TIP_EXAMPLE7_TEXT = this.$filter('translate')('%popup.tip.example.new_necessary_expense.example7.text');
-            const POPUP_TIP_EXAMPLE8_TEXT = this.$filter('translate')('%popup.tip.example.new_necessary_expense.example8.text');
+            const POPUP_TIP_SUBTITLE_TEXT = this.$filter('translate')('%popup.tip.example.new_unnecessary_expense.subtitle.text');
+            const POPUP_TIP_EXAMPLE1_TEXT = this.$filter('translate')('%popup.tip.example.new_unnecessary_expense.example1.text');
+            const POPUP_TIP_EXAMPLE2_TEXT = this.$filter('translate')('%popup.tip.example.new_unnecessary_expense.example2.text');
+            const POPUP_TIP_EXAMPLE3_TEXT = this.$filter('translate')('%popup.tip.example.new_unnecessary_expense.example3.text');
+            const POPUP_TIP_EXAMPLE4_TEXT = this.$filter('translate')('%popup.tip.example.new_unnecessary_expense.example4.text');
+            const POPUP_TIP_EXAMPLE5_TEXT = this.$filter('translate')('%popup.tip.example.new_unnecessary_expense.example5.text');
+            const POPUP_TIP_EXAMPLE6_TEXT = this.$filter('translate')('%popup.tip.example.new_unnecessary_expense.example6.text');
+            const POPUP_TIP_EXAMPLE7_TEXT = this.$filter('translate')('%popup.tip.example.new_unnecessary_expense.example7.text');
+            const POPUP_TIP_EXAMPLE8_TEXT = this.$filter('translate')('%popup.tip.example.new_unnecessary_expense.example8.text');
             const POPUP_OK_BUTTON_TYPE = 'button-positive';
             //Assign popUp's text to $scope
             self.$scope.popupConfig = {
@@ -164,22 +163,21 @@ module app.pages.addNecessaryExpensePage {
         showExpenseDetailPopup(expense: app.models.finance.Expense): void {
             //VARIABLES
             let self = this;
-
             //CONSTANTS
             const POPUP_BODY_CLASS = 'expenseDetailPopup';
             const POPUP_TITLE = this.$filter('translate')('%popup.add_expense.title.text');
             const POPUP_CANCEL_BUTTON_TEXT = this.$filter('translate')('%popup.general.cancel_button.text');
             const POPUP_ADD_BUTTON_TEXT = this.$filter('translate')('%popup.add_expense.add_button.text');
-            const POPUP_ADD_NECESSARY_EXPENSE_SUBTITLE_TEXT = this.$filter('translate')('%popup.add_necessary_expense.subtitle.text');
+            const POPUP_ADD_UNNECESSARY_EXPENSE_SUBTITLE_TEXT = this.$filter('translate')('%popup.add_unnecessary_expense.subtitle.text');
             const POPUP_ADD_BUTTON_TYPE = 'button-positive';
 
-            //Assign expense value to $scope
+            //Assign expense value
             self.$scope.form = {
                 expense: expense ? expense : new app.models.finance.Expense()
             };
             //Assign popUp's text to $scope
             self.$scope.popupConfig = {
-                subtitle: POPUP_ADD_NECESSARY_EXPENSE_SUBTITLE_TEXT
+                subtitle: POPUP_ADD_UNNECESSARY_EXPENSE_SUBTITLE_TEXT
             };
 
             this.$ionicPopup.show({
@@ -207,11 +205,11 @@ module app.pages.addNecessaryExpensePage {
         */
         _addOrEditExpense(expense): void {
             //Update User model
-            let expenseWithUid = this.$rootScope.User.Finance[this.financePos].TypeOfExpense.setNecessaries(expense);
-            //Update Finance Object on firebase
-            this.FinanceService.saveNecessaryExpense(expenseWithUid, this.addNecessaryExpenseDataConfig.financeId);
+            let expenseWithUid = this.$rootScope.User.Finance[this.financePos].TypeOfExpense.setUnnecessaries(expense);
+            //Save unnecessary expense on firebase
+            this.FinanceService.saveUnnecessaryExpense(expenseWithUid, this.addUnnecessaryExpenseDataConfig.financeId);
             //Update expenses List view
-            this.expensesList = angular.copy(this.$rootScope.User.Finance[this.financePos].TypeOfExpense.Necessaries);
+            this.expensesList = angular.copy(this.$rootScope.User.Finance[this.financePos].TypeOfExpense.Unnecessaries);
             //Calculate Total Expenses
             this._calculateTotalExpenses(this.expensesList);
 
@@ -221,12 +219,12 @@ module app.pages.addNecessaryExpensePage {
         * Parse Expenses Object in order to calculate Total Expenses
         * @description this method is launched when user press OK button
         */
-        //TODO: Codigo duplicado en addUnnecessaryExpensePage.controller
+        //TODO: Codigo duplicado en addNecessaryExpensePage.controller
         _calculateTotalExpenses(expenses): void {
             //Parse expenses Object
 
-            let expensesArray = expenses.map(function(obj){
-               return obj.value.num;
+            let expensesArray = expenses.map(function(obj) {
+                return obj.value.num;
             });
 
             this.form.total.num = this.FinanceService.total(expensesArray);
@@ -235,26 +233,27 @@ module app.pages.addNecessaryExpensePage {
         }
 
         /*
-        * Format Total value Method
-        * @description Format the total value with default currency
+        * Format Business Method
+        * @description Format the business value with default currency
         */
-        //TODO: Codigo duplicado en addUnnecessaryExpensePage.controller
+        //TODO: Codigo duplicado en addNecessaryExpensePage.controller
         _formatTotal(): void {
             let currencyObj: app.models.finance.IMoney =
-            this.FunctionsUtilService.formatCurrency(this.form.total.num,
-                                                     this.form.total.formatted);
+                this.FunctionsUtilService.formatCurrency(this.form.total.num,
+                    this.form.total.formatted);
 
             this.form.total.num = currencyObj.num;
             this.form.total.formatted = currencyObj.formatted;
         }
 
         /*
-        * Go to unneccesary page
+        * Go to business page
         * @description this method is launched when user press OK button
         */
         goToNext(): void {
-            this.$state.go('page.unnecessaryExpense',
-                           {financeId: this.addNecessaryExpenseDataConfig.financeId});
+            //TODO: Aqui deberia llevarme a la pagina principal donde el usuario va
+            // a gestionar todo, info del user, gastos mensuales, tarjetas, etc
+            this.$state.go('page.unnecessaryExpense', { financeId: this.addUnnecessaryExpenseDataConfig.financeId });
         }
 
         /*
@@ -269,7 +268,6 @@ module app.pages.addNecessaryExpensePage {
 
     /*-- MODULE DEFINITION --*/
     angular
-        .module('finApp.pages.addNecessaryExpensePage')
-        .controller(AddNecessaryExpensePageController.controllerId,
-                    AddNecessaryExpensePageController);
+        .module('finApp.pages.addUnnecessaryExpensePage')
+        .controller(AddUnnecessaryExpensePageController.controllerId, AddUnnecessaryExpensePageController);
 }

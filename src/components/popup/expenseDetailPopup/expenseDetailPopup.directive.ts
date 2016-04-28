@@ -4,7 +4,7 @@
 * @example - <fa-expense-detail-popup></fa-expense-detail-popup>
 */
 
-module components.expenseDetailPopup {
+module components.popup.expenseDetailPopup {
     'use strict';
 
     /**********************************/
@@ -75,11 +75,13 @@ module components.expenseDetailPopup {
     }
 
     export interface IExpenseDetailPopupScope extends angular.IScope {
+        popupConfig: app.interfaces.IPopup;
         form: IExpenseDetailPopupForm;
+        $parent: IExpenseDetailPopupScope;
     }
 
     export interface IExpenseDetailPopupForm {
-        expense: any;
+        expense: app.models.finance.IExpense;
     }
 
     /****************************************/
@@ -109,14 +111,8 @@ module components.expenseDetailPopup {
         /*-- INITIALIZE METHOD --*/
         private init() {
             //Init form
-            this.$scope.form = {
-                expense: {
-                    value: {
-                        num: null,
-                        formatted: ''
-                    },
-                    title: ''
-                }
+            this.form = {
+                expense: this.$scope.$parent.form.expense
             };
 
             this.activate();

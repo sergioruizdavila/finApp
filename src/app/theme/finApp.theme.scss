@@ -296,6 +296,10 @@ body.finApp {
                 width: 80%;
             }
 
+            &--90Percent {
+                width: 90%;
+            }
+
             &--100Percent {
                 width: 100%;
             }
@@ -338,6 +342,36 @@ body.finApp {
 
         &__content {
             padding: 15px;
+            overflow: scroll;
+            max-height: 190px;
+
+            &__list_container {
+
+                    &__item {
+                        border-top: 1px solid #DDD;
+                        border-bottom: 1px solid #DDD;
+                        border-left: none;
+                        border-right: none;
+                        padding: 10px;
+
+                        &__text {
+                            font-size: 18px;
+                            text-align: center;
+                            color: $FA-TEXT-P;
+                            overflow:hidden;
+                            white-space:nowrap;
+                            text-overflow: ellipsis;
+                        }
+
+                        &__value {
+                            font-size: 20px;
+                            text-align: right;
+                            color: $FA_TEXT_LIST_VALUE;
+                        }
+                    }
+
+            }
+
         }
 
         &__footer {

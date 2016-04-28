@@ -1,26 +1,25 @@
 /**
 * config()
-* @description - add business page config file
+* @description - add unnecessary expense page config file
 */
+
 
 (function() {
     'use strict';
 
     angular
-        .module('finApp.pages.addBusinessPage', [])
+        .module('finApp.pages.addUnnecessaryExpensePage', [])
         .config(config);
-
-    //config.$inject = ['ionic'];
 
     function config($stateProvider: angular.ui.IStateProvider) {
 
         $stateProvider
-            .state('page.business', {
-                url: '/business',
+            .state('page.unnecessaryExpense', {
+                url: '/unnecessaryExpense',
                 views: {
                     'container': {
-                        templateUrl: 'templates/app/pages/addBusinessPage/addBusinessPage.html',
-                        controller: 'finApp.pages.addBusinessPage.AddBusinessPageController',
+                        templateUrl: 'templates/app/pages/addUnnecessaryExpensePage/addUnnecessaryExpensePage.html',
+                        controller: 'finApp.pages.addUnnecessaryExpensePage.AddUnnecessaryExpensePageController',
                         controllerAs: 'vm'
                     }
                 },

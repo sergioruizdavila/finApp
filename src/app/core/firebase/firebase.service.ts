@@ -10,18 +10,20 @@ module app.core.firebase {
 
     export interface IFirebaseFactory {
         createFirebase: () => Firebase;
+        update: (url: string, data: any) => void;
+        add: (url: string, data: any) => void;
     }
 
     export class FirebaseFactory implements IFirebaseFactory {
 
         static serviceId = 'finApp.core.firebase.FirebaseFactory';
-        url: string;
+        baseUrl: string;
 
         //inject dependencies
         static $inject = ['dataConfig'];
 
         constructor(dataConfig: IDataConfig) {
-            this.url = dataConfig.baseUrl;
+            this.baseUrl = dataConfig.baseUrl;
         }
 
         /*-- METHODS --*/
@@ -31,8 +33,33 @@ module app.core.firebase {
         * @returns {Firebase}
         */
         createFirebase(): Firebase {
-            return new Firebase(this.url);
+            return new Firebase(this.baseUrl);
         }
+
+        /**
+        * update
+        * @description - update service against Firebase
+        * @function
+        * @params {string} url - uri of firebase
+        * @params {any} data - data to send in order to update object on firebase
+        */
+        update(url, data): void {
+            let ref = new Firebase(this.baseUrl + url);
+            ref.update(data);
+        }
+
+        /**
+        * add
+        * @description - add item on Array against Firebase
+        * @function
+        * @params {string} url - uri of firebase
+        * @params {any} data - item to send in order to add object on firebase
+        */
+        add(url, data): void {
+            let ref = new Firebase(this.baseUrl + url);
+            ref.set(data);
+        }
+
 
 
         static instance(dataConfig: IDataConfig): IFirebaseFactory {

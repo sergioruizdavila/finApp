@@ -1,56 +1,17 @@
 <div class="listPopup">
-    <span class="listPopup__title" translate>
-        %popup.tip.example.new_necessary_expense.title.text
+    <span class="listPopup__subtitle">
+        {{vm.$scope.$parent.popupConfig.subtitle}}
     </span>
 
-    <div class="row listPopup__row">
+    <div class="row listPopup__row" ng-repeat="item in vm.list track by $index" ng-if="$even">
         <div class="col-50">
-            <p class="listPopup__row__item" translate>
-                %popup.tip.example.new_necessary_expense.rent.text
+            <p class="listPopup__row__item">
+                {{vm.list[$index]}}
             </p>
         </div>
         <div class="col-50">
-            <p class="listPopup__row__item" translate>
-                %popup.tip.example.new_necessary_expense.services.text
-            </p>
-        </div>
-    </div>
-
-    <div class="row listPopup__row">
-        <div class="col-50">
-            <p class="listPopup__row__item" translate>
-                %popup.tip.example.new_necessary_expense.market.text
-            </p>
-        </div>
-        <div class="col-50">
-            <p class="listPopup__row__item" translate>
-                %popup.tip.example.new_necessary_expense.university.text
-            </p>
-        </div>
-    </div>
-
-    <div class="row listPopup__row">
-        <div class="col-50">
-            <p class="listPopup__row__item" translate>
-                %popup.tip.example.new_necessary_expense.health.text
-            </p>
-        </div>
-        <div class="col-50">
-            <p class="listPopup__row__item" translate>
-                %popup.tip.example.new_necessary_expense.school.text
-            </p>
-        </div>
-    </div>
-
-    <div class="row listPopup__row">
-        <div class="col-50">
-            <p class="listPopup__row__item" translate>
-                %popup.tip.example.new_necessary_expense.taxes.text
-            </p>
-        </div>
-        <div class="col-50">
-            <p class="listPopup__row__item" translate>
-                %popup.tip.example.new_necessary_expense.fuel.text
+            <p class="listPopup__row__item">
+                {{vm.list[$index + 1]}}
             </p>
         </div>
     </div>

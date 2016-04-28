@@ -1,8 +1,8 @@
 /**
- * functionsUtilService
- * @description - Service with util functions used accross the whole application
- * @constructor
- */
+* functionsUtilService
+* @description - Service with util functions used accross the whole application
+* @constructor
+*/
 
 module app.core.util.functionsUtil {
     'use strict';
@@ -11,15 +11,10 @@ module app.core.util.functionsUtil {
     /*           INTERFACES           */
     /**********************************/
     export interface IFunctionsUtilService {
-        dateFormatted: IDateFormatted;
-        splitDateFormat: (date: any) => IDateFormatted;
+        dateFormatted: app.interfaces.IDateFormatted;
+        getPositionByUid: (array: Array<any>, uid: string) => number;
     }
 
-    export interface IDateFormatted {
-        day: string;
-        month: string;
-        year: string;
-    }
 
     /****************************************/
     /*           CLASS DEFINITION           */
@@ -31,7 +26,7 @@ module app.core.util.functionsUtil {
         /**********************************/
         /*           PROPERTIES           */
         /**********************************/
-        dateFormatted: IDateFormatted;
+        dateFormatted: app.interfaces.IDateFormatted;
         // --------------------------------
 
         /**********************************/
@@ -49,11 +44,12 @@ module app.core.util.functionsUtil {
         * Split Date Format Method
         * @description Split Date in 3 parts: day, month and year
         */
-        splitDateFormat(date): IDateFormatted {
+        public static splitDateFormat(date: string): app.interfaces.IDateFormatted {
             //Format date to MM/DD/YYYY
             let dateString = moment(date).format('YYYY/MMM/DD').split('/');
             //Split date to day, month and year
             let dateFormatted = {
+                complete: date,
                 day: dateString[2],
                 month: dateString[1],
                 year: dateString[0]
@@ -88,11 +84,39 @@ module app.core.util.functionsUtil {
 
         }
 
+        /**
+        * generateGuid
+        * @description - generate Guid id string
+        * @function
+        * @return {string} guid - Returns an Guid Id string.
+        */
+        public static generateGuid(): string {
+            var fmt = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx';
+            var guid = fmt.replace(/[xy]/g, function (c) {
+                var r = Math.random() * 16 | 0, v = c === 'x' ? r : (r & 0x3 | 0x8);
+                return v.toString(16);
+            });
+            return guid;
+        }
+
+        /**
+        * getPositionByUid
+        * @description - get Position on Array by Uid
+        * @function
+        * @return {number} index - Returns an index position on Array
+        */
+        getPositionByUid(array, uid): number {
+            let index = array.map(function(element){
+                return element.Uid;
+            }).indexOf(uid);
+            return index;
+        }
+
     }
 
     /*-- MODULE DEFINITION --*/
     angular
-        .module('finApp.core.util', [])
-        .service(FunctionsUtilService.serviceId, FunctionsUtilService);
+    .module('finApp.core.util', [])
+    .service(FunctionsUtilService.serviceId, FunctionsUtilService);
 
 }

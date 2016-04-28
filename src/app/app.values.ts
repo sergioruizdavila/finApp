@@ -9,6 +9,11 @@
 /*--  INTERFACE --*/
 interface IDataConfig {
     baseUrl: string;
+    salaryIncomeUrl: string;
+    investmentIncomeUrl: string;
+    businessIncomeUrl: string;
+    neccesaryExpenseUrl: string;
+    unneccesaryExpenseUrl: string;
     userId: string;
 }
 
@@ -19,6 +24,11 @@ interface IDataConfig {
 
     var dataConfig: IDataConfig = {
         baseUrl: 'https://shining-fire-8072.firebaseio.com',
+        salaryIncomeUrl: '/finance/income/salary',
+        investmentIncomeUrl: '/finance/income/investment',
+        businessIncomeUrl: '/finance/income/business',
+        neccesaryExpenseUrl: '/typeOfExpense/necessaries/',
+        unneccesaryExpenseUrl: '/typeOfExpense/unnecessaries/',
         userId: ''
     };
 

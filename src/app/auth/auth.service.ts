@@ -28,9 +28,6 @@ module app.auth {
             authDataCallback: function(authData) {
                 if (authData) {
                     console.log('AUTH LOG: User ' + authData.uid + ' is logged in with: ' + authData.provider);
-                    /*NOTE:Ejemplo de otra forma de crear un dato en la base*/
-                    /*$rootScope.User.Provider = authData.provider;
-                    ref.child('users').child(authData.uid).set($rootScope.User);*/
                 } else {
                     console.log('AUTH LOG: User is logged out');
                 }
