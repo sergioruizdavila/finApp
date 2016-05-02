@@ -1,0 +1,26 @@
+.finApp{
+
+    .faTabs {
+
+        &__tabs_container {
+            height: 55px!important;
+
+            &__tab-item{
+                color: $FA_BTN_ADD;
+                &.active {
+                    border-bottom: 3px solid $FA_BTN_ADD!important;
+                }
+
+                &.activated {
+                    border-bottom: 3px solid $FA_BTN_ADD!important;
+                }
+
+                i {
+                    font-size: 40px;
+                    display: inline!important;
+                }
+            }
+        }
+    }
+
+}

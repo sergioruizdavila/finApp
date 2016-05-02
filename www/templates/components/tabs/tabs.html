@@ -1,0 +1,29 @@
+<div class="bar bar-header"></div>
+
+<div class="tabs-striped tabs-top faTabs">
+    <div class="tabs navBar faTabs__tabs_container">
+        <a class="tab-item faTabs__tabs_container__tab-item"
+           ng-class="{active:vm.isSet(1)}"
+           ng-click="vm.setTab(1)"
+           ui-sref="tabs.history"
+           href="#" >
+            <i class="material-icons">store</i>
+        </a>
+        <a class="tab-item faTabs__tabs_container__tab-item"
+           ng-class="{active:vm.isSet(2)}"
+           ng-click="vm.setTab(2)"
+           ui-sref="tabs.cards"
+           href="#">
+            <i class="material-icons">style</i>
+        </a>
+        <a class="tab-item faTabs__tabs_container__tab-item"
+           ng-class="{active:vm.isSet(3)}"
+           ng-click="vm.setTab(3)"
+           ui-sref="tabs.profile"
+           href="#">
+            <i class="material-icons">account_circle</i>
+        </a>
+    </div>
+</div>
+
+<ion-nav-view name="tabs" animation="slide-left-right"></ion-nav-view>

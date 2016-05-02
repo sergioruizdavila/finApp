@@ -20,9 +20,15 @@
 // All FinApp Style
 @import 'finApp.theme';
 
+// FinApp Components
+// --------------------------------------------------
+// tabs Style
+@import '../../components/tabs/tabs';
+
 
 // FinApp Pages
 // --------------------------------------------------
+
 // logIn Pages Style
 @import '../pages/logInPage/logInPage';
 // listPopup Component Style

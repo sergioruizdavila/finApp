@@ -209,6 +209,8 @@ body.finApp {
 
     ///INPUT TEXTBOX
     .fa-input {
+        -webkit-border-radius: 5px;
+        -moz-border-radius: 5px;
         border-radius: 5px;
         //border: 1px solid #CCC;
         @include shadowBlock();
@@ -311,6 +313,8 @@ body.finApp {
 
         &__circle {
             background-color: $FA_BTN_ICON;
+            -webkit-border-radius: 15px;
+            -moz-border-radius: 15px;
             border-radius: 15px;
             position: absolute;
             right: 0;
@@ -326,12 +330,110 @@ body.finApp {
 
     /*              3D BLOCKS              */
     /*-------------------------------------*/
+    .block_3d_container {
+            margin-top: 70px;
+            &--flex {
+                display:flex;
+                flex-direction: row;
+                flex-wrap: wrap;
+                justify-content: center;
+                align-content: center;
+                align-items: center;
+
+                .block_3d {
+                    flex-wrap: wrap;
+                    margin: 5px;
+                }
+            }
+    }
+
     .block_3d {
         background-color: #FFF;
+        -webkit-border-radius: 10px;
+        -moz-border-radius: 10px;
         border-radius: 10px;
-        width: 90%;
         margin: 25% auto 0 auto;
         @include shadowBlock();
+
+        &--small {
+            width: 45%;
+
+            &__content {
+                padding: 15px;
+                overflow: scroll;
+
+                &__incomes {
+                    margin-bottom: 10px;
+                    padding-bottom: 5px;
+                    border-bottom: 1px solid tint($FA_TEXT_P, 80);
+
+                    &__value {
+                        font-weight: bold;
+                        font-size: 18px;
+                        color: $FA_TEXT_P;
+                    }
+                    &__text {
+                        font-weight: bold;
+                        font-size: 15px;
+                        color: tint($FA_TEXT_P, 30);
+                    }
+                }
+
+                &__expenses {
+                    margin-bottom: 10px;
+                    padding-bottom: 5px;
+                    border-bottom: 1px solid tint($FA_TEXT_P, 80);
+
+                    &__value {
+                        font-weight: bold;
+                        font-size: 18px;
+                        color: $FA_BTN_ADD;
+                    }
+                    &__text {
+                        font-weight: bold;
+                        font-size: 15px;
+                        color: tint($FA_BTN_ADD, 30);
+                    }
+                }
+
+                &__saving {
+
+                    &__value {
+                        font-weight: bold;
+                        font-size: 18px;
+                        color: #28a54c;
+                    }
+                    &__text {
+                        font-weight: bold;
+                        font-size: 15px;
+                        color: tint(#28a54c, 40);
+                    }
+                }
+            }
+            &__footer {
+                padding: 10px;
+                border-top: 2px solid #e5e5e5;
+
+                &__month {
+                    font-size: 18px;
+                    text-align: center;
+                    font-weight: bold;
+                }
+
+                &--red_light {
+                    border-top: none;
+                    background-color: $FA_BTN_ADD;
+                    -webkit-border-radius:  0px 0px 10px 10px;
+                    -moz-border-radius: 0px 0px 10px 10px;
+                    border-radius: 0px 0px 10px 10px;
+                    color: #FFF;
+                }
+            }
+        }
+
+        &--big {
+            width: 90%;
+        }
 
         &__title {
             color: $FA_TEXT_LIST_VALUE;
@@ -407,6 +509,8 @@ body.finApp {
     }
     /// POPUP
     .popup {
+        -webkit-border-radius: 10px;
+        -moz-border-radius: 10px;
         border-radius: 10px;
         background-color: #fff;
         width: 300px;
@@ -430,7 +534,7 @@ body.finApp {
             padding: 10px 18px 10px;
 
             &--gray {
-                background-color: $FA-PROGRESSIVE-PAGE;
+                background-color: $FA-BODY-PAGE;
                 border-top: 1px solid #DDD;
                 border-bottom: 1px solid #DDD;
             }
@@ -478,10 +582,7 @@ body.finApp {
     .progressivePage {
 
         &__contentPage {
-            //Original Color
-            //background-color: $FA_PROGRESSIVE_PAGE;
-            //Temporal Color
-            background-color: #F2F2F2;
+            background-color: $FA_BODY_PAGE;
             text-align: center;
 
             &__title {
@@ -517,9 +618,17 @@ body.finApp {
         &__footer {
             padding: 20px;
             height: 100px;
-            background-color: $FA_PROGRESSIVE_PAGE;
+            background-color: $FA_BODY_PAGE;
         }
 
+    }
+
+    //DASHBOARD PAGE
+    .dashboardPage {
+        &__contentPage {
+            background-color: $FA_BODY_PAGE;
+            margin-top: 50px;
+        }
     }
     /*----------- END -  PAGES ------------*/
 

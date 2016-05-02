@@ -251,9 +251,7 @@ module app.pages.addUnnecessaryExpensePage {
         * @description this method is launched when user press OK button
         */
         goToNext(): void {
-            //TODO: Aqui deberia llevarme a la pagina principal donde el usuario va
-            // a gestionar todo, info del user, gastos mensuales, tarjetas, etc
-            this.$state.go('page.unnecessaryExpense', { financeId: this.addUnnecessaryExpenseDataConfig.financeId });
+            this.$state.go('tabs.history');
         }
 
         /*
