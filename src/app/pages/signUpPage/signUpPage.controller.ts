@@ -149,7 +149,7 @@ module app.pages.signUpPage {
             let self = this;
             let currentDataUser = {
                 email: this.$rootScope.User.Email,
-                password: 'temporalPassword'
+                password: '1234'
             };
             let auth = self.AuthService.getRef();
 
