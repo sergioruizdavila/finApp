@@ -331,7 +331,7 @@ body.finApp {
     /*              3D BLOCKS              */
     /*-------------------------------------*/
     .block_3d_container {
-            margin-top: 70px;
+
             &--flex {
                 display:flex;
                 flex-direction: row;
@@ -627,7 +627,16 @@ body.finApp {
     .dashboardPage {
         &__contentPage {
             background-color: $FA_BODY_PAGE;
-            margin-top: 50px;
+
+            &__categories {
+                margin: 110px auto 10px;
+                border-bottom: 1px dashed #ccc;
+                width: 90%;
+
+                &__title {
+                    color: $FA_DASHBOARD_PAGE_TITLE_TEXT;
+                }
+            }
         }
     }
     /*----------- END -  PAGES ------------*/
