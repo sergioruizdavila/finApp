@@ -12,6 +12,7 @@ module app.core.util.functionsUtil {
     /**********************************/
     export interface IFunctionsUtilService {
         dateFormatted: app.interfaces.IDateFormatted;
+        dateMonthToString: (date: string, zone: string) => string;
         getPositionByUid: (array: Array<any>, uid: string) => number;
         groupByYear: (array: Array<any>) => any;
     }
@@ -57,6 +58,23 @@ module app.core.util.functionsUtil {
             };
 
             return dateFormatted;
+        }
+
+        /**
+        * dateMonthToString
+        * @description - format month to long string (example: 'November')
+        * @use - this.FinanceService.dateMonthToString('Mon May 01 2016 01:23:34 GMT-0500 (COT)', 'es-ES');
+        * @function
+        * @params {string} date - complete date
+        * @params {string} zone - specific the language zone (example: 'en-US', 'es-ES')
+        * @return {string} month - Returns month formatted to long string (example: 'November')
+        */
+        dateMonthToString(date, zone): string {
+            //VARIABLES
+            var dateFormatted = new Date(date);
+            var options = {month: "long"};
+            var month = dateFormatted.toLocaleDateString(zone, options);
+            return month;
         }
 
         /**

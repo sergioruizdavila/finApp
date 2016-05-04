@@ -11,31 +11,32 @@
 
                 <div class="block_3d_container block_3d_container--flex">
                     <!-- 3D BLOCK -->
-                    <div class="block_3d block_3d--inline block_3d--small" ng-repeat="item in value">
+                    <div class="block_3d block_3d--inline block_3d--small"
+                        ng-repeat="item in value | orderBy: 'date'">
                         <!-- BLOCK CONTENT -->
                         <div class="block_3d--small__content text-center">
                             <div class="block_3d--small__content__incomes">
                                 <div class="block_3d--small__content__incomes__value">
                                     {{item.finances.incomes.formatted}}
                                 </div>
-                                <div class="block_3d--small__content__incomes__text">
-                                    INGRESOS
+                                <div class="block_3d--small__content__incomes__text" translate>
+                                    %history.block_content.incomes.text
                                 </div>
                             </div>
                             <div class="block_3d--small__content__expenses">
                                 <div class="block_3d--small__content__expenses__value">
-                                    $ 350'000.000
+                                    {{item.finances.expenses.formatted}}
                                 </div>
-                                <div class="block_3d--small__content__expenses__text">
-                                    GASTOS
+                                <div class="block_3d--small__content__expenses__text" translate>
+                                    %history.block_content.expenses.text
                                 </div>
                             </div>
                             <div class="block_3d--small__content__saving">
                                 <div class="block_3d--small__content__saving__value">
-                                    $ 350'000.000
+                                    {{item.finances.saving.formatted}}
                                 </div>
-                                <div class="block_3d--small__content__saving__text">
-                                    AHORRO
+                                <div class="block_3d--small__content__saving__text" translate>
+                                    %history.block_content.saving.text
                                 </div>
                             </div>
                         </div>
