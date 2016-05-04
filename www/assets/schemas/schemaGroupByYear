@@ -1,0 +1,132 @@
+var groupedByYear = [
+    {
+        "year": "2016",
+        "finances": [
+            {
+                "month": "03",
+                "finance": {
+                    "incomes": {
+                        "num": 340000,
+                        "formatted": "$ 340.000"
+                    },
+                    "expenses": {
+                        "num": 340000,
+                        "formatted": "$ 340.000"
+                    },
+                    "saving": {
+                        "num": 340000,
+                        "formatted": "$ 340.000"
+                    }
+                }
+            },
+            {
+                "month": "04",
+                "finance": {
+                    "incomes": {
+                        "num": 340000,
+                        "formatted": "$ 340.000"
+                    },
+                    "expenses": {
+                        "num": 340000,
+                        "formatted": "$ 340.000"
+                    },
+                    "saving": {
+                        "num": 340000,
+                        "formatted": "$ 340.000"
+                    }
+                }
+            }
+        ]
+
+    },
+    {
+        "year": "2017",
+        "finances": [
+            {
+                "month": "05",
+                "finance": {
+                    "incomes": {
+                        "num": 340000,
+                        "formatted": "$ 340.000"
+                    },
+                    "expenses": {
+                        "num": 340000,
+                        "formatted": "$ 340.000"
+                    },
+                    "saving": {
+                        "num": 340000,
+                        "formatted": "$ 340.000"
+                    }
+                }
+            },
+            {
+                "month": "06",
+                "finance": {
+                    "incomes": {
+                        "num": 340000,
+                        "formatted": "$ 340.000"
+                    },
+                    "expenses": {
+                        "num": 340000,
+                        "formatted": "$ 340.000"
+                    },
+                    "saving": {
+                        "num": 340000,
+                        "formatted": "$ 340.000"
+                    }
+                }
+            }
+        ]
+
+    }
+
+]
+
+
+for (var i = 0; i < groupedByYear.length; i++ ){
+    var financesByYear = _.find(groupedByYear, { 'year': groupedByYear[i].year });
+    var financesByMonth = groupedByYear[i]
+}
+
+
+[
+    {
+        "2016":[
+            {
+                "month":"Jun",
+                "finances":{
+                    "business":{"formatted":"$450,000","num":450000},
+                    "investment":{"formatted":"$0","num":0},
+                    "salary":{"formatted":"$5,000,000","num":5000000}
+                }
+            },
+            {
+                "month":"May",
+                "finances":{
+                    "business":{"formatted":"$230,000","num":230000},
+                    "investment":{"formatted":"$120,000","num":120000},
+                    "salary":{"formatted":"$2,300,000","num":2300000}
+                }
+            },
+        ]
+    }
+]
+
+[
+    {
+        "2016":[
+            {
+                "month":"Jun",
+                "finances":{
+                    "incomes":{"num":5450000,"formatted":"$5,450,000"}
+                }
+            },
+            {
+                "month":"May",
+                "finances":{
+                    "incomes":{"num":2650000,"formatted":"$2,650,000"}
+                }
+            }
+        ]
+    }
+]

@@ -16,7 +16,7 @@ module app.models.user {
     /**********************************/
     export interface IUserService {
         ref: any;
-        existUserByEmail: (email: string) => any;
+        existUserByEmail: (email: string) => angular.IPromise<boolean>;
         getUserByEmail: (email: string) => AngularFireObject;
         getUsers: () => AngularFireArray;
         bindingUser: (uid: string, $rootScope: app.interfaces.IFinAppRootScope) => any;
@@ -27,7 +27,7 @@ module app.models.user {
     /****************************************/
     /*           CLASS DEFINITION           */
     /****************************************/
-    class UserService implements IUserService {
+    export class UserService implements IUserService {
 
         static serviceId = 'finApp.models.user.UserService';
 
@@ -125,7 +125,7 @@ module app.models.user {
                          if not, return false.
         * @function
         * @params {string} email - valid email string
-        * @return {ng.IPromise<boolean>} promise - return a firebaseArray promise
+        * @return {angular.IPromise<boolean>} promise - return a firebaseArray promise
         */
         existUserByEmail(email): angular.IPromise<boolean> {
 

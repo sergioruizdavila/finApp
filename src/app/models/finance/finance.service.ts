@@ -22,8 +22,11 @@ module app.models.finance {
         saveBusiness: (newBusiness: IMoney) => void;
         saveNecessaryExpense: (necessaryExpense: Expense, financeId: string) => void;
         saveUnnecessaryExpense: (unnecessaryExpense: Expense, financeId: string) => void;
+        getAllFinances: () => angular.IPromise<Array<Finance>>;
+        getFinancesByDate: (startDate: string, endDate: string) => void;
         /*-- mathematical calculations --*/
         total: (numbers: Array<number>) => number;
+        getSaving: (incomes: number, expenses: number) => number;
     }
 
 
@@ -132,6 +135,35 @@ module app.models.finance {
             this.FirebaseFactory.add(url, unnecessaryExpense);
         }
 
+        /**
+        * getFinances
+        * @description - get user's finances
+        * @function
+        */
+        getAllFinances(): angular.IPromise<Array<Finance>> {
+            let url = '/users/' + this.$rootScope.User.Uid + '/finances/';
+            return this.FirebaseFactory.getArray(url).then(function(data){
+                return data;
+            });
+        }
+
+        /**
+        * getFinanceByDate
+        * @description - get user's finances by specific date
+        * @use - this.FinanceService.getFinancesByDate('Mon May 01 2016 01:23:34 GMT-0500 (COT)',
+        *                                              'Mon May 03 2016 20:23:34 GMT-0500 (COT)');
+        * @function
+        * @parameter {string} userId - user uid on firebase
+        * @parameter {string} startDate - start specific date
+        * @parameter {string} endDate - end specific date
+        */
+        getFinancesByDate(startDate, endDate): any {
+            let url = '/users/' + this.$rootScope.User.Uid + '/finances/';
+            return this.FirebaseFactory.getArrayByDate(url, startDate, endDate).then(function(data){
+                console.log(data);
+            });
+        }
+
         /***********************************/
         /*    mathematical calculations    */
         /***********************************/
@@ -148,6 +180,19 @@ module app.models.finance {
                 total += numbers[i];
             }
             return total;
+        }
+
+        /**
+        * getSaving
+        * @description: incomes - expenses = saving
+        * @function
+        * @parameter {number} incomes - sum of incomes
+        * @parameter {number} expenses - sum of expenses
+        */
+        getSaving(incomes, expenses): number {
+            let saving = 0;
+            saving = incomes - expenses;
+            return saving;
         }
 
 

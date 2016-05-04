@@ -13,6 +13,7 @@ module app.core.util.functionsUtil {
     export interface IFunctionsUtilService {
         dateFormatted: app.interfaces.IDateFormatted;
         getPositionByUid: (array: Array<any>, uid: string) => number;
+        groupByYear: (array: Array<any>) => any;
     }
 
 
@@ -63,7 +64,7 @@ module app.core.util.functionsUtil {
         * @description - format a number to currency string
         * @function
         * @params {number} num - number without format
-        * @params {string} formatted - number formatted
+        * @params {string} formatted - number formatted (if you don't have this value, please send '')
         * @return {object} currency - Returns an object with 2 properties: num - number without format
         * and formatted - number formatted.
         */
@@ -110,6 +111,20 @@ module app.core.util.functionsUtil {
                 return element.Uid;
             }).indexOf(uid);
             return index;
+        }
+
+        /**
+        * groupByYear
+        * @description - take an array and grouping it by Year
+        * @function
+        * @return {Array<any>} newArrayGroupedByYear - Returns an array grouped by Year
+        */
+        groupByYear(array): any {
+            let newArrayGroupedByYear = _.groupBy(array, function(item:any) {
+                return item.dateCreated.year;
+            });
+
+            return newArrayGroupedByYear;
         }
 
     }
