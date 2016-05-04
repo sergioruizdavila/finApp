@@ -1,5 +1,6 @@
 {
     "__GLOBAL__":"",
+    "%global.zone": "es-ES",
     "%global.continue.button.text": "CONTINUAR",
     "%global.total.text": "TOTAL",
 
@@ -72,6 +73,11 @@
     "__UNNECESSARY_EXPENSE__":"",
     "%unnecessary_expense.title.text": "Gastos No Necesarios",
     "%unnecessary_expense.help_text.text": "Agrega todos los gastos que no afectarian tu vida si no los pagaras (por ejemplo regalos, ropa, fiestas, etc.)",
+
+    "__HISTORY__":"",
+    "%history.block_content.incomes.text": "INGRESOS",
+    "%history.block_content.expenses.text": "GASTOS",
+    "%history.block_content.saving.text": "AHORROS",
 
     "": ""
 }

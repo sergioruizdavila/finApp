@@ -628,13 +628,22 @@ body.finApp {
         &__contentPage {
             background-color: $FA_BODY_PAGE;
 
+            &__categories:nth-of-type(1)
+            {
+                margin: 110px auto 15px;
+            }
+
             &__categories {
-                margin: 110px auto 10px;
-                border-bottom: 1px dashed #ccc;
-                width: 90%;
+                margin-bottom: 15px;
 
                 &__title {
-                    color: $FA_DASHBOARD_PAGE_TITLE_TEXT;
+                    margin: 0 auto 10px;
+                    border-bottom: 1px dashed #ccc;
+                    width: 90%;
+
+                    &__text {
+                        color: $FA_DASHBOARD_PAGE_TITLE_TEXT;
+                    }
                 }
             }
         }
