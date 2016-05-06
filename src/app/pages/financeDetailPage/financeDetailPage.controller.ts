@@ -1,40 +1,34 @@
 /**
- * AddSalaryPageController
- * @description - Add Salary Page Controller
+ * FinanceDetailPageController
+ * @description - Finance Detail Page Controller
  */
 
-module app.pages.addSalaryPage {
+module app.pages.financeDetailPage {
 
     /**********************************/
     /*           INTERFACES           */
     /**********************************/
-    export interface IAddSalaryPageController {
-        form: IAddSalaryForm;
+    export interface IFinanceDetailPageController {
         activate: () => void;
-        goToNext: () => void;
+        saveChanges: () => void;
         goToBack: () => void;
     }
 
-    export interface IAddSalaryDataConfig extends ng.ui.IStateParamsService {
+    export interface IFinanceDetailDataConfig extends ng.ui.IStateParamsService {
         financeId: string;
-    }
-
-    export interface IAddSalaryForm {
-        salary: app.models.finance.IMoney;
     }
 
     /****************************************/
     /*           CLASS DEFINITION           */
     /****************************************/
-    export class AddSalaryPageController implements IAddSalaryPageController {
+    export class FinanceDetailPageController implements IFinanceDetailPageController {
 
-        static controllerId = 'finApp.pages.addSalaryPage.AddSalaryPageController';
+        static controllerId = 'finApp.pages.financeDetailPage.FinanceDetailPageController';
 
         /**********************************/
         /*           PROPERTIES           */
         /**********************************/
-        form: IAddSalaryForm;
-        addSalaryDataConfig: IAddSalaryDataConfig;
+        financeDetailDataConfig: IFinanceDetailDataConfig;
         // --------------------------------
 
         /*-- INJECT DEPENDENCIES --*/
@@ -55,10 +49,10 @@ module app.pages.addSalaryPage {
                     private FinanceService: app.models.finance.IFinanceService,
                     private FunctionsUtilService: app.core.util.functionsUtil.FunctionsUtilService,
                     private $state: ng.ui.IStateService,
-                    private $stateParams: IAddSalaryDataConfig,
+                    private $stateParams: IFinanceDetailDataConfig,
                     private $rootScope: app.interfaces.IFinAppRootScope,
                     private auth: any) {
-            this.init();
+                this.init();
         }
 
         /*-- INITIALIZE METHOD --*/
@@ -66,19 +60,14 @@ module app.pages.addSalaryPage {
             //Validate if user is logged in
             this._isLoggedIn();
 
-            //Init form
-            this.form = {
-                salary: { num: null, formatted: '' }
-            };
-
-            this.addSalaryDataConfig = this.$stateParams;
+            this.financeDetailDataConfig = this.$stateParams;
 
             this.activate();
         }
 
         /*-- ACTIVATE METHOD --*/
         activate(): void {
-            console.log('addSalaryPage controller actived');
+            console.log('financeDetailPage controller actived');
         }
 
         /**********************************/
@@ -97,31 +86,13 @@ module app.pages.addSalaryPage {
         }
 
         /*
-        * Format Salary Method
-        * @description Format the salary value with default currency
-        */
-        _formatSalary(): void {
-            let currencyObj: app.models.finance.IMoney =
-            this.FunctionsUtilService.formatCurrency(this.form.salary.num,
-                                                     this.form.salary.formatted);
-            this.form.salary.num = currencyObj.num;
-            this.form.salary.formatted = currencyObj.formatted;
-        }
-
-        /*
-        * Go to investment page
+        * Go to necessary expenses page
         * @description this method is launched when user press OK button
         */
-        goToNext(): void {
-            //Get elementPos by Uid
-            var elementPos = this.FunctionsUtilService.getPositionByUid(this.$rootScope.User.Finance,
-                                                                        this.addSalaryDataConfig.financeId);
-            //Update User model
-            this.$rootScope.User.Finance[elementPos].Income.Salary = this.form.salary;
-            //Save salary on firebase
-            this.FinanceService.saveFinance(this.$rootScope.User.Finance[elementPos]);
-
-            this.$state.go('page.investment', {financeId: this.addSalaryDataConfig.financeId});
+        saveChanges(): void {
+            //TODO: Analizar, ya que no serviria de nada un boton guardar, ya que
+            // en cada pagina de editar un campo al dar click en el boton Continuar
+            // ya guardo los cambios, asi que este boton no tendria utilidad.
         }
 
         /*
@@ -132,13 +103,11 @@ module app.pages.addSalaryPage {
             this.$ionicHistory.goBack();
         }
 
-
-
     }
 
     /*-- MODULE DEFINITION --*/
     angular
-        .module('finApp.pages.addSalaryPage')
-        .controller(AddSalaryPageController.controllerId, AddSalaryPageController);
+        .module('finApp.pages.addBusinessPage')
+        .controller(FinanceDetailPageController.controllerId, FinanceDetailPageController);
 
 }

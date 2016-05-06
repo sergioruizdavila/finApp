@@ -16,11 +16,16 @@
         .module('finApp')
         .run(run);
 
-    //run.$inject = ['$ionicPlatform', '$rootScope'];
+    run.$inject = ['$ionicPlatform',
+                   '$rootScope',
+                   'finApp.auth.AuthServiceExample',
+                   'finApp.auth.session',
+                   '$state'];
 
-    function run($ionicPlatform, $rootScope: app.interfaces.IFinAppRootScope): void {
+    function run($ionicPlatform, $rootScope: app.interfaces.IFinAppRootScope, auth, session, $state): void {
 
         $ionicPlatform.ready(function() {
+
             if (window.cordova && window.cordova.plugins.Keyboard) {
                 // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
                 // for form inputs)
@@ -35,10 +40,33 @@
                 StatusBar.styleDefault();
             }
 
-            //Create User object
-            $rootScope.User = new app.models.user.UserFirebase();
-
         });
+
+        $rootScope.auth = auth;
+        $rootScope.session = session;
+
+        //Create User object
+        $rootScope.User = new app.models.user.UserFirebase();
     }
 
 })();
+
+
+(function (angular) {
+
+  function localStorageServiceFactory($window){
+    if($window.localStorage){
+      return $window.localStorage;
+    }
+    throw new Error('Local storage support is needed');
+  }
+
+  // Inject dependencies
+  localStorageServiceFactory.$inject = ['$window'];
+
+  // Export
+  angular
+    .module('finApp.localStorage', [])
+    .factory('finApp.localStorageService', localStorageServiceFactory);
+
+})(angular);

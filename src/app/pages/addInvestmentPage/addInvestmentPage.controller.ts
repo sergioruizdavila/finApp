@@ -44,7 +44,8 @@ module app.pages.addInvestmentPage {
                           'finApp.core.util.FunctionsUtilService',
                           '$state',
                           '$stateParams',
-                          '$rootScope'];
+                          '$rootScope',
+                          'finApp.auth.AuthServiceExample'];
 
         /**********************************/
         /*           CONSTRUCTOR          */
@@ -55,12 +56,16 @@ module app.pages.addInvestmentPage {
         private FunctionsUtilService: app.core.util.functionsUtil.FunctionsUtilService,
         private $state: ng.ui.IStateService,
         private $stateParams: IAddInvestmentDataConfig,
-        private $rootScope: app.interfaces.IFinAppRootScope) {
+        private $rootScope: app.interfaces.IFinAppRootScope,
+        private auth: any) {
             this.init();
         }
 
         /*-- INITIALIZE METHOD --*/
         private init() {
+            //Validate if user is logged in
+            this._isLoggedIn();
+
             //Init form
             this.form = {
                 investment: { num: null, formatted: '' }
@@ -79,6 +84,17 @@ module app.pages.addInvestmentPage {
         /**********************************/
         /*            METHODS             */
         /**********************************/
+        
+        /*
+        * Is Logged In Method
+        * @description Validate if user is logged in.
+        */
+        _isLoggedIn(): void {
+            if(!this.auth.isLoggedIn()){
+                this.$state.go('page.signUp');
+                event.preventDefault();
+            }
+        }
 
         /*
         * Format Investment Method

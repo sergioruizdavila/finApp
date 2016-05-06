@@ -30,17 +30,22 @@ module components.tabs {
         // --------------------------------
 
         /*-- INJECT DEPENDENCIES --*/
-        static $inject = ['$state'];
+        static $inject = ['$state',
+                          'finApp.auth.AuthServiceExample'];
 
         /**********************************/
         /*           CONSTRUCTOR          */
         /**********************************/
-        constructor(private $state: ng.ui.IStateService) {
+        constructor(private $state: ng.ui.IStateService,
+                    private auth: any) {
             this.init();
         }
 
         /*-- INITIALIZE METHOD --*/
         private init() {
+            //Validate if user is logged in
+            this._isLoggedIn();
+            
             this.tab = 1;
             this.activate();
         }
@@ -53,6 +58,18 @@ module components.tabs {
         /**********************************/
         /*            METHODS             */
         /**********************************/
+
+        /*
+        * Is Logged In Method
+        * @description Validate if user is logged in.
+        */
+        _isLoggedIn(): void {
+            if(!this.auth.isLoggedIn()){
+                this.$state.go('page.signUp');
+                event.preventDefault();
+            }
+        }
+
         isSet(tabId): boolean {
             return this.tab === tabId;
         }

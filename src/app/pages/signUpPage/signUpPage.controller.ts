@@ -49,7 +49,8 @@ module app.pages.signUpPage {
             '$filter',
             'finApp.models.user.UserService',
             '$scope',
-            '$rootScope'];
+            '$rootScope',
+            'finApp.auth.AuthServiceExample',];
 
         /**********************************/
         /*           CONSTRUCTOR          */
@@ -61,7 +62,8 @@ module app.pages.signUpPage {
             private $filter: angular.IFilterService,
             private UserService: app.models.user.IUserService,
             private $scope: angular.IScope,
-            private $rootScope: app.interfaces.IFinAppRootScope) {
+            private $rootScope: app.interfaces.IFinAppRootScope,
+            private auth: any) {
 
             this.init();
 
@@ -69,6 +71,8 @@ module app.pages.signUpPage {
 
         /*-- INITIALIZE METHOD --*/
         private init() {
+            //Validate if user is logged in
+            this._isLoggedIn();
 
             //Init form
             this.form = {
@@ -91,6 +95,17 @@ module app.pages.signUpPage {
         /**********************************/
         /*            METHODS             */
         /**********************************/
+
+        /*
+        * Is Logged In Method
+        * @description Validate if user is logged in.
+        */
+        _isLoggedIn(): void {
+            if(this.auth.isLoggedIn()){
+                this.$state.go('tabs.history');
+                event.preventDefault();
+            }
+        }
 
         /*
         * Register Method

@@ -57,7 +57,8 @@ module app.pages.addUnnecessaryExpensePage {
             '$state',
             '$stateParams',
             '$scope',
-            '$rootScope'];
+            '$rootScope',
+            'finApp.auth.AuthServiceExample'];
 
         /**********************************/
         /*           CONSTRUCTOR          */
@@ -71,12 +72,16 @@ module app.pages.addUnnecessaryExpensePage {
             private $state: ng.ui.IStateService,
             private $stateParams: IAddUnnecessaryExpenseDataConfig,
             private $scope: IAddUnnecessaryExpensePageScope,
-            private $rootScope: app.interfaces.IFinAppRootScope) {
+            private $rootScope: app.interfaces.IFinAppRootScope,
+            private auth: any) {
             this.init();
         }
 
         /*-- INITIALIZE METHOD --*/
         private init() {
+            //Validate if user is logged in
+            this._isLoggedIn();
+
             //Init form
             this.form = {
                 expense: new app.models.finance.Expense(),
@@ -104,6 +109,17 @@ module app.pages.addUnnecessaryExpensePage {
         /**********************************/
         /*            METHODS             */
         /**********************************/
+        
+        /*
+        * Is Logged In Method
+        * @description Validate if user is logged in.
+        */
+        _isLoggedIn(): void {
+            if(!this.auth.isLoggedIn()){
+                this.$state.go('page.signUp');
+                event.preventDefault();
+            }
+        }
 
         /*
         * Show tip example expenses popup

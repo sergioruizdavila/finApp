@@ -42,6 +42,7 @@ module app.pages.logInPage {
         static $inject = ['$ionicHistory',
                           '$state',
                           'finApp.auth.AuthService',
+                          'finApp.auth.AuthServiceExample',
                           '$rootScope'];
 
         /**********************************/
@@ -50,6 +51,7 @@ module app.pages.logInPage {
         constructor(private $ionicHistory: ionic.navigation.IonicHistoryService,
                     private $state: ng.ui.IStateService,
                     private AuthService,
+                    private auth,
                     private $rootScope: app.interfaces.IFinAppRootScope) {
 
             this.init();
@@ -58,6 +60,9 @@ module app.pages.logInPage {
 
         /*-- INITIALIZE METHOD --*/
         private init() {
+            //Validate if user is logged in
+            this._isLoggedIn();
+
             //Init form
             this.form = {
                 password: ''
@@ -80,6 +85,17 @@ module app.pages.logInPage {
         /**********************************/
 
         /*
+        * Is Logged In Method
+        * @description Validate if user is logged in.
+        */
+        _isLoggedIn(): void {
+            if(this.auth.isLoggedIn()){
+                this.$state.go('tabs.history');
+                event.preventDefault();
+            }
+        }
+
+        /*
         * Login Method
         * @description If current user has an account, it asks a valid password
         *              in order to give authorization
@@ -92,7 +108,16 @@ module app.pages.logInPage {
                 email: this.$rootScope.User.Email,
                 password: this.form.password
             };
-            this.AuthService.getRef().$authWithPassword(currentDataUser).then(
+
+            this.auth.logInPassword(currentDataUser).then(
+                function(response){
+                    self.$rootScope.User.Uid = response.uid;
+                    let newFinance = self.$rootScope.User.setFinance(new app.models.finance.Finance());
+                    self.$state.go('page.salary', {financeId: newFinance.Uid});
+                    console.log('Authenticated successfully with payload:', response);
+                }
+            );
+            /*this.AuthService.getRef().$authWithPassword(currentDataUser).then(
                 function (authData){
                     //TODO: Si se loguea exitosamente debe llevarlo directamente a: 1. addSalaryPage
                     // si es la primera vez que usa la App, 2. dashboard o pantalla principal, donde le
@@ -109,7 +134,7 @@ module app.pages.logInPage {
                     self.error = error;
                     console.log('Login Failed!', error);
                 }
-            );
+            );*/
         }
 
         /*
