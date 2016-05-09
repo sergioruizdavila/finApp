@@ -39,7 +39,7 @@ module app.pages.financeDetailPage {
                           '$state',
                           '$stateParams',
                           '$rootScope',
-                          'finApp.auth.AuthServiceExample'];
+                          'finApp.auth.AuthService'];
 
         /**********************************/
         /*           CONSTRUCTOR          */
@@ -52,11 +52,11 @@ module app.pages.financeDetailPage {
                     private $stateParams: IFinanceDetailDataConfig,
                     private $rootScope: app.interfaces.IFinAppRootScope,
                     private auth: any) {
-                this.init();
+                this._init();
         }
 
         /*-- INITIALIZE METHOD --*/
-        private init() {
+        private _init() {
             //Validate if user is logged in
             this._isLoggedIn();
 
@@ -78,7 +78,7 @@ module app.pages.financeDetailPage {
         * Is Logged In Method
         * @description Validate if user is logged in.
         */
-        _isLoggedIn(): void {
+        private _isLoggedIn(): void {
             if(!this.auth.isLoggedIn()){
                 this.$state.go('page.signUp');
                 event.preventDefault();

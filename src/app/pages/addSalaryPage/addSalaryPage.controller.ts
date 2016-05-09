@@ -45,7 +45,7 @@ module app.pages.addSalaryPage {
                           '$state',
                           '$stateParams',
                           '$rootScope',
-                          'finApp.auth.AuthServiceExample'];
+                          'finApp.auth.AuthService'];
 
         /**********************************/
         /*           CONSTRUCTOR          */
@@ -58,11 +58,11 @@ module app.pages.addSalaryPage {
                     private $stateParams: IAddSalaryDataConfig,
                     private $rootScope: app.interfaces.IFinAppRootScope,
                     private auth: any) {
-            this.init();
+            this._init();
         }
 
         /*-- INITIALIZE METHOD --*/
-        private init() {
+        private _init() {
             //Validate if user is logged in
             this._isLoggedIn();
 
@@ -89,7 +89,7 @@ module app.pages.addSalaryPage {
         * Is Logged In Method
         * @description Validate if user is logged in.
         */
-        _isLoggedIn(): void {
+        private _isLoggedIn(): void {
             if(!this.auth.isLoggedIn()){
                 this.$state.go('page.signUp');
                 event.preventDefault();
@@ -100,7 +100,7 @@ module app.pages.addSalaryPage {
         * Format Salary Method
         * @description Format the salary value with default currency
         */
-        _formatSalary(): void {
+        private _formatSalary(): void {
             let currencyObj: app.models.finance.IMoney =
             this.FunctionsUtilService.formatCurrency(this.form.salary.num,
                                                      this.form.salary.formatted);

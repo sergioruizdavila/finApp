@@ -10,8 +10,13 @@ module app.interfaces {
 
     export interface IFinAppRootScope extends angular.IRootScopeService {
         User: app.models.user.UserFirebase;
-        auth: any,
-        session: any
+        auth: any;
+        session: any;
+    }
+
+    export interface IUserDataAuth {
+        email: string;
+        password: string;
     }
 
     export interface IDateFormatted {

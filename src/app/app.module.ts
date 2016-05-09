@@ -11,12 +11,11 @@
 
     angular
         .module('finApp', [
+            'finApp.auth',
             'finApp.core',
             'finApp.core.util',
             'finApp.core.firebase',
             'finApp.localStorage',
-            'finApp.auth',
-            'finApp.authExample',
             'finApp.pages.main',
             'finApp.pages.tutorialPage',
             'finApp.pages.signUpPage',

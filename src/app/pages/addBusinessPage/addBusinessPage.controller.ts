@@ -45,7 +45,7 @@ module app.pages.addBusinessPage {
                           '$state',
                           '$stateParams',
                           '$rootScope',
-                          'finApp.auth.AuthServiceExample'];
+                          'finApp.auth.AuthService'];
 
         /**********************************/
         /*           CONSTRUCTOR          */
@@ -58,11 +58,11 @@ module app.pages.addBusinessPage {
                     private $stateParams: IAddBusinessDataConfig,
                     private $rootScope: app.interfaces.IFinAppRootScope,
                     private auth: any) {
-                this.init();
+                this._init();
         }
 
         /*-- INITIALIZE METHOD --*/
-        private init() {
+        private _init() {
             //Validate if user is logged in
             this._isLoggedIn();
 
@@ -89,18 +89,18 @@ module app.pages.addBusinessPage {
         * Is Logged In Method
         * @description Validate if user is logged in.
         */
-        _isLoggedIn(): void {
+        private _isLoggedIn(): void {
             if(!this.auth.isLoggedIn()){
                 this.$state.go('page.signUp');
                 event.preventDefault();
             }
         }
-        
+
         /*
         * Format Business Method
         * @description Format the business value with default currency
         */
-        _formatBusiness(): void {
+        private _formatBusiness(): void {
             let currencyObj: app.models.finance.IMoney =
             this.FunctionsUtilService.formatCurrency(this.form.business.num,
                                                      this.form.business.formatted);

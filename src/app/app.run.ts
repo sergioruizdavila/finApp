@@ -18,11 +18,15 @@
 
     run.$inject = ['$ionicPlatform',
                    '$rootScope',
-                   'finApp.auth.AuthServiceExample',
+                   'finApp.auth.AuthService',
                    'finApp.auth.session',
                    '$state'];
 
-    function run($ionicPlatform, $rootScope: app.interfaces.IFinAppRootScope, auth, session, $state): void {
+    function run($ionicPlatform,
+                 $rootScope: app.interfaces.IFinAppRootScope,
+                 auth,
+                 session,
+                 $state): void {
 
         $ionicPlatform.ready(function() {
 

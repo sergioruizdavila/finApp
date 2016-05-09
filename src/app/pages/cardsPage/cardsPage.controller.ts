@@ -33,11 +33,11 @@ module app.pages.cardsPage {
         /*           CONSTRUCTOR          */
         /**********************************/
         constructor(private $state: ng.ui.IStateService) {
-            this.init();
+            this._init();
         }
 
         /*-- INITIALIZE METHOD --*/
-        private init() {
+        private _init() {
 
             this.activate();
         }

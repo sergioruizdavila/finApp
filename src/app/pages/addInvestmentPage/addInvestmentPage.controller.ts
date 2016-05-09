@@ -45,7 +45,7 @@ module app.pages.addInvestmentPage {
                           '$state',
                           '$stateParams',
                           '$rootScope',
-                          'finApp.auth.AuthServiceExample'];
+                          'finApp.auth.AuthService'];
 
         /**********************************/
         /*           CONSTRUCTOR          */
@@ -58,11 +58,11 @@ module app.pages.addInvestmentPage {
         private $stateParams: IAddInvestmentDataConfig,
         private $rootScope: app.interfaces.IFinAppRootScope,
         private auth: any) {
-            this.init();
+            this._init();
         }
 
         /*-- INITIALIZE METHOD --*/
-        private init() {
+        private _init() {
             //Validate if user is logged in
             this._isLoggedIn();
 
@@ -84,12 +84,12 @@ module app.pages.addInvestmentPage {
         /**********************************/
         /*            METHODS             */
         /**********************************/
-        
+
         /*
         * Is Logged In Method
         * @description Validate if user is logged in.
         */
-        _isLoggedIn(): void {
+        private _isLoggedIn(): void {
             if(!this.auth.isLoggedIn()){
                 this.$state.go('page.signUp');
                 event.preventDefault();
@@ -100,7 +100,7 @@ module app.pages.addInvestmentPage {
         * Format Investment Method
         * @description Format the investment value with default currency
         */
-        _formatInvestment(): void {
+        private _formatInvestment(): void {
             let currencyObj: app.models.finance.IMoney =
             this.FunctionsUtilService.formatCurrency(this.form.investment.num,
                                                      this.form.investment.formatted);

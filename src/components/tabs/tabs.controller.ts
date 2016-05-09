@@ -31,7 +31,7 @@ module components.tabs {
 
         /*-- INJECT DEPENDENCIES --*/
         static $inject = ['$state',
-                          'finApp.auth.AuthServiceExample'];
+                          'finApp.auth.AuthService'];
 
         /**********************************/
         /*           CONSTRUCTOR          */
@@ -45,7 +45,7 @@ module components.tabs {
         private init() {
             //Validate if user is logged in
             this._isLoggedIn();
-            
+
             this.tab = 1;
             this.activate();
         }

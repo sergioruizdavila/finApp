@@ -23,11 +23,11 @@ module app.pages.tutorialPage {
         /*           CONSTRUCTOR          */
         /**********************************/
         constructor() {
-            this.init();
+            this._init();
         }
 
         /*-- INITIALIZE METHOD --*/
-        private init() {
+        private _init() {
             this.activate();
         }
 

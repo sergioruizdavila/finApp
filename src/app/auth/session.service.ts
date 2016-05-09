@@ -35,7 +35,7 @@
   sessionService.$inject = ['$log', 'finApp.localStorageService'];
 
   // Export
-  angular.module('finApp.authExample')
+  angular.module('finApp.auth')
     .service('finApp.auth.session', sessionService);
 
 })(angular);

@@ -28,7 +28,7 @@ module app.pages.historyPage {
         /*           PROPERTIES           */
         /**********************************/
         historyDataConfig: IHistoryDataConfig;
-        financesList: Array<any>;
+        private _financesList: Array<any>;
         // --------------------------------
 
         /*-- INJECT DEPENDENCIES --*/
@@ -50,11 +50,11 @@ module app.pages.historyPage {
                     private $stateParams: IHistoryDataConfig,
                     private $filter: angular.IFilterService,
                     private $rootScope: app.interfaces.IFinAppRootScope) {
-            this.init();
+            this._init();
         }
 
         /*-- INITIALIZE METHOD --*/
-        private init() {
+        private _init() {
 
             this.historyDataConfig = this.$stateParams;
 
@@ -71,21 +71,38 @@ module app.pages.historyPage {
             //Get All User's finances in order to draw each block
             this._getFinances().then(function(finances:any){
                 //grouping by year
-                self.financesList = self._groupByYear(finances);
+                self._financesList = self._groupByYear(finances);
             });
         }
 
         /**********************************/
         /*            METHODS             */
         /**********************************/
-        _getFinances(): angular.IPromise<Array<app.models.finance.Finance>> {
+
+        /**
+        * _getFinances
+        * @description - get all Finances associated to user logged in
+        * @function
+        * @params {any} authData - User Authenticated Data
+        * @return {angular.IPromise<Array<app.models.finance.Finance>>}
+        * promise - return user's finances data promise
+        */
+        private _getFinances(): angular.IPromise<Array<app.models.finance.Finance>> {
             return this.FinanceService.getAllFinances().then(function(finances){
                 return finances;
             });
         }
 
 
-        _getTotalIncomes(incomes): number {
+        /**
+        * _getTotalIncomes
+        * @description - get user's incomes total
+        * @function
+        * @params {any} incomes - user's incomes list
+        * @return {number} total - total of user's incomes
+        */
+        //TODO: change any type to Array<Incomes>
+        private _getTotalIncomes(incomes: any): number {
             //VARIABLES
             var incomesToArray = [];
             let total = 0;
@@ -99,7 +116,15 @@ module app.pages.historyPage {
         }
 
 
-        _getTotalExpenses(expenses): number {
+        /**
+        * _getTotalExpenses
+        * @description - get user's expenses total
+        * @function
+        * @params {any} expenses - user's expenses list
+        * @return {number} total - total of user's expenses
+        */
+        //TODO: change any type to Array<Expenses>
+        private _getTotalExpenses(expenses: any): number {
             //VARIABLES
             var expensesToArray = [];
             let total = 0;
@@ -117,7 +142,15 @@ module app.pages.historyPage {
         }
 
 
-        _groupByYear(finances): Array<any> {
+        /**
+        * _groupByYear
+        * @description - grouping finances by Year
+        * @function
+        * @params {any} finances - user's finances
+        * @return {number} result - return finances grouped by Year
+        */
+        //TODO: change any type. Analyze what is the best type
+        private _groupByYear(finances: any): Array<any> {
             //VARIABLES
             var groups = {};
             var result = [];
