@@ -172,6 +172,7 @@ module app.pages.historyPage {
                 }
 
                 groups[item.dateCreated.year].push({
+                    uid: item.uid,
                     date: new Date(item.dateCreated.complete),
                     month: this.FunctionsUtilService.dateMonthToString(item.dateCreated.complete, ZONE),
                     finances: {
@@ -191,6 +192,15 @@ module app.pages.historyPage {
             }
 
             return result;
+        }
+
+        /*
+        * Go to finance detail page
+        * @description this method is launched when user press one finance's block
+        */
+        goToDetail(financeId: string): void {
+            this.$state.go('page.financeDetail',
+                           {financeId: financeId});
         }
 
 

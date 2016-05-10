@@ -11,7 +11,6 @@
         .module('finApp.pages.financeDetailPage', [])
         .config(config);
 
-    //config.$inject = ['ionic'];
 
     function config($stateProvider: angular.ui.IStateProvider) {
 
@@ -24,6 +23,10 @@
                         controller: 'finApp.pages.financeDetailPage.FinanceDetailPageController',
                         controllerAs: 'vm'
                     }
+                },
+                parent: 'page',
+                params: {
+                    financeId: null
                 }
             });
     }

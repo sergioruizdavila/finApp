@@ -78,6 +78,10 @@ module app.auth {
         */
         getUserAuthData(): FirebaseAuthData {
             let self = this;
+            //TODO: Analizar por que estoy obteniendo la session Auth con el
+            // metodo $getAuth de Firebase no con mi metodo del servicio session
+            // creo que va a ser necesario replatear esto: uso la sesion de firebase
+            // o la que estoy creando yo?
             return this._authObj.$getAuth();
         }
 

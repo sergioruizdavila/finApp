@@ -10,7 +10,6 @@ module app.pages.financeDetailPage {
     /**********************************/
     export interface IFinanceDetailPageController {
         activate: () => void;
-        saveChanges: () => void;
         goToBack: () => void;
     }
 
@@ -67,7 +66,18 @@ module app.pages.financeDetailPage {
 
         /*-- ACTIVATE METHOD --*/
         activate(): void {
+            //LOG
             console.log('financeDetailPage controller actived');
+            //VARIABLES
+            let self = this;
+
+            //Get All User's finances in order to draw each block
+            this._getFinanceDetail(this.financeDetailDataConfig.financeId)
+            .then(function(finance){
+                //grouping by year
+                //self._financesList = self._groupByYear(finances);
+                console.log(finance);
+            });
         }
 
         /**********************************/
@@ -86,13 +96,16 @@ module app.pages.financeDetailPage {
         }
 
         /*
-        * Go to necessary expenses page
+        * _getFinanceDetail
         * @description this method is launched when user press OK button
         */
-        saveChanges(): void {
-            //TODO: Analizar, ya que no serviria de nada un boton guardar, ya que
-            // en cada pagina de editar un campo al dar click en el boton Continuar
-            // ya guardo los cambios, asi que este boton no tendria utilidad.
+        _getFinanceDetail(financeId): angular.IPromise<AngularFireObject> {
+            return this.FinanceService.getFinanceById(financeId)
+            .then(
+                function(finance){
+                    return finance;
+                }
+            );
         }
 
         /*

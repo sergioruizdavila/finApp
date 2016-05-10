@@ -22,8 +22,9 @@ module app.models.finance {
         saveBusiness: (newBusiness: IMoney) => void;
         saveNecessaryExpense: (necessaryExpense: Expense, financeId: string) => void;
         saveUnnecessaryExpense: (unnecessaryExpense: Expense, financeId: string) => void;
-        getAllFinances: () => angular.IPromise<Array<Finance>>;
+        getAllFinances: () => angular.IPromise<AngularFireArray>;
         getFinancesByDate: (startDate: string, endDate: string) => void;
+        getFinanceById: (financeId: string) => angular.IPromise<AngularFireObject>;
         /*-- mathematical calculations --*/
         total: (numbers: Array<number>) => number;
         getSaving: (incomes: number, expenses: number) => number;
@@ -140,7 +141,7 @@ module app.models.finance {
         * @description - get user's finances
         * @function
         */
-        getAllFinances(): angular.IPromise<Array<Finance>> {
+        getAllFinances(): angular.IPromise<AngularFireArray> {
             let url = '/users/' + this.$rootScope.User.Uid + '/finances/';
             return this.FirebaseFactory.getArray(url).then(function(data){
                 return data;
@@ -153,7 +154,6 @@ module app.models.finance {
         * @use - this.FinanceService.getFinancesByDate('Mon May 01 2016 01:23:34 GMT-0500 (COT)',
         *                                              'Mon May 03 2016 20:23:34 GMT-0500 (COT)');
         * @function
-        * @params {string} userId - user uid on firebase
         * @params {string} startDate - start specific date
         * @params {string} endDate - end specific date
         */
@@ -161,6 +161,22 @@ module app.models.finance {
             let url = '/users/' + this.$rootScope.User.Uid + '/finances/';
             return this.FirebaseFactory.getArrayByDate(url, startDate, endDate).then(function(data){
                 console.log(data);
+            });
+        }
+
+        /**
+        * getFinanceByDate
+        * @description - get user's finances by specific date
+        * @use - this.FinanceService.getFinancesByDate('Mon May 01 2016 01:23:34 GMT-0500 (COT)',
+        *                                              'Mon May 03 2016 20:23:34 GMT-0500 (COT)');
+        * @function
+        * @params {string} startDate - start specific date
+        * @params {string} endDate - end specific date
+        */
+        getFinanceById(financeId): angular.IPromise<AngularFireObject> {
+            let url = '/users/' + this.$rootScope.User.Uid + '/finances/' + financeId;
+            return this.FirebaseFactory.getObject(url).then(function(data){
+                return data;
             });
         }
 
