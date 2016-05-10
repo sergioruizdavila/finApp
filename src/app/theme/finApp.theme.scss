@@ -263,6 +263,8 @@ body.finApp {
             position: relative !important;
             font-size: 25px!important;
             line-height: 45px!important;
+            margin-right: 0px;
+            margin-left: 0px;
         }
     }
     /*---------- END -  NAVBAR ------------*/
@@ -342,9 +344,14 @@ body.finApp {
 
                 .block_3d {
                     flex-wrap: wrap;
-                    margin: 5px;
+                    margin: 5px!important;
                 }
             }
+    }
+
+    .block_3d:nth-of-type(1)
+    {
+        margin-top: 25%;
     }
 
     .block_3d {
@@ -352,7 +359,8 @@ body.finApp {
         -webkit-border-radius: 10px;
         -moz-border-radius: 10px;
         border-radius: 10px;
-        margin: 25% auto 0 auto;
+        margin: 0 auto 5%;
+        overflow: hidden;
         @include shadowBlock();
 
         &--small {
@@ -401,12 +409,12 @@ body.finApp {
                     &__value {
                         font-weight: bold;
                         font-size: 18px;
-                        color: #28a54c;
+                        color: $FA_COLORS_SUCCESS;
                     }
                     &__text {
                         font-weight: bold;
                         font-size: 15px;
-                        color: tint(#28a54c, 40);
+                        color: $FA_INCOME_BLOCK_TITLE_TEXT;
                     }
                 }
             }
@@ -440,6 +448,16 @@ body.finApp {
             text-align: center;
             font-size: 25px;
             padding: 20px;
+
+            &--positive {
+                color: $FA_NAVBAR;
+                background-color: $FA_INCOME_BLOCK_TITLE_TEXT;
+            }
+
+            &--negative {
+                color: $FA_NAVBAR;
+                background-color: $FA_COLORS_NEGATIVE;
+            }
         }
 
         &__content {

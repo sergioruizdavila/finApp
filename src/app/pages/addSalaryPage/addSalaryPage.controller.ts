@@ -116,6 +116,7 @@ module app.pages.addSalaryPage {
             //Get elementPos by Uid
             var elementPos = this.FunctionsUtilService.getPositionByUid(this.$rootScope.User.Finance,
                                                                         this.addSalaryDataConfig.financeId);
+
             //Update User model
             this.$rootScope.User.Finance[elementPos].Income.Salary = this.form.salary;
             //Save salary on firebase

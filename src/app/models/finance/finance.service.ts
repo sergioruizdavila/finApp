@@ -27,6 +27,9 @@ module app.models.finance {
         getFinanceById: (financeId: string) => angular.IPromise<AngularFireObject>;
         /*-- mathematical calculations --*/
         total: (numbers: Array<number>) => number;
+        getTotalIncomes: (incomes: any) => number;
+        getTotalExpensesByType: (expenses: any) => number;
+        getTotalExpenses: (expenses: any) => number;
         getSaving: (incomes: number, expenses: number) => number;
     }
 
@@ -199,6 +202,73 @@ module app.models.finance {
         }
 
         /**
+        * getTotalIncomes
+        * @description - get user's incomes total
+        * @function
+        * @params {any} incomes - user's incomes list
+        * @return {number} total - total of user's incomes
+        */
+        //TODO: change any type to Array<Incomes>
+        getTotalIncomes(incomes: any): number {
+            //VARIABLES
+            var incomesToArray = [];
+            let total = 0;
+
+            for (let key in incomes) {
+                incomesToArray.push(incomes[key].num || 0);
+            }
+
+            total = this.total(incomesToArray);
+            return total;
+        }
+
+        /**
+        * getTotalByKindOfExpenses
+        * @description - get user's expenses total (by kind of expenses, i.e neccesaries)
+        * @function
+        * @params {any} expenses - user's expenses list
+        * @return {number} total - total of user's expenses
+        */
+        //TODO: change any type to Array<Expenses>
+        getTotalExpensesByType(expenses: any): number {
+            //VARIABLES
+            var expensesToArray = [];
+            let total = 0;
+
+            for (let key in expenses) {
+                expensesToArray.push(expenses[key].value.num || 0);
+            }
+
+            total = this.total(expensesToArray);
+            return total;
+        }
+
+        /**
+        * getTotalExpenses
+        * @description - get user's expenses total
+        * @function
+        * @params {any} expenses - user's expenses list
+        * @return {number} total - total of user's expenses
+        */
+        //TODO: change any type to Array<Expenses>
+        getTotalExpenses(expenses: any): number {
+            //VARIABLES
+            var expensesToArray = [];
+            let total = 0;
+
+            for (let type in expenses) {
+
+                for (let key in expenses[type]) {
+                    expensesToArray.push(expenses[type][key].value.num || 0);
+                }
+
+            }
+
+            total = this.total(expensesToArray);
+            return total;
+        }
+
+        /**
         * getSaving
         * @description: incomes - expenses = saving
         * @function
@@ -210,6 +280,8 @@ module app.models.finance {
             saving = incomes - expenses;
             return saving;
         }
+
+
 
 
         /**********************************/

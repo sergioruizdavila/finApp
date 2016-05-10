@@ -11,7 +11,6 @@ module app.core.util.functionsUtil {
     /*           INTERFACES           */
     /**********************************/
     export interface IFunctionsUtilService {
-        dateFormatted: app.interfaces.IDateFormatted;
         dateMonthToString: (date: string, zone: string) => string;
         getPositionByUid: (array: Array<any>, uid: string) => number;
         groupByYear: (array: Array<any>) => any;
@@ -28,7 +27,7 @@ module app.core.util.functionsUtil {
         /**********************************/
         /*           PROPERTIES           */
         /**********************************/
-        dateFormatted: app.interfaces.IDateFormatted;
+        
         // --------------------------------
 
         /**********************************/

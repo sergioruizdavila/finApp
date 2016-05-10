@@ -87,32 +87,10 @@ module app.pages.historyPage {
         * @return {angular.IPromise<Array<app.models.finance.Finance>>}
         * promise - return user's finances data promise
         */
-        private _getFinances(): angular.IPromise<Array<app.models.finance.Finance>> {
+        private _getFinances(): angular.IPromise<AngularFireArray> {
             return this.FinanceService.getAllFinances().then(function(finances){
                 return finances;
             });
-        }
-
-
-        /**
-        * _getTotalIncomes
-        * @description - get user's incomes total
-        * @function
-        * @params {any} incomes - user's incomes list
-        * @return {number} total - total of user's incomes
-        */
-        //TODO: change any type to Array<Incomes>
-        private _getTotalIncomes(incomes: any): number {
-            //VARIABLES
-            var incomesToArray = [];
-            let total = 0;
-
-            for (let key in incomes) {
-                incomesToArray.push(incomes[key].num || 0);
-            }
-
-            total = this.FinanceService.total(incomesToArray);
-            return total;
         }
 
 
@@ -160,7 +138,7 @@ module app.pages.historyPage {
                 const ZONE = this.$filter('translate')('%global.zone');
                 //VARIABLES
                 var item = finances[i];
-                let totalIncomes = this._getTotalIncomes(item.income);
+                let totalIncomes = this.FinanceService.getTotalIncomes(item.income);
                 let totalIncomesFormatted = this.FunctionsUtilService.formatCurrency(totalIncomes, '');
                 let totalExpenses = this._getTotalExpenses(item.typeOfExpense);
                 let totalExpensesFormatted = this.FunctionsUtilService.formatCurrency(totalExpenses, '');

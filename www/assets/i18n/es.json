@@ -79,5 +79,11 @@
     "%history.block_content.expenses.text": "GASTOS",
     "%history.block_content.saving.text": "AHORROS",
 
+    "__FINANCE_DETAILS__":"",
+    "%finance_details.block_content.income.title.text": "Tipos de ingreso",
+    "%finance_details.block_content.salary.title.text": "Sueldo",
+    "%finance_details.block_content.business.title.text": "Negocios",
+    "%finance_details.block_content.investment.title.text": "Inversiones",
+
     "": ""
 }

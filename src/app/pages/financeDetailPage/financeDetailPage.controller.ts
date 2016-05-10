@@ -28,6 +28,11 @@ module app.pages.financeDetailPage {
         /*           PROPERTIES           */
         /**********************************/
         financeDetailDataConfig: IFinanceDetailDataConfig;
+        private _dateFormatted: app.interfaces.IDateFormatted;
+        private _financeDetails: any;
+        private _totalIncomes: app.models.finance.IMoney;
+        private _totalNecessariesExpenses: app.models.finance.IMoney;
+        private _totalUnnecessariesExpenses: app.models.finance.IMoney;
         // --------------------------------
 
         /*-- INJECT DEPENDENCIES --*/
@@ -35,6 +40,7 @@ module app.pages.financeDetailPage {
                           '$ionicHistory',
                           'finApp.models.finance.FinanceService',
                           'finApp.core.util.FunctionsUtilService',
+                          '$filter',
                           '$state',
                           '$stateParams',
                           '$rootScope',
@@ -47,6 +53,7 @@ module app.pages.financeDetailPage {
                     private $ionicHistory: ionic.navigation.IonicHistoryService,
                     private FinanceService: app.models.finance.IFinanceService,
                     private FunctionsUtilService: app.core.util.functionsUtil.FunctionsUtilService,
+                    private $filter: angular.IFilterService,
                     private $state: ng.ui.IStateService,
                     private $stateParams: IFinanceDetailDataConfig,
                     private $rootScope: app.interfaces.IFinAppRootScope,
@@ -71,12 +78,10 @@ module app.pages.financeDetailPage {
             //VARIABLES
             let self = this;
 
-            //Get All User's finances in order to draw each block
+            //Get Finance Details
             this._getFinanceDetail(this.financeDetailDataConfig.financeId)
-            .then(function(finance){
-                //grouping by year
-                //self._financesList = self._groupByYear(finances);
-                console.log(finance);
+            .then(function(finance: any){
+                self._buildFinanceDetailsBlocks(finance);
             });
         }
 
@@ -99,13 +104,43 @@ module app.pages.financeDetailPage {
         * _getFinanceDetail
         * @description this method is launched when user press OK button
         */
-        _getFinanceDetail(financeId): angular.IPromise<AngularFireObject> {
+        private _getFinanceDetail(financeId): angular.IPromise<AngularFireObject> {
             return this.FinanceService.getFinanceById(financeId)
             .then(
                 function(finance){
                     return finance;
                 }
             );
+        }
+
+        /*
+        * _getFinanceDetail
+        * @description this method is launched when user press OK button
+        */
+        private _buildFinanceDetailsBlocks(finance): void {
+            //CONSTANTS
+            const ZONE = this.$filter('translate')('%global.zone');
+            //VARIABLES
+            let dateFormatted = app.core.util.functionsUtil.FunctionsUtilService.splitDateFormat(finance.dateCreated.complete);
+            dateFormatted.month = this.FunctionsUtilService.dateMonthToString(dateFormatted.complete, ZONE);
+            let totalIncomes = this.FinanceService.getTotalIncomes(finance.income);
+            let totalIncomesFormatted = this.FunctionsUtilService.formatCurrency(totalIncomes, '');
+            let totalNecessariesExpenses = this.FinanceService.getTotalExpensesByType(finance.typeOfExpense.necessaries);
+            let totalNecessariesExpensesFormatted = this.FunctionsUtilService.formatCurrency(totalNecessariesExpenses, '');
+            let totalUnnecessariesExpenses = this.FinanceService.getTotalExpensesByType(finance.typeOfExpense.unnecessaries);
+            let totalUnnecessariesExpensesFormatted = this.FunctionsUtilService.formatCurrency(totalUnnecessariesExpenses, '');
+
+            /* Charge values on each field blocks */
+            // Assign date title header page
+            this._dateFormatted = dateFormatted;
+            // Calculate total incomes value
+            this._totalIncomes = totalIncomesFormatted;
+            // Calculate total necessaries expenses value
+            this._totalNecessariesExpenses = totalNecessariesExpensesFormatted;
+            // Calculate total unnecessaries expenses value
+            this._totalUnnecessariesExpenses = totalUnnecessariesExpensesFormatted;
+            // Assign finance gotten on scope vm
+            this._financeDetails = finance;
         }
 
         /*

@@ -73,11 +73,17 @@
     "__UNNECESSARY_EXPENSE__":"",
     "%unnecessary_expense.title.text": "Gastos No Necesarios",
     "%unnecessary_expense.help_text.text": "Agrega todos los gastos que no afectarian tu vida si no los pagaras (por ejemplo regalos, ropa, fiestas, etc.)",
-    
+
     "__HISTORY__":"",
     "%history.block_content.incomes.text": "INGRESOS",
     "%history.block_content.expenses.text": "GASTOS",
     "%history.block_content.saving.text": "SAVING",
+
+    "__FINANCE_DETAILS__":"",
+    "%finance_details.block_content.income.title.text": "Tipos de ingreso",
+    "%finance_details.block_content.income.salary.title.text": "Sueldo",
+    "%finance_details.block_content.income.business.title.text": "Negocios",
+    "%finance_details.block_content.income.investment.title.text": "Inversiones",
 
     "": ""
 }
