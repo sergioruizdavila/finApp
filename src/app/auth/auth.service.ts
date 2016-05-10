@@ -14,7 +14,9 @@ module app.auth {
     /**********************************/
     export interface IAuthService {
         getRef: () => AngularFireAuth;
+        getUserAuthData: () => FirebaseAuthData;
         isLoggedIn: () => boolean;
+        logInPassword: (currentDataUser: app.interfaces.IUserDataAuth) => angular.IPromise<FirebaseAuthData>;
     }
 
 
@@ -29,13 +31,13 @@ module app.auth {
         /*           PROPERTIES           */
         /**********************************/
         private _ref: Firebase = null;
-        private _authObj: any = this.getRef();
+        private _authObj: AngularFireAuth = this.getRef();
         // --------------------------------
 
         /*-- INJECT DEPENDENCIES --*/
         static $inject = ['finApp.core.firebase.FirebaseFactory',
                           '$firebaseAuth',
-                          'finApp.auth.session',
+                          'finApp.auth.SessionService',
                           '$q',
                           '$rootScope'];
 
@@ -44,7 +46,7 @@ module app.auth {
         /**********************************/
         constructor(private FirebaseFactory: app.core.firebase.IFirebaseFactory,
                     private $firebaseAuth: AngularFireAuthService,
-                    private session: any,
+                    private session: ISessionService,
                     private $q: any,
                     $rootScope: app.interfaces.IFinAppRootScope) {
             console.log('auth service called');
@@ -65,6 +67,18 @@ module app.auth {
             //check Auth Status
             this._ref.onAuth(this._authDataCallback);
             return this.$firebaseAuth(this._ref);
+        }
+
+
+        /**
+        * getRef
+        * @description - Return a Firebase Auth reference
+        * @function
+        * @return {AngularFireAuth} $firebaseAuth - firebase auth reference
+        */
+        getUserAuthData(): FirebaseAuthData {
+            let self = this;
+            return this._authObj.$getAuth();
         }
 
 
@@ -137,12 +151,12 @@ module app.auth {
         * @params {app.interfaces.IUserDataAuth} currentDataUser - User Authenticated Data
         * @return {angular.IPromise<any>} promise - return user authentication data promise
         */
-        logInPassword (currentDataUser: app.interfaces.IUserDataAuth): angular.IPromise<any> {
+        logInPassword (currentDataUser): angular.IPromise<FirebaseAuthData> {
             let self = this;
             return this._authObj
             .$authWithPassword(currentDataUser)
             .then(
-                function(authData){
+                function(authData: FirebaseAuthData){
                     //LOG
                     console.log('Authenticated successfully with payload:', authData);
                     self.session.setAuthData(authData);
@@ -162,12 +176,12 @@ module app.auth {
         * @params {app.interfaces.IUserDataAuth} currentDataUser - User Authenticated Data
         * @return {angular.IPromise<any>} promise - return user uid created promise
         */
-        signUpPassword (currentDataUser): any {
+        signUpPassword (currentDataUser): angular.IPromise<Object> {
             let self = this;
             return this._authObj
             .$createUser(currentDataUser)
             .then(
-                function(userUid) {
+                function(userUid: Object) {
                     //LOG
                     console.log('created new user in FireBase Auth System: ', userUid);
                     return userUid;
@@ -186,7 +200,7 @@ module app.auth {
         * @return {void}
         */
         logOut (): void {
-          this._authObj.unauth();
+          this._authObj.$unauth();
           this.session.destroy();
         }
 

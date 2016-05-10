@@ -90,8 +90,8 @@ module app.models.user {
         * createUser
         * @description - create new User
         * @function
-        * @parameters {app.model.user.User} newUser - include the user information object
-        * @parameters {function} callback - function callback required to know if create new user was Ok
+        * @paramss {app.model.user.User} newUser - include the user information object
+        * @paramss {function} callback - function callback required to know if create new user was Ok
         */
         createUser(newUser, callback): void {
             let userRef = this.ref.child('users/' + newUser.Uid);

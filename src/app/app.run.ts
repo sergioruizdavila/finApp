@@ -19,7 +19,7 @@
     run.$inject = ['$ionicPlatform',
                    '$rootScope',
                    'finApp.auth.AuthService',
-                   'finApp.auth.session',
+                   'finApp.auth.SessionService',
                    '$state'];
 
     function run($ionicPlatform,
