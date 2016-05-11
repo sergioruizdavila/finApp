@@ -227,40 +227,11 @@ module app.pages.addUnnecessaryExpensePage {
             //Update expenses List view
             this._expensesList = angular.copy(this.$rootScope.User.Finance[this._financePos].TypeOfExpense.Unnecessaries);
             //Calculate Total Expenses
-            this._calculateTotalExpenses(this._expensesList);
+            let totalUnnecessariesExpenses = this.FinanceService.getTotalExpensesByType(this._expensesList);
+            this.form.total = this.FunctionsUtilService.formatCurrency(totalUnnecessariesExpenses, '');
 
         }
 
-        /*
-        * Parse Expenses Object in order to calculate Total Expenses
-        * @description this method is launched when user press OK button
-        */
-        //TODO: Codigo duplicado en addNecessaryExpensePage.controller
-        private _calculateTotalExpenses(expenses): void {
-            //Parse expenses Object
-
-            let expensesArray = expenses.map(function(obj) {
-                return obj.value.num;
-            });
-
-            this.form.total.num = this.FinanceService.total(expensesArray);
-            this.form.total.formatted = this.form.total.num.toString();
-            this._formatTotal();
-        }
-
-        /*
-        * Format Business Method
-        * @description Format the business value with default currency
-        */
-        //TODO: Codigo duplicado en addNecessaryExpensePage.controller
-        private _formatTotal(): void {
-            let currencyObj: app.models.finance.IMoney =
-                this.FunctionsUtilService.formatCurrency(this.form.total.num,
-                    this.form.total.formatted);
-
-            this.form.total.num = currencyObj.num;
-            this.form.total.formatted = currencyObj.formatted;
-        }
 
         /*
         * Go to business page

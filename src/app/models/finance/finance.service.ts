@@ -159,22 +159,22 @@ module app.models.finance {
         * @function
         * @params {string} startDate - start specific date
         * @params {string} endDate - end specific date
+        * @return {angular.IPromise<AngularFireArray>} promise - return Array of Finances by range of date
         */
-        getFinancesByDate(startDate, endDate): any {
+        getFinancesByDate(startDate, endDate): angular.IPromise<AngularFireArray> {
             let url = '/users/' + this.$rootScope.User.Uid + '/finances/';
             return this.FirebaseFactory.getArrayByDate(url, startDate, endDate).then(function(data){
-                console.log(data);
+                return data;
             });
         }
 
         /**
-        * getFinanceByDate
-        * @description - get user's finances by specific date
-        * @use - this.FinanceService.getFinancesByDate('Mon May 01 2016 01:23:34 GMT-0500 (COT)',
-        *                                              'Mon May 03 2016 20:23:34 GMT-0500 (COT)');
+        * getFinanceById
+        * @description - get user's finances by finance Id
+        * @use - this.FinanceService.getFinanceById('98d667ae-2231-4347-8a94-b955baf218f6');
         * @function
-        * @params {string} startDate - start specific date
-        * @params {string} endDate - end specific date
+        * @params {string} financeId - start specific date
+        * @return {angular.IPromise<AngularFireObject>} promise - return user's finance by Id
         */
         getFinanceById(financeId): angular.IPromise<AngularFireObject> {
             let url = '/users/' + this.$rootScope.User.Uid + '/finances/' + financeId;
@@ -223,10 +223,10 @@ module app.models.finance {
         }
 
         /**
-        * getTotalByKindOfExpenses
+        * getTotalExpensesByType
         * @description - get user's expenses total (by kind of expenses, i.e neccesaries)
         * @function
-        * @params {any} expenses - user's expenses list
+        * @params {any} expenses - user's expenses list by type
         * @return {number} total - total of user's expenses
         */
         //TODO: change any type to Array<Expenses>

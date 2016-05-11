@@ -443,6 +443,32 @@ body.finApp {
             width: 90%;
         }
 
+        &--one_element {
+            background-color: rgba(126, 201, 148, 0.71);
+
+            &__content {
+                font-size: 30px;
+                padding-top: 10px;
+                color: #FFF;
+                font-weight: bold;
+                text-shadow: 1px 1px 1px rgba(68, 68, 68, 0.64);
+
+                &__total {
+                    padding-top: 10px;
+                }
+            }
+
+            &__footer {
+                padding-top: 0!important;
+
+                &__total {
+                    &__value {
+                        font-size: 25px!important;
+                    }
+                }
+            }
+        }
+
         &__title {
             color: $FA_TEXT_LIST_VALUE;
             text-align: center;

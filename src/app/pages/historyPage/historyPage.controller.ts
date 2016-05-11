@@ -95,32 +95,6 @@ module app.pages.historyPage {
 
 
         /**
-        * _getTotalExpenses
-        * @description - get user's expenses total
-        * @function
-        * @params {any} expenses - user's expenses list
-        * @return {number} total - total of user's expenses
-        */
-        //TODO: change any type to Array<Expenses>
-        private _getTotalExpenses(expenses: any): number {
-            //VARIABLES
-            var expensesToArray = [];
-            let total = 0;
-
-            for (let type in expenses) {
-
-                for (let key in expenses[type]) {
-                    expensesToArray.push(expenses[type][key].value.num || 0);
-                }
-
-            }
-
-            total = this.FinanceService.total(expensesToArray);
-            return total;
-        }
-
-
-        /**
         * _groupByYear
         * @description - grouping finances by Year
         * @function
@@ -140,7 +114,7 @@ module app.pages.historyPage {
                 var item = finances[i];
                 let totalIncomes = this.FinanceService.getTotalIncomes(item.income);
                 let totalIncomesFormatted = this.FunctionsUtilService.formatCurrency(totalIncomes, '');
-                let totalExpenses = this._getTotalExpenses(item.typeOfExpense);
+                let totalExpenses = this.FinanceService.getTotalExpenses(item.typeOfExpense);
                 let totalExpensesFormatted = this.FunctionsUtilService.formatCurrency(totalExpenses, '');
                 let totalSaving = this.FinanceService.getSaving(totalIncomes, totalExpenses);
                 let totalSavingFormatted = this.FunctionsUtilService.formatCurrency(totalSaving, '');

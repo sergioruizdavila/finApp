@@ -81,9 +81,9 @@
 
     "__FINANCE_DETAILS__":"",
     "%finance_details.block_content.income.title.text": "Tipos de ingreso",
-    "%finance_details.block_content.salary.title.text": "Sueldo",
-    "%finance_details.block_content.business.title.text": "Negocios",
-    "%finance_details.block_content.investment.title.text": "Inversiones",
+    "%finance_details.block_content.income.salary.title.text": "Sueldo",
+    "%finance_details.block_content.income.business.title.text": "Negocios",
+    "%finance_details.block_content.income.investment.title.text": "Inversiones",
 
     "": ""
 }

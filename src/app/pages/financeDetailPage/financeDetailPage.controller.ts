@@ -33,6 +33,7 @@ module app.pages.financeDetailPage {
         private _totalIncomes: app.models.finance.IMoney;
         private _totalNecessariesExpenses: app.models.finance.IMoney;
         private _totalUnnecessariesExpenses: app.models.finance.IMoney;
+        private _totalSaving: app.models.finance.IMoney;
         // --------------------------------
 
         /*-- INJECT DEPENDENCIES --*/
@@ -57,7 +58,7 @@ module app.pages.financeDetailPage {
                     private $state: ng.ui.IStateService,
                     private $stateParams: IFinanceDetailDataConfig,
                     private $rootScope: app.interfaces.IFinAppRootScope,
-                    private auth: any) {
+                    private auth: app.auth.IAuthService) {
                 this._init();
         }
 
@@ -129,16 +130,21 @@ module app.pages.financeDetailPage {
             let totalNecessariesExpensesFormatted = this.FunctionsUtilService.formatCurrency(totalNecessariesExpenses, '');
             let totalUnnecessariesExpenses = this.FinanceService.getTotalExpensesByType(finance.typeOfExpense.unnecessaries);
             let totalUnnecessariesExpensesFormatted = this.FunctionsUtilService.formatCurrency(totalUnnecessariesExpenses, '');
+            let totalSaving = this.FinanceService.getSaving(totalIncomes, totalNecessariesExpenses + totalUnnecessariesExpenses);
+            let totalSavingFormatted = this.FunctionsUtilService.formatCurrency(totalSaving, '');
 
             /* Charge values on each field blocks */
             // Assign date title header page
             this._dateFormatted = dateFormatted;
-            // Calculate total incomes value
+            // Assign total incomes value
             this._totalIncomes = totalIncomesFormatted;
-            // Calculate total necessaries expenses value
+            // Assign total necessaries expenses value
             this._totalNecessariesExpenses = totalNecessariesExpensesFormatted;
-            // Calculate total unnecessaries expenses value
+            // Assign total unnecessaries expenses value
             this._totalUnnecessariesExpenses = totalUnnecessariesExpensesFormatted;
+            // Assign total saving
+            this._totalSaving = totalSavingFormatted;
+
             // Assign finance gotten on scope vm
             this._financeDetails = finance;
         }
