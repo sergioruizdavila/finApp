@@ -74,7 +74,7 @@ module app.models.finance {
         /**********************************/
 
         /**
-        * saveSalary
+        * saveFinance
         * @description - save user salary on firebase
         * @function
         * @params {string} newSalary - new value for user salary property

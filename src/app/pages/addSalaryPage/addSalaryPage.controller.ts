@@ -17,6 +17,12 @@ module app.pages.addSalaryPage {
 
     export interface IAddSalaryDataConfig extends ng.ui.IStateParamsService {
         financeId: string;
+        action: IActionParams;
+    }
+
+    export interface IActionParams {
+        type: string;
+        data: app.models.finance.IMoney;
     }
 
     export interface IAddSalaryForm {
@@ -66,12 +72,15 @@ module app.pages.addSalaryPage {
             //Validate if user is logged in
             this._isLoggedIn();
 
+            this.addSalaryDataConfig = this.$stateParams;
+
             //Init form
             this.form = {
-                salary: { num: null, formatted: '' }
+                salary: {
+                    num: this.addSalaryDataConfig.action.data.num,
+                    formatted: this.addSalaryDataConfig.action.data.formatted
+                }
             };
-
-            this.addSalaryDataConfig = this.$stateParams;
 
             this.activate();
         }
@@ -123,6 +132,30 @@ module app.pages.addSalaryPage {
             this.FinanceService.saveFinance(this.$rootScope.User.Finance[elementPos]);
 
             this.$state.go('page.investment', {financeId: this.addSalaryDataConfig.financeId});
+        }
+
+        /*
+        * Update Value method
+        * @description this method is launched when user is editing salary value
+        */
+        updateValue(): void {
+            let self = this;
+            this.FinanceService.getFinanceById(this.addSalaryDataConfig.financeId)
+            .then(
+                function(finance: any) {
+                    //Create User Finance object
+                    self.$rootScope.User.setFinance(finance);
+                    //Get elementPos by Uid
+                    var elementPos = self.FunctionsUtilService.getPositionByUid(self.$rootScope.User.Finance,
+                                                                                self.addSalaryDataConfig.financeId);
+
+                    //Update User model
+                    self.$rootScope.User.Finance[elementPos].Income.Salary = self.form.salary;
+                    //Update salary on firebase
+                    self.FinanceService.saveFinance(self.$rootScope.User.Finance[elementPos]);
+                    self.$ionicHistory.goBack();
+                }
+            );
         }
 
         /*

@@ -190,7 +190,16 @@ module app.pages.signUpPage {
                         } else {
                             //Create User Finance object
                             let newFinance = self.$rootScope.User.setFinance(new app.models.finance.Finance());
-                            self.$state.go('page.salary', {financeId: newFinance.Uid});
+                            self.$state.go('page.salary', {
+                                financeId: newFinance.Uid,
+                                action: {
+                                    type: 'Add',
+                                    data: {
+                                        num: null,
+                                        formatted: ''
+                                    }
+                                }
+                            });
                         }
                     });
                 }

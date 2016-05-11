@@ -150,6 +150,23 @@ module app.pages.financeDetailPage {
         }
 
         /*
+        * Go to edit salary method
+        * @description this method is launched when user press edit salary row
+        */
+        goToEditSalary(value): void {
+            this.$state.go('page.salary', {
+                financeId: this.financeDetailDataConfig.financeId,
+                action: {
+                    type: 'Edit',
+                    data: {
+                        num: value.num,
+                        formatted: value.formatted
+                    }
+                }
+            });
+        }
+
+        /*
         * Go to back method
         * @description this method is launched when user press back button
         */
