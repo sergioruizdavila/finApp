@@ -444,7 +444,14 @@ body.finApp {
         }
 
         &--one_element {
-            background-color: rgba(126, 201, 148, 0.71);
+
+            &--positive {
+                background-color: $FA_INCOME_BLOCK_TITLE_TEXT;
+            }
+
+            &--negative {
+                background-color: $FA_COLORS_NEGATIVE;
+            }
 
             &__content {
                 font-size: 30px;
@@ -464,6 +471,7 @@ body.finApp {
                 &__total {
                     &__value {
                         font-size: 25px!important;
+                        color: $FA_NAVBAR!important;
                     }
                 }
             }
