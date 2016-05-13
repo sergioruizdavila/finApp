@@ -17,6 +17,7 @@ module app.models.user {
     export interface IUserService {
         ref: any;
         existUserByEmail: (email: string) => angular.IPromise<boolean>;
+        getUserByUid: (uid: string) => angular.IPromise<AngularFireObject>;
         getUserByEmail: (email: string) => AngularFireObject;
         getUsers: () => AngularFireArray;
         bindingUser: (uid: string, $rootScope: app.interfaces.IFinAppRootScope) => any;
@@ -60,6 +61,21 @@ module app.models.user {
         /**********************************/
         /*            METHODS             */
         /**********************************/
+
+        /**
+        * getUserByUid
+        * @description - get user by Uid
+        * @use - this.FinanceService.getUserByUid('98d667ae-2231-4347-8a94-b955baf218f6');
+        * @function
+        * @params {string} uid - user uid
+        * @return {angular.IPromise<AngularFireObject>} promise - return user by Id
+        */
+        getUserByUid(uid): angular.IPromise<AngularFireObject> {
+            let url = '/users/' + uid;
+            return this.FirebaseFactory.getObject(url).then(function(data){
+                return data;
+            });
+        }
 
         /**
         * getUserByEmail

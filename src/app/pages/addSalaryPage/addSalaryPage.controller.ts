@@ -46,6 +46,7 @@ module app.pages.addSalaryPage {
         /*-- INJECT DEPENDENCIES --*/
         static $inject = ['dataConfig',
                           '$ionicHistory',
+                          'finApp.models.user.UserService',
                           'finApp.models.finance.FinanceService',
                           'finApp.core.util.FunctionsUtilService',
                           '$state',
@@ -58,6 +59,7 @@ module app.pages.addSalaryPage {
         /**********************************/
         constructor(private dataConfig: IDataConfig,
                     private $ionicHistory: ionic.navigation.IonicHistoryService,
+                    private UserService: app.models.user.UserService,
                     private FinanceService: app.models.finance.IFinanceService,
                     private FunctionsUtilService: app.core.util.functionsUtil.FunctionsUtilService,
                     private $state: ng.ui.IStateService,
@@ -99,9 +101,30 @@ module app.pages.addSalaryPage {
         * @description Validate if user is logged in.
         */
         private _isLoggedIn(): void {
+            let self = this;
+
             if(!this.auth.isLoggedIn()){
                 this.$state.go('page.signUp');
                 event.preventDefault();
+            } else {
+                this.UserService.getUserByUid(this.$rootScope.User.Uid).then(
+                    function(userData: any){
+
+                        self.$rootScope.User = new app.models.user.UserFirebase(userData);
+                        console.log('Finances Model: ', self.$rootScope.User);
+                    }
+                );
+
+                // this.FinanceService.getAllFinances().then(
+                //     function(finances) {
+                //         console.log('Finances from BE: ', finances);
+                //         for (let i = 0; i < finances.length; i++) {
+                //             let financeInstance = new app.models.finance.Finance(finances[i]);
+                //             self.$rootScope.User.addFinance(financeInstance);
+                //         }
+                //         console.log('Finances Model: ', self.$rootScope.User);
+                //     }
+                // );
             }
         }
 
@@ -143,12 +166,9 @@ module app.pages.addSalaryPage {
             this.FinanceService.getFinanceById(this.addSalaryDataConfig.financeId)
             .then(
                 function(finance: any) {
-                    //Create User Finance object
-                    self.$rootScope.User.setFinance(finance);
-                    //Get elementPos by Uid
+                    let financeInstance = new app.models.finance.Finance(finance);
                     var elementPos = self.FunctionsUtilService.getPositionByUid(self.$rootScope.User.Finance,
                                                                                 self.addSalaryDataConfig.financeId);
-
                     //Update User model
                     self.$rootScope.User.Finance[elementPos].Income.Salary = self.form.salary;
                     //Update salary on firebase

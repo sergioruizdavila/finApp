@@ -29,6 +29,7 @@ module app.pages.addNecessaryExpensePage {
     export interface IAddNecessaryExpenseForm {
         expense: any;
         total?: app.models.finance.IMoney;
+        action?: string;
     }
 
     /****************************************/
@@ -192,7 +193,8 @@ module app.pages.addNecessaryExpensePage {
 
             //Assign expense value to $scope
             self.$scope.form = {
-                expense: expense ? expense : new app.models.finance.Expense()
+                expense: expense ? expense : new app.models.finance.Expense(),
+                action: expense ? 'Edit' : 'Add'
             };
             //Assign popUp's text to $scope
             self.$scope.popupConfig = {
@@ -210,29 +212,28 @@ module app.pages.addNecessaryExpensePage {
                         text: POPUP_ADD_BUTTON_TEXT,
                         type: POPUP_ADD_BUTTON_TYPE,
                         onTap: function(e) {
-                            let expense = angular.copy(this.scope.vm.form.expense);
-                            self._addOrEditExpense(expense);
+                            let expenseInstance = angular.copy(this.scope.vm.form.expense);
+
+                            if(this.scope.vm.form.action == 'Add'){
+                                //Update User model
+                                self.$rootScope.User.Finance[self._financePos].TypeOfExpense.addNecessary(expenseInstance);
+                            } else {
+                                //Update User model
+                                self.$rootScope.User.Finance[self._financePos].TypeOfExpense.editNecessary(expenseInstance);
+                            }
+
+                            //Update Finance Object on firebase
+                            self.FinanceService.saveNecessaryExpense(expenseInstance, self.addNecessaryExpenseDataConfig.financeId);
+                            //Update expenses List view
+                            self._expensesList = angular.copy(self.$rootScope.User.Finance[self._financePos].TypeOfExpense.Necessaries);
+                            //Calculate Total Expenses
+                            let totalNecessariesExpenses = self.FinanceService.getTotalExpensesByType(self._expensesList);
+                            self.form.total = self.FunctionsUtilService.formatCurrency(totalNecessariesExpenses, '');
+
                         }
                     }
                 ]
             });
-        }
-
-        /*
-        * Add or Edit Expense
-        * @description this method is launched when user press Add button on expenseDetailPopup
-        */
-        private _addOrEditExpense(expense): void {
-            //Update User model
-            let expenseWithUid = this.$rootScope.User.Finance[this._financePos].TypeOfExpense.setNecessaries(expense);
-            //Update Finance Object on firebase
-            this.FinanceService.saveNecessaryExpense(expenseWithUid, this.addNecessaryExpenseDataConfig.financeId);
-            //Update expenses List view
-            this._expensesList = angular.copy(this.$rootScope.User.Finance[this._financePos].TypeOfExpense.Necessaries);
-            //Calculate Total Expenses
-            let totalNecessariesExpenses = this.FinanceService.getTotalExpensesByType(this._expensesList);
-            this.form.total = this.FunctionsUtilService.formatCurrency(totalNecessariesExpenses, '');
-
         }
 
         /*

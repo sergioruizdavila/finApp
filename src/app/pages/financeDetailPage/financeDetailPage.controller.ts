@@ -82,6 +82,7 @@ module app.pages.financeDetailPage {
             //Get Finance Details
             this._getFinanceDetail(this.financeDetailDataConfig.financeId)
             .then(function(finance: any){
+                let financeInstance = new app.models.finance.Finance(finance);
                 self._buildFinanceDetailsBlocks(finance);
             });
         }

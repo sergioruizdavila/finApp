@@ -173,7 +173,7 @@ module app.models.finance {
         * @description - get user's finances by finance Id
         * @use - this.FinanceService.getFinanceById('98d667ae-2231-4347-8a94-b955baf218f6');
         * @function
-        * @params {string} financeId - start specific date
+        * @params {string} financeId - finance uid
         * @return {angular.IPromise<AngularFireObject>} promise - return user's finance by Id
         */
         getFinanceById(financeId): angular.IPromise<AngularFireObject> {

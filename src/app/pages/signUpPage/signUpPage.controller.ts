@@ -189,7 +189,8 @@ module app.pages.signUpPage {
                             console.log('Error: Not created user');
                         } else {
                             //Create User Finance object
-                            let newFinance = self.$rootScope.User.setFinance(new app.models.finance.Finance());
+                            let newFinance = new app.models.finance.Finance();
+                            self.$rootScope.User.addFinance(newFinance);
                             self.$state.go('page.salary', {
                                 financeId: newFinance.Uid,
                                 action: {
