@@ -17,6 +17,12 @@ module app.pages.addBusinessPage {
 
     export interface IAddBusinessDataConfig extends ng.ui.IStateParamsService {
         financeId: string;
+        action: IActionParams;
+    }
+
+    export interface IActionParams {
+        type: string;
+        data: app.models.finance.IMoney;
     }
 
     export interface IAddBusinessForm {
@@ -35,6 +41,7 @@ module app.pages.addBusinessPage {
         /**********************************/
         form: IAddBusinessForm;
         addBusinessDataConfig: IAddBusinessDataConfig;
+        private _financePos: number;
         // --------------------------------
 
         /*-- INJECT DEPENDENCIES --*/
@@ -66,12 +73,19 @@ module app.pages.addBusinessPage {
             //Validate if user is logged in
             this._isLoggedIn();
 
+            this.addBusinessDataConfig = this.$stateParams;
+
+            //Get Finance Position
+            this._financePos = this.FunctionsUtilService.getPositionByUid(this.$rootScope.User.Finance,
+                                                                          this.addBusinessDataConfig.financeId);
+
             //Init form
             this.form = {
-                business: { num: null, formatted: '' }
+                business: {
+                    num: this.addBusinessDataConfig.action.data.num,
+                    formatted: this.addBusinessDataConfig.action.data.formatted
+                }
             };
-
-            this.addBusinessDataConfig = this.$stateParams;
 
             this.activate();
         }
@@ -110,20 +124,36 @@ module app.pages.addBusinessPage {
         }
 
         /*
+        * Save Business Method
+        * @description Save business value on $rootScope's model and on Firebase
+        */
+        private _saveBusiness(): void {
+            //Update User model
+            this.$rootScope.User.Finance[this._financePos].Income.Business = this.form.business;
+            //Save salary on firebase
+            this.FinanceService.saveFinance(this.$rootScope.User.Finance[this._financePos]);
+        }
+
+        /*
         * Go to necessary expenses page
         * @description this method is launched when user press OK button
         */
         goToNext(): void {
-            //Get elementPos by Uid
-            var elementPos = this.FunctionsUtilService.getPositionByUid(this.$rootScope.User.Finance,
-                                                                        this.addBusinessDataConfig.financeId);
-
-            //Update User model
-            this.$rootScope.User.Finance[elementPos].Income.Business = this.form.business;
-            //Save salary on firebase
-            this.FinanceService.saveFinance(this.$rootScope.User.Finance[elementPos]);
+            //Save Business value
+            this._saveBusiness();
 
             this.$state.go('page.necessaryExpense', {financeId: this.addBusinessDataConfig.financeId});
+        }
+
+        /*
+        * Update Value method
+        * @description this method is launched when user is editing salary value
+        */
+        updateValue(): void {
+            //Save Salary value
+            this._saveBusiness();
+
+            this.$ionicHistory.goBack();
         }
 
         /*

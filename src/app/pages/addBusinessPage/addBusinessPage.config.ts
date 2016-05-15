@@ -26,7 +26,14 @@
                 },
                 parent: 'page',
                 params: {
-                    financeId: null
+                    financeId: null,
+                    action: {
+                        type: '',
+                        data: {
+                            num: null,
+                            formatted: ''
+                        }
+                    }
                 }
             });
     }

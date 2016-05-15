@@ -20,15 +20,39 @@
                    '$rootScope',
                    'finApp.auth.AuthService',
                    'finApp.auth.SessionService',
+                   'finApp.models.user.UserService',
                    '$state'];
 
     function run($ionicPlatform,
                  $rootScope: app.interfaces.IFinAppRootScope,
                  auth,
                  session,
+                 UserService,
                  $state): void {
 
         $ionicPlatform.ready(function() {
+
+            $rootScope.auth = auth;
+            $rootScope.session = session;
+
+            //Create User object
+            if($rootScope.auth.isLoggedIn()) {
+                //Get User's Uid
+                let userAuth = $rootScope.auth.getUserAuthData();
+                //Create User instance
+                $rootScope.User = new app.models.user.UserFirebase();
+                $rootScope.User.Uid = userAuth.uid;
+
+                UserService.getUserByUid(userAuth.uid).then(
+                    function(userData: any) {
+                        $rootScope.User = new app.models.user.UserFirebase(userData);
+                        console.log('User Model: ', $rootScope.User);
+                    }
+                );
+            } else {
+                //Create User instance
+                $rootScope.User = new app.models.user.UserFirebase();
+            }
 
             if (window.cordova && window.cordova.plugins.Keyboard) {
                 // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
@@ -46,11 +70,6 @@
 
         });
 
-        $rootScope.auth = auth;
-        $rootScope.session = session;
-
-        //Create User object
-        $rootScope.User = new app.models.user.UserFirebase();
     }
 
 })();

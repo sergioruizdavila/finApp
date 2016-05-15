@@ -69,7 +69,7 @@ module app.pages.historyPage {
             let self = this;
 
             //Get All User's finances in order to draw each block
-            this._getFinances().then(function(finances:any){
+            this._getFinances().then(function(finances:any) {
                 //grouping by year
                 self._financesList = self._groupByYear(finances);
             });

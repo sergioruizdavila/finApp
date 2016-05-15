@@ -41,12 +41,12 @@ module app.pages.addSalaryPage {
         /**********************************/
         form: IAddSalaryForm;
         addSalaryDataConfig: IAddSalaryDataConfig;
+        private _financePos: number;
         // --------------------------------
 
         /*-- INJECT DEPENDENCIES --*/
         static $inject = ['dataConfig',
                           '$ionicHistory',
-                          'finApp.models.user.UserService',
                           'finApp.models.finance.FinanceService',
                           'finApp.core.util.FunctionsUtilService',
                           '$state',
@@ -59,7 +59,6 @@ module app.pages.addSalaryPage {
         /**********************************/
         constructor(private dataConfig: IDataConfig,
                     private $ionicHistory: ionic.navigation.IonicHistoryService,
-                    private UserService: app.models.user.UserService,
                     private FinanceService: app.models.finance.IFinanceService,
                     private FunctionsUtilService: app.core.util.functionsUtil.FunctionsUtilService,
                     private $state: ng.ui.IStateService,
@@ -75,6 +74,10 @@ module app.pages.addSalaryPage {
             this._isLoggedIn();
 
             this.addSalaryDataConfig = this.$stateParams;
+
+            //Get Finance Position
+            this._financePos = this.FunctionsUtilService.getPositionByUid(this.$rootScope.User.Finance,
+                                                                          this.addSalaryDataConfig.financeId);
 
             //Init form
             this.form = {
@@ -101,30 +104,9 @@ module app.pages.addSalaryPage {
         * @description Validate if user is logged in.
         */
         private _isLoggedIn(): void {
-            let self = this;
-
             if(!this.auth.isLoggedIn()){
                 this.$state.go('page.signUp');
                 event.preventDefault();
-            } else {
-                this.UserService.getUserByUid(this.$rootScope.User.Uid).then(
-                    function(userData: any){
-
-                        self.$rootScope.User = new app.models.user.UserFirebase(userData);
-                        console.log('Finances Model: ', self.$rootScope.User);
-                    }
-                );
-
-                // this.FinanceService.getAllFinances().then(
-                //     function(finances) {
-                //         console.log('Finances from BE: ', finances);
-                //         for (let i = 0; i < finances.length; i++) {
-                //             let financeInstance = new app.models.finance.Finance(finances[i]);
-                //             self.$rootScope.User.addFinance(financeInstance);
-                //         }
-                //         console.log('Finances Model: ', self.$rootScope.User);
-                //     }
-                // );
             }
         }
 
@@ -141,18 +123,23 @@ module app.pages.addSalaryPage {
         }
 
         /*
+        * Save Salary Method
+        * @description Save salary value on $rootScope's model and on Firebase
+        */
+        private _saveSalary(): void {
+            //Update User model
+            this.$rootScope.User.Finance[this._financePos].Income.Salary = this.form.salary;
+            //Save salary on firebase
+            this.FinanceService.saveFinance(this.$rootScope.User.Finance[this._financePos]);
+        }
+
+        /*
         * Go to investment page
         * @description this method is launched when user press OK button
         */
         goToNext(): void {
-            //Get elementPos by Uid
-            var elementPos = this.FunctionsUtilService.getPositionByUid(this.$rootScope.User.Finance,
-                                                                        this.addSalaryDataConfig.financeId);
-
-            //Update User model
-            this.$rootScope.User.Finance[elementPos].Income.Salary = this.form.salary;
-            //Save salary on firebase
-            this.FinanceService.saveFinance(this.$rootScope.User.Finance[elementPos]);
+            //Save Salary value
+            this._saveSalary();
 
             this.$state.go('page.investment', {financeId: this.addSalaryDataConfig.financeId});
         }
@@ -162,20 +149,10 @@ module app.pages.addSalaryPage {
         * @description this method is launched when user is editing salary value
         */
         updateValue(): void {
-            let self = this;
-            this.FinanceService.getFinanceById(this.addSalaryDataConfig.financeId)
-            .then(
-                function(finance: any) {
-                    let financeInstance = new app.models.finance.Finance(finance);
-                    var elementPos = self.FunctionsUtilService.getPositionByUid(self.$rootScope.User.Finance,
-                                                                                self.addSalaryDataConfig.financeId);
-                    //Update User model
-                    self.$rootScope.User.Finance[elementPos].Income.Salary = self.form.salary;
-                    //Update salary on firebase
-                    self.FinanceService.saveFinance(self.$rootScope.User.Finance[elementPos]);
-                    self.$ionicHistory.goBack();
-                }
-            );
+            //Save Salary value
+            this._saveSalary();
+
+            this.$ionicHistory.goBack();
         }
 
         /*
@@ -185,7 +162,6 @@ module app.pages.addSalaryPage {
         goToBack(): void {
             this.$ionicHistory.goBack();
         }
-
 
 
     }

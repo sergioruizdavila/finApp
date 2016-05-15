@@ -10,6 +10,9 @@ module app.pages.financeDetailPage {
     /**********************************/
     export interface IFinanceDetailPageController {
         activate: () => void;
+        goToEditSalary: (value: app.models.finance.IMoney) => void;
+        goToEditBusiness: (value: app.models.finance.IMoney) => void;
+        goToEditInvestment: (value: app.models.finance.IMoney) => void;
         goToBack: () => void;
     }
 
@@ -156,6 +159,40 @@ module app.pages.financeDetailPage {
         */
         goToEditSalary(value): void {
             this.$state.go('page.salary', {
+                financeId: this.financeDetailDataConfig.financeId,
+                action: {
+                    type: 'Edit',
+                    data: {
+                        num: value.num,
+                        formatted: value.formatted
+                    }
+                }
+            });
+        }
+
+        /*
+        * Go to edit business method
+        * @description this method is launched when user press edit business row
+        */
+        goToEditBusiness(value): void {
+            this.$state.go('page.business', {
+                financeId: this.financeDetailDataConfig.financeId,
+                action: {
+                    type: 'Edit',
+                    data: {
+                        num: value.num,
+                        formatted: value.formatted
+                    }
+                }
+            });
+        }
+
+        /*
+        * Go to edit investment method
+        * @description this method is launched when user press edit investment row
+        */
+        goToEditInvestment(value): void {
+            this.$state.go('page.investment', {
                 financeId: this.financeDetailDataConfig.financeId,
                 action: {
                     type: 'Edit',

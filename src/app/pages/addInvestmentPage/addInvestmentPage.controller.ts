@@ -17,6 +17,12 @@ module app.pages.addInvestmentPage {
 
     export interface IAddInvestmentDataConfig extends ng.ui.IStateParamsService {
         financeId: string;
+        action: IActionParams;
+    }
+
+    export interface IActionParams {
+        type: string;
+        data: app.models.finance.IMoney;
     }
 
     export interface IAddInvestmentForm {
@@ -35,6 +41,7 @@ module app.pages.addInvestmentPage {
         /**********************************/
         form: IAddInvestmentForm;
         addInvestmentDataConfig: IAddInvestmentDataConfig;
+        private _financePos: number;
         // --------------------------------
 
         /*-- INJECT DEPENDENCIES --*/
@@ -66,12 +73,19 @@ module app.pages.addInvestmentPage {
             //Validate if user is logged in
             this._isLoggedIn();
 
+            this.addInvestmentDataConfig = this.$stateParams;
+
+            //Get Finance Position
+            this._financePos = this.FunctionsUtilService.getPositionByUid(this.$rootScope.User.Finance,
+                                                                          this.addInvestmentDataConfig.financeId);
+
             //Init form
             this.form = {
-                investment: { num: null, formatted: '' }
+                investment: {
+                    num: this.addInvestmentDataConfig.action.data.num,
+                    formatted: this.addInvestmentDataConfig.action.data.formatted
+                }
             };
-
-            this.addInvestmentDataConfig = this.$stateParams;
 
             this.activate();
         }
@@ -110,21 +124,36 @@ module app.pages.addInvestmentPage {
         }
 
         /*
+        * Save Investment Method
+        * @description Save investment value on $rootScope's model and on Firebase
+        */
+        private _saveInvestment(): void {
+            //Update User model
+            this.$rootScope.User.Finance[this._financePos].Income.Investment = this.form.investment;
+            //Save investment on firebase
+            this.FinanceService.saveFinance(this.$rootScope.User.Finance[this._financePos]);
+        }
+
+        /*
         * Go to business page
         * @description this method is launched when user press OK button
         */
         goToNext(): void {
-
-            //Get elementPos by Uid
-            var elementPos = this.FunctionsUtilService.getPositionByUid(this.$rootScope.User.Finance,
-                                                                        this.addInvestmentDataConfig.financeId);
-
-            //Update User model
-            this.$rootScope.User.Finance[elementPos].Income.Investment = this.form.investment;
-            //Save salary on firebase
-            this.FinanceService.saveFinance(this.$rootScope.User.Finance[elementPos]);
+            //Save Investment value
+            this._saveInvestment();
 
             this.$state.go('page.business', {financeId: this.addInvestmentDataConfig.financeId});
+        }
+
+        /*
+        * Update Value method
+        * @description this method is launched when user is editing salary value
+        */
+        updateValue(): void {
+            //Save Investment value
+            this._saveInvestment();
+
+            this.$ionicHistory.goBack();
         }
 
         /*

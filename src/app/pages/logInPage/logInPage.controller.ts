@@ -111,7 +111,10 @@ module app.pages.logInPage {
                 function(response){
                     //TODO: implementar mostrar el error cuando response sea error
                     self.$rootScope.User.Uid = response.uid;
-                    let newFinance = self.$rootScope.User.setFinance(new app.models.finance.Finance());
+                    //Create User Finance object
+                    let newFinance = new app.models.finance.Finance();
+                    self.$rootScope.User.addFinance(newFinance);
+                    //let newFinance = self.$rootScope.User.setFinance(new app.models.finance.Finance());
                     self.$state.go('tabs.history');
                     console.log('Authenticated successfully with payload:', response);
                 }

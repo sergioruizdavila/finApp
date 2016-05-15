@@ -32,6 +32,7 @@ module components.tabs {
         /*-- INJECT DEPENDENCIES --*/
         static $inject = ['$state',
                           'finApp.auth.AuthService',
+                          'finApp.models.user.UserService',
                           '$rootScope'];
 
         /**********************************/
@@ -39,6 +40,7 @@ module components.tabs {
         /**********************************/
         constructor(private $state: ng.ui.IStateService,
                     private auth: app.auth.IAuthService,
+                    private UserService: app.models.user.UserService,
                     private $rootScope: app.interfaces.IFinAppRootScope) {
             this._init();
         }
@@ -46,7 +48,7 @@ module components.tabs {
         /*-- INITIALIZE METHOD --*/
         private _init() {
             //Validate if user is logged in
-            this._isLoggedIn();
+            //this._isLoggedIn();
 
             this.tab = 1;
             this.activate();
@@ -66,13 +68,19 @@ module components.tabs {
         * @description Validate if user is logged in.
         */
         _isLoggedIn(): void {
-            if(!this.auth.isLoggedIn()){
+            var self = this;
+            if(!this.auth.isLoggedIn()) {
                 this.$state.go('page.signUp');
                 event.preventDefault();
             } else {
                 //Get User's Uid
                 let uid = this.getUserUid();
-                this.$rootScope.User.Uid = uid;
+                this.UserService.getUserByUid(uid).then(
+                    function(userData: any) {
+                        self.$rootScope.User = new app.models.user.UserFirebase(userData);
+                        console.log('User Model: ', self.$rootScope.User);
+                    }
+                );
             }
         }
 

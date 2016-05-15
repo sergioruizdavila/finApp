@@ -28,14 +28,14 @@ module app.models.user {
             this.username = obj.username || '';
             this.email = obj.email || '';
 
-            if(obj != {}) {
+            if(_.isEmpty(obj)) {
+                this.finances = [];
+            } else {
                 for (let key in obj.finances) {
                     let financeInstance = new app.models.finance.Finance(obj.finances[key]);
                     this.finances = [];
                     this.addFinance(financeInstance);
                 }
-            } else {
-                this.finances = [];
             }
 
         }

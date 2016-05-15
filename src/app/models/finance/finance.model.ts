@@ -19,6 +19,14 @@ module app.models.finance {
         value: IMoney;
     }
 
+    export interface IFinance {
+        uid: string;
+        income: Income;
+        typeOfExpense: TypeOfExpense;
+        dateCreated: app.interfaces.IDateFormatted;
+        dateUpdated: string;
+    }
+
 
     /****************************************/
     /*           CLASS DEFINITION           */
@@ -191,7 +199,6 @@ module app.models.finance {
                 this.necessaries = [];
                 this.unnecessaries = [];
             }
-
 
         }
 

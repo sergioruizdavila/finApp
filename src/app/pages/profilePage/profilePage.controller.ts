@@ -1,5 +1,5 @@
 /**
- * CardsPageController
+ * ProfilePageController
  * @description - Profile Page Controller
  */
 
