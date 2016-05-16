@@ -11,6 +11,7 @@ module app.pages.addBusinessPage {
     export interface IAddBusinessPageController {
         form: IAddBusinessForm;
         activate: () => void;
+        updateValue: () => void;
         goToNext: () => void;
         goToBack: () => void;
     }

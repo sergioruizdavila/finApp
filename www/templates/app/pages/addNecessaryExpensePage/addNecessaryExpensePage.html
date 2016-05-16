@@ -8,7 +8,8 @@
         </div>
 
         <div class="col-60">
-            <div class="progressBar">
+            <div class="progressBar"
+                 ng-if="vm.addNecessaryExpenseDataConfig.action.type != 'Edit'">
                 <div class="progressBar__progressLine progressBar__progressLine--80Percent"></div>
                 <div class="progressBar__innerLine"></div>
                 <div class="progressBar__circle"></div>
@@ -90,7 +91,8 @@
         </ion-content>
     </ion-view>
 
-    <ion-footer-bar class="progressivePage__footer">
+    <ion-footer-bar class="progressivePage__footer"
+                    ng-if="vm.addNecessaryExpenseDataConfig.action.type != 'Edit'">
         <button class="fa_btn fa_btn--blue fa_btn--block fa_btn--large fa_btn__3d fa_btn__3d--blue padding"
          ng-click="vm.goToNext()">
             <span class="button-inner" translate>

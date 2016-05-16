@@ -93,11 +93,11 @@
                     %necessary_expense.title.text
                 </div>
                 <div class="block_3d__content">
-                    <ion-list class="block_3d__content__list_container">
+                    <ion-list class="block_3d__content__list_container"
+                              ng-click="vm.goToEditNecessariesExpenses(vm._financeDetails.typeOfExpense.necessaries)">
 
                         <ion-item class="block_3d__content__list_container__item"
-                                  ng-repeat="expense in vm._financeDetails.typeOfExpense.necessaries"
-                                  ng-click="vm.showExpenseDetailPopup(expense)">
+                                  ng-repeat="expense in vm._financeDetails.typeOfExpense.necessaries">
                             <div class="row row-center">
                                 <div class="block_3d__content__list_container__item__text col-50">
                                     {{expense.title}}
@@ -130,11 +130,10 @@
                     %unnecessary_expense.title.text
                 </div>
                 <div class="block_3d__content">
-                    <ion-list class="block_3d__content__list_container">
-
+                    <ion-list class="block_3d__content__list_container"
+                              ng-click="vm.goToEditUnnecessariesExpenses(vm._financeDetails.typeOfExpense.unnecessaries)">
                         <ion-item class="block_3d__content__list_container__item"
-                                  ng-repeat="expense in vm._financeDetails.typeOfExpense.unnecessaries"
-                                  ng-click="vm.showExpenseDetailPopup(expense)">
+                                  ng-repeat="expense in vm._financeDetails.typeOfExpense.unnecessaries">
                             <div class="row row-center">
                                 <div class="block_3d__content__list_container__item__text col-50">
                                     {{expense.title}}
@@ -144,7 +143,6 @@
                                 </div>
                             </div>
                         </ion-item>
-
                     </ion-list>
                 </div>
                 <div class="block_3d__footer">

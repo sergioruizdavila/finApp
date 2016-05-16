@@ -13,6 +13,8 @@ module app.pages.financeDetailPage {
         goToEditSalary: (value: app.models.finance.IMoney) => void;
         goToEditBusiness: (value: app.models.finance.IMoney) => void;
         goToEditInvestment: (value: app.models.finance.IMoney) => void;
+        goToEditNecessariesExpenses: (expenses: Array<app.models.finance.IExpense>) => void;
+        goToEditUnnecessariesExpenses: (expenses: Array<app.models.finance.IExpense>) => void;
         goToBack: () => void;
     }
 
@@ -199,6 +201,38 @@ module app.pages.financeDetailPage {
                     data: {
                         num: value.num,
                         formatted: value.formatted
+                    }
+                }
+            });
+        }
+
+        /*
+        * Go to edit expense method
+        * @description this method is launched when user press edit expense row
+        */
+        goToEditNecessariesExpenses(expenses): void {
+            this.$state.go('page.necessaryExpense', {
+                financeId: this.financeDetailDataConfig.financeId,
+                action: {
+                    type: 'Edit',
+                    data: {
+                        total: this._totalNecessariesExpenses
+                    }
+                }
+            });
+        }
+
+        /*
+        * Go to edit expense method
+        * @description this method is launched when user press edit expense row
+        */
+        goToEditUnnecessariesExpenses(expenses): void {
+            this.$state.go('page.unnecessaryExpense', {
+                financeId: this.financeDetailDataConfig.financeId,
+                action: {
+                    type: 'Edit',
+                    data: {
+                        total: this._totalUnnecessariesExpenses
                     }
                 }
             });

@@ -11,6 +11,7 @@ module app.pages.addInvestmentPage {
     export interface IAddInvestmentPageController {
         form: IAddInvestmentForm;
         activate: () => void;
+        updateValue: () => void;
         goToNext: () => void;
         goToBack: () => void;
     }
@@ -82,8 +83,8 @@ module app.pages.addInvestmentPage {
             //Init form
             this.form = {
                 investment: {
-                    num: this.addInvestmentDataConfig.action.data.num,
-                    formatted: this.addInvestmentDataConfig.action.data.formatted
+                    num: this.addInvestmentDataConfig.action.data.num || null,
+                    formatted: this.addInvestmentDataConfig.action.data.formatted || ''
                 }
             };
 
@@ -142,7 +143,13 @@ module app.pages.addInvestmentPage {
             //Save Investment value
             this._saveInvestment();
 
-            this.$state.go('page.business', {financeId: this.addInvestmentDataConfig.financeId});
+            this.$state.go('page.business', {
+                financeId: this.addInvestmentDataConfig.financeId,
+                action: {
+                    type: '',
+                    data: {num: null, formatted: ''}
+                }
+            });
         }
 
         /*

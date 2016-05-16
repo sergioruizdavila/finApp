@@ -184,15 +184,16 @@ module app.models.finance {
             console.log('init type of expense');
 
             if(obj != {}) {
+
+                this.necessaries = [];
                 for (let key in obj.necessaries) {
                     let expenseInstance = new app.models.finance.Expense(obj.necessaries[key]);
-                    this.necessaries = [];
                     this.addNecessary(expenseInstance);
                 }
 
+                this.unnecessaries = [];
                 for (let key in obj.unnecessaries) {
                     let expenseInstance = new app.models.finance.Expense(obj.unnecessaries[key]);
-                    this.unnecessaries = [];
                     this.addUnnecessary(expenseInstance);
                 }
             } else {

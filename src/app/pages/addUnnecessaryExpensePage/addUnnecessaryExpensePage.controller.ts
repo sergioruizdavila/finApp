@@ -24,10 +24,16 @@ module app.pages.addUnnecessaryExpensePage {
 
     export interface IAddUnnecessaryExpenseDataConfig extends ng.ui.IStateParamsService {
         financeId: string;
+        action: IActionParams;
+    }
+
+    export interface IActionParams {
+        type: string;
+        data: { total: app.models.finance.IMoney };
     }
 
     export interface IAddUnnecessaryExpenseForm {
-        expense: any;
+        expense?: any;
         total?: app.models.finance.IMoney;
         action?: string;
     }
@@ -83,13 +89,15 @@ module app.pages.addUnnecessaryExpensePage {
             //Validate if user is logged in
             this._isLoggedIn();
 
+            this.addUnnecessaryExpenseDataConfig = this.$stateParams;
+
             //Init form
             this.form = {
-                expense: new app.models.finance.Expense(),
-                total: { num: 0, formatted: '$0' }
+                total: {
+                    num: this.addUnnecessaryExpenseDataConfig.action.data.total.num || 0,
+                    formatted: this.addUnnecessaryExpenseDataConfig.action.data.total.formatted || '$0'
+                }
             };
-
-            this.addUnnecessaryExpenseDataConfig = this.$stateParams;
 
             //Get Finance Position
             this._financePos = this.FunctionsUtilService.getPositionByUid(this.$rootScope.User.Finance,

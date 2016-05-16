@@ -12,6 +12,7 @@ module app.pages.addSalaryPage {
         form: IAddSalaryForm;
         activate: () => void;
         goToNext: () => void;
+        updateValue: () => void;
         goToBack: () => void;
     }
 
@@ -141,7 +142,13 @@ module app.pages.addSalaryPage {
             //Save Salary value
             this._saveSalary();
 
-            this.$state.go('page.investment', {financeId: this.addSalaryDataConfig.financeId});
+            this.$state.go('page.investment', {
+                financeId: this.addSalaryDataConfig.financeId,
+                action: {
+                    type: '',
+                    data: {num: null, formatted: ''}
+                }
+            });
         }
 
         /*
