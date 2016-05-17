@@ -147,7 +147,7 @@ module app.pages.addInvestmentPage {
                 financeId: this.addInvestmentDataConfig.financeId,
                 action: {
                     type: '',
-                    data: {num: null, formatted: ''}
+                    data: {total: {num: null, formatted: ''} }
                 }
             });
         }

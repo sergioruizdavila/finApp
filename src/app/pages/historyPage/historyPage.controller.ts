@@ -38,7 +38,8 @@ module app.pages.historyPage {
                           '$state',
                           '$stateParams',
                           '$filter',
-                          '$rootScope'];
+                          '$rootScope',
+                          'finApp.auth.AuthService'];
 
         /**********************************/
         /*           CONSTRUCTOR          */
@@ -49,7 +50,8 @@ module app.pages.historyPage {
                     private $state: ng.ui.IStateService,
                     private $stateParams: IHistoryDataConfig,
                     private $filter: angular.IFilterService,
-                    private $rootScope: app.interfaces.IFinAppRootScope) {
+                    private $rootScope: app.interfaces.IFinAppRootScope,
+                    private auth: any) {
             this._init();
         }
 
@@ -68,6 +70,9 @@ module app.pages.historyPage {
             //VARIABLES
             let self = this;
 
+            //Validate if user is logged in
+            this._isLoggedIn();
+
             //Get All User's finances in order to draw each block
             this._getFinances().then(function(finances:any) {
                 //grouping by year
@@ -79,6 +84,16 @@ module app.pages.historyPage {
         /*            METHODS             */
         /**********************************/
 
+        /*
+        * Is Logged In Method
+        * @description Validate if user is logged in.
+        */
+        private _isLoggedIn(): void {
+            if(!this.auth.isLoggedIn()){
+                this.$state.go('page.signUp');
+                event.preventDefault();
+            }
+        }
         /**
         * _getFinances
         * @description - get all Finances associated to user logged in

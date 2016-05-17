@@ -249,8 +249,13 @@ module app.pages.addNecessaryExpensePage {
         * @description this method is launched when user press OK button
         */
         goToNext(): void {
-            this.$state.go('page.unnecessaryExpense',
-                           {financeId: this.addNecessaryExpenseDataConfig.financeId});
+            this.$state.go('page.unnecessaryExpense', {
+                financeId: this.addNecessaryExpenseDataConfig.financeId,
+                action: {
+                    type: '',
+                    data: {total: {num: null, formatted: ''} }
+                }
+            });
         }
 
         /*
@@ -258,6 +263,7 @@ module app.pages.addNecessaryExpensePage {
         * @description this method is launched when user press back button
         */
         goToBack(): void {
+            let viewBack = this.$ionicHistory.backView();
             this.$ionicHistory.goBack();
         }
 

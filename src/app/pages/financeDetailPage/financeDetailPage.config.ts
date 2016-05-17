@@ -27,7 +27,8 @@
                 parent: 'page',
                 params: {
                     financeId: null
-                }
+                },
+                cache: false
             });
     }
 })();

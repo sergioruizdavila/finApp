@@ -143,7 +143,13 @@ module app.pages.addBusinessPage {
             //Save Business value
             this._saveBusiness();
 
-            this.$state.go('page.necessaryExpense', {financeId: this.addBusinessDataConfig.financeId});
+            this.$state.go('page.necessaryExpense', {
+                financeId: this.addBusinessDataConfig.financeId,
+                action: {
+                    type: '',
+                    data: {total: {num: null, formatted: ''} }
+                }
+            });
         }
 
         /*
