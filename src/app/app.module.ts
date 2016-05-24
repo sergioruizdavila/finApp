@@ -11,15 +11,17 @@
 
     angular
         .module('finApp', [
+            'finApp.auth',
             'finApp.core',
             'finApp.core.util',
             'finApp.core.firebase',
-            'finApp.auth',
+            'finApp.localStorage',
             'finApp.pages.main',
             'finApp.pages.tutorialPage',
             'finApp.pages.signUpPage',
             'finApp.pages.logInPage',
             'finApp.pages.historyPage',
+            'finApp.pages.financeDetailPage',
             'finApp.pages.cardsPage',
             'finApp.pages.profilePage',
             'finApp.pages.addSalaryPage',
@@ -36,7 +38,8 @@
         .config(config);
 
     function config($urlRouterProvider: angular.ui.IUrlRouterProvider,
-                    $translateProvider: angular.translate.ITranslateProvider) {
+                    $translateProvider: angular.translate.ITranslateProvider,
+                    $ionicConfigProvider: any) {
 
         $urlRouterProvider.otherwise('/page/tutorial');
 

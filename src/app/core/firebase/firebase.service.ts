@@ -12,8 +12,9 @@ module app.core.firebase {
         createFirebase: () => Firebase;
         update: (url: string, data: any) => void;
         add: (url: string, data: any) => void;
-        getArray: (url: string) => any;
-        getArrayByDate: (url: string, startDate: string, endDate: string) => any;
+        getArray: (url: string) => angular.IPromise<AngularFireArray>;
+        getArrayByDate: (url: string, startDate: string, endDate: string) => angular.IPromise<AngularFireArray>;
+        getObject: (url: string) => angular.IPromise<AngularFireObject>;
     }
 
     export class FirebaseFactory implements IFirebaseFactory {
@@ -28,10 +29,13 @@ module app.core.firebase {
 
 
         /*-- INJECT DEPENDENCIES --*/
-        static $inject = ['dataConfig', '$firebaseArray'];
+        static $inject = ['dataConfig',
+                          '$firebaseArray',
+                          '$firebaseObject'];
 
         constructor(dataConfig: IDataConfig,
-                    private $firebaseArray: AngularFireArrayService) {
+                    private $firebaseArray: AngularFireArrayService,
+                    private $firebaseObject: AngularFireObjectService) {
             this.baseUrl = dataConfig.baseUrl;
         }
 
@@ -71,11 +75,12 @@ module app.core.firebase {
 
         /**
         * getArray
-        * @description - get data arry against Firebase
+        * @description - get data array against Firebase
         * @function
         * @params {string} url - uri of firebase
+        * @return {angular.IPromise<AngularFireArray>} data - Array gotten from firebase
         */
-        getArray(url): any {
+        getArray(url): angular.IPromise<AngularFireArray> {
             let ref = new Firebase(this.baseUrl + url);
             return this.$firebaseArray(ref).$loaded().then(function(data) {
                 return data;
@@ -89,8 +94,9 @@ module app.core.firebase {
         * @params {string} url - uri of firebase
         * @params {string} startDate - start specific Date
         * @params {string} endDate - end specific Date
+        * @return {angular.IPromise<AngularFireArray>} data - Array gotten from firebase
         */
-        getArrayByDate(url, startDate, endDate): any {
+        getArrayByDate(url, startDate, endDate): angular.IPromise<AngularFireArray> {
             let ref = new Firebase(this.baseUrl + url);
             let query: any = ref.orderByChild("dateCreated/complete").startAt(startDate).endAt(endDate);
             return this.$firebaseArray(query).$loaded().then(function(data) {
@@ -98,18 +104,37 @@ module app.core.firebase {
             });
         }
 
+        /**
+        * getObject
+        * @description - get data object against Firebase
+        * @function
+        * @params {string} url - uri of firebase
+        * @params {string} startDate - start specific Date
+        * @params {string} endDate - end specific Date
+        * @return {angular.IPromise<AngularFireObject>} data - object gotten from firebase
+        */
+        getObject(url): angular.IPromise<AngularFireObject> {
+            let ref = new Firebase(this.baseUrl + url);
+            return this.$firebaseObject(ref).$loaded().then(function(data) {
+                return data;
+            });
+        }
+
 
 
         static instance(dataConfig: IDataConfig,
-                        $firebaseArray: AngularFireArrayService): IFirebaseFactory {
-            return new FirebaseFactory(dataConfig, $firebaseArray);
+                        $firebaseArray: AngularFireArrayService,
+                        $firebaseObject: AngularFireObjectService): IFirebaseFactory {
+            return new FirebaseFactory(dataConfig, $firebaseArray, $firebaseObject);
         }
 
     }
 
     angular.module('finApp.core.firebase', [])
-    .factory(FirebaseFactory.serviceId, ['dataConfig',
+    .factory(FirebaseFactory.serviceId, [
+        'dataConfig',
         '$firebaseArray',
+        '$firebaseObject',
         FirebaseFactory.instance]);
 
 }

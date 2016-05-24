@@ -12,11 +12,18 @@ module app.pages.addSalaryPage {
         form: IAddSalaryForm;
         activate: () => void;
         goToNext: () => void;
+        updateValue: () => void;
         goToBack: () => void;
     }
 
     export interface IAddSalaryDataConfig extends ng.ui.IStateParamsService {
         financeId: string;
+        action: IActionParams;
+    }
+
+    export interface IActionParams {
+        type: string;
+        data: app.models.finance.IMoney;
     }
 
     export interface IAddSalaryForm {
@@ -35,6 +42,7 @@ module app.pages.addSalaryPage {
         /**********************************/
         form: IAddSalaryForm;
         addSalaryDataConfig: IAddSalaryDataConfig;
+        private _financePos: number;
         // --------------------------------
 
         /*-- INJECT DEPENDENCIES --*/
@@ -44,7 +52,8 @@ module app.pages.addSalaryPage {
                           'finApp.core.util.FunctionsUtilService',
                           '$state',
                           '$stateParams',
-                          '$rootScope'];
+                          '$rootScope',
+                          'finApp.auth.AuthService'];
 
         /**********************************/
         /*           CONSTRUCTOR          */
@@ -55,18 +64,29 @@ module app.pages.addSalaryPage {
                     private FunctionsUtilService: app.core.util.functionsUtil.FunctionsUtilService,
                     private $state: ng.ui.IStateService,
                     private $stateParams: IAddSalaryDataConfig,
-                    private $rootScope: app.interfaces.IFinAppRootScope) {
-            this.init();
+                    private $rootScope: app.interfaces.IFinAppRootScope,
+                    private auth: any) {
+            this._init();
         }
 
         /*-- INITIALIZE METHOD --*/
-        private init() {
-            //Init form
-            this.form = {
-                salary: { num: null, formatted: '' }
-            };
+        private _init() {
+            //Validate if user is logged in
+            this._isLoggedIn();
 
             this.addSalaryDataConfig = this.$stateParams;
+
+            //Get Finance Position
+            this._financePos = this.FunctionsUtilService.getPositionByUid(this.$rootScope.User.Finance,
+                                                                          this.addSalaryDataConfig.financeId);
+
+            //Init form
+            this.form = {
+                salary: {
+                    num: this.addSalaryDataConfig.action.data.num || null,
+                    formatted: this.addSalaryDataConfig.action.data.formatted || ''
+                }
+            };
 
             this.activate();
         }
@@ -81,10 +101,21 @@ module app.pages.addSalaryPage {
         /**********************************/
 
         /*
+        * Is Logged In Method
+        * @description Validate if user is logged in.
+        */
+        private _isLoggedIn(): void {
+            if(!this.auth.isLoggedIn()){
+                this.$state.go('page.signUp');
+                event.preventDefault();
+            }
+        }
+
+        /*
         * Format Salary Method
         * @description Format the salary value with default currency
         */
-        _formatSalary(): void {
+        private _formatSalary(): void {
             let currencyObj: app.models.finance.IMoney =
             this.FunctionsUtilService.formatCurrency(this.form.salary.num,
                                                      this.form.salary.formatted);
@@ -93,19 +124,42 @@ module app.pages.addSalaryPage {
         }
 
         /*
+        * Save Salary Method
+        * @description Save salary value on $rootScope's model and on Firebase
+        */
+        private _saveSalary(): void {
+            //Update User model
+            this.$rootScope.User.Finance[this._financePos].Income.Salary = this.form.salary;
+            //Save salary on firebase
+            this.FinanceService.saveFinance(this.$rootScope.User.Finance[this._financePos]);
+        }
+
+        /*
         * Go to investment page
         * @description this method is launched when user press OK button
         */
         goToNext(): void {
-            //Get elementPos by Uid
-            var elementPos = this.FunctionsUtilService.getPositionByUid(this.$rootScope.User.Finance,
-                                                                        this.addSalaryDataConfig.financeId);
-            //Update User model
-            this.$rootScope.User.Finance[elementPos].Income.Salary = this.form.salary;
-            //Save salary on firebase
-            this.FinanceService.saveFinance(this.$rootScope.User.Finance[elementPos]);
+            //Save Salary value
+            this._saveSalary();
 
-            this.$state.go('page.investment', {financeId: this.addSalaryDataConfig.financeId});
+            this.$state.go('page.investment', {
+                financeId: this.addSalaryDataConfig.financeId,
+                action: {
+                    type: '',
+                    data: {num: null, formatted: ''}
+                }
+            });
+        }
+
+        /*
+        * Update Value method
+        * @description this method is launched when user is editing salary value
+        */
+        updateValue(): void {
+            //Save Salary value
+            this._saveSalary();
+
+            this.$ionicHistory.goBack();
         }
 
         /*
@@ -115,7 +169,6 @@ module app.pages.addSalaryPage {
         goToBack(): void {
             this.$ionicHistory.goBack();
         }
-
 
 
     }

@@ -30,17 +30,26 @@ module components.tabs {
         // --------------------------------
 
         /*-- INJECT DEPENDENCIES --*/
-        static $inject = ['$state'];
+        static $inject = ['$state',
+                          'finApp.auth.AuthService',
+                          'finApp.models.user.UserService',
+                          '$rootScope'];
 
         /**********************************/
         /*           CONSTRUCTOR          */
         /**********************************/
-        constructor(private $state: ng.ui.IStateService) {
-            this.init();
+        constructor(private $state: ng.ui.IStateService,
+                    private auth: app.auth.IAuthService,
+                    private UserService: app.models.user.UserService,
+                    private $rootScope: app.interfaces.IFinAppRootScope) {
+            this._init();
         }
 
         /*-- INITIALIZE METHOD --*/
-        private init() {
+        private _init() {
+            //Validate if user is logged in
+            //this._isLoggedIn();
+
             this.tab = 1;
             this.activate();
         }
@@ -53,10 +62,54 @@ module components.tabs {
         /**********************************/
         /*            METHODS             */
         /**********************************/
+
+        /*
+        * Is Logged In Method
+        * @description Validate if user is logged in.
+        */
+        _isLoggedIn(): void {
+            var self = this;
+            if(!this.auth.isLoggedIn()) {
+                this.$state.go('page.signUp');
+                event.preventDefault();
+            } else {
+                //Get User's Uid
+                let uid = this.getUserUid();
+                this.UserService.getUserByUid(uid).then(
+                    function(userData: any) {
+                        self.$rootScope.User = new app.models.user.UserFirebase(userData);
+                        console.log('User Model: ', self.$rootScope.User);
+                    }
+                );
+            }
+        }
+
+        /*
+        * getUserUid Method
+        * @description - Return user Authenticated Uid
+        * @return {string} userAuth.uid - User authenticated Uid
+        */
+        getUserUid(): string {
+            let userAuth = this.auth.getUserAuthData();
+            return userAuth.uid;
+        }
+
+        /*
+        * isSet Method
+        * @description - Return true if the tab selected is the current tab
+        * @params {number} - tab Id selected
+        * @return {boolean} - if this tab is equal to tab Id selected, return true
+        */
         isSet(tabId): boolean {
             return this.tab === tabId;
         }
 
+        /*
+        * setTab Method
+        * @description - Assign the tab selected like a current tab
+        * @params {number} - tab Id selected
+        * @return {void}
+        */
         setTab(tabId): void {
             this.tab = tabId;
         };

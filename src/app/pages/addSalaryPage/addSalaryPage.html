@@ -8,11 +8,22 @@
         </div>
 
         <div class="col-60">
-            <div class="progressBar">
+            <div class="progressBar"
+                 ng-if="vm.addSalaryDataConfig.action.type != 'Edit'">
                 <div class="progressBar__progressLine progressBar__progressLine--20Percent"></div>
                 <div class="progressBar__innerLine"></div>
                 <div class="progressBar__circle"></div>
             </div>
+        </div>
+
+        <div class="col-20 text-right"
+             ng-if="vm.addSalaryDataConfig.action.type == 'Edit'">
+            <button class="button button-clear fa_btn fa_btn__header"
+                    type="button"
+                    name="button"
+                    ng-click="vm.updateValue()" translate>
+                %navbar.button_ok.text
+            </button>
         </div>
 
     </div>
@@ -43,9 +54,11 @@
         </ion-content>
     </ion-view>
 
-    <ion-footer-bar class="progressivePage__footer">
+    <ion-footer-bar class="progressivePage__footer"
+                    ng-if="vm.addSalaryDataConfig.action.type != 'Edit'">
         <button class="fa_btn fa_btn--blue fa_btn--block fa_btn--large fa_btn__3d fa_btn__3d--blue padding"
-            ng-click="vm.goToNext()">
+            ng-click="vm.goToNext()"
+            ng-disabled="vm.form.salary.num == 0 || vm.form.salary.num == null">
             <span class="button-inner" translate>
                 %global.continue.button.text
             </span>

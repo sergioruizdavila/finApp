@@ -24,7 +24,8 @@
                         controller: 'finApp.pages.historyPage.HistoryPageController',
                         controllerAs: 'vm'
                     }
-                }
+                },
+                cache: false
             });
     }
 })();

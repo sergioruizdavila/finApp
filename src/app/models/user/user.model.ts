@@ -19,15 +19,24 @@ module app.models.user {
         /**********************************/
         /*           CONSTRUCTOR          */
         /**********************************/
-        constructor() {
+        constructor(obj: any = {}) {
             //LOG
             console.log('User Model instanced');
 
             //init properties
-            this.uid = null;
-            this.username = null;
-            this.email = null;
-            this.finances = [];
+            this.uid = obj.uid;
+            this.username = obj.username || '';
+            this.email = obj.email || '';
+
+            if(_.isEmpty(obj)) {
+                this.finances = [];
+            } else {
+                for (let key in obj.finances) {
+                    let financeInstance = new app.models.finance.Finance(obj.finances[key]);
+                    this.finances = [];
+                    this.addFinance(financeInstance);
+                }
+            }
 
         }
 
@@ -66,23 +75,19 @@ module app.models.user {
             return this.finances;
         }
 
-        setFinance(finance: app.models.finance.Finance): app.models.finance.Finance {
-            if(finance === undefined) { throw 'Please supply finance element'; }
+        addFinance(finance: app.models.finance.Finance): void {
+            if(finance === undefined) { throw 'Please supply finance element (Add)'; }
+            this.finances.push(finance);
+        }
 
-            //Update element in Array
-            if(finance.Uid) {
-                this.finances.forEach(function (element, index, array) {
-                    if (finance.Uid === element.Uid) {
-                        array[index] = finance;
-                    }
-                });
-            //Add new element in Array
-            } else {
-                finance.Uid = app.core.util.functionsUtil.FunctionsUtilService.generateGuid();
-                this.finances.push(finance);
-            }
-
-            return finance;
+        editFinance(finance: app.models.finance.Finance): void {
+            if(finance === undefined) { throw 'Please supply finance element (Edit)'; }
+            //Edit existing Finance
+            this.finances.forEach(function (element, index, array) {
+                if (finance.Uid === element.Uid) {
+                    array[index] = finance;
+                }
+            });
         }
 
     }
@@ -97,14 +102,19 @@ module app.models.user {
     /****************************************/
     export class UserFirebase extends User {
 
-        private provider: string = null;
+        private provider: string;
 
         /**********************************/
         /*           CONSTRUCTOR          */
         /**********************************/
-        constructor() {
-            super();
+        constructor(obj:any = {}) {
+            //LOG
             console.log('UserFirebase Model instanced');
+
+            //init properties
+            super(obj);
+            this.provider = obj.provider || null;
+
         }
 
         /**********************************/

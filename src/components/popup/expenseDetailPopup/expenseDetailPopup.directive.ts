@@ -82,6 +82,7 @@ module components.popup.expenseDetailPopup {
 
     export interface IExpenseDetailPopupForm {
         expense: app.models.finance.IExpense;
+        action: string;
     }
 
     /****************************************/
@@ -112,7 +113,8 @@ module components.popup.expenseDetailPopup {
         private init() {
             //Init form
             this.form = {
-                expense: this.$scope.$parent.form.expense
+                expense: this.$scope.$parent.form.expense,
+                action: this.$scope.$parent.form.action
             };
 
             this.activate();

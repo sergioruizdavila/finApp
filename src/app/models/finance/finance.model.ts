@@ -19,6 +19,14 @@ module app.models.finance {
         value: IMoney;
     }
 
+    export interface IFinance {
+        uid: string;
+        income: Income;
+        typeOfExpense: TypeOfExpense;
+        dateCreated: app.interfaces.IDateFormatted;
+        dateUpdated: string;
+    }
+
 
     /****************************************/
     /*           CLASS DEFINITION           */
@@ -37,15 +45,15 @@ module app.models.finance {
         /**********************************/
         /*           CONSTRUCTOR          */
         /**********************************/
-        constructor() {
+        constructor(obj:any = {}) {
             //LOG
             console.log('init finances');
 
             //init properties
-            this.uid = null;
-            this.income = new Income();
-            this.typeOfExpense = new TypeOfExpense();
-            this.dateCreated = app.core.util.functionsUtil.FunctionsUtilService.splitDateFormat(new Date().toString());
+            this.uid = obj.uid || app.core.util.functionsUtil.FunctionsUtilService.generateGuid();
+            this.income = new Income(obj.income);
+            this.typeOfExpense = new TypeOfExpense(obj.typeOfExpense);
+            this.dateCreated = obj.dateCreated || app.core.util.functionsUtil.FunctionsUtilService.splitDateFormat(new Date().toString());
             this.dateUpdated = new Date().toString();
 
         }
@@ -94,6 +102,7 @@ module app.models.finance {
     export class Income {
 
         /*-- PROPERTIES --*/
+        private uid: string;
         private salary: IMoney;
         private investment: IMoney;
         private business: IMoney;
@@ -101,14 +110,27 @@ module app.models.finance {
         /**********************************/
         /*           CONSTRUCTOR          */
         /**********************************/
-        constructor() {
+        constructor(obj: any = {salary: {}, investment: {}, business: {}}) {
             //LOG
             console.log('init income');
 
             //init properties
-            this.salary = {num: null, formatted: ''};
-            this.investment = {num: null, formatted: ''};
-            this.business = {num: null, formatted: ''};
+            this.uid = obj.uid || app.core.util.functionsUtil.FunctionsUtilService.generateGuid();
+
+            this.salary = {
+                num: obj.salary.num || null ,
+                formatted: obj.salary.formatted || ''
+            };
+
+            this.investment = {
+                num: obj.investment.num || null,
+                formatted: obj.investment.formatted || ''
+            };
+
+            this.business = {
+                num: obj.business.num || null,
+                formatted: obj.business.formatted || ''
+            };
         }
 
         /**********************************/
@@ -157,13 +179,28 @@ module app.models.finance {
         /**********************************/
         /*           CONSTRUCTOR          */
         /**********************************/
-        constructor() {
+        constructor(obj: any = {}) {
             //LOG
             console.log('init type of expense');
 
-            //init properties
-            this.necessaries = [];
-            this.unnecessaries = [];
+            if(obj != {}) {
+
+                this.necessaries = [];
+                for (let key in obj.necessaries) {
+                    let expenseInstance = new app.models.finance.Expense(obj.necessaries[key]);
+                    this.addNecessary(expenseInstance);
+                }
+
+                this.unnecessaries = [];
+                for (let key in obj.unnecessaries) {
+                    let expenseInstance = new app.models.finance.Expense(obj.unnecessaries[key]);
+                    this.addUnnecessary(expenseInstance);
+                }
+            } else {
+                this.necessaries = [];
+                this.unnecessaries = [];
+            }
+
         }
 
         /**********************************/
@@ -178,42 +215,34 @@ module app.models.finance {
             return this.unnecessaries;
         }
 
-        setNecessaries(expense: Expense): Expense {
-            if(expense === undefined) { throw 'Please supply neccesary expense value'; }
-
-            //Update element in Array
-            if(expense.Uid) {
-                this.necessaries.forEach(function (element, index, array) {
-                    if (expense.Uid === element.Uid) {
-                        array[index] = expense;
-                    }
-                });
-            //Add new element in Array
-            } else {
-                expense.Uid = app.core.util.functionsUtil.FunctionsUtilService.generateGuid();
-                this.necessaries.push(expense);
-            }
-
-            return expense;
+        addNecessary(expense: Expense): void {
+            if(expense === undefined) { throw 'Please supply neccesary expense value (Add)'; }
+            this.necessaries.push(expense);
         }
 
-        setUnnecessaries(expense: Expense): Expense {
-            if (expense === undefined) { throw 'Please supply unneccesary expense value'; }
+        editNecessary(expense: Expense): void {
+            if(expense === undefined) { throw 'Please supply neccesary expense value (Edit)'; }
+            //Edit existing Finance
+            this.necessaries.forEach(function (element, index, array) {
+                if (expense.Uid === element.Uid) {
+                    array[index] = expense;
+                }
+            });
+        }
 
-            //Update element in Array
-            if(expense.Uid){
-                this.unnecessaries.forEach(function(element, index, array){
-                    if(expense.Uid === element.Uid) {
-                        array[index] = expense;
-                    }
-                });
-            //Add new element in Array
-            } else {
-                expense.Uid = app.core.util.functionsUtil.FunctionsUtilService.generateGuid();
-                this.unnecessaries.push(expense);
-            }
+        addUnnecessary(expense: Expense): void {
+            if(expense === undefined) { throw 'Please supply unneccesary expense value (Add)'; }
+            this.unnecessaries.push(expense);
+        }
 
-            return expense;
+        editUnnecessary(expense: Expense): void {
+            if(expense === undefined) { throw 'Please supply unneccesary expense value (Edit)'; }
+            //Edit existing Finance
+            this.unnecessaries.forEach(function (element, index, array) {
+                if (expense.Uid === element.Uid) {
+                    array[index] = expense;
+                }
+            });
         }
     }
 
@@ -231,14 +260,17 @@ module app.models.finance {
         /**********************************/
         /*           CONSTRUCTOR          */
         /**********************************/
-        constructor() {
+        constructor(obj: any = { value: {}}) {
             //LOG
             console.log('init expense');
 
             //init properties
-            this.uid = '';
-            this.title = '';
-            this.value = {num: null, formatted: ''};
+            this.uid = obj.uid || app.core.util.functionsUtil.FunctionsUtilService.generateGuid();
+            this.title = obj.title || '';
+            this.value = {
+                num: obj.value.num || null ,
+                formatted: obj.value.formatted || ''
+            };
         }
 
         /**********************************/

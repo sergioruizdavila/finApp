@@ -29,6 +29,9 @@ $colors: (
   favorite:   #69BB7B
 );
 
+$FA_COLORS_SUCCESS: #28a54c;
+$FA_COLORS_NEGATIVE: #FA7470;
+
 // The path for our ionicons font files, relative to the built CSS in www/css
 $ionicons-font-path: "../lib/ionic/fonts" !default;
 
@@ -63,6 +66,9 @@ $FA_TEXT_P: shade($FA_TEXT, 20);
 
 /// Text Value List
 $FA_TEXT_LIST_VALUE: #FA7470;
+
+/// Incomes Title Block
+$FA_INCOME_BLOCK_TITLE_TEXT: tint($FA_COLORS_SUCCESS, 40);
 
 //FinApp Fonts
 $FA-FONT-PATH: "../assets/fonts";

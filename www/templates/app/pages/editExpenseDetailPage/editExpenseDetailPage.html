@@ -9,15 +9,15 @@
 
         <div class="col-60">
             <div class="progressBar"
-                 ng-if="vm.addInvestmentDataConfig.action.type != 'Edit'">
-                <div class="progressBar__progressLine progressBar__progressLine--40Percent"></div>
+                 ng-if="vm.editExpenseDetailDataConfig.action.type != 'Edit'">
+                <div class="progressBar__progressLine progressBar__progressLine--20Percent"></div>
                 <div class="progressBar__innerLine"></div>
                 <div class="progressBar__circle"></div>
             </div>
         </div>
 
         <div class="col-20 text-right"
-             ng-if="vm.addInvestmentDataConfig.action.type == 'Edit'">
+             ng-if="vm.editExpenseDetailDataConfig.action.type == 'Edit'">
             <button class="button button-clear fa_btn fa_btn__header"
                     type="button"
                     name="button"
@@ -29,36 +29,44 @@
     </div>
 </div>
 
-<!-- where the initial view template will be rendered -->
+
 <ion-nav-view>
 
     <ion-view>
         <ion-content class="progressivePage__contentPage" scroll="false">
             <div class="progressivePage__contentPage__title" translate>
-                %investment.title.text
+                Editar Gasto
             </div>
 
             <div class="progressivePage__contentPage__input">
                 <input  type="text"
-                ng-model="vm.form.investment.formatted"
-                ng-change="vm._formatInvestment()"
-                name="investment"
+                        ng-model="vm.form.expense.title"
+                        name="text"
+                        value=""
+                        translate translate-attr-placeholder="%popup.add_expense.input_expense_name.placeholder.text"
+                        class="fa-input fa-input--large fa-input--email">
+            </div>
+
+            <div class="progressivePage__contentPage__input">
+                <input  type="text"
+                ng-model="vm.form.expense.value.formatted"
+                ng-change="vm._formatExpense()"
+                name="expense"
                 value=""
                 placeholder="$0"
                 class="fa-input fa-input--medium fa-input--money">
             </div>
 
             <div class="progressivePage__contentPage__helpText" translate>
-                %investment.help_text.text
+                %popup.add_necessary_expense.subtitle.text
             </div>
         </ion-content>
     </ion-view>
 
     <ion-footer-bar class="progressivePage__footer"
-                    ng-if="vm.addInvestmentDataConfig.action.type != 'Edit'">
+                    ng-if="vm.editExpenseDetailDataConfig.action.type != 'Edit'">
         <button class="fa_btn fa_btn--blue fa_btn--block fa_btn--large fa_btn__3d fa_btn__3d--blue padding"
-         ng-click="vm.goToNext()"
-         ng-disabled="vm.form.investment.num == null">
+            ng-click="vm.goToNext()">
             <span class="button-inner" translate>
                 %global.continue.button.text
             </span>

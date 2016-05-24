@@ -28,7 +28,7 @@ module app.pages.historyPage {
         /*           PROPERTIES           */
         /**********************************/
         historyDataConfig: IHistoryDataConfig;
-        financesList: Array<any>;
+        private _financesList: Array<any>;
         // --------------------------------
 
         /*-- INJECT DEPENDENCIES --*/
@@ -38,7 +38,8 @@ module app.pages.historyPage {
                           '$state',
                           '$stateParams',
                           '$filter',
-                          '$rootScope'];
+                          '$rootScope',
+                          'finApp.auth.AuthService'];
 
         /**********************************/
         /*           CONSTRUCTOR          */
@@ -49,12 +50,13 @@ module app.pages.historyPage {
                     private $state: ng.ui.IStateService,
                     private $stateParams: IHistoryDataConfig,
                     private $filter: angular.IFilterService,
-                    private $rootScope: app.interfaces.IFinAppRootScope) {
-            this.init();
+                    private $rootScope: app.interfaces.IFinAppRootScope,
+                    private auth: any) {
+            this._init();
         }
 
         /*-- INITIALIZE METHOD --*/
-        private init() {
+        private _init() {
 
             this.historyDataConfig = this.$stateParams;
 
@@ -68,56 +70,54 @@ module app.pages.historyPage {
             //VARIABLES
             let self = this;
 
+            //Validate if user is logged in
+            this._isLoggedIn();
+
             //Get All User's finances in order to draw each block
-            this._getFinances().then(function(finances:any){
+            this._getFinances().then(function(finances:any) {
                 //grouping by year
-                self.financesList = self._groupByYear(finances);
+                self._financesList = self._groupByYear(finances);
             });
         }
 
         /**********************************/
         /*            METHODS             */
         /**********************************/
-        _getFinances(): angular.IPromise<Array<app.models.finance.Finance>> {
+
+        /*
+        * Is Logged In Method
+        * @description Validate if user is logged in.
+        */
+        private _isLoggedIn(): void {
+            if(!this.auth.isLoggedIn()){
+                this.$state.go('page.signUp');
+                event.preventDefault();
+            }
+        }
+        /**
+        * _getFinances
+        * @description - get all Finances associated to user logged in
+        * @function
+        * @params {any} authData - User Authenticated Data
+        * @return {angular.IPromise<Array<app.models.finance.Finance>>}
+        * promise - return user's finances data promise
+        */
+        private _getFinances(): angular.IPromise<AngularFireArray> {
             return this.FinanceService.getAllFinances().then(function(finances){
                 return finances;
             });
         }
 
 
-        _getTotalIncomes(incomes): number {
-            //VARIABLES
-            var incomesToArray = [];
-            let total = 0;
-
-            for (let key in incomes) {
-                incomesToArray.push(incomes[key].num || 0);
-            }
-
-            total = this.FinanceService.total(incomesToArray);
-            return total;
-        }
-
-
-        _getTotalExpenses(expenses): number {
-            //VARIABLES
-            var expensesToArray = [];
-            let total = 0;
-
-            for (let type in expenses) {
-
-                for (let key in expenses[type]) {
-                    expensesToArray.push(expenses[type][key].value.num || 0);
-                }
-
-            }
-
-            total = this.FinanceService.total(expensesToArray);
-            return total;
-        }
-
-
-        _groupByYear(finances): Array<any> {
+        /**
+        * _groupByYear
+        * @description - grouping finances by Year
+        * @function
+        * @params {any} finances - user's finances
+        * @return {number} result - return finances grouped by Year
+        */
+        //TODO: change any type. Analyze what is the best type
+        private _groupByYear(finances: any): Array<any> {
             //VARIABLES
             var groups = {};
             var result = [];
@@ -127,9 +127,9 @@ module app.pages.historyPage {
                 const ZONE = this.$filter('translate')('%global.zone');
                 //VARIABLES
                 var item = finances[i];
-                let totalIncomes = this._getTotalIncomes(item.income);
+                let totalIncomes = this.FinanceService.getTotalIncomes(item.income);
                 let totalIncomesFormatted = this.FunctionsUtilService.formatCurrency(totalIncomes, '');
-                let totalExpenses = this._getTotalExpenses(item.typeOfExpense);
+                let totalExpenses = this.FinanceService.getTotalExpenses(item.typeOfExpense);
                 let totalExpensesFormatted = this.FunctionsUtilService.formatCurrency(totalExpenses, '');
                 let totalSaving = this.FinanceService.getSaving(totalIncomes, totalExpenses);
                 let totalSavingFormatted = this.FunctionsUtilService.formatCurrency(totalSaving, '');
@@ -139,6 +139,7 @@ module app.pages.historyPage {
                 }
 
                 groups[item.dateCreated.year].push({
+                    uid: item.uid,
                     date: new Date(item.dateCreated.complete),
                     month: this.FunctionsUtilService.dateMonthToString(item.dateCreated.complete, ZONE),
                     finances: {
@@ -158,6 +159,15 @@ module app.pages.historyPage {
             }
 
             return result;
+        }
+
+        /*
+        * Go to finance detail page
+        * @description this method is launched when user press one finance's block
+        */
+        goToDetail(financeId: string): void {
+            this.$state.go('page.financeDetail',
+                           {financeId: financeId});
         }
 
 

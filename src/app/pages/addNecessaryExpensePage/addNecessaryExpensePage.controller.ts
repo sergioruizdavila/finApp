@@ -24,11 +24,18 @@ module app.pages.addNecessaryExpensePage {
 
     export interface IAddNecessaryExpenseDataConfig extends ng.ui.IStateParamsService {
         financeId: string;
+        action: IActionParams;
+    }
+
+    export interface IActionParams {
+        type: string;
+        data: { total: app.models.finance.IMoney };
     }
 
     export interface IAddNecessaryExpenseForm {
-        expense: any;
+        expense?: any;
         total?: app.models.finance.IMoney;
+        action?: string;
     }
 
     /****************************************/
@@ -42,9 +49,9 @@ module app.pages.addNecessaryExpensePage {
         /*           PROPERTIES           */
         /**********************************/
         form: IAddNecessaryExpenseForm;
-        financePos: number;
+        private _financePos: number;
         addNecessaryExpenseDataConfig: IAddNecessaryExpenseDataConfig;
-        expensesList: Array<app.models.finance.Expense>;
+        private _expensesList: Array<app.models.finance.Expense>;
         // --------------------------------
 
         /*-- INJECT DEPENDENCIES --*/
@@ -57,7 +64,8 @@ module app.pages.addNecessaryExpensePage {
                           '$state',
                           '$stateParams',
                           '$scope',
-                          '$rootScope'];
+                          '$rootScope',
+                          'finApp.auth.AuthService'];
 
         /**********************************/
         /*           CONSTRUCTOR          */
@@ -71,28 +79,34 @@ module app.pages.addNecessaryExpensePage {
                     private $state: ng.ui.IStateService,
                     private $stateParams: IAddNecessaryExpenseDataConfig,
                     private $scope: IAddNecessaryExpensePageScope,
-                    private $rootScope: app.interfaces.IFinAppRootScope) {
+                    private $rootScope: app.interfaces.IFinAppRootScope,
+                    private auth: any) {
 
-            this.init();
+            this._init();
 
         }
 
         /*-- INITIALIZE METHOD --*/
-        private init() {
-            //Init form
-            this.form = {
-                expense: new app.models.finance.Expense(),
-                total: { num: 0, formatted: '$0' }
-            };
+        private _init() {
+            //Validate if user is logged in
+            this._isLoggedIn();
 
             this.addNecessaryExpenseDataConfig = this.$stateParams;
 
+            //Init form
+            this.form = {
+                total: {
+                    num: this.addNecessaryExpenseDataConfig.action.data.total.num || 0,
+                    formatted: this.addNecessaryExpenseDataConfig.action.data.total.formatted || '$0'
+                }
+            };
+
             //Get Finance Position
-            this.financePos = this.FunctionsUtilService.getPositionByUid(this.$rootScope.User.Finance,
+            this._financePos = this.FunctionsUtilService.getPositionByUid(this.$rootScope.User.Finance,
                                                                          this.addNecessaryExpenseDataConfig.financeId);
 
-            this.expensesList = angular.copy(
-                this.$rootScope.User.Finance[this.financePos].TypeOfExpense.Necessaries
+            this._expensesList = angular.copy(
+                this.$rootScope.User.Finance[this._financePos].TypeOfExpense.Necessaries
             );
 
             this.activate();
@@ -108,8 +122,20 @@ module app.pages.addNecessaryExpensePage {
         /**********************************/
 
         /*
+        * Is Logged In Method
+        * @description Validate if user is logged in.
+        */
+        private _isLoggedIn(): void {
+            if(!this.auth.isLoggedIn()){
+                this.$state.go('page.signUp');
+                event.preventDefault();
+            }
+        }
+
+        /*
         * Show tip example expenses popup
-        * @description this method is launched when user press Gift icon in order to receive more information
+        * @description - This method is launched when user press Gift icon in order
+        * to receive more information
         */
         showTipPopup(): void {
             //VARIABLES
@@ -159,7 +185,7 @@ module app.pages.addNecessaryExpensePage {
 
         /*
         * show expense detail popup
-        * @description this method is launched when user press Add button in the header
+        * @description - This method is launched when user press Add button in the header
         */
         showExpenseDetailPopup(expense: app.models.finance.Expense): void {
             //VARIABLES
@@ -175,7 +201,8 @@ module app.pages.addNecessaryExpensePage {
 
             //Assign expense value to $scope
             self.$scope.form = {
-                expense: expense ? expense : new app.models.finance.Expense()
+                expense: expense ? expense : new app.models.finance.Expense(),
+                action: expense ? 'Edit' : 'Add'
             };
             //Assign popUp's text to $scope
             self.$scope.popupConfig = {
@@ -193,8 +220,24 @@ module app.pages.addNecessaryExpensePage {
                         text: POPUP_ADD_BUTTON_TEXT,
                         type: POPUP_ADD_BUTTON_TYPE,
                         onTap: function(e) {
-                            let expense = angular.copy(this.scope.vm.form.expense);
-                            self._addOrEditExpense(expense);
+                            let expenseInstance = angular.copy(this.scope.vm.form.expense);
+
+                            if(this.scope.vm.form.action == 'Add'){
+                                //Update User model
+                                self.$rootScope.User.Finance[self._financePos].TypeOfExpense.addNecessary(expenseInstance);
+                            } else {
+                                //Update User model
+                                self.$rootScope.User.Finance[self._financePos].TypeOfExpense.editNecessary(expenseInstance);
+                            }
+
+                            //Update Finance Object on firebase
+                            self.FinanceService.saveNecessaryExpense(expenseInstance, self.addNecessaryExpenseDataConfig.financeId);
+                            //Update expenses List view
+                            self._expensesList = angular.copy(self.$rootScope.User.Finance[self._financePos].TypeOfExpense.Necessaries);
+                            //Calculate Total Expenses
+                            let totalNecessariesExpenses = self.FinanceService.getTotalExpensesByType(self._expensesList);
+                            self.form.total = self.FunctionsUtilService.formatCurrency(totalNecessariesExpenses, '');
+
                         }
                     }
                 ]
@@ -202,59 +245,17 @@ module app.pages.addNecessaryExpensePage {
         }
 
         /*
-        * Add or Edit Expense
-        * @description this method is launched when user press Add button on expenseDetailPopup
-        */
-        _addOrEditExpense(expense): void {
-            //Update User model
-            let expenseWithUid = this.$rootScope.User.Finance[this.financePos].TypeOfExpense.setNecessaries(expense);
-            //Update Finance Object on firebase
-            this.FinanceService.saveNecessaryExpense(expenseWithUid, this.addNecessaryExpenseDataConfig.financeId);
-            //Update expenses List view
-            this.expensesList = angular.copy(this.$rootScope.User.Finance[this.financePos].TypeOfExpense.Necessaries);
-            //Calculate Total Expenses
-            this._calculateTotalExpenses(this.expensesList);
-
-        }
-
-        /*
-        * Parse Expenses Object in order to calculate Total Expenses
-        * @description this method is launched when user press OK button
-        */
-        //TODO: Codigo duplicado en addUnnecessaryExpensePage.controller
-        _calculateTotalExpenses(expenses): void {
-            //Parse expenses Object
-
-            let expensesArray = expenses.map(function(obj){
-               return obj.value.num;
-            });
-
-            this.form.total.num = this.FinanceService.total(expensesArray);
-            this.form.total.formatted = this.form.total.num.toString();
-            this._formatTotal();
-        }
-
-        /*
-        * Format Total value Method
-        * @description Format the total value with default currency
-        */
-        //TODO: Codigo duplicado en addUnnecessaryExpensePage.controller
-        _formatTotal(): void {
-            let currencyObj: app.models.finance.IMoney =
-            this.FunctionsUtilService.formatCurrency(this.form.total.num,
-                                                     this.form.total.formatted);
-
-            this.form.total.num = currencyObj.num;
-            this.form.total.formatted = currencyObj.formatted;
-        }
-
-        /*
         * Go to unneccesary page
         * @description this method is launched when user press OK button
         */
         goToNext(): void {
-            this.$state.go('page.unnecessaryExpense',
-                           {financeId: this.addNecessaryExpenseDataConfig.financeId});
+            this.$state.go('page.unnecessaryExpense', {
+                financeId: this.addNecessaryExpenseDataConfig.financeId,
+                action: {
+                    type: '',
+                    data: {total: {num: null, formatted: ''} }
+                }
+            });
         }
 
         /*
@@ -262,6 +263,7 @@ module app.pages.addNecessaryExpensePage {
         * @description this method is launched when user press back button
         */
         goToBack(): void {
+            let viewBack = this.$ionicHistory.backView();
             this.$ionicHistory.goBack();
         }
 

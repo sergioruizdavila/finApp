@@ -11,12 +11,19 @@ module app.pages.addInvestmentPage {
     export interface IAddInvestmentPageController {
         form: IAddInvestmentForm;
         activate: () => void;
+        updateValue: () => void;
         goToNext: () => void;
         goToBack: () => void;
     }
 
     export interface IAddInvestmentDataConfig extends ng.ui.IStateParamsService {
         financeId: string;
+        action: IActionParams;
+    }
+
+    export interface IActionParams {
+        type: string;
+        data: app.models.finance.IMoney;
     }
 
     export interface IAddInvestmentForm {
@@ -35,6 +42,7 @@ module app.pages.addInvestmentPage {
         /**********************************/
         form: IAddInvestmentForm;
         addInvestmentDataConfig: IAddInvestmentDataConfig;
+        private _financePos: number;
         // --------------------------------
 
         /*-- INJECT DEPENDENCIES --*/
@@ -44,7 +52,8 @@ module app.pages.addInvestmentPage {
                           'finApp.core.util.FunctionsUtilService',
                           '$state',
                           '$stateParams',
-                          '$rootScope'];
+                          '$rootScope',
+                          'finApp.auth.AuthService'];
 
         /**********************************/
         /*           CONSTRUCTOR          */
@@ -55,18 +64,29 @@ module app.pages.addInvestmentPage {
         private FunctionsUtilService: app.core.util.functionsUtil.FunctionsUtilService,
         private $state: ng.ui.IStateService,
         private $stateParams: IAddInvestmentDataConfig,
-        private $rootScope: app.interfaces.IFinAppRootScope) {
-            this.init();
+        private $rootScope: app.interfaces.IFinAppRootScope,
+        private auth: any) {
+            this._init();
         }
 
         /*-- INITIALIZE METHOD --*/
-        private init() {
-            //Init form
-            this.form = {
-                investment: { num: null, formatted: '' }
-            };
+        private _init() {
+            //Validate if user is logged in
+            this._isLoggedIn();
 
             this.addInvestmentDataConfig = this.$stateParams;
+
+            //Get Finance Position
+            this._financePos = this.FunctionsUtilService.getPositionByUid(this.$rootScope.User.Finance,
+                                                                          this.addInvestmentDataConfig.financeId);
+
+            //Init form
+            this.form = {
+                investment: {
+                    num: this.addInvestmentDataConfig.action.data.num || null,
+                    formatted: this.addInvestmentDataConfig.action.data.formatted || ''
+                }
+            };
 
             this.activate();
         }
@@ -81,10 +101,21 @@ module app.pages.addInvestmentPage {
         /**********************************/
 
         /*
+        * Is Logged In Method
+        * @description Validate if user is logged in.
+        */
+        private _isLoggedIn(): void {
+            if(!this.auth.isLoggedIn()){
+                this.$state.go('page.signUp');
+                event.preventDefault();
+            }
+        }
+
+        /*
         * Format Investment Method
         * @description Format the investment value with default currency
         */
-        _formatInvestment(): void {
+        private _formatInvestment(): void {
             let currencyObj: app.models.finance.IMoney =
             this.FunctionsUtilService.formatCurrency(this.form.investment.num,
                                                      this.form.investment.formatted);
@@ -94,21 +125,42 @@ module app.pages.addInvestmentPage {
         }
 
         /*
+        * Save Investment Method
+        * @description Save investment value on $rootScope's model and on Firebase
+        */
+        private _saveInvestment(): void {
+            //Update User model
+            this.$rootScope.User.Finance[this._financePos].Income.Investment = this.form.investment;
+            //Save investment on firebase
+            this.FinanceService.saveFinance(this.$rootScope.User.Finance[this._financePos]);
+        }
+
+        /*
         * Go to business page
         * @description this method is launched when user press OK button
         */
         goToNext(): void {
+            //Save Investment value
+            this._saveInvestment();
 
-            //Get elementPos by Uid
-            var elementPos = this.FunctionsUtilService.getPositionByUid(this.$rootScope.User.Finance,
-                                                                        this.addInvestmentDataConfig.financeId);
+            this.$state.go('page.business', {
+                financeId: this.addInvestmentDataConfig.financeId,
+                action: {
+                    type: '',
+                    data: {total: {num: null, formatted: ''} }
+                }
+            });
+        }
 
-            //Update User model
-            this.$rootScope.User.Finance[elementPos].Income.Investment = this.form.investment;
-            //Save salary on firebase
-            this.FinanceService.saveFinance(this.$rootScope.User.Finance[elementPos]);
+        /*
+        * Update Value method
+        * @description this method is launched when user is editing salary value
+        */
+        updateValue(): void {
+            //Save Investment value
+            this._saveInvestment();
 
-            this.$state.go('page.business', {financeId: this.addInvestmentDataConfig.financeId});
+            this.$ionicHistory.goBack();
         }
 
         /*

@@ -1,7 +1,7 @@
 <ion-view>
     <ion-content class="dashboardPage__contentPage">
         <!-- YEAR CATEGORIES SECTION -->
-        <div class="dashboardPage__contentPage__categories" ng-repeat="finance in vm.financesList">
+        <div class="dashboardPage__contentPage__categories" ng-repeat="finance in vm._financesList">
 
             <div ng-repeat="(key, value) in finance">
 
@@ -12,7 +12,8 @@
                 <div class="block_3d_container block_3d_container--flex">
                     <!-- 3D BLOCK -->
                     <div class="block_3d block_3d--inline block_3d--small"
-                        ng-repeat="item in value | orderBy: 'date'">
+                        ng-repeat="item in value | orderBy: 'date'"
+                        ng-click="vm.goToDetail(item.uid)">
                         <!-- BLOCK CONTENT -->
                         <div class="block_3d--small__content text-center">
                             <div class="block_3d--small__content__incomes">

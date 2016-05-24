@@ -9,10 +9,9 @@ module app.pages.signUpPage {
     /*           INTERFACES           */
     /**********************************/
     export interface ISignUpPageController {
-        ref: Firebase;
         form: ISignUpForm;
         error: ISignUpError;
-        register: () => void;
+        signIn: () => void;
         goToBack: () => void;
         activate: () => void;
     }
@@ -35,7 +34,6 @@ module app.pages.signUpPage {
         /**********************************/
         /*           PROPERTIES           */
         /**********************************/
-        ref: Firebase;
         form: ISignUpForm;
         error: ISignUpError;
         // --------------------------------
@@ -57,18 +55,20 @@ module app.pages.signUpPage {
         constructor(private $ionicHistory: ionic.navigation.IonicHistoryService,
             private $ionicPopup: ionic.popup.IonicPopupService,
             private $state: ng.ui.IStateService,
-            private AuthService,
+            private auth,
             private $filter: angular.IFilterService,
             private UserService: app.models.user.IUserService,
             private $scope: angular.IScope,
             private $rootScope: app.interfaces.IFinAppRootScope) {
 
-            this.init();
+            this._init();
 
         }
 
         /*-- INITIALIZE METHOD --*/
-        private init() {
+        private _init() {
+            //Validate if user is logged in
+            this._isLoggedIn();
 
             //Init form
             this.form = {
@@ -93,10 +93,21 @@ module app.pages.signUpPage {
         /**********************************/
 
         /*
+        * Is Logged In Method
+        * @description Validate if user is logged in.
+        */
+        private _isLoggedIn(): void {
+            if(this.auth.isLoggedIn()){
+                this.$state.go('tabs.history');
+                event.preventDefault();
+            }
+        }
+
+        /*
         * Register Method
         * @description Create new user if current user doesn`t have an account
         */
-        register(): void {
+        signIn(): void {
 
             let self = this;
             //CONSTANTS
@@ -142,50 +153,35 @@ module app.pages.signUpPage {
         * Create Account
         * @description Create Account on FireBase
         */
-        _createAccount(event): void {
-            //LOG
-            console.log('onTap Button Event: ', event);
+        private _createAccount(event): void {
             //VARIABLES
             let self = this;
-            let currentDataUser = {
+            let currentDataUser: app.interfaces.IUserDataAuth = {
                 email: this.$rootScope.User.Email,
                 password: '1234'
             };
-            let auth = self.AuthService.getRef();
 
-            //Create Account on Firebase Accounting System
-            auth.$createUser(currentDataUser).then(function(user) {
-                //LOG
-                console.log('created new user in FireBase Auth System: ', user);
-                //Authenticate user
-                self._authWithPassword(auth, currentDataUser);
-
-            }, function(error) {
-
-                if (error.code === 'EMAIL_TAKEN') {
-                    console.log('this user already has an account');
-                    self.$state.go('page.logIn');
-                } else {
-                    self.error = error;
+            this.auth.signUpPassword(currentDataUser).then(
+                function(response) {
+                    //Authenticate user
+                    self._authWithPassword(auth, currentDataUser);
                 }
-            });
+            );
         }
 
         /*
         * authWithPassword
         * @description Authenticated User with password method
         */
-        _authWithPassword(authRef, user): void {
+        private _authWithPassword(authRef, user): void {
             let self = this;
             /*  After created successfully account, authenticates the client using
                 email / password combination */
-            authRef.$authWithPassword(user).then(
-                function (authData){
-                    //LOG
-                    console.log('Authenticated successfully with payload:', authData);
+            this.auth.logInPassword(user).then(
+                function(response){
                     //Add provider property
-                    self.$rootScope.User.Uid = authData.uid;
-                    self.$rootScope.User.Provider = authData.provider;
+                    self.$rootScope.User.Uid = response.uid;
+                    self.$rootScope.User.Provider = response.provider;
                     //Create new User in dataBase and make three binding ways
                     self.UserService.createUser(self.$rootScope.User, function(err){
                         if (err) {
@@ -193,17 +189,23 @@ module app.pages.signUpPage {
                             console.log('Error: Not created user');
                         } else {
                             //Create User Finance object
-                            let newFinance = self.$rootScope.User.setFinance(new app.models.finance.Finance());
-                            self.$state.go('page.salary', {financeId: newFinance.Uid});
+                            let newFinance = new app.models.finance.Finance();
+                            self.$rootScope.User.addFinance(newFinance);
+                            self.$state.go('page.salary', {
+                                financeId: newFinance.Uid,
+                                action: {
+                                    type: 'Add',
+                                    data: {
+                                        num: null,
+                                        formatted: ''
+                                    }
+                                }
+                            });
                         }
                     });
-
-                }, function (error){
-                    self.error = error;
-                    //LOG
-                    console.log('Login Failed!', error);
                 }
             );
+
         }
 
         /*

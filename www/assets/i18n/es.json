@@ -56,7 +56,7 @@
 
     "__SALARY__":"",
     "%salary.title.text": "Sueldo",
-    "%salary.help_text.text": "Especifica cuanto es tu sueldo mensual, no incluyas los aportes a pensión, jubilación o salud. En otras palabras, especifica solo el dinero que puedes usar para tus gastos.",
+    "%salary.help_text.text": "Especifica cuanto es tu sueldo mensual, no incluyas los aportes a pensión, jubilación o salud. En otras palabras, especifica solo el dinero que puedes usar para pagar tus gastos.",
 
     "__INVESTMENT__":"",
     "%investment.title.text": "Ingresos por inversión",
@@ -78,6 +78,12 @@
     "%history.block_content.incomes.text": "INGRESOS",
     "%history.block_content.expenses.text": "GASTOS",
     "%history.block_content.saving.text": "AHORROS",
+
+    "__FINANCE_DETAILS__":"",
+    "%finance_details.block_content.income.title.text": "Tipos de ingreso",
+    "%finance_details.block_content.income.salary.title.text": "Sueldo",
+    "%finance_details.block_content.income.business.title.text": "Negocios",
+    "%finance_details.block_content.income.investment.title.text": "Inversiones",
 
     "": ""
 }

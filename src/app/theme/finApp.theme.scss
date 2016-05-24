@@ -179,6 +179,22 @@ body.finApp {
         }
 
     }
+
+    .fa_btn[disabled] {
+        opacity: 0.5;
+
+        &__3d:active {
+            -webkit-transform: translate(0px, 0px);
+            -moz-transform: translate(0px, 0px);
+            -o-transform: translate(0px, 0px);
+            -ms-transform: translate(0px, 0px);
+            transform: translate(0px, 0px);
+            -webkit-box-shadow: none;
+            -moz-box-shadow: none;
+            box-shadow: none;
+        }
+    }
+
     /*---------- END -  BUTTONS -----------*/
 
 
@@ -262,7 +278,9 @@ body.finApp {
             font-family: $FA-FONT-FAMILY!important;
             position: relative !important;
             font-size: 25px!important;
-            line-height: 41px!important;
+            line-height: 45px!important;
+            margin-right: 0px;
+            margin-left: 0px;
         }
     }
     /*---------- END -  NAVBAR ------------*/
@@ -342,9 +360,14 @@ body.finApp {
 
                 .block_3d {
                     flex-wrap: wrap;
-                    margin: 5px;
+                    margin: 5px!important;
                 }
             }
+    }
+
+    .block_3d:nth-of-type(1)
+    {
+        margin-top: 25%;
     }
 
     .block_3d {
@@ -352,7 +375,8 @@ body.finApp {
         -webkit-border-radius: 10px;
         -moz-border-radius: 10px;
         border-radius: 10px;
-        margin: 25% auto 0 auto;
+        margin: 0 auto 5%;
+        overflow: hidden;
         @include shadowBlock();
 
         &--small {
@@ -401,12 +425,12 @@ body.finApp {
                     &__value {
                         font-weight: bold;
                         font-size: 18px;
-                        color: #28a54c;
+                        color: $FA_COLORS_SUCCESS;
                     }
                     &__text {
                         font-weight: bold;
                         font-size: 15px;
-                        color: tint(#28a54c, 40);
+                        color: $FA_INCOME_BLOCK_TITLE_TEXT;
                     }
                 }
             }
@@ -435,11 +459,55 @@ body.finApp {
             width: 90%;
         }
 
+        &--one_element {
+
+            &--positive {
+                background-color: $FA_INCOME_BLOCK_TITLE_TEXT;
+            }
+
+            &--negative {
+                background-color: $FA_COLORS_NEGATIVE;
+            }
+
+            &__content {
+                font-size: 30px;
+                padding-top: 10px;
+                color: #FFF;
+                font-weight: bold;
+                text-shadow: 1px 1px 1px rgba(68, 68, 68, 0.64);
+
+                &__total {
+                    padding-top: 10px;
+                }
+            }
+
+            &__footer {
+                padding-top: 0!important;
+
+                &__total {
+                    &__value {
+                        font-size: 25px!important;
+                        color: $FA_NAVBAR!important;
+                    }
+                }
+            }
+        }
+
         &__title {
             color: $FA_TEXT_LIST_VALUE;
             text-align: center;
             font-size: 25px;
             padding: 20px;
+
+            &--positive {
+                color: $FA_NAVBAR;
+                background-color: $FA_INCOME_BLOCK_TITLE_TEXT;
+            }
+
+            &--negative {
+                color: $FA_NAVBAR;
+                background-color: $FA_COLORS_NEGATIVE;
+            }
         }
 
         &__content {

@@ -17,6 +17,7 @@ module app.models.user {
     export interface IUserService {
         ref: any;
         existUserByEmail: (email: string) => angular.IPromise<boolean>;
+        getUserByUid: (uid: string) => angular.IPromise<AngularFireObject>;
         getUserByEmail: (email: string) => AngularFireObject;
         getUsers: () => AngularFireArray;
         bindingUser: (uid: string, $rootScope: app.interfaces.IFinAppRootScope) => any;
@@ -62,6 +63,21 @@ module app.models.user {
         /**********************************/
 
         /**
+        * getUserByUid
+        * @description - get user by Uid
+        * @use - this.FinanceService.getUserByUid('98d667ae-2231-4347-8a94-b955baf218f6');
+        * @function
+        * @params {string} uid - user uid
+        * @return {angular.IPromise<AngularFireObject>} promise - return user by Id
+        */
+        getUserByUid(uid): angular.IPromise<AngularFireObject> {
+            let url = '/users/' + uid;
+            return this.FirebaseFactory.getObject(url).then(function(data){
+                return data;
+            });
+        }
+
+        /**
         * getUserByEmail
         * @description - get an expecific User by Email
         * @function
@@ -90,8 +106,8 @@ module app.models.user {
         * createUser
         * @description - create new User
         * @function
-        * @parameters {app.model.user.User} newUser - include the user information object
-        * @parameters {function} callback - function callback required to know if create new user was Ok
+        * @paramss {app.model.user.User} newUser - include the user information object
+        * @paramss {function} callback - function callback required to know if create new user was Ok
         */
         createUser(newUser, callback): void {
             let userRef = this.ref.child('users/' + newUser.Uid);

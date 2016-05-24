@@ -24,8 +24,15 @@
                 },
                 parent: 'page',
                 params: {
-                    financeId: null
-                }
+                    financeId: null,
+                    action: {
+                        type: 'Edit',
+                        data: {
+                            total: {num: null, formatted: ''}
+                        }
+                    }
+                },
+                cache: false
             });
     }
 })();
