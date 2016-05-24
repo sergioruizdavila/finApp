@@ -89,10 +89,11 @@
 
             <!-- NECESSARIES EXPENSES BLOCK -->
             <div class="block_3d block_3d--big">
-                <div class="block_3d__title block_3d__title--negative" translate>
+                <div class="block_3d__title" translate>
                     %necessary_expense.title.text
                 </div>
                 <div class="block_3d__content">
+
                     <ion-list class="block_3d__content__list_container"
                               ng-click="vm.goToEditNecessariesExpenses(vm._financeDetails.typeOfExpense.necessaries)">
 
@@ -109,6 +110,15 @@
                         </ion-item>
 
                     </ion-list>
+
+                    <button class="fa_btn fa_btn--red_light fa_btn--block fa_btn--large fa_btn__3d fa_btn__3d--red_light padding"
+                            ng-click="vm.goToEditNecessariesExpenses(vm._financeDetails.typeOfExpense.necessaries)"
+                            ng-if="!vm._financeDetails.typeOfExpense.necessaries">
+                        <span class="button-inner">
+                            AGREGAR GASTO
+                        </span>
+                    </button>
+
                 </div>
                 <div class="block_3d__footer">
                     <div class="block_3d__footer__total">
@@ -126,10 +136,13 @@
 
             <!-- UNNECESSARIES EXPENSES BLOCK -->
             <div class="block_3d block_3d--big">
-                <div class="block_3d__title block_3d__title--negative" translate>
+
+                <div class="block_3d__title" translate>
                     %unnecessary_expense.title.text
                 </div>
+
                 <div class="block_3d__content">
+
                     <ion-list class="block_3d__content__list_container"
                               ng-click="vm.goToEditUnnecessariesExpenses(vm._financeDetails.typeOfExpense.unnecessaries)">
                         <ion-item class="block_3d__content__list_container__item"
@@ -144,7 +157,17 @@
                             </div>
                         </ion-item>
                     </ion-list>
+
+                    <button class="fa_btn fa_btn--red_light fa_btn--block fa_btn--large fa_btn__3d fa_btn__3d--red_light padding"
+                            ng-click="vm.goToEditUnnecessariesExpenses(vm._financeDetails.typeOfExpense.unnecessaries)"
+                            ng-if="!vm._financeDetails.typeOfExpense.unnecessaries">
+                        <span class="button-inner">
+                            AGREGAR GASTO
+                        </span>
+                    </button>
+
                 </div>
+
                 <div class="block_3d__footer">
                     <div class="block_3d__footer__total">
                         <div class="row row-center">

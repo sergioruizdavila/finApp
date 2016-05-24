@@ -32,7 +32,8 @@
                             total: {num: null, formatted: ''}
                         }
                     }
-                }
+                },
+                cache: false
             });
     }
 })();

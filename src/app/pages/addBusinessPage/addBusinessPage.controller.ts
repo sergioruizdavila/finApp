@@ -83,8 +83,8 @@ module app.pages.addBusinessPage {
             //Init form
             this.form = {
                 business: {
-                    num: this.addBusinessDataConfig.action.data.num,
-                    formatted: this.addBusinessDataConfig.action.data.formatted
+                    num: this.addBusinessDataConfig.action.data.num || null,
+                    formatted: this.addBusinessDataConfig.action.data.formatted || ''
                 }
             };
 

@@ -179,6 +179,22 @@ body.finApp {
         }
 
     }
+
+    .fa_btn[disabled] {
+        opacity: 0.5;
+
+        &__3d:active {
+            -webkit-transform: translate(0px, 0px);
+            -moz-transform: translate(0px, 0px);
+            -o-transform: translate(0px, 0px);
+            -ms-transform: translate(0px, 0px);
+            transform: translate(0px, 0px);
+            -webkit-box-shadow: none;
+            -moz-box-shadow: none;
+            box-shadow: none;
+        }
+    }
+
     /*---------- END -  BUTTONS -----------*/
 
 

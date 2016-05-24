@@ -132,10 +132,19 @@ module app.pages.financeDetailPage {
             dateFormatted.month = this.FunctionsUtilService.dateMonthToString(dateFormatted.complete, ZONE);
             let totalIncomes = this.FinanceService.getTotalIncomes(finance.income);
             let totalIncomesFormatted = this.FunctionsUtilService.formatCurrency(totalIncomes, '');
-            let totalNecessariesExpenses = this.FinanceService.getTotalExpensesByType(finance.typeOfExpense.necessaries);
-            let totalNecessariesExpensesFormatted = this.FunctionsUtilService.formatCurrency(totalNecessariesExpenses, '');
-            let totalUnnecessariesExpenses = this.FinanceService.getTotalExpensesByType(finance.typeOfExpense.unnecessaries);
-            let totalUnnecessariesExpensesFormatted = this.FunctionsUtilService.formatCurrency(totalUnnecessariesExpenses, '');
+            // Necessary Expenses totalIncomes
+            let totalNecessariesExpenses = 0;
+            let totalNecessariesExpensesFormatted = {num: 0, formatted: '$0'};
+            let totalUnnecessariesExpenses = 0;
+            let totalUnnecessariesExpensesFormatted = {num: 0, formatted: '$0'};
+
+            if(finance.typeOfExpense) {
+                totalNecessariesExpenses = this.FinanceService.getTotalExpensesByType(finance.typeOfExpense.necessaries);
+                totalNecessariesExpensesFormatted = this.FunctionsUtilService.formatCurrency(totalNecessariesExpenses, '');
+                totalUnnecessariesExpenses = this.FinanceService.getTotalExpensesByType(finance.typeOfExpense.unnecessaries);
+                totalUnnecessariesExpensesFormatted = this.FunctionsUtilService.formatCurrency(totalUnnecessariesExpenses, '');
+            }
+            
             let totalSaving = this.FinanceService.getSaving(totalIncomes, totalNecessariesExpenses + totalUnnecessariesExpenses);
             let totalSavingFormatted = this.FunctionsUtilService.formatCurrency(totalSaving, '');
 

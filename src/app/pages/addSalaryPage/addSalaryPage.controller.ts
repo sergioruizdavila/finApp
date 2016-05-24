@@ -83,8 +83,8 @@ module app.pages.addSalaryPage {
             //Init form
             this.form = {
                 salary: {
-                    num: this.addSalaryDataConfig.action.data.num,
-                    formatted: this.addSalaryDataConfig.action.data.formatted
+                    num: this.addSalaryDataConfig.action.data.num || null,
+                    formatted: this.addSalaryDataConfig.action.data.formatted || ''
                 }
             };
 
