@@ -32,6 +32,7 @@
             'finApp.components.tabs',
             'finApp.components.faExpenseDetailPopup',
             'finApp.components.faListPopup',
+            'finApp.components.rewardPopup.faCardPopup',
             'finApp.models.user',
             'finApp.models.finance'
         ])

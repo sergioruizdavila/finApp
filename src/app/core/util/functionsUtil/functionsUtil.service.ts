@@ -27,7 +27,7 @@ module app.core.util.functionsUtil {
         /**********************************/
         /*           PROPERTIES           */
         /**********************************/
-        
+
         // --------------------------------
 
         /**********************************/
@@ -151,7 +151,7 @@ module app.core.util.functionsUtil {
 
     /*-- MODULE DEFINITION --*/
     angular
-    .module('finApp.core.util', [])
+    .module('finApp.core.util')
     .service(FunctionsUtilService.serviceId, FunctionsUtilService);
 
 }

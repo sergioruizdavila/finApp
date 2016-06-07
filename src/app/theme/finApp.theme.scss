@@ -89,6 +89,8 @@ body.finApp {
             width: 1.2em;
             font-size: 2.2rem;
             font-weight: bold;
+            padding: 0 8px;
+            line-height: 32px;
         }
 
         &--large {
@@ -104,7 +106,7 @@ body.finApp {
             line-height: 55px;
         }
 
-        ///COLOR_BUTTON
+        ///BUTTON_COLOR
         &--blue {
             background-color: $FA_BTN_FORM;
             color: #FFF;
@@ -115,7 +117,12 @@ body.finApp {
             color: #FFF;
         }
 
-        ///TYPE_BUTTON
+        &--green {
+            background-color: $FA_COLORS_SUCCESS;
+            color: #FFF;
+        }
+
+        ///BUTTON_TYPE
         &__3d {
             display: inline-block;
             -webkit-border-radius: 5px;
@@ -142,6 +149,10 @@ body.finApp {
 
         &__3d--red_light {
             @include ThreeDEffect(shade($FA_BTN_ADD, 10));
+        }
+
+        &__3d--green {
+            @include ThreeDEffect(shade($FA_COLORS_SUCCESS, 10));
         }
 
         &--with_icon {
@@ -224,7 +235,7 @@ body.finApp {
 
 
     ///INPUT TEXTBOX
-    .fa-input {
+    .fa_input {
         -webkit-border-radius: 5px;
         -moz-border-radius: 5px;
         border-radius: 5px;
@@ -253,6 +264,37 @@ body.finApp {
     }
 
     /*---------- END -  INPUTS ------------*/
+
+
+
+    /*                LABELS               */
+    /*-------------------------------------*/
+    .fa_label {
+
+        ///LABEL_SIZE
+        &--large {
+            padding: 10px;
+            font-size: 25px;
+        }
+
+        ///LABEL_COLOR
+        &--blue {
+            background-color: $FA_BTN_FORM;
+            color: #FFF;
+        }
+
+        &--red_light {
+            background-color: $FA_BTN_ADD;
+            color: #FFF;
+        }
+
+        ///LABEL_TYPE
+        &__round {
+            border-radius: 25px;
+        }
+    }
+
+    /*---------- END -  LABELS ------------*/
 
 
 
@@ -344,6 +386,35 @@ body.finApp {
     }
     /*------- END -  PROGRESS BAR ---------*/
 
+
+    /*               RIBBONS               */
+    /*-------------------------------------*/
+    .ribbon_container {
+        width: 85px;
+        height: 80px;
+        overflow: hidden;
+        position: absolute;
+        top: -3px;
+        right: -3px;
+
+        &__ribbon--green {
+            font: bold 15px Sans-Serif;
+            color: #FFF;
+            text-align: center;
+            -webkit-transform: rotate(45deg);
+            -moz-transform:    rotate(45deg);
+            -ms-transform:     rotate(45deg);
+            -o-transform:      rotate(45deg);
+            position: relative;
+            padding: 7px 0;
+            left: -5px;
+            top: 15px;
+            width: 120px;
+            background-color: #51D075;
+        }
+    }
+
+    /*---------- END -  RIBBONS -----------*/
 
 
     /*              3D BLOCKS              */

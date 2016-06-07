@@ -50,6 +50,7 @@ module app.pages.addSalaryPage {
                           '$ionicHistory',
                           'finApp.models.finance.FinanceService',
                           'finApp.core.util.FunctionsUtilService',
+                          'finApp.core.util.CustomPopupService',
                           '$state',
                           '$stateParams',
                           '$rootScope',
@@ -62,6 +63,7 @@ module app.pages.addSalaryPage {
                     private $ionicHistory: ionic.navigation.IonicHistoryService,
                     private FinanceService: app.models.finance.IFinanceService,
                     private FunctionsUtilService: app.core.util.functionsUtil.FunctionsUtilService,
+                    private customPopup: app.core.util.customPopup.CustomPopupService,
                     private $state: ng.ui.IStateService,
                     private $stateParams: IAddSalaryDataConfig,
                     private $rootScope: app.interfaces.IFinAppRootScope,
@@ -139,8 +141,13 @@ module app.pages.addSalaryPage {
         * @description this method is launched when user press OK button
         */
         goToNext(): void {
+
+            //TODO: REMOVE AFTER TEST: Invocar PopUp personalizado
+            this.customPopup.invokeCustomPopup({scope: this.$rootScope});
+
             //Save Salary value
-            this._saveSalary();
+            //TODO: REMOVE COMMENTS AFTER TEST: Invocar PopUp personalizado
+            /*this._saveSalary();
 
             this.$state.go('page.investment', {
                 financeId: this.addSalaryDataConfig.financeId,
@@ -148,7 +155,7 @@ module app.pages.addSalaryPage {
                     type: '',
                     data: {num: null, formatted: ''}
                 }
-            });
+            });*/
         }
 
         /*
