@@ -142,12 +142,11 @@ module app.pages.addSalaryPage {
         */
         goToNext(): void {
 
-            //TODO: REMOVE AFTER TEST: Invocar PopUp personalizado
-            this.customPopup.invokeCustomPopup({scope: this.$rootScope});
+            /* TODO: REMOVE AFTER TEST: Invocar PopUp personalizado e*/
+            //this.customPopup.invokeCustomPopup({scope: this.$rootScope});
 
             //Save Salary value
-            //TODO: REMOVE COMMENTS AFTER TEST: Invocar PopUp personalizado
-            /*this._saveSalary();
+            this._saveSalary();
 
             this.$state.go('page.investment', {
                 financeId: this.addSalaryDataConfig.financeId,
@@ -155,7 +154,7 @@ module app.pages.addSalaryPage {
                     type: '',
                     data: {num: null, formatted: ''}
                 }
-            });*/
+            });
         }
 
         /*
@@ -175,6 +174,10 @@ module app.pages.addSalaryPage {
         */
         goToBack(): void {
             this.$ionicHistory.goBack();
+        }
+
+        new(): void {
+            console.log(2);
         }
 
 

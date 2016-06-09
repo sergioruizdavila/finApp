@@ -116,7 +116,7 @@ module app.pages.historyPage {
         * @params {any} finances - user's finances
         * @return {number} result - return finances grouped by Year
         */
-        //TODO: change any type. Analyze what is the best type
+        /* TODO: change any type. Analyze what is the best type */
         private _groupByYear(finances: any): Array<any> {
             //VARIABLES
             var groups = {};

@@ -134,7 +134,7 @@ module app.pages.addUnnecessaryExpensePage {
         * Show tip example expenses popup
         * @description this method is launched when user press Gift icon in order to receive more information
         */
-        //TODO: Puedo hacer una clase base, para que los gastos hereden estos metodos como showTipPopup.
+        /* TODO: Puedo hacer una clase base, para que los gastos hereden estos metodos como showTipPopup. */
         showTipPopup(): void {
             //VARIABLES
             let self = this;

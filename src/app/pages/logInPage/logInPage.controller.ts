@@ -109,7 +109,7 @@ module app.pages.logInPage {
 
             this.auth.logInPassword(currentDataUser).then(
                 function(response){
-                    //TODO: implementar mostrar el error cuando response sea error
+                    /* TODO: implementar mostrar el error cuando response sea error */
                     self.$rootScope.User.Uid = response.uid;
                     //Create User Finance object
                     let newFinance = new app.models.finance.Finance();

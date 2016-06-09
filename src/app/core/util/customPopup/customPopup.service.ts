@@ -11,7 +11,11 @@ module app.core.util.customPopup {
     /*           INTERFACES           */
     /**********************************/
     export interface ICustomPopupService {
-        invokeCustomPopup: (popupConfig: any) => void;
+        invokeCustomPopup: (popupConfig: IPopupConfig) => void;
+    }
+
+    export interface IPopupConfig {
+        scope: any;
     }
 
 
@@ -47,6 +51,7 @@ module app.core.util.customPopup {
         /**
         * invokeCustomPopup
         * @description - invoke custom popUp
+        * @use - this.customPopup.invokeCustomPopup(popupConfigObject);
         * @function
         * @params {any} popupConfig - popupConfig data
         */

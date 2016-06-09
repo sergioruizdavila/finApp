@@ -47,9 +47,9 @@ module app.core.util.functionsUtil {
         */
         public static splitDateFormat(date: string): app.interfaces.IDateFormatted {
             //Format date to MM/DD/YYYY
-            //TODO: Analizar month, ya que hasta el momento no me sirve de nada tenerlo: MAY, JUN
-            //Lo estoy usando completo: Junio o June. Analizar si transformarlo aqui de esa forma
-            //O aqui guardar solo el numero.
+            /* TODO: Analizar month, ya que hasta el momento no me sirve de nada tenerlo: MAY, JUN
+            Lo estoy usando completo: Junio o June. Analizar si transformarlo aqui de esa forma
+            O aqui guardar solo el numero. */
             let dateString = moment(date).format('YYYY/MMM/DD').split('/');
             //Split date to day, month and year
             let dateFormatted = {
@@ -98,7 +98,7 @@ module app.core.util.functionsUtil {
             if (currency.formatted) {
                 currency.num = accounting.unformat(currency.formatted);
             }
-            //TODO: Remove '$' hardcode, change it with some variable
+            /* TODO: Remove '$' hardcode, change it with some variable */
             currency.formatted = accounting.formatMoney(currency.num, '$', 0);
 
             return currency;

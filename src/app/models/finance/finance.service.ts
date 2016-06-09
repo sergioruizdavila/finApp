@@ -208,7 +208,7 @@ module app.models.finance {
         * @params {any} incomes - user's incomes list
         * @return {number} total - total of user's incomes
         */
-        //TODO: change any type to Array<Incomes>
+        /* TODO: change any type to Array<Incomes> */
         getTotalIncomes(incomes: any): number {
             //VARIABLES
             var incomesToArray = [];
@@ -229,7 +229,7 @@ module app.models.finance {
         * @params {any} expenses - user's expenses list by type
         * @return {number} total - total of user's expenses
         */
-        //TODO: change any type to Array<Expenses>
+        /* TODO: change any type to Array<Expenses> */
         getTotalExpensesByType(expenses: any): number {
             //VARIABLES
             var expensesToArray = [];
@@ -250,7 +250,7 @@ module app.models.finance {
         * @params {any} expenses - user's expenses list
         * @return {number} total - total of user's expenses
         */
-        //TODO: change any type to Array<Expenses>
+        /* TODO: change any type to Array<Expenses> */
         getTotalExpenses(expenses: any): number {
             //VARIABLES
             var expensesToArray = [];
