@@ -176,11 +176,6 @@ module app.pages.addSalaryPage {
             this.$ionicHistory.goBack();
         }
 
-        new(): void {
-            console.log(2);
-        }
-
-
     }
 
     /*-- MODULE DEFINITION --*/
