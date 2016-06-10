@@ -450,7 +450,29 @@ body.finApp {
         overflow: hidden;
         @include shadowBlock();
 
+        &--mini_gray {
+            width: 80px;
+            height: 100px;
+            background-color: tint($FA_COLORS_NEUTRAL, 70);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            &__emblem {
+                font-size: 55px;
+                color: #d2d2d2;
+            }
+        }
+
         &--small {
+            width: 45%;
+
+            &__content {
+                padding: 15px;
+            }
+        }
+
+        &--small_history {
             width: 45%;
 
             &__content {
