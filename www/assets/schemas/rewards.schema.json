@@ -1,0 +1,36 @@
+cards_category : [
+    {
+        "id": "uniqueId1",
+        "title": "%rewards.title.type1",
+        "description": "%rewards.description.type1",
+        "emblem": "image.jpg",
+        "formula": 1
+    },
+    {
+        "id": "uniqueId2",
+        "title": "%rewards.title.type2",
+        "description": "%rewards.description.type2",
+        "emblem": "image2.jpg",
+        "formula": 2
+    }
+],
+
+users: [
+    {
+        "id": 1,
+        "finances": [],
+        "username": "sergioruizdavila",
+        "cards": [
+            {
+                "id": "uniqueId1",
+                "amount": 2,
+                "status": "new"
+            },
+            {
+                "id": "uniqueId2",
+                "amount": 2,
+                "status": "used"
+            }
+        ]
+    }
+]
