@@ -137,7 +137,15 @@ module app.pages.addSalaryPage {
             //Update User model
             this.$rootScope.User.Finance[this._financePos].Income.Salary = this.form.salary;
             //Save salary on firebase
-            this.FinanceService.saveFinance(this.$rootScope.User.Finance[this._financePos]);
+            this.FinanceService.saveFinance(
+                this.$rootScope.User.Finance[this._financePos],
+                function(err) {
+                    if (err) {
+                        //LOG
+                        console.log('Error: Not saved finance after change Salary value');
+                    }
+                }
+            );
         }
 
         /*

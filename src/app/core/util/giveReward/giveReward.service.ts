@@ -121,7 +121,14 @@ module app.core.util.giveReward {
                     //5. Guardar la nueva carta en la base
                     /*TODO: Cambiar nombre de este servicio 'giveCard', a otro nombre
                     ya que confunde que el metodo de reward se llame igual*/
-                    self.cardService.giveCard(randomCard);
+                    self.cardService.saveUserCard(randomCard,
+                        function(err) {
+                            if (err) {
+                                //LOG
+                                console.log('Error: Not saved user card');
+                            }
+                        }
+                    );
                 }
             );
 

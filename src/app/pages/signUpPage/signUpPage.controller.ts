@@ -183,7 +183,7 @@ module app.pages.signUpPage {
                     self.$rootScope.User.Uid = response.uid;
                     self.$rootScope.User.Provider = response.provider;
                     //Create new User in dataBase and make three binding ways
-                    self.UserService.createUser(self.$rootScope.User, function(err){
+                    self.UserService.createNewUser(self.$rootScope.User, function(err){
                         if (err) {
                             //LOG
                             console.log('Error: Not created user');

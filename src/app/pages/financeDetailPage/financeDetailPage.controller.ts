@@ -121,8 +121,8 @@ module app.pages.financeDetailPage {
         }
 
         /*
-        * _getFinanceDetail
-        * @description this method is launched when user press OK button
+        * _buildFinanceDetailsBlocks
+        * @description - build financial details blocks
         */
         private _buildFinanceDetailsBlocks(finance): void {
             //CONSTANTS
@@ -144,7 +144,7 @@ module app.pages.financeDetailPage {
                 totalUnnecessariesExpenses = this.FinanceService.getTotalExpensesByType(finance.typeOfExpense.unnecessaries);
                 totalUnnecessariesExpensesFormatted = this.FunctionsUtilService.formatCurrency(totalUnnecessariesExpenses, '');
             }
-            
+
             let totalSaving = this.FinanceService.getSaving(totalIncomes, totalNecessariesExpenses + totalUnnecessariesExpenses);
             let totalSavingFormatted = this.FunctionsUtilService.formatCurrency(totalSaving, '');
 
@@ -159,14 +159,15 @@ module app.pages.financeDetailPage {
             this._totalUnnecessariesExpenses = totalUnnecessariesExpensesFormatted;
             // Assign total saving
             this._totalSaving = totalSavingFormatted;
-
             // Assign finance gotten on scope vm
             this._financeDetails = finance;
         }
 
         /*
+        * goToEditSalary
+        * @description this method is launched when user press edit salary row,
         * Go to edit salary method
-        * @description this method is launched when user press edit salary row
+        * @params {app.models.finance.IMoney} value - user's salary data
         */
         goToEditSalary(value): void {
             this.$state.go('page.salary', {
@@ -182,8 +183,10 @@ module app.pages.financeDetailPage {
         }
 
         /*
+        * goToEditBusiness
+        * @description this method is launched when user press edit business row,
         * Go to edit business method
-        * @description this method is launched when user press edit business row
+        * @params {app.models.finance.IMoney} value - user's business data
         */
         goToEditBusiness(value): void {
             this.$state.go('page.business', {
@@ -199,8 +202,10 @@ module app.pages.financeDetailPage {
         }
 
         /*
-        * Go to edit investment method
+        * goToEditInvestment
         * @description this method is launched when user press edit investment row
+        * Go to edit investment method
+        * @params {app.models.finance.IMoney} value - user's investment data
         */
         goToEditInvestment(value): void {
             this.$state.go('page.investment', {
@@ -216,8 +221,11 @@ module app.pages.financeDetailPage {
         }
 
         /*
+        * goToEditNecessariesExpenses
+        * @description this method is launched when user press edit necessary expense row
         * Go to edit expense method
-        * @description this method is launched when user press edit expense row
+        * @params {Array<app.models.finance.IExpense>} expenses - user's necessaries
+        * expense data
         */
         goToEditNecessariesExpenses(expenses): void {
             this.$state.go('page.necessaryExpense', {
@@ -232,8 +240,11 @@ module app.pages.financeDetailPage {
         }
 
         /*
-        * Go to edit expense method
+        * goToEditUnnecessariesExpenses
         * @description this method is launched when user press edit expense row
+        * Go to edit expense method
+        * @params {Array<app.models.finance.IExpense>} expenses - user's unnecessaries
+        * expense data
         */
         goToEditUnnecessariesExpenses(expenses): void {
             this.$state.go('page.unnecessaryExpense', {

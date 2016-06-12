@@ -231,7 +231,17 @@ module app.pages.addNecessaryExpensePage {
                             }
 
                             //Update Finance Object on firebase
-                            self.FinanceService.saveNecessaryExpense(expenseInstance, self.addNecessaryExpenseDataConfig.financeId);
+                            self.FinanceService.saveNecessaryExpense(
+                                expenseInstance,
+                                self.addNecessaryExpenseDataConfig.financeId,
+                                function(err) {
+                                    if (err) {
+                                        //LOG
+                                        console.log('Error: Not saved necessaryExpense');
+                                    }
+                                }
+                            );
+
                             //Update expenses List view
                             self._expensesList = angular.copy(self.$rootScope.User.Finance[self._financePos].TypeOfExpense.Necessaries);
                             //Calculate Total Expenses

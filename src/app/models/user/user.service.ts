@@ -19,9 +19,9 @@ module app.models.user {
         existUserByEmail: (email: string) => angular.IPromise<boolean>;
         getUserByUid: (uid: string) => angular.IPromise<AngularFireObject>;
         getUserByEmail: (email: string) => AngularFireObject;
-        getUsers: () => AngularFireArray;
+        getAllUsers: () => angular.IPromise<AngularFireArray>;
         bindingUser: (uid: string, $rootScope: app.interfaces.IFinAppRootScope) => any;
-        createUser: (newUser: app.models.user.User, callback: (err) => void) => void;
+        createNewUser: (newUser: app.models.user.User, callback: (err) => void) => void;
     }
 
 
@@ -91,27 +91,33 @@ module app.models.user {
         }
 
         /**
-        * getUsers
+        * getAllUsers
         * @description - get all Users
         * @function
-        * @return {AngularFireArrayService} firebaseArray - Return a AngularFireArray object
+        * @return {angular.IPromise<AngularFireArray>} return a promise with
+        * users list
         */
-        getUsers(): AngularFireArray {
-            // return it as a synchronized object
-            return this.$firebaseArray(this.ref);
+        getAllUsers(): angular.IPromise<AngularFireArray> {
+            let url = '/users/';
+            return this.FirebaseFactory.getArray(url).then(function(data){
+                return data;
+            });
         }
 
 
         /**
-        * createUser
+        * createNewUser
         * @description - create new User
         * @function
-        * @paramss {app.model.user.User} newUser - include the user information object
-        * @paramss {function} callback - function callback required to know if create new user was Ok
+        * @params {app.model.user.User} newUser - include the user information object
+        * @params {function} callback - function callback required to know if create new user was Ok
         */
-        createUser(newUser, callback): void {
+        createNewUser(newUser, callback): void {
+            let url = '/users/' + newUser.Uid;
+            this.FirebaseFactory.add(url, newUser, callback);
+            /* TODO: Legacy method - remove when it's neccessary
             let userRef = this.ref.child('users/' + newUser.Uid);
-            userRef.set(newUser, callback);
+            userRef.set(newUser, callback); */
         }
 
 
@@ -145,22 +151,20 @@ module app.models.user {
         */
         existUserByEmail(email): angular.IPromise<boolean> {
 
-            let promise = this.$firebaseArray(this.ref).$loaded().then(function(users) {
+            let promise = this.$firebaseArray(this.ref).$loaded().then(function(data) {
 
-                for (let i = 0; i < users.length; i++) {
-
-                    for (let key in users[i]) {
-
-                        let obj = users[i][key] || { email: null };
-
-                        if (obj.email === email) {
-                            return true;
+                for (let i = 0; i < data.length; i++) {
+                    
+                    if(data[i].$id === 'users') {
+                        for (let key in data[i]) {
+                            let obj = data[i][key] || { email: null };
+                            if (obj.email === email) {
+                                return true;
+                            }
                         }
 
+                        return false;
                     }
-
-                    return false;
-
                 }
 
                 return false;

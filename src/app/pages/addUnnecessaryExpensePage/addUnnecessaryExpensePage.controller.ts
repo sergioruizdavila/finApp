@@ -228,7 +228,16 @@ module app.pages.addUnnecessaryExpensePage {
                             }
 
                             //Update Finance Object on firebase
-                            self.FinanceService.saveUnnecessaryExpense(expenseInstance, self.addUnnecessaryExpenseDataConfig.financeId);
+                            self.FinanceService.saveUnnecessaryExpense(
+                                expenseInstance,
+                                self.addUnnecessaryExpenseDataConfig.financeId,
+                                function(err) {
+                                    if (err) {
+                                        //LOG
+                                        console.log('Error: Not saved unnecessaryExpense');
+                                    }
+                                }
+                            );
                             //Update expenses List view
                             self._expensesList = angular.copy(self.$rootScope.User.Finance[self._financePos].TypeOfExpense.Unnecessaries);
                             //Calculate Total Expenses

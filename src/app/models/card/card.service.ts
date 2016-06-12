@@ -17,8 +17,8 @@ module app.models.card {
     /**********************************/
     export interface ICardService {
         ref: any;
-        createNewCard: (card: Card) => void;
-        giveCard: (card: UserCard) => void;
+        createNewCard: (card: Card, callback: (err) => void) => void;
+        saveUserCard: (card: UserCard, callback: (err) => void) => void;
         getAllCards: () => angular.IPromise<AngularFireArray>;
         getCardsByUserId: () => angular.IPromise<AngularFireArray>;
         getCardById: (uid: string) => angular.IPromise<AngularFireObject>;
@@ -67,22 +67,25 @@ module app.models.card {
         * @description - create new card category on firebase
         * @function
         * @params {Card} card - new card category
+        * @params {function} callback - function callback required to know if
+        * It created a new card
         */
-        createNewCard(card): void {
+        createNewCard(card, callback): void {
             let url = '/typeOfCard/' + card.Uid;
-            this.FirebaseFactory.add(url, card);
+            this.FirebaseFactory.add(url, card, callback);
         }
 
         /**
-        * giveCard
+        * saveUserCard
         * @description - give a new card to logged user
         * @function
         * @params {Card} card - card to user
-        * @params {string} userId - logged user uid
+        * @params {function} callback - function callback required to know if
+        * It created a new user card
         */
-        giveCard(card): void {
+        saveUserCard(card, callback): void {
             let url = '/users/' + this.$rootScope.User.Uid + '/cards/' + card.uid;
-            this.FirebaseFactory.add(url, card);
+            this.FirebaseFactory.add(url, card, callback);
         }
 
         /**
