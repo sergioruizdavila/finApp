@@ -23,34 +23,89 @@ module app.pages.cardsPage {
         /**********************************/
         /*           PROPERTIES           */
         /**********************************/
-
+        //TODO: Cambiar el any por app.models.Card guiarse de Gastos
+        private _userCardsList: Array<any>;
         // --------------------------------
 
         /*-- INJECT DEPENDENCIES --*/
-        static $inject = ['$state'];
+        static $inject = ['$state',
+                          'finApp.models.card.CardService',
+                          'finApp.core.util.GiveRewardService'];
 
         /**********************************/
         /*           CONSTRUCTOR          */
         /**********************************/
-        constructor(private $state: ng.ui.IStateService) {
+        constructor(private $state: ng.ui.IStateService,
+                    private CardService: app.models.card.CardService,
+                    private GiveRewardService: app.core.util.giveReward.GiveRewardService) {
             this._init();
         }
 
         /*-- INITIALIZE METHOD --*/
         private _init() {
-
+            this.GiveRewardService.giveCard();
             this.activate();
         }
 
         /*-- ACTIVATE METHOD --*/
         activate(): void {
+            //LOG
             console.log('cardsPage controller actived');
+            //VARIABLES
+            let self = this;
+            //Get user's cards list
+            this._getUserCardsList().then(
+                function(userCards) {
+                    //TODO: Construimos el album de cartas, con las cartas que el user tiene
+                    // y las que no tiene.
+                    self._buildCardAlbum(userCards);
+                    self._userCardsList = userCards;
+                }
+            );
         }
 
         /**********************************/
         /*            METHODS             */
         /**********************************/
+        private _getUserCardsList(): angular.IPromise<AngularFireArray> {
+            return this.CardService.getCardsByUserId();
+        }
+        //TODO: Investigar bien como se gestiona el tipo de dato: Promise, ya que aqui
+        //deberia recibir un Array<app.models.card.UserCard> no una Promise
+        private _buildCardAlbum(userCards: any): any {
 
+            return this.CardService.getAllCards().then(
+                function(cards){
+                    //Saber cuanto es la cantidad total de cartas
+                    let total = cards.length;
+                    //Buscamos si el usuario tiene alguna carta
+                    let album = cards.map(
+                        function(card: any){
+                            for (let i = 0; i < userCards.length; i++) {
+                                if(card.uid === userCards[i].uid){
+                                    //TODO: Quiere decir que el user tiene esa tarjeta
+                                    var merge = _.merge(card, userCards[i]);
+                                    return merge;
+                                } else  {
+                                    //It's the last element
+                                    if(i == userCards.length -1){
+                                        var gray = {
+                                            uid: card.uid,
+                                            formulaId: card.formulaId
+                                        };
+                                        return gray;
+                                    }
+                                }
+                            }
+                        }
+                    );
+
+                    console.log('user album: ', album);
+
+                    return album;
+                }
+            );
+        }
 
 
 

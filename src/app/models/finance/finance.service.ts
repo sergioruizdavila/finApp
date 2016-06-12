@@ -77,7 +77,7 @@ module app.models.finance {
         * saveFinance
         * @description - save user salary on firebase
         * @function
-        * @params {string} newSalary - new value for user salary property
+        * @params {Finance} finance - new finance for user
         */
         saveFinance(finance): void {
             let url = '/users/' + this.$rootScope.User.Uid + '/finances/' + finance.Uid;
@@ -140,7 +140,7 @@ module app.models.finance {
         }
 
         /**
-        * getFinances
+        * getAllFinances
         * @description - get user's finances
         * @function
         */

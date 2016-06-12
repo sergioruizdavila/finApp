@@ -1,0 +1,36 @@
+typeOfCard : [
+    {
+        "uid": "uniqueId1",
+        "title": "%rewards.title.type1",
+        "description": "%rewards.description.type1",
+        "emblem": "image.jpg",
+        "formulaId": 1
+    },
+    {
+        "uid": "uniqueId2",
+        "title": "%rewards.title.type2",
+        "description": "%rewards.description.type2",
+        "emblem": "image2.jpg",
+        "formulaId": 2
+    }
+],
+
+users: [
+    {
+        "uid": 1,
+        "finances": [],
+        "username": "sergioruizdavila",
+        "cards": [
+            {
+                "uid": "uniqueId1",
+                "amount": 2,
+                "status": "new"
+            },
+            {
+                "uid": "uniqueId2",
+                "amount": 2,
+                "status": "used"
+            }
+        ]
+    }
+]

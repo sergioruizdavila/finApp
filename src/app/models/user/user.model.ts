@@ -15,6 +15,7 @@ module app.models.user {
         private username: string;
         private email: string;
         private finances: Array<app.models.finance.Finance>;
+        private cards: Array<app.models.card.UserCard>;
 
         /**********************************/
         /*           CONSTRUCTOR          */
@@ -30,11 +31,17 @@ module app.models.user {
 
             if(_.isEmpty(obj)) {
                 this.finances = [];
+                this.cards = [];
             } else {
                 for (let key in obj.finances) {
                     let financeInstance = new app.models.finance.Finance(obj.finances[key]);
                     this.finances = [];
                     this.addFinance(financeInstance);
+                }
+                for (let key in obj.cards) {
+                    let cardInstance = new app.models.card.UserCard(obj.cards[key]);
+                    this.cards = [];
+                    this.addCard(cardInstance);
                 }
             }
 
@@ -75,6 +82,10 @@ module app.models.user {
             return this.finances;
         }
 
+        get Card() {
+            return this.cards;
+        }
+
         addFinance(finance: app.models.finance.Finance): void {
             if(finance === undefined) { throw 'Please supply finance element (Add)'; }
             this.finances.push(finance);
@@ -86,6 +97,22 @@ module app.models.user {
             this.finances.forEach(function (element, index, array) {
                 if (finance.Uid === element.Uid) {
                     array[index] = finance;
+                }
+            });
+        }
+
+        addCard(card: app.models.card.UserCard): void {
+            if(card === undefined) { throw 'Please supply user card element (Add)'; }
+            this.cards.push(card);
+        }
+        /*TODO: No estoy seguro si es necesario la funcion editCard, ya que yo
+        no quiero editar una tarjeta*/
+        editCard(card: app.models.card.UserCard): void {
+            if(card === undefined) { throw 'Please supply user card element (Edit)'; }
+            //Edit existing Card
+            this.cards.forEach(function (element, index, array) {
+                if (card.Uid === element.Uid) {
+                    array[index] = card;
                 }
             });
         }
