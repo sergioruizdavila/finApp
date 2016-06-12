@@ -102,7 +102,7 @@ module app.models.card {
     export class UserCard {
 
         /*-- PROPERTIES --*/
-        private cardId: string;
+        private uid: string;
         private amount: number;
         private status: string;
 
@@ -114,7 +114,7 @@ module app.models.card {
             console.log('User Card Model instanced');
 
             //init properties
-            this.cardId = obj.cardId;
+            this.uid = obj.uid;
             this.amount = obj.amount || 0;
             this.status = obj.status || '';
 
@@ -124,13 +124,13 @@ module app.models.card {
         /*             METHODS            */
         /**********************************/
 
-        get CardId() {
-            return this.cardId;
+        get Uid() {
+            return this.uid;
         }
 
-        set CardId(cardId: string) {
-            if (cardId === undefined) { throw 'Please supply card Id'; }
-            this.cardId = cardId;
+        set Uid(uid: string) {
+            if (uid === undefined) { throw 'Please supply card Id'; }
+            this.uid = uid;
         }
 
         get Amount() {

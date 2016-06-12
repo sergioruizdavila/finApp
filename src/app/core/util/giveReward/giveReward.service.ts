@@ -110,7 +110,7 @@ module app.core.util.giveReward {
                 function(cards: any){
                     //2. Escogemos una al azar
                     let randomCard = new app.models.card.UserCard();
-                    randomCard.uid = cards[Math.floor(Math.random()*cards.length)].uid;
+                    randomCard.Uid = cards[Math.floor(Math.random()*cards.length)].uid;
                     //3. Asignamos una cantidad de cartas
                     randomCard.Amount = 1;
                     //4. Asignamos un status

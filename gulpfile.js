@@ -27,7 +27,7 @@ var paths = {
     sassdocOptions: {dest: './www/css/doc'}
 };
 
-gulp.task('default', ['sass']);
+gulp.task('default', ['sass', 'copy-html', 'ts']);
 
 /**
  * SASS to CSS - based on http://www.sitepoint.com/simple-gulpy-workflow-sass/
