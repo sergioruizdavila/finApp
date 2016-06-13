@@ -46,6 +46,8 @@
   &.md-24 { font-size: 24px; }
   &.md-36 { font-size: 36px; }
   &.md-48 { font-size: 48px; }
+  &.md-60 { font-size: 60px; }
+  &.md-72 { font-size: 72px; }
 
   /* Rules for using icons as black on a light background. */
   &.md-dark { color: rgba(0, 0, 0, 0.54); }
@@ -58,6 +60,10 @@
   /* Rules for using icons as red-light on a red-dark background. */
   &.md-red_light { color: $FA_BTN_ADD;}
   &.md-red_light.md-inactive { color: shade($FA_BTN_ADD, 10);}
+
+  /* Rules for using icons as gray on a gray-dark background. */
+  &.md-gray { color: $FA_GRAY_EMBLEM_ICON;}
+  &.md-gray.md-inactive { color: shade($FA_GRAY_EMBLEM_ICON, 10);}
 
 }
 
@@ -451,22 +457,17 @@ body.finApp {
         @include shadowBlock();
 
         &--mini_gray {
-            width: 80px;
-            height: 100px;
+            width: 7rem;
+            height: 8rem;
             background-color: tint($FA_COLORS_NEUTRAL, 70);
             display: flex;
             justify-content: center;
             align-items: center;
-
-            &__emblem {
-                font-size: 55px;
-                color: #d2d2d2;
-            }
         }
 
         &--mini_card {
-            width: 80px;
-            height: 100px;
+            width: 7rem;
+            height: 8rem;
             background-color: $FA_NAVBAR;
             display: flex;
             justify-content: center;
@@ -823,6 +824,25 @@ body.finApp {
 }
 /******************** END - BODY **************************/
 
+
+/**********************************************************/
+/*                      RESET STYLES                      */
+/**********************************************************/
+
+// Reset ionic border-bottom from header bar
+@media (min--moz-device-pixel-ratio: 1.5),
+        (-webkit-min-device-pixel-ratio: 1.5),
+        (min-device-pixel-ratio: 1.5),
+        (min-resolution: 144dpi),
+        (min-resolution: 1.5dppx) {
+    .bar {
+        background-image: none!important;
+        background-image: none!important;
+    }
+}
+
+
+/******************** END - RESET STYLES ******************/
 
 
 /**********************************************************/

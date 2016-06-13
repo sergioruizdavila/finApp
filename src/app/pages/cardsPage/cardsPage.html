@@ -11,9 +11,8 @@
                          ng-class="card.gray ? 'block_3d--mini_gray' : 'block_3d--mini_card'"
                          ng-repeat="card in vm._userCardsList">
                         <!-- GRAY CARD -->
-                        <i class="block_3d--mini_gray__emblem
-                                  material-icons"
-                           ng-if="card.gray">
+                        <i ng-if="card.gray"
+                           class="material-icons md-gray md-72">
                            filter_b_and_w
                         </i>
                         <!-- USER CARD -->
