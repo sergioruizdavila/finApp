@@ -7,14 +7,20 @@
 
                 <div class="block_3d_container block_3d_container--flex">
                     <!-- 3D BLOCK -->
-                    <div class="block_3d block_3d--inline block_3d--mini_gray"
-                         ng-class=""
+                    <div class="block_3d block_3d--inline"
+                         ng-class="card.gray ? 'block_3d--mini_gray' : 'block_3d--mini_card'"
                          ng-repeat="card in vm._userCardsList">
+                        <!-- GRAY CARD -->
                         <i class="block_3d--mini_gray__emblem
                                   material-icons"
-                           ng-if="">
-                           blur_on
+                           ng-if="card.gray">
+                           filter_b_and_w
                         </i>
+                        <!-- USER CARD -->
+                        <p ng-if="!card.gray"
+                           style="text-align: center;padding: 10px;" translate>
+                            {{card.title}}
+                        </p>
                     </div>
 
                     <!-- 3D BLOCK -->

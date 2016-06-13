@@ -43,7 +43,7 @@ module app.pages.cardsPage {
 
         /*-- INITIALIZE METHOD --*/
         private _init() {
-            this.GiveRewardService.giveCard();
+            //this.GiveRewardService.giveCard();
             this.activate();
         }
 
@@ -56,10 +56,11 @@ module app.pages.cardsPage {
             //Get user's cards list
             this._getUserCardsList().then(
                 function(userCards) {
-                    //TODO: Construimos el album de cartas, con las cartas que el user tiene
-                    // y las que no tiene.
-                    self._buildCardAlbum(userCards);
-                    self._userCardsList = userCards;
+                    self._buildCardAlbum(userCards).then(
+                        function(album) {
+                            self._userCardsList = album;
+                        }
+                    );
                 }
             );
         }
@@ -91,7 +92,8 @@ module app.pages.cardsPage {
                                     if(i == userCards.length -1){
                                         var gray = {
                                             uid: card.uid,
-                                            formulaId: card.formulaId
+                                            formulaId: card.formulaId,
+                                            gray: true
                                         };
                                         return gray;
                                     }

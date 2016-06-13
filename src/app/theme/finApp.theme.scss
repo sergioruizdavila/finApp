@@ -464,6 +464,15 @@ body.finApp {
             }
         }
 
+        &--mini_card {
+            width: 80px;
+            height: 100px;
+            background-color: $FA_NAVBAR;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
         &--small {
             width: 45%;
 
