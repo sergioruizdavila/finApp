@@ -16,12 +16,12 @@ module app.models.finance {
     /**********************************/
     export interface IFinanceService {
         ref: any;
-        saveFinance: (finance: Finance) => void;
+        saveFinance: (finance: Finance, callback: (err) => void) => void;
         saveSalary: (newSalary: IMoney) => void;
         saveInvestment: (newInvestment: IMoney) => void;
         saveBusiness: (newBusiness: IMoney) => void;
-        saveNecessaryExpense: (necessaryExpense: Expense, financeId: string) => void;
-        saveUnnecessaryExpense: (unnecessaryExpense: Expense, financeId: string) => void;
+        saveNecessaryExpense: (necessaryExpense: Expense, financeId: string, callback: (err) => void) => void;
+        saveUnnecessaryExpense: (unnecessaryExpense: Expense, financeId: string, callback: (err) => void) => void;
         getAllFinances: () => angular.IPromise<AngularFireArray>;
         getFinancesByDate: (startDate: string, endDate: string) => void;
         getFinanceById: (financeId: string) => angular.IPromise<AngularFireObject>;
@@ -77,11 +77,13 @@ module app.models.finance {
         * saveFinance
         * @description - save user salary on firebase
         * @function
-        * @params {string} newSalary - new value for user salary property
+        * @params {Finance} finance - new finance for user
+        * @params {function} callback - function callback required to know if
+        * It saved finance
         */
-        saveFinance(finance): void {
+        saveFinance(finance, callback): void {
             let url = '/users/' + this.$rootScope.User.Uid + '/finances/' + finance.Uid;
-            this.FirebaseFactory.add(url, finance);
+            this.FirebaseFactory.add(url, finance, callback);
         }
 
         /**
@@ -122,25 +124,32 @@ module app.models.finance {
         * @description - add/update neccesary expense on firebase
         * @function
         * @params {string} necessaryExpense - new value for user necessary expense property
+        * @params {string} financeId - finance uid
+        * @params {function} callback - function callback required to know if
+        * It saved necessary expense
         */
-        saveNecessaryExpense(necessaryExpense, financeId): void {
+        saveNecessaryExpense(necessaryExpense, financeId, callback): void {
             let url = '/users/' + this.$rootScope.User.Uid + '/finances/' + financeId + this.dataConfig.neccesaryExpenseUrl + necessaryExpense.Uid;
-            this.FirebaseFactory.add(url, necessaryExpense);
+            this.FirebaseFactory.add(url, necessaryExpense, callback);
         }
 
         /**
         * saveUnnecessaryExpense
         * @description - add/update unneccesary expense on firebase
         * @function
-        * @params {string} unnecessaryExpense - new value for user unnecessary expense property
+        * @params {string} unnecessaryExpense - new value for user unnecessary
+        * expense property
+        * @params {string} financeId - finance uid
+        * @params {function} callback - function callback required to know if
+        * It saved unnecessary expense
         */
-        saveUnnecessaryExpense(unnecessaryExpense, financeId): void {
+        saveUnnecessaryExpense(unnecessaryExpense, financeId, callback): void {
             let url = '/users/' + this.$rootScope.User.Uid + '/finances/' + financeId + this.dataConfig.unneccesaryExpenseUrl + unnecessaryExpense.Uid;
-            this.FirebaseFactory.add(url, unnecessaryExpense);
+            this.FirebaseFactory.add(url, unnecessaryExpense, callback);
         }
 
         /**
-        * getFinances
+        * getAllFinances
         * @description - get user's finances
         * @function
         */
@@ -208,7 +217,7 @@ module app.models.finance {
         * @params {any} incomes - user's incomes list
         * @return {number} total - total of user's incomes
         */
-        //TODO: change any type to Array<Incomes>
+        /* TODO: change any type to Array<Incomes> */
         getTotalIncomes(incomes: any): number {
             //VARIABLES
             var incomesToArray = [];
@@ -229,7 +238,7 @@ module app.models.finance {
         * @params {any} expenses - user's expenses list by type
         * @return {number} total - total of user's expenses
         */
-        //TODO: change any type to Array<Expenses>
+        /* TODO: change any type to Array<Expenses> */
         getTotalExpensesByType(expenses: any): number {
             //VARIABLES
             var expensesToArray = [];
@@ -250,7 +259,7 @@ module app.models.finance {
         * @params {any} expenses - user's expenses list
         * @return {number} total - total of user's expenses
         */
-        //TODO: change any type to Array<Expenses>
+        /* TODO: change any type to Array<Expenses> */
         getTotalExpenses(expenses: any): number {
             //VARIABLES
             var expensesToArray = [];
@@ -293,7 +302,11 @@ module app.models.finance {
             $firebaseArray: AngularFireArrayService,
             $rootScope: app.interfaces.IFinAppRootScope): IFinanceService {
 
-            return new FinanceService(dataConfig, FirebaseFactory, $firebaseObject, $firebaseArray, $rootScope);
+            return new FinanceService(dataConfig,
+                                      FirebaseFactory,
+                                      $firebaseObject,
+                                      $firebaseArray,
+                                      $rootScope);
 
         }
 

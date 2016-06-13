@@ -132,7 +132,15 @@ module app.pages.addBusinessPage {
             //Update User model
             this.$rootScope.User.Finance[this._financePos].Income.Business = this.form.business;
             //Save salary on firebase
-            this.FinanceService.saveFinance(this.$rootScope.User.Finance[this._financePos]);
+            this.FinanceService.saveFinance(
+                this.$rootScope.User.Finance[this._financePos],
+                function(err) {
+                    if (err) {
+                        //LOG
+                        console.log('Error: Not saved finance after change Business value');
+                    }
+                }
+            );
         }
 
         /*

@@ -132,7 +132,15 @@ module app.pages.addInvestmentPage {
             //Update User model
             this.$rootScope.User.Finance[this._financePos].Income.Investment = this.form.investment;
             //Save investment on firebase
-            this.FinanceService.saveFinance(this.$rootScope.User.Finance[this._financePos]);
+            this.FinanceService.saveFinance(
+                this.$rootScope.User.Finance[this._financePos],
+                function(err) {
+                    if (err) {
+                        //LOG
+                        console.log('Error: Not saved finance after change Investment value');
+                    }
+                }
+            );
         }
 
         /*

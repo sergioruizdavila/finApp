@@ -46,10 +46,13 @@ module app.pages.addSalaryPage {
         // --------------------------------
 
         /*-- INJECT DEPENDENCIES --*/
+        /*TODO: Remover CustomPopupService y GiveRewardService sino se va a usar*/
         static $inject = ['dataConfig',
                           '$ionicHistory',
                           'finApp.models.finance.FinanceService',
                           'finApp.core.util.FunctionsUtilService',
+                          'finApp.core.util.CustomPopupService',
+                          'finApp.core.util.GiveRewardService',
                           '$state',
                           '$stateParams',
                           '$rootScope',
@@ -58,10 +61,13 @@ module app.pages.addSalaryPage {
         /**********************************/
         /*           CONSTRUCTOR          */
         /**********************************/
+        /*TODO: Remover CustomPopupService y GiveRewardService sino se va a usar*/
         constructor(private dataConfig: IDataConfig,
                     private $ionicHistory: ionic.navigation.IonicHistoryService,
                     private FinanceService: app.models.finance.IFinanceService,
                     private FunctionsUtilService: app.core.util.functionsUtil.FunctionsUtilService,
+                    private customPopup: app.core.util.customPopup.CustomPopupService,
+                    private GiveRewardService: app.core.util.giveReward.GiveRewardService,
                     private $state: ng.ui.IStateService,
                     private $stateParams: IAddSalaryDataConfig,
                     private $rootScope: app.interfaces.IFinAppRootScope,
@@ -131,7 +137,15 @@ module app.pages.addSalaryPage {
             //Update User model
             this.$rootScope.User.Finance[this._financePos].Income.Salary = this.form.salary;
             //Save salary on firebase
-            this.FinanceService.saveFinance(this.$rootScope.User.Finance[this._financePos]);
+            this.FinanceService.saveFinance(
+                this.$rootScope.User.Finance[this._financePos],
+                function(err) {
+                    if (err) {
+                        //LOG
+                        console.log('Error: Not saved finance after change Salary value');
+                    }
+                }
+            );
         }
 
         /*
@@ -139,6 +153,10 @@ module app.pages.addSalaryPage {
         * @description this method is launched when user press OK button
         */
         goToNext(): void {
+
+            /* TODO: REMOVE AFTER TEST: Invocar PopUp personalizado e*/
+            //this.customPopup.invokeCustomPopup({scope: this.$rootScope});
+
             //Save Salary value
             this._saveSalary();
 
@@ -169,7 +187,6 @@ module app.pages.addSalaryPage {
         goToBack(): void {
             this.$ionicHistory.goBack();
         }
-
 
     }
 

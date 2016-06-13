@@ -86,7 +86,6 @@ module app.auth {
           }
           return null;
         };
-
         */
 
 

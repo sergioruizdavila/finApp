@@ -46,6 +46,8 @@
   &.md-24 { font-size: 24px; }
   &.md-36 { font-size: 36px; }
   &.md-48 { font-size: 48px; }
+  &.md-60 { font-size: 60px; }
+  &.md-72 { font-size: 72px; }
 
   /* Rules for using icons as black on a light background. */
   &.md-dark { color: rgba(0, 0, 0, 0.54); }
@@ -58,6 +60,10 @@
   /* Rules for using icons as red-light on a red-dark background. */
   &.md-red_light { color: $FA_BTN_ADD;}
   &.md-red_light.md-inactive { color: shade($FA_BTN_ADD, 10);}
+
+  /* Rules for using icons as gray on a gray-dark background. */
+  &.md-gray { color: $FA_GRAY_EMBLEM_ICON;}
+  &.md-gray.md-inactive { color: shade($FA_GRAY_EMBLEM_ICON, 10);}
 
 }
 
@@ -89,6 +95,8 @@ body.finApp {
             width: 1.2em;
             font-size: 2.2rem;
             font-weight: bold;
+            padding: 0 8px;
+            line-height: 32px;
         }
 
         &--large {
@@ -104,7 +112,7 @@ body.finApp {
             line-height: 55px;
         }
 
-        ///COLOR_BUTTON
+        ///BUTTON_COLOR
         &--blue {
             background-color: $FA_BTN_FORM;
             color: #FFF;
@@ -115,7 +123,12 @@ body.finApp {
             color: #FFF;
         }
 
-        ///TYPE_BUTTON
+        &--green {
+            background-color: $FA_COLORS_SUCCESS;
+            color: #FFF;
+        }
+
+        ///BUTTON_TYPE
         &__3d {
             display: inline-block;
             -webkit-border-radius: 5px;
@@ -142,6 +155,10 @@ body.finApp {
 
         &__3d--red_light {
             @include ThreeDEffect(shade($FA_BTN_ADD, 10));
+        }
+
+        &__3d--green {
+            @include ThreeDEffect(shade($FA_COLORS_SUCCESS, 10));
         }
 
         &--with_icon {
@@ -224,7 +241,7 @@ body.finApp {
 
 
     ///INPUT TEXTBOX
-    .fa-input {
+    .fa_input {
         -webkit-border-radius: 5px;
         -moz-border-radius: 5px;
         border-radius: 5px;
@@ -253,6 +270,37 @@ body.finApp {
     }
 
     /*---------- END -  INPUTS ------------*/
+
+
+
+    /*                LABELS               */
+    /*-------------------------------------*/
+    .fa_label {
+
+        ///LABEL_SIZE
+        &--large {
+            padding: 10px;
+            font-size: 25px;
+        }
+
+        ///LABEL_COLOR
+        &--blue {
+            background-color: $FA_BTN_FORM;
+            color: #FFF;
+        }
+
+        &--red_light {
+            background-color: $FA_BTN_ADD;
+            color: #FFF;
+        }
+
+        ///LABEL_TYPE
+        &__round {
+            border-radius: 25px;
+        }
+    }
+
+    /*---------- END -  LABELS ------------*/
 
 
 
@@ -345,6 +393,35 @@ body.finApp {
     /*------- END -  PROGRESS BAR ---------*/
 
 
+    /*               RIBBONS               */
+    /*-------------------------------------*/
+    .ribbon_container {
+        width: 85px;
+        height: 80px;
+        overflow: hidden;
+        position: absolute;
+        top: -3px;
+        right: -3px;
+
+        &__ribbon--green {
+            font: bold 15px Sans-Serif;
+            color: #FFF;
+            text-align: center;
+            -webkit-transform: rotate(45deg);
+            -moz-transform:    rotate(45deg);
+            -ms-transform:     rotate(45deg);
+            -o-transform:      rotate(45deg);
+            position: relative;
+            padding: 7px 0;
+            left: -5px;
+            top: 15px;
+            width: 120px;
+            background-color: #51D075;
+        }
+    }
+
+    /*---------- END -  RIBBONS -----------*/
+
 
     /*              3D BLOCKS              */
     /*-------------------------------------*/
@@ -379,7 +456,33 @@ body.finApp {
         overflow: hidden;
         @include shadowBlock();
 
+        &--mini_gray {
+            width: 7rem;
+            height: 8rem;
+            background-color: tint($FA_COLORS_NEUTRAL, 70);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        &--mini_card {
+            width: 7rem;
+            height: 8rem;
+            background-color: $FA_NAVBAR;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
         &--small {
+            width: 45%;
+
+            &__content {
+                padding: 15px;
+            }
+        }
+
+        &--small_history {
             width: 45%;
 
             &__content {
@@ -721,6 +824,25 @@ body.finApp {
 }
 /******************** END - BODY **************************/
 
+
+/**********************************************************/
+/*                      RESET STYLES                      */
+/**********************************************************/
+
+// Reset ionic border-bottom from header bar
+@media (min--moz-device-pixel-ratio: 1.5),
+        (-webkit-min-device-pixel-ratio: 1.5),
+        (min-device-pixel-ratio: 1.5),
+        (min-resolution: 144dpi),
+        (min-resolution: 1.5dppx) {
+    .bar {
+        background-image: none!important;
+        background-image: none!important;
+    }
+}
+
+
+/******************** END - RESET STYLES ******************/
 
 
 /**********************************************************/

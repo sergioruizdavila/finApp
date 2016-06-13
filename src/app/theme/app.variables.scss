@@ -31,6 +31,7 @@ $colors: (
 
 $FA_COLORS_SUCCESS: #28a54c;
 $FA_COLORS_NEGATIVE: #FA7470;
+$FA_COLORS_NEUTRAL: #8D8D8D;
 
 // The path for our ionicons font files, relative to the built CSS in www/css
 $ionicons-font-path: "../lib/ionic/fonts" !default;
@@ -69,6 +70,9 @@ $FA_TEXT_LIST_VALUE: #FA7470;
 
 /// Incomes Title Block
 $FA_INCOME_BLOCK_TITLE_TEXT: tint($FA_COLORS_SUCCESS, 40);
+
+/// Emblem Gray cards
+$FA_GRAY_EMBLEM_ICON: #D2D2D2;
 
 //FinApp Fonts
 $FA-FONT-PATH: "../assets/fonts";

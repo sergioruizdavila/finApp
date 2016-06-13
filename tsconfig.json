@@ -2,7 +2,8 @@
    "exclude": [
     "node_modules",
     "www/lib",
-    "www/assets"
+    "www/assets",
+    "platforms"
   ],
   "compilerOptions": {
     "target": "es5",

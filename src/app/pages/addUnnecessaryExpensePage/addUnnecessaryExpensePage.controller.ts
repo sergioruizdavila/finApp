@@ -134,7 +134,7 @@ module app.pages.addUnnecessaryExpensePage {
         * Show tip example expenses popup
         * @description this method is launched when user press Gift icon in order to receive more information
         */
-        //TODO: Puedo hacer una clase base, para que los gastos hereden estos metodos como showTipPopup.
+        /* TODO: Puedo hacer una clase base, para que los gastos hereden estos metodos como showTipPopup. */
         showTipPopup(): void {
             //VARIABLES
             let self = this;
@@ -228,7 +228,16 @@ module app.pages.addUnnecessaryExpensePage {
                             }
 
                             //Update Finance Object on firebase
-                            self.FinanceService.saveUnnecessaryExpense(expenseInstance, self.addUnnecessaryExpenseDataConfig.financeId);
+                            self.FinanceService.saveUnnecessaryExpense(
+                                expenseInstance,
+                                self.addUnnecessaryExpenseDataConfig.financeId,
+                                function(err) {
+                                    if (err) {
+                                        //LOG
+                                        console.log('Error: Not saved unnecessaryExpense');
+                                    }
+                                }
+                            );
                             //Update expenses List view
                             self._expensesList = angular.copy(self.$rootScope.User.Finance[self._financePos].TypeOfExpense.Unnecessaries);
                             //Calculate Total Expenses

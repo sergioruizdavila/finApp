@@ -42,6 +42,7 @@ module app.pages.logInPage {
         static $inject = ['$ionicHistory',
                           '$state',
                           'finApp.auth.AuthService',
+                          'finApp.models.user.UserService',
                           '$rootScope'];
 
         /**********************************/
@@ -49,7 +50,8 @@ module app.pages.logInPage {
         /**********************************/
         constructor(private $ionicHistory: ionic.navigation.IonicHistoryService,
                     private $state: ng.ui.IStateService,
-                    private auth,
+                    private auth: app.auth.IAuthService,
+                    private UserService: app.models.user.UserService,
                     private $rootScope: app.interfaces.IFinAppRootScope) {
 
             this._init();
@@ -109,14 +111,24 @@ module app.pages.logInPage {
 
             this.auth.logInPassword(currentDataUser).then(
                 function(response){
-                    //TODO: implementar mostrar el error cuando response sea error
+                    //Get User's Uid
+                    self.$rootScope.User.Uid = response.uid;
+
+                    self.UserService.getUserByUid(response.uid).then(
+                        function(userData: any) {
+                            self.$rootScope.User = new app.models.user.UserFirebase(userData);
+                            console.log('User Model: ', self.$rootScope.User);
+                            self.$state.go('tabs.history');
+                        }
+                    );
+                    /* LEGACY IMPLEMENTATION
                     self.$rootScope.User.Uid = response.uid;
                     //Create User Finance object
                     let newFinance = new app.models.finance.Finance();
                     self.$rootScope.User.addFinance(newFinance);
                     //let newFinance = self.$rootScope.User.setFinance(new app.models.finance.Finance());
                     self.$state.go('tabs.history');
-                    console.log('Authenticated successfully with payload:', response);
+                    console.log('Authenticated successfully with payload:', response); */
                 }
             );
 

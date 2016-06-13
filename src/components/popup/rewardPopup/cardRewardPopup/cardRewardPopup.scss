@@ -1,0 +1,73 @@
+.cardRewardPopup_container {
+
+    /* -- POPUP CONTAINER HEADER -- */
+    &__header {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+
+        &__title {
+            color: #FFF;
+            font-size: 23px;
+            font-weight: bold;
+            line-height: 25px;
+        }
+
+        &__close {
+            .material-icons {
+                position: relative;
+                right: 5px;
+            }
+        }
+    }
+
+    /* -- POPUP CONTAINER POPUP -- */
+    &__popup {
+
+        &__header {
+
+        }
+
+        &__body {
+
+            &__emblem {
+                width: 170px;
+                height: 170px;
+            }
+
+        }
+
+        &__footer {
+
+            &__description {
+                padding: 15px;
+                min-height: 65px;
+                font-size: 20px;
+                color: #525252;
+                line-height: 25px;
+            }
+
+        }
+    }
+
+    /* -- POPUP CONTAINER FOOTER -- */
+    &__footer {
+        position: absolute;
+        bottom: 5%;
+        right: 0;
+        left: 0;
+
+        &__use_btn {
+            font-size: 20px;
+            width: 30%;
+            margin-right: 10px;
+        }
+
+        &__save_btn {
+            font-size: 20px;
+            width: 50%;
+        }
+    }
+
+}

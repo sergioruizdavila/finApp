@@ -11,7 +11,7 @@ module app.core.firebase {
     export interface IFirebaseFactory {
         createFirebase: () => Firebase;
         update: (url: string, data: any) => void;
-        add: (url: string, data: any) => void;
+        add: (url: string, data: any, callback: (err) => void) => void;
         getArray: (url: string) => angular.IPromise<AngularFireArray>;
         getArrayByDate: (url: string, startDate: string, endDate: string) => angular.IPromise<AngularFireArray>;
         getObject: (url: string) => angular.IPromise<AngularFireObject>;
@@ -68,9 +68,9 @@ module app.core.firebase {
         * @params {string} url - uri of firebase
         * @params {any} data - item to send in order to add object on firebase
         */
-        add(url, data): void {
+        add(url, data, callback): void {
             let ref = new Firebase(this.baseUrl + url);
-            ref.set(data);
+            ref.set(data, callback);
         }
 
         /**
