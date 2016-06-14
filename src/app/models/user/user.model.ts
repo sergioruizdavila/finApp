@@ -130,6 +130,7 @@ module app.models.user {
     export class UserFirebase extends User {
 
         private provider: string;
+        private firstTime: boolean;
 
         /**********************************/
         /*           CONSTRUCTOR          */
@@ -141,6 +142,7 @@ module app.models.user {
             //init properties
             super(obj);
             this.provider = obj.provider || null;
+            this.firstTime = obj.firstTime || false;
 
         }
 
@@ -152,8 +154,17 @@ module app.models.user {
         }
 
         set Provider(provider: string) {
-            if (provider === undefined) { throw 'Please supply provider'; }
+            if (provider === undefined) { throw 'Please supply provider value'; }
             this.provider = provider;
+        }
+
+        get FirstTime() {
+            return this.firstTime;
+        }
+
+        set FirstTime(firstTime: boolean) {
+            if (firstTime === undefined) { throw 'Please supply firstTime value'; }
+            this.firstTime = firstTime;
         }
 
     }

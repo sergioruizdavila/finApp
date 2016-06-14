@@ -40,7 +40,7 @@
     "%popup.add_expense.add_button.text": "AGREGAR",
 
     "__TUTORIAL__":"",
-    "%tutorial.signup.button.text" : "REGISTRARSE",
+    "%tutorial.signup.button.text" : "INGRESAR",
 
     "__SIGNUP__":"",
     "%signup.title.text": "Introduce tu email",

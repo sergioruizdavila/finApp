@@ -11,7 +11,7 @@
     angular.module('finApp.core', [
         /*Angular Modules*/
         'pascalprecht.translate',
-
+        
         /*3rd Party*/
         'ionic',
         'firebase'

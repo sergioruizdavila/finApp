@@ -20,6 +20,7 @@ var karma = require('gulp-karma');
 var paths = {
     htmlTemplates: 'src/**/*.html',
     appTypescript: ['src/**/*.ts', '!src/typings/**/*.*', '!platforms/**/*.*'],
+    appJs: 'src/**/*.js',
     outputJs: 'www/js/',
     appSass: ['src/**/**/*.scss'],
     inputSass: 'src/app/theme/finApp.scss',
@@ -27,7 +28,7 @@ var paths = {
     sassdocOptions: {dest: './www/css/doc'}
 };
 
-gulp.task('default', ['sass', 'copy-html', 'ts']);
+gulp.task('default', ['sass', 'copy-js', 'copy-html', 'ts']);
 
 /**
  * SASS to CSS - based on http://www.sitepoint.com/simple-gulpy-workflow-sass/
@@ -108,10 +109,13 @@ gulp.task('watch', function() {
     gulp.watch(paths.appSass, ['sass']).on('change', function (event) {
         console.log('File ' + event.path + ' was ' + event.type + ', running tasks...');
     });
-    gulp.watch(paths.appTypescript, ['ts']).on('change', function (event) {
+    /*gulp.watch(paths.appTypescript, ['ts']).on('change', function (event) {
         console.log('File ' + event.path + ' was ' + event.type + ', running tasks...');
-    });
+    });*/
     gulp.watch(paths.htmlTemplates, ['copy-html']).on('change', function (event){
+        console.log('File' + event.path + ' was ' + event.type + ', running tasks...');
+    });
+    gulp.watch(paths.appJs, ['copy-js']).on('change', function (event){
         console.log('File' + event.path + ' was ' + event.type + ', running tasks...');
     });
     //gulp.watch(paths.sass, ['sass']);
@@ -126,6 +130,14 @@ gulp.task('watch', function() {
     .pipe(gulp.dest('www/templates/'));
 });
 
+/*
+ * Copy JS and Paste in www/js folder
+ */
+ gulp.task('copy-js', function() {
+    gulp.src(paths.appJs)
+    // Perform minification tasks, etc here
+    .pipe(gulp.dest(paths.outputJs));
+});
 
 /*
  * Karma Unit Test

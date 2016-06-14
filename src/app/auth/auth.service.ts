@@ -212,7 +212,7 @@ module app.auth {
 
     /*-- MODULE DEFINITION --*/
     angular
-    .module('finApp.auth', [])
+    .module('finApp.auth')
     .service(AuthService.serviceId, AuthService);
 
 }

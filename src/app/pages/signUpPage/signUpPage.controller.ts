@@ -182,6 +182,8 @@ module app.pages.signUpPage {
                     //Add provider property
                     self.$rootScope.User.Uid = response.uid;
                     self.$rootScope.User.Provider = response.provider;
+                    self.$rootScope.User.FirstTime = true;
+                    console.log('TESTTEST');
                     //Create new User in dataBase and make three binding ways
                     self.UserService.createNewUser(self.$rootScope.User, function(err){
                         if (err) {
