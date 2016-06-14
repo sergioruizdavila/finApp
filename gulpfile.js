@@ -20,7 +20,7 @@ var karma = require('gulp-karma');
 var paths = {
     htmlTemplates: 'src/**/*.html',
     appTypescript: ['src/**/*.ts', '!src/typings/**/*.*', '!platforms/**/*.*'],
-    appJs: 'src/**/*.js',
+    appJs: ['src/**/*.js', 'src/**/*.js.map'],
     outputJs: 'www/js/',
     appSass: ['src/**/**/*.scss'],
     inputSass: 'src/app/theme/finApp.scss',
