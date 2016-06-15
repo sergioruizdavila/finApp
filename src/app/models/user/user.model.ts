@@ -170,5 +170,4 @@ module app.models.user {
     }
 
 
-
 }

@@ -12,7 +12,6 @@ module app.pages.cardsPage {
         activate: () => void;
     }
 
-
     /****************************************/
     /*           CLASS DEFINITION           */
     /****************************************/

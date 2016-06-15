@@ -20,11 +20,10 @@ module app.models.card {
         createNewCard: (card: Card, callback: (err) => void) => void;
         saveUserCard: (card: UserCard, callback: (err) => void) => void;
         getAllCards: () => angular.IPromise<AngularFireArray>;
-        getCardsByUserId: () => angular.IPromise<AngularFireArray>;
+        getCardsByUserId: () => angular.IPromise<Array<app.models.card.UserCard>>;
         getCardById: (uid: string) => angular.IPromise<AngularFireObject>;
         getCardDetails: (userCard: UserCard) => angular.IPromise<Card>;
     }
-
 
     /****************************************/
     /*           CLASS DEFINITION           */
@@ -100,6 +99,9 @@ module app.models.card {
             let url = '/typeOfCard/';
             return this.FirebaseFactory.getArray(url).then(function(data){
                 return data;
+            }).catch(function(err) {
+                console.log(err);
+                return err;
             });
         }
 
@@ -110,10 +112,18 @@ module app.models.card {
         * @return {angular.IPromise<AngularFireArray>} return a promise with
         * user's cards list
         */
-        getCardsByUserId(): angular.IPromise<AngularFireArray> {
+        getCardsByUserId(): angular.IPromise<Array<app.models.card.UserCard>> {
             let url = '/users/' + this.$rootScope.User.Uid + '/cards/';
             return this.FirebaseFactory.getArray(url).then(function(data){
-                return data;
+                let userCards = [];
+                for (let i = 0; i < data.length; i++) {
+                    let cardInstance = new app.models.card.UserCard(data[i]);
+                    userCards.push(cardInstance);
+                }
+                return userCards;
+            }).catch(function(err) {
+                console.log(err);
+                return err;
             });
         }
 
@@ -130,6 +140,9 @@ module app.models.card {
             let url = '/typeOfCard/' + uid;
             return this.FirebaseFactory.getObject(url).then(function(data){
                 return data;
+            }).catch(function(err) {
+                console.log(err);
+                return err;
             });
         }
 
@@ -146,12 +159,13 @@ module app.models.card {
         // una Promise de tipo AngularFireArray o AngularFireObject a un modelo especifico
         // en este caso 'Card'
         getCardDetails(userCard): angular.IPromise<Card> {
-            return this.getCardById(userCard.Uid).then(
-                function(details) {
-                    let userCardDetails = new app.models.card.Card(_.merge(userCard, details));
-                    return userCardDetails;
-                }
-            );
+            return this.getCardById(userCard.Uid).then(function(details) {
+                let userCardDetails = new app.models.card.Card(_.merge(userCard, details));
+                return userCardDetails;
+            }).catch(function(err) {
+                console.log(err);
+                return err;
+            });
 
         }
 

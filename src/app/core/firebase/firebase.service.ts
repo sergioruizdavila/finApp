@@ -13,12 +13,14 @@ module app.core.firebase {
         update: (url: string, data: any) => void;
         add: (url: string, data: any, callback: (err) => void) => void;
         addWithPromise: (url: string, data: any) => angular.IPromise<any>;
-        getArray: (url: string) => angular.IPromise<AngularFireArray>;
+        getArray: (url: string) => any;
         getArrayByDate: (url: string, startDate: string, endDate: string) => angular.IPromise<AngularFireArray>;
         getObject: (url: string) => angular.IPromise<AngularFireObject>;
     }
-    
 
+    /****************************************/
+    /*           CLASS DEFINITION           */
+    /****************************************/
     export class FirebaseFactory implements IFirebaseFactory {
 
         static serviceId = 'finApp.core.firebase.FirebaseFactory';
@@ -41,7 +43,9 @@ module app.core.firebase {
             this.baseUrl = dataConfig.baseUrl;
         }
 
-        /*-- METHODS --*/
+        /**********************************/
+        /*            METHODS             */
+        /**********************************/
 
         /**
         * Creates a new Firebase JavaScript API Object from this configuration.
@@ -95,7 +99,7 @@ module app.core.firebase {
         * @params {string} url - uri of firebase
         * @return {angular.IPromise<AngularFireArray>} data - Array gotten from firebase
         */
-        getArray(url): angular.IPromise<AngularFireArray> {
+        getArray(url): any {
             let ref = new Firebase(this.baseUrl + url);
             return this.$firebaseArray(ref).$loaded().then(function(data) {
                 return data;

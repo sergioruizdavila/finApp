@@ -75,6 +75,9 @@ module app.models.user {
             let url = '/users/' + uid;
             return this.FirebaseFactory.getObject(url).then(function(data){
                 return data;
+            }).catch(function(err) {
+                console.log(err);
+                return err;
             });
         }
 
@@ -101,6 +104,9 @@ module app.models.user {
             let url = '/users/';
             return this.FirebaseFactory.getArray(url).then(function(data){
                 return data;
+            }).catch(function(err) {
+                console.log(err);
+                return err;
             });
         }
 
@@ -179,8 +185,11 @@ module app.models.user {
                         return false;
                     }
                 }
-
                 return false;
+                
+            }).catch(function(err) {
+                console.log(err);
+                return err;
             });
 
             return promise;

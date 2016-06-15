@@ -157,6 +157,9 @@ module app.models.finance {
             let url = '/users/' + this.$rootScope.User.Uid + '/finances/';
             return this.FirebaseFactory.getArray(url).then(function(data){
                 return data;
+            }).catch(function(err) {
+                console.log(err);
+                return err;
             });
         }
 
@@ -174,6 +177,9 @@ module app.models.finance {
             let url = '/users/' + this.$rootScope.User.Uid + '/finances/';
             return this.FirebaseFactory.getArrayByDate(url, startDate, endDate).then(function(data){
                 return data;
+            }).catch(function(err) {
+                console.log(err);
+                return err;
             });
         }
 
@@ -189,6 +195,9 @@ module app.models.finance {
             let url = '/users/' + this.$rootScope.User.Uid + '/finances/' + financeId;
             return this.FirebaseFactory.getObject(url).then(function(data){
                 return data;
+            }).catch(function(err) {
+                console.log(err);
+                return err;
             });
         }
 

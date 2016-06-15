@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<!-- Creator: CorelDRAW X6 -->
+<svg xmlns="http://www.w3.org/2000/svg" xml:space="preserve" width="202px" height="202px" version="1.1" style="shape-rendering:geometricPrecision; text-rendering:geometricPrecision; image-rendering:optimizeQuality; fill-rule:evenodd; clip-rule:evenodd"
+viewBox="0 0 7446 7446"
+ xmlns:xlink="http://www.w3.org/1999/xlink">
+ <defs>
+  <style type="text/css">
+   <![CDATA[
+    .fil1 {fill:#596366}
+    .fil6 {fill:#6B7F9E}
+    .fil0 {fill:#83CF8F}
+    .fil8 {fill:#8597B1}
+    .fil4 {fill:#ECF0F1}
+    .fil3 {fill:#F0BA7D}
+    .fil10 {fill:#FCD34E}
+    .fil2 {fill:#FED298}
+    .fil5 {fill:#FF7069}
+    .fil9 {fill:#FFE356}
+    .fil7 {fill:white}
+   ]]>
+  </style>
+ </defs>
+ <g id="Layer_x0020_1">
+  <metadata id="CorelCorpID_0Corel-Layer"/>
+  <g id="_357004992">
+   <circle class="fil0" cx="3723" cy="3723" r="3723"/>
+   <g>
+    <path class="fil1" d="M2076 4923c237,-398 611,-861 231,-1564 -558,-2442 2015,-2937 2404,-1929 633,239 616,1553 291,2241 -14,283 -309,530 223,1260l38 -8 0 0c-690,200 -2458,108 -3187,0z"/>
+    <path class="fil2" d="M2752 3658c194,408 266,567 507,750 -38,703 -416,702 -836,921l2680 60c-451,-257 -874,-222 -914,-980 241,-183 313,-342 507,-750 48,25 97,59 136,15 39,-43 222,-607 189,-683 -33,-76 -65,-28 -115,7 3,-16 -39,204 -38,170 5,-266 -186,-501 -246,-1205 -553,1024 -2147,603 -2079,1035 -310,-217 67,668 75,677 39,43 88,10 136,-15z"/>
+    <path class="fil3" d="M3259 4408c-10,193 -47,333 -102,439l604 361 544 -325c-64,-112 -105,-262 -117,-475 -129,96 -224,198 -423,198 -208,0 -318,-99 -505,-198z"/>
+    <path class="fil4" d="M3130 4893c-68,107 -160,176 -266,233l0 0 889 1685 825 -1687c-118,-63 -218,-142 -288,-273l0 0 -564 281 -17 1 -501 -268 -79 28z"/>
+    <polygon class="fil5" points="3584,5138 3637,5295 3520,7083 3722,7269 3924,7083 3807,5295 3859,5138 3722,5131 "/>
+    <path class="fil6" d="M2865 5125c-296,158 -837,-33 -1174,512 -42,68 -67,671 -154,1099 614,446 1370,710 2187,710 818,0 1575,-264 2189,-712 -78,-428 -77,-1030 -119,-1097 -338,-546 -918,-354 -1214,-513l-825 1687 -889 -1685 0 0z"/>
+    <path class="fil7" d="M3194 4693l-134 280 398 670 261 -511 -525 -439zm1058 0l136 273 -401 676 -261 -511 525 -439z"/>
+    <path class="fil8" d="M2932 5086l797 1552 785 -1552c39,25 82,47 126,69l-911 1780 -919 -1782c43,-21 84,-43 122,-67z"/>
+   </g>
+   <g>
+    <circle class="fil7" cx="6244" cy="6244" r="1202"/>
+    <circle class="fil9" cx="6244" cy="6244" r="1052"/>
+    <polygon class="fil10" points="6248,5488 6430,6050 7020,6049 6542,6396 6726,6957 6248,6609 5771,6957 5955,6396 5476,6049 6067,6050 "/>
+    <polygon class="fil7" points="6244,5475 6426,6037 7016,6036 6538,6383 6721,6944 6244,6596 5767,6944 5951,6383 5472,6036 6063,6037 "/>
+   </g>
+  </g>
+ </g>
+</svg>

@@ -193,7 +193,6 @@ module app.pages.historyPage {
                            {financeId: financeId});
         }
 
-
     }
 
     /*-- MODULE DEFINITION --*/

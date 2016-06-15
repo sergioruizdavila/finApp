@@ -14,7 +14,6 @@ module app.core.util.giveReward {
         giveCard: () => void;
     }
 
-
     /****************************************/
     /*           CLASS DEFINITION           */
     /****************************************/
@@ -31,6 +30,8 @@ module app.core.util.giveReward {
         /*-- INJECT DEPENDENCIES --*/
         static $inject = ['finApp.models.card.CardService',
                           'finApp.models.user.UserService',
+                          'finApp.core.util.FunctionsUtilService',
+                          '$filter',
                           '$rootScope'];
 
         /**********************************/
@@ -38,6 +39,8 @@ module app.core.util.giveReward {
         /**********************************/
         constructor(private CardService: app.models.card.CardService,
                     private UserService: app.models.user.UserService,
+                    private FunctionsUtilService: app.core.util.functionsUtil.FunctionsUtilService,
+                    private $filter: angular.IFilterService,
                     private $rootScope: app.interfaces.IFinAppRootScope) {
             console.log('functionsUtil service called');
         }
@@ -55,42 +58,44 @@ module app.core.util.giveReward {
         * @return {app.models.card.Card} - user card reward
         */
         giveCard(): any {
+            //VARIABLES
             let self = this;
+            let randomCard = new app.models.card.UserCard();
+            //CONSTANTS
+            const NEW_STATUS = this.$filter('translate')('%reward.card.status.new.text');
+            const REPEATED_STATUS = this.$filter('translate')('%reward.card.status.repeated.text');
             //Get all cards
-            return this.CardService.getAllCards().then(
-                function(cards: any) {
-                    //2. Escogemos una al azar
-                    let randomCard = new app.models.card.UserCard();
-                    randomCard.Uid = cards[Math.floor(Math.random()*cards.length)].uid;
-                    //3. Asignamos una cantidad de cartas
-                    randomCard.Amount = 1;
-                    //4. Asignamos un status
-                    /*TODO: No podemos asignar un status asi, ya que si el usuario
-                    tiene una carta del mismo tipo, no deberia mostrar el Status Nuevo,
-                    sino 'Repetido' y mostrar la cantidad de cartas repetidas*/
-                    randomCard.Status = 'Nuevo';
-                    //5. Guardar la nueva carta en la base
-                    return self.CardService.saveUserCard(randomCard).then(
-                        function(err) {
-                            if (err) { throw 'Error: Not saved user card'; }
-                            //Get Card details
-                            return self.CardService.getCardDetails(randomCard).then(
-                                function(userCardDetails){
-                                    /*User received his/her reward, so we change
-                                    first time value to false */
-                                    if(self.$rootScope.User.FirstTime) {
-                                        self.$rootScope.User.FirstTime = false;
-                                        self.UserService.saveFirstTime(self.$rootScope.User.FirstTime);
-                                    }
-                                    
-                                    return userCardDetails;
-                                }
-                            );
-                        }
-                    );
-                }
-            );
+            return this.CardService.getAllCards().then(function(cards: any) {
 
+                return self.CardService.getCardsByUserId().then(function(userCards: Array<app.models.card.UserCard>) {
+
+                    randomCard.Uid = cards[Math.floor(Math.random()*cards.length)].uid;
+
+                    let position = self.FunctionsUtilService.getPositionByUid(userCards, randomCard.Uid);
+
+                    if(position != -1) {
+                        randomCard.Amount = userCards[position].Amount + 1;
+                        randomCard.Status = REPEATED_STATUS;
+                    } else {
+                        randomCard.Amount = 1;
+                        randomCard.Status = NEW_STATUS;
+                    }
+
+                    return self.CardService.saveUserCard(randomCard).then(function(err) {
+                        if (err) { throw 'Error: Not saved user card'; }
+                        //Get Card details
+                        return self.CardService.getCardDetails(randomCard).then(function(userCardDetails){
+                            //Change first time value to false
+                            if(self.$rootScope.User.FirstTime) {
+                                self.$rootScope.User.FirstTime = false;
+                                self.UserService.saveFirstTime(self.$rootScope.User.FirstTime);
+                            }
+                            return userCardDetails;
+                        });
+                    });
+                });
+
+            });
         }
 
 
