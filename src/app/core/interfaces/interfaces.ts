@@ -26,9 +26,11 @@ module app.interfaces {
         year: string;
     }
 
+    //Popup interface for all popup on FinApp
     export interface IPopup {
         subtitle?: string;
         textsList?: Array<string>;
+        cardData?: app.models.card.Card;
     }
 
 }

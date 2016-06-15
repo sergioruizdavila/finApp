@@ -136,6 +136,13 @@ module app.pages.addSalaryPage {
         private _saveSalary(): void {
             //Update User model
             this.$rootScope.User.Finance[this._financePos].Income.Salary = this.form.salary;
+            //TODO: IMPORTANT, Analizar si es mejor actualizar cada valor, ya que actualizar
+            // todo el objeto User es un gran lio, ya que tendriamos que hacer una function
+            // que mantenga los key en los array para que no se pierdan. Hasta el momento,
+            // los unicos valores que estan actualizando todo el objeto User son: salary,
+            // investment y business, de resto gastos, firstTime se actualizan solo estas
+            // propiedades
+            
             //Save salary on firebase
             this.FinanceService.saveFinance(
                 this.$rootScope.User.Finance[this._financePos],

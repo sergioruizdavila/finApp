@@ -16,6 +16,10 @@ module app.pages.historyPage {
 
     }
 
+    export interface IHistoryPageScope extends angular.IScope {
+        popupConfig: app.interfaces.IPopup;
+    }
+
 
     /****************************************/
     /*           CLASS DEFINITION           */
@@ -35,9 +39,12 @@ module app.pages.historyPage {
         static $inject = ['dataConfig',
                           'finApp.models.finance.FinanceService',
                           'finApp.core.util.FunctionsUtilService',
+                          'finApp.core.util.GiveRewardService',
+                          'finApp.core.util.CustomPopupService',
                           '$state',
                           '$stateParams',
                           '$filter',
+                          '$scope',
                           '$rootScope',
                           'finApp.auth.AuthService'];
 
@@ -47,9 +54,12 @@ module app.pages.historyPage {
         constructor(private dataConfig: IDataConfig,
                     private FinanceService: app.models.finance.IFinanceService,
                     private FunctionsUtilService: app.core.util.functionsUtil.FunctionsUtilService,
+                    private GiveRewardService: app.core.util.giveReward.GiveRewardService,
+                    private CustomPopupService: app.core.util.customPopup.CustomPopupService,
                     private $state: ng.ui.IStateService,
                     private $stateParams: IHistoryDataConfig,
                     private $filter: angular.IFilterService,
+                    public $scope: IHistoryPageScope,
                     private $rootScope: app.interfaces.IFinAppRootScope,
                     private auth: any) {
             this._init();
@@ -72,6 +82,20 @@ module app.pages.historyPage {
 
             //Validate if user is logged in
             this._isLoggedIn();
+
+            //Validate if is first time on app
+            if(this.$rootScope.User.FirstTime) {
+                //Give Card reward
+                this.GiveRewardService.giveCard().then(
+                    function(card) {
+                        self.$scope.popupConfig = {
+                            cardData: card
+                        };
+                        //Invoke card reward popup
+                        self.CustomPopupService.invokeCardRewardPopup(self.$scope);
+                    }
+                );
+            }
 
             //Get All User's finances in order to draw each block
             this._getFinances().then(function(finances:any) {
@@ -98,8 +122,7 @@ module app.pages.historyPage {
         * _getFinances
         * @description - get all Finances associated to user logged in
         * @function
-        * @params {any} authData - User Authenticated Data
-        * @return {angular.IPromise<Array<app.models.finance.Finance>>}
+        * @return {angular.IPromise<Array<app.models.finance.Finance>>} finances
         * promise - return user's finances data promise
         */
         private _getFinances(): angular.IPromise<AngularFireArray> {

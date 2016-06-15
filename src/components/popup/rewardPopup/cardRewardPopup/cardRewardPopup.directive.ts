@@ -99,11 +99,12 @@ module components.popup.rewardPopup.cardRewardPopup {
         constructor(public $scope: ICardRewardPopupScope,
                     private FunctionsUtilService: app.core.util.functionsUtil.FunctionsUtilService) {
             this.init();
+
         }
 
         /*-- INITIALIZE METHOD --*/
         private init() {
-            
+
             this.activate();
         }
 
@@ -115,7 +116,6 @@ module components.popup.rewardPopup.cardRewardPopup {
         /**********************************/
         /*            METHODS             */
         /**********************************/
-
 
     }
 

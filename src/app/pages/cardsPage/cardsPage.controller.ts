@@ -77,14 +77,14 @@ module app.pages.cardsPage {
 
             return this.CardService.getAllCards().then(
                 function(cards){
-                    //Saber cuanto es la cantidad total de cartas
+                    //Get cards total
                     let total = cards.length;
-                    //Buscamos si el usuario tiene alguna carta
+                    //Look for If user has any card
                     let album = cards.map(
                         function(card: any){
                             for (let i = 0; i < userCards.length; i++) {
                                 if(card.uid === userCards[i].uid){
-                                    //TODO: Quiere decir que el user tiene esa tarjeta
+                                    //User has this card
                                     var merge = _.merge(card, userCards[i]);
                                     return merge;
                                 } else  {

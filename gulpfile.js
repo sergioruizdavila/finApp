@@ -115,9 +115,9 @@ gulp.task('watch', function() {
     gulp.watch(paths.htmlTemplates, ['copy-html']).on('change', function (event){
         console.log('File' + event.path + ' was ' + event.type + ', running tasks...');
     });
-    gulp.watch(paths.appJs, ['copy-js']).on('change', function (event){
+    /*gulp.watch(paths.appJs, ['copy-js']).on('change', function (event){
         console.log('File' + event.path + ' was ' + event.type + ', running tasks...');
-    });
+    });*/
     //gulp.watch(paths.sass, ['sass']);
 });
 

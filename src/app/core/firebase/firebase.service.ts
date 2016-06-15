@@ -12,10 +12,12 @@ module app.core.firebase {
         createFirebase: () => Firebase;
         update: (url: string, data: any) => void;
         add: (url: string, data: any, callback: (err) => void) => void;
+        addWithPromise: (url: string, data: any) => angular.IPromise<any>;
         getArray: (url: string) => angular.IPromise<AngularFireArray>;
         getArrayByDate: (url: string, startDate: string, endDate: string) => angular.IPromise<AngularFireArray>;
         getObject: (url: string) => angular.IPromise<AngularFireObject>;
     }
+    
 
     export class FirebaseFactory implements IFirebaseFactory {
 
@@ -74,6 +76,19 @@ module app.core.firebase {
         }
 
         /**
+        * addWithPromise
+        * @description - add item on Array (return a promise) against Firebase
+        * @function
+        * @params {string} url - uri of firebase
+        * @params {any} data - item to send in order to add object on firebase
+        * @return {angular.IPromise<any>}
+        */
+        addWithPromise(url, data): angular.IPromise<any> {
+            let ref = new Firebase(this.baseUrl + url);
+            return ref.set(data);
+        }
+
+        /**
         * getArray
         * @description - get data array against Firebase
         * @function
@@ -119,7 +134,6 @@ module app.core.firebase {
                 return data;
             });
         }
-
 
 
         static instance(dataConfig: IDataConfig,

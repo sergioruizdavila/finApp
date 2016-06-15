@@ -22,6 +22,7 @@ module app.models.card {
         getAllCards: () => angular.IPromise<AngularFireArray>;
         getCardsByUserId: () => angular.IPromise<AngularFireArray>;
         getCardById: (uid: string) => angular.IPromise<AngularFireObject>;
+        getCardDetails: (userCard: UserCard) => angular.IPromise<Card>;
     }
 
 
@@ -83,9 +84,9 @@ module app.models.card {
         * @params {function} callback - function callback required to know if
         * It created a new user card
         */
-        saveUserCard(card, callback): void {
+        saveUserCard(card): any {
             let url = '/users/' + this.$rootScope.User.Uid + '/cards/' + card.uid;
-            this.FirebaseFactory.add(url, card, callback);
+            return this.FirebaseFactory.addWithPromise(url, card);
         }
 
         /**
@@ -126,10 +127,32 @@ module app.models.card {
         * a specific card
         */
         getCardById(uid): angular.IPromise<AngularFireObject> {
-            let url = '/cards/' + uid;
+            let url = '/typeOfCard/' + uid;
             return this.FirebaseFactory.getObject(url).then(function(data){
                 return data;
             });
+        }
+
+        /**
+        * getCardDetails
+        * @description - get card details
+        * @use - this.CardService.getCardDetails(userCard);
+        * @function
+        * @params {string} uid - card uid
+        * @return {angular.IPromise<AngularFireObject>} return a promise with
+        * a card details
+        */
+        //TODO: IMPORTANTE tomar esto como ejemplo para implementar el parseo de
+        // una Promise de tipo AngularFireArray o AngularFireObject a un modelo especifico
+        // en este caso 'Card'
+        getCardDetails(userCard): angular.IPromise<Card> {
+            return this.getCardById(userCard.Uid).then(
+                function(details) {
+                    let userCardDetails = new app.models.card.Card(_.merge(userCard, details));
+                    return userCardDetails;
+                }
+            );
+
         }
 
 

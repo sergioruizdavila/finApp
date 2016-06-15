@@ -10,8 +10,8 @@
 
             <div class="col-80">
                 <!-- TITLE CARD -->
-                <div class="cardRewardPopup_container__header__title text-center">
-                    Ganancias previstas
+                <div class="cardRewardPopup_container__header__title text-center" translate>
+                    {{vm.$scope.popupConfig.cardData.title}}
                 </div>
             </div>
 
@@ -40,25 +40,25 @@
         <!-- RIBBON -->
         <div class="ribbon_container">
             <div class="ribbon_container__ribbon ribbon_container__ribbon--green">
-                NUEVO
+                {{vm.$scope.popupConfig.cardData.status}}
             </div>
         </div>
         <!-- POPUP HEAD -->
         <div class="cardRewardPopup_container__popup__header popup-head">
             <h3 class="cardRewardPopup_container__popup__header__title popup-title">
                 <span class="fa_label fa_label__round fa_label--large fa_label--red_light">
-                    x2
+                    x{{vm.$scope.popupConfig.cardData.amount}}
                 </span>
             </h3>
         </div>
         <!-- POPUP BODY -->
         <div class="cardRewardPopup_container__popup__body popup-body text-center">
-            <img class="cardRewardPopup_container__popup__body__emblem" src="img/emblem.png">
+            <img class="cardRewardPopup_container__popup__body__emblem" src="img/card/{{vm.$scope.popupConfig.cardData.emblem}}">
         </div>
         <!-- POPUP FOOTER -->
         <div class="cardRewardPopup_container__popup__footer">
-            <div class="cardRewardPopup_container__popup__footer__description text-center">
-                Sabrás cuantas ganancias obtendrás este año
+            <div class="cardRewardPopup_container__popup__footer__description text-center" translate>
+                {{vm.$scope.popupConfig.cardData.description}}
             </div>
         </div>
     </div>
