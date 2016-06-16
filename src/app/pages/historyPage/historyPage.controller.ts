@@ -10,6 +10,7 @@ module app.pages.historyPage {
     /**********************************/
     export interface IHistoryPageController {
         activate: () => void;
+        goToDetail: (financeId: string) => void;
     }
 
     export interface IHistoryDataConfig extends ng.ui.IStateParamsService {
@@ -67,6 +68,7 @@ module app.pages.historyPage {
 
         /*-- INITIALIZE METHOD --*/
         private _init() {
+            /*TODO: TEST, remove when you don't need it*/
             this.GiveRewardService.giveCard();
             this.historyDataConfig = this.$stateParams;
 
@@ -95,11 +97,11 @@ module app.pages.historyPage {
                 //Give Card reward
                 this.GiveRewardService.giveCard().then(
                     function(card) {
-                        self.$scope.popupConfig = {
+                        let popupConfig = {
                             cardData: card
                         };
                         //Invoke card reward popup
-                        self.CustomPopupService.invokeCardRewardPopup(self.$scope);
+                        self.CustomPopupService.invokeCardRewardPopup(self.$scope, popupConfig);
                     }
                 );
             }
@@ -190,7 +192,7 @@ module app.pages.historyPage {
         * Go to finance detail page
         * @description this method is launched when user press one finance's block
         */
-        goToDetail(financeId: string): void {
+        goToDetail(financeId): void {
             this.$state.go('page.financeDetail',
                            {financeId: financeId});
         }

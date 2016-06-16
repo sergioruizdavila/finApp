@@ -10,6 +10,11 @@ module app.pages.cardsPage {
     /**********************************/
     export interface ICardsPageController {
         activate: () => void;
+        goToDetail: (card: app.models.card.Card) => void;
+    }
+
+    export interface ICardsPageScope extends angular.IScope {
+        popupConfig: app.interfaces.IPopup;
     }
 
     /****************************************/
@@ -28,15 +33,19 @@ module app.pages.cardsPage {
 
         /*-- INJECT DEPENDENCIES --*/
         static $inject = ['$state',
+                          '$scope',
                           'finApp.models.card.CardService',
-                          'finApp.core.util.GiveRewardService'];
+                          'finApp.core.util.GiveRewardService',
+                          'finApp.core.util.CustomPopupService'];
 
         /**********************************/
         /*           CONSTRUCTOR          */
         /**********************************/
         constructor(private $state: ng.ui.IStateService,
+                    public $scope: ICardsPageScope,
                     private CardService: app.models.card.CardService,
-                    private GiveRewardService: app.core.util.giveReward.GiveRewardService) {
+                    private GiveRewardService: app.core.util.giveReward.GiveRewardService,
+                    private CustomPopupService: app.core.util.customPopup.CustomPopupService) {
             this._init();
         }
 
@@ -108,6 +117,18 @@ module app.pages.cardsPage {
             );
         }
 
+
+        /*
+        * show card detail popup
+        * @description this method is launched when user press one card's block
+        */
+        goToDetail(card): void {
+            var popupConfig = {
+                cardData: card
+            };
+            //Invoke card reward popup
+            this.CustomPopupService.invokeCardRewardPopup(this.$scope, popupConfig);
+        }
 
 
     }

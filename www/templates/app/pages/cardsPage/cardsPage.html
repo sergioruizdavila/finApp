@@ -9,6 +9,7 @@
                     <!-- 3D BLOCK -->
                     <div class="block_3d"
                          ng-class="card.gray ? 'block_3d--mini_gray' : 'block_3d--mini_card'"
+                         ng-click="vm.goToDetail(card)"
                          ng-repeat="card in vm._userCardsList">
 
                          <!------------------------------->

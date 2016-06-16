@@ -89,13 +89,15 @@ body.finApp {
         text-overflow: ellipsis;
         overflow: hidden;
         border: 0;
+        font-family: $FA_FONT_FAMILY;
+        font-weight: bold;
+
 
         ///BUTTON_SIZE
         &--mini {
             height: 1.2em;
             width: 1.2em;
             font-size: 2.2rem;
-            font-weight: bold;
             padding: 0 8px;
             line-height: 32px;
         }
@@ -189,6 +191,12 @@ body.finApp {
         &__header--mini {
             position: relative;
             bottom: 3px;
+
+            &__icon {
+                position: relative;
+                right: 5px;
+                top: 2px;
+            }
 
             .button-inner {
                 font-weight: bold;

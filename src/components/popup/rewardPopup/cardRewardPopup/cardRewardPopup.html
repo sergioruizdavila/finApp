@@ -23,7 +23,7 @@
                                     fa_btn__3d--red_light
                                     fa_btn__header--mini padding"
                                     ng-click="vm.close()">
-                                        <i class="material-icons md-36">
+                                        <i class="fa_btn__header--mini__icon material-icons md-36">
                                             clear
                                         </i>
                     </button>
@@ -38,7 +38,8 @@
     <!-- POPUP -->
     <div class="cardRewardPopup_container__popup popup">
         <!-- RIBBON -->
-        <div class="ribbon_container">
+        <div ng-if="vm.$scope.popupConfig.cardData.status"
+         class="ribbon_container">
             <div class="ribbon_container__ribbon
                         ribbon_container__ribbon--large
                         ribbon_container__ribbon--green">
