@@ -71,7 +71,7 @@ module app.pages.addSalaryPage {
                     private $state: ng.ui.IStateService,
                     private $stateParams: IAddSalaryDataConfig,
                     private $rootScope: app.interfaces.IFinAppRootScope,
-                    private auth: any) {
+                    private auth: app.auth.IAuthService) {
             this._init();
         }
 
@@ -142,7 +142,7 @@ module app.pages.addSalaryPage {
             // los unicos valores que estan actualizando todo el objeto User son: salary,
             // investment y business, de resto gastos, firstTime se actualizan solo estas
             // propiedades
-            
+
             //Save salary on firebase
             this.FinanceService.saveFinance(
                 this.$rootScope.User.Finance[this._financePos],
@@ -160,10 +160,6 @@ module app.pages.addSalaryPage {
         * @description this method is launched when user press OK button
         */
         goToNext(): void {
-
-            /* TODO: REMOVE AFTER TEST: Invocar PopUp personalizado e*/
-            //this.customPopup.invokeCustomPopup({scope: this.$rootScope});
-
             //Save Salary value
             this._saveSalary();
 

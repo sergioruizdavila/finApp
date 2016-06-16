@@ -88,6 +88,8 @@
     "__REWARDS__":"",
     "%reward.card.status.new.text": "NUEVO",
     "%reward.card.status.repeated.text": "REPETIDO",
+    "%reward.card.use.button.text": "USAR",
+    "%reward.card.save.button.text": "GUARDAR",
     "%reward.card.1.title.text": "Ganancias previstas",
     "%reward.card.1.description.text": "Sabrás cuantas ganancias obtendrás este año",
     "%reward.card.1.result.text": "Para ahorrar 100'000.000 con los ingresos y gastos que tienes demoraras aproximadamente 8 años",

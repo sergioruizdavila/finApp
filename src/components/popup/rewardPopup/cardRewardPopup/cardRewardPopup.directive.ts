@@ -70,6 +70,7 @@ module components.popup.rewardPopup.cardRewardPopup {
     /**********************************/
     export interface ICardRewardPopupController {
         activate: () => void;
+        close:() => void;
     }
 
     export interface ICardRewardPopupScope extends angular.IScope {
@@ -91,12 +92,15 @@ module components.popup.rewardPopup.cardRewardPopup {
         // --------------------------------
 
         /*-- INJECT DEPENDENCIES --*/
-        static $inject = ['$scope', 'finApp.core.util.FunctionsUtilService'];
+        static $inject = ['$scope',
+                          '$element',
+                          'finApp.core.util.FunctionsUtilService'];
 
         /**********************************/
         /*           CONSTRUCTOR          */
         /**********************************/
         constructor(public $scope: ICardRewardPopupScope,
+                    public $element: Element,
                     private FunctionsUtilService: app.core.util.functionsUtil.FunctionsUtilService) {
             this.init();
 
@@ -104,7 +108,6 @@ module components.popup.rewardPopup.cardRewardPopup {
 
         /*-- INITIALIZE METHOD --*/
         private init() {
-
             this.activate();
         }
 
@@ -116,6 +119,15 @@ module components.popup.rewardPopup.cardRewardPopup {
         /**********************************/
         /*            METHODS             */
         /**********************************/
+
+        /*
+        * close Popup
+        * @description this method is launched when user press X button
+        */
+        close(): void {
+            this.$scope.$destroy();
+            this.$element.remove();
+        }
 
     }
 

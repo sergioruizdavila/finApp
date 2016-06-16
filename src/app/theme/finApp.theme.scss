@@ -76,7 +76,8 @@
 /**********************************************************/
 body.finApp {
 
-    font-family: $FA-FONT-FAMILY;
+    font-family: $FA_FONT_FAMILY;
+    color: $FA_COLORS_DARK;
 
 
     /*               BUTTONS               */
@@ -278,9 +279,16 @@ body.finApp {
     .fa_label {
 
         ///LABEL_SIZE
+        &--small {
+            padding: 5px;
+            font-size: 20px;
+            font-weight: bold;
+        }
+
         &--large {
             padding: 10px;
             font-size: 25px;
+            font-weight: bold;
         }
 
         ///LABEL_COLOR
@@ -292,6 +300,11 @@ body.finApp {
         &--red_light {
             background-color: $FA_BTN_ADD;
             color: #FFF;
+        }
+
+        &--red_light_reverse {
+            background-color: transparent;
+            color: $FA_BTN_ADD;
         }
 
         ///LABEL_TYPE
@@ -323,7 +336,7 @@ body.finApp {
         }
 
         &__title {
-            font-family: $FA-FONT-FAMILY!important;
+            font-family: $FA_FONT_FAMILY!important;
             position: relative !important;
             font-size: 25px!important;
             line-height: 45px!important;
@@ -403,20 +416,34 @@ body.finApp {
         top: -3px;
         right: -3px;
 
-        &__ribbon--green {
-            font: bold 15px Sans-Serif;
-            color: #FFF;
+        &__ribbon {
             text-align: center;
             -webkit-transform: rotate(45deg);
             -moz-transform:    rotate(45deg);
             -ms-transform:     rotate(45deg);
             -o-transform:      rotate(45deg);
             position: relative;
-            padding: 7px 0;
-            left: -5px;
-            top: 15px;
-            width: 120px;
-            background-color: #51D075;
+
+            &--green {
+                background-color: $FA_COLORS_SUCCESS;
+                color: $FA_NAVBAR;
+            }
+
+            &--mini {
+                font: bold 10px Sans-Serif;
+                padding: 3px 0;
+                width: 115px;
+                left: 9px;
+                top: 10px;
+            }
+
+            &--large {
+                font: bold 15px Sans-Serif;
+                padding: 7px 0;
+                width: 120px;
+                left: -5px;
+                top: 15px;
+            }
         }
     }
 
@@ -466,12 +493,32 @@ body.finApp {
         }
 
         &--mini_card {
+            position: relative;
+            padding: 8px 8px 4px 8px;
             width: 7rem;
             height: 8rem;
             background-color: $FA_NAVBAR;
             display: flex;
             justify-content: center;
             align-items: center;
+
+            &__emblem {
+                width: 60%;
+                height: 60%;
+            }
+
+            &__title {
+                text-align: center;
+                line-height: 13px;
+                margin-bottom: 2px;
+                font-size: 12px;
+            }
+
+            &__fa_label {
+                position: absolute;
+                top: 0;
+                left: 0;
+            }
         }
 
         &--small {
@@ -693,7 +740,7 @@ body.finApp {
             padding: 20px 18px 10px;
 
             .popup-title {
-                font-family: $FA-FONT-FAMILY!important;
+                font-family: $FA_FONT_FAMILY!important;
                 font-size: 21px;
                 color: #4E4E4E;
                 font-weight: bold;
@@ -723,7 +770,7 @@ body.finApp {
             text-align: right;
 
             .button {
-                font-family: $FA-FONT-FAMILY!important;
+                font-family: $FA_FONT_FAMILY!important;
                 background-color: transparent;
                 font-size: 20px;
                 font-weight: bold;
@@ -849,9 +896,9 @@ body.finApp {
 /*                       FONT FACES                       */
 /**********************************************************/
 @font-face {
-    font-family: $FA-FONT-FAMILY;
-    src:url("#{$FA-FONT-PATH}/ProximaNovaSoft-Regular.otf");
-    src: url("#{$FA-FONT-PATH}/ProximaNovaSoft-Regular.otf") format('opentype');
+    font-family: $FA_FONT_FAMILY;
+    src:url("#{$FA_FONT_PATH}/ProximaNovaSoft-Regular.otf");
+    src: url("#{$FA_FONT_PATH}/ProximaNovaSoft-Regular.otf") format('opentype');
     font-weight: normal;
     font-style: normal;
 }
@@ -863,8 +910,8 @@ body.finApp {
   src: url(MaterialIcons-Regular.eot); /* For IE6-8 */
   src: local('Material Icons'),
        local('MaterialIcons-Regular'),
-       url('#{$FA-FONT-PATH}/materialDesign/MaterialIcons-Regular.woff2') format('woff2'),
-       url('#{$FA-FONT-PATH}/materialDesign/MaterialIcons-Regular.woff') format('woff'),
-       url('#{$FA-FONT-PATH}/materialDesign/MaterialIcons-Regular.ttf') format('truetype');
+       url('#{$FA_FONT_PATH}/materialDesign/MaterialIcons-Regular.woff2') format('woff2'),
+       url('#{$FA_FONT_PATH}/materialDesign/MaterialIcons-Regular.woff') format('woff'),
+       url('#{$FA_FONT_PATH}/materialDesign/MaterialIcons-Regular.ttf') format('truetype');
 }
 /******************** END - FONT FACES ********************/

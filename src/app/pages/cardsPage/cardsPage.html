@@ -7,75 +7,51 @@
 
                 <div class="block_3d_container block_3d_container--flex">
                     <!-- 3D BLOCK -->
-                    <div class="block_3d block_3d--inline"
+                    <div class="block_3d"
                          ng-class="card.gray ? 'block_3d--mini_gray' : 'block_3d--mini_card'"
                          ng-repeat="card in vm._userCardsList">
-                        <!-- GRAY CARD -->
+
+                         <!------------------------------->
+                         <!--        GRAY CARD          -->
+                         <!------------------------------->
                         <i ng-if="card.gray"
                            class="material-icons md-gray md-72">
                            filter_b_and_w
                         </i>
-                        <!-- USER CARD -->
+
+                        <!------------------------------->
+                        <!--        USER CARD          -->
+                        <!------------------------------->
+
+                        <!-- AMOUNT -->
+                        <span ng-if="!card.gray && card.amount > 1"
+                              class="block_3d--mini_card__fa_label
+                                     fa_label
+                                     fa_label--small
+                                     fa_label--red_light_reverse">
+                            x{{card.amount}}
+                        </span>
+                        <!-- RIBBON -->
+                        <div ng-if="!card.gray && card.status"
+                             class="ribbon_container">
+                            <div class="ribbon_container__ribbon
+                                        ribbon_container__ribbon--mini
+                                        ribbon_container__ribbon--green">
+                                {{card.status}}
+                            </div>
+                        </div>
+                        <!-- EMBLEM -->
+                        <img ng-if="!card.gray"
+                             class="block_3d--mini_card__emblem"
+                             ng-src="img/card/{{card.emblem}}">
+                        <!-- TITLE -->
                         <p ng-if="!card.gray"
-                           style="text-align: center;padding: 10px;" translate>
+                           class="block_3d--mini_card__title"
+                           translate>
                             {{card.title}}
                         </p>
+
                     </div>
-
-                    <!-- 3D BLOCK -->
-                    <!--<div class="block_3d block_3d--inline block_3d--mini_gray">
-                        <i class="block_3d--mini_gray__emblem
-                                  material-icons">pie_chart</i>
-                    </div>
-
-
-                    <div class="block_3d block_3d--inline block_3d--mini_gray">
-                        <i class="block_3d--mini_gray__emblem
-                                  material-icons">monetization_on</i>
-                    </div>
-
-
-                    <div class="block_3d block_3d--inline block_3d--mini_gray">
-                        <i class="block_3d--mini_gray__emblem
-                                  material-icons">pie_chart</i>
-                    </div>
-
-
-                    <div class="block_3d block_3d--inline block_3d--mini_gray">
-                        <i class="block_3d--mini_gray__emblem
-                                  material-icons">pie_chart</i>
-                    </div>
-
-
-                    <div class="block_3d block_3d--inline block_3d--mini_gray">
-                        <i class="block_3d--mini_gray__emblem
-                                  material-icons">bubble_chart</i>
-                    </div>
-
-
-                    <div class="block_3d block_3d--inline block_3d--mini_gray">
-                        <i class="block_3d--mini_gray__emblem
-                                  material-icons">filter_b_and_w</i>
-                    </div>
-
-
-                    <div class="block_3d block_3d--inline block_3d--mini_gray">
-                        <i class="block_3d--mini_gray__emblem
-                                  material-icons">pie_chart</i>
-                    </div>
-
-
-                    <div class="block_3d block_3d--inline block_3d--mini_gray">
-                        <i class="block_3d--mini_gray__emblem
-                                  material-icons">pie_chart</i>
-                    </div>
-
-
-                    <div class="block_3d block_3d--inline block_3d--mini_gray">
-                        <i class="block_3d--mini_gray__emblem
-                                  material-icons">pie_chart</i>
-                    </div>-->
-
             </div>
 
         </div>

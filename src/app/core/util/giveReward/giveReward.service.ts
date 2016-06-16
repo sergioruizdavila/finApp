@@ -63,19 +63,18 @@ module app.core.util.giveReward {
             let randomCard = new app.models.card.UserCard();
             //CONSTANTS
             const NEW_STATUS = this.$filter('translate')('%reward.card.status.new.text');
-            const REPEATED_STATUS = this.$filter('translate')('%reward.card.status.repeated.text');
             //Get all cards
             return this.CardService.getAllCards().then(function(cards: any) {
 
                 return self.CardService.getCardsByUserId().then(function(userCards: Array<app.models.card.UserCard>) {
 
                     randomCard.Uid = cards[Math.floor(Math.random()*cards.length)].uid;
-
+                    //To know if the user already has this card
                     let position = self.FunctionsUtilService.getPositionByUid(userCards, randomCard.Uid);
 
                     if(position != -1) {
                         randomCard.Amount = userCards[position].Amount + 1;
-                        randomCard.Status = REPEATED_STATUS;
+                        randomCard.Status = '';
                     } else {
                         randomCard.Amount = 1;
                         randomCard.Status = NEW_STATUS;

@@ -80,7 +80,7 @@ module app.pages.addNecessaryExpensePage {
                     private $stateParams: IAddNecessaryExpenseDataConfig,
                     private $scope: IAddNecessaryExpensePageScope,
                     private $rootScope: app.interfaces.IFinAppRootScope,
-                    private auth: any) {
+                    private auth: app.auth.IAuthService) {
 
             this._init();
 

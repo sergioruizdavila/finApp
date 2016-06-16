@@ -67,7 +67,7 @@ module app.pages.cardsPage {
         /**********************************/
         /*            METHODS             */
         /**********************************/
-        private _getUserCardsList(): angular.IPromise<AngularFireArray> {
+        private _getUserCardsList(): angular.IPromise<Array<app.models.card.UserCard>> {
             return this.CardService.getCardsByUserId();
         }
         //TODO: Investigar bien como se gestiona el tipo de dato: Promise, ya que aqui

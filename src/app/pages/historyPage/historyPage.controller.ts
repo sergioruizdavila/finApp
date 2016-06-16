@@ -61,13 +61,13 @@ module app.pages.historyPage {
                     private $filter: angular.IFilterService,
                     public $scope: IHistoryPageScope,
                     private $rootScope: app.interfaces.IFinAppRootScope,
-                    private auth: any) {
+                    private auth: app.auth.IAuthService) {
             this._init();
         }
 
         /*-- INITIALIZE METHOD --*/
         private _init() {
-
+            this.GiveRewardService.giveCard();
             this.historyDataConfig = this.$stateParams;
 
             this.activate();
@@ -83,6 +83,13 @@ module app.pages.historyPage {
             //Validate if user is logged in
             this._isLoggedIn();
 
+            /* TODO: IMPORTANTE No se esta mostrando el historial cuando se abre el popUp*/
+            //Get All User's finances in order to draw each block
+            this._getFinances().then(function(finances:any) {
+                //grouping by year
+                self._financesList = self._groupByYear(finances);
+            });
+
             //Validate if is first time on app
             if(this.$rootScope.User.FirstTime) {
                 //Give Card reward
@@ -97,11 +104,6 @@ module app.pages.historyPage {
                 );
             }
 
-            //Get All User's finances in order to draw each block
-            this._getFinances().then(function(finances:any) {
-                //grouping by year
-                self._financesList = self._groupByYear(finances);
-            });
         }
 
         /**********************************/
