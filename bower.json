@@ -12,7 +12,8 @@
     "firebase-util": "^0.2.5",
     "angularfire": "^1.1.4",
     "material-design-icons": "^2.2.3",
-    "animate.css": "^3.5.2"
+    "animate.css": "^3.5.2",
+    "ngCordova": "^0.1.26-alpha"
   },
   "devDependencies": {
     "ionic": "driftyco/ionic-bower#1.2.4",
