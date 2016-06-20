@@ -55,7 +55,8 @@
     </ion-view>
 
     <ion-footer-bar class="progressivePage__footer"
-                    ng-if="vm.addSalaryDataConfig.action.type != 'Edit'">
+                    ng-if="vm.addSalaryDataConfig.action.type != 'Edit'"
+                    keyboard-attach>
         <button class="fa_btn fa_btn--blue fa_btn--block fa_btn--large fa_btn__3d fa_btn__3d--blue padding"
             ng-click="vm.goToNext()"
             ng-disabled="vm.form.salary.num == 0 || vm.form.salary.num == null">

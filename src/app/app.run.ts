@@ -34,11 +34,7 @@
 
         $ionicPlatform.ready(function() {
 
-            // $cordovaNativeAudio.preloadSimple('snare', 'assets/audio/snare.mp3').then(
-            //     function(){
-            //         $cordovaNativeAudio.play('snare');
-            //     }
-            // );
+            $cordovaNativeAudio.preloadSimple('win', 'assets/audio/win.mp3');
 
             $rootScope.auth = auth;
             $rootScope.session = session;
@@ -81,6 +77,7 @@
     }
 
 })();
+
 
 
 (function (angular) {

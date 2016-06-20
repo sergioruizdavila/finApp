@@ -95,6 +95,7 @@ module components.popup.rewardPopup.cardRewardPopup {
         /*-- INJECT DEPENDENCIES --*/
         static $inject = ['$scope',
                           '$element',
+                          '$cordovaNativeAudio',
                           'finApp.core.util.FunctionsUtilService'];
 
         /**********************************/
@@ -102,6 +103,7 @@ module components.popup.rewardPopup.cardRewardPopup {
         /**********************************/
         constructor(public $scope: ICardRewardPopupScope,
                     public $element: Element,
+                    private $cordovaNativeAudio: any,
                     private FunctionsUtilService: app.core.util.functionsUtil.FunctionsUtilService) {
             this.init();
         }
@@ -109,6 +111,9 @@ module components.popup.rewardPopup.cardRewardPopup {
         /*-- INITIALIZE METHOD --*/
         private init() {
             this._opened = false;
+            if(this.$scope.popupConfig.withPack){
+                this.$cordovaNativeAudio.play('win');
+            }
             this.activate();
         }
 
