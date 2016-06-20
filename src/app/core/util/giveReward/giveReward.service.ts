@@ -11,7 +11,7 @@ module app.core.util.giveReward {
     /*           INTERFACES           */
     /**********************************/
     export interface IGiveRewardService {
-        giveCard: (type: string) => void;
+        giveCard: (formulaId: string) => void;
     }
 
     /****************************************/
@@ -52,9 +52,10 @@ module app.core.util.giveReward {
         /**
         * giveCard
         * @description - give reward: Card
-        * @use - this.RewardService.giveCard();
+        * @use - this.RewardService.giveCard('1'); if user send formulaId, give a
+        * specific card, if not, give a random card.
         * @function
-        * @params {string} userId - logged user uid
+        * @params {string} formulaId - formula id
         * @return {app.models.card.Card} - user card reward
         */
         giveCard(formulaId = '0'): any {
