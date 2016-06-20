@@ -19,6 +19,15 @@
     /* -- POPUP CONTAINER POPUP -- */
     &__popup {
 
+        &__pack {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background-color: #9E9E9E;
+            background-image: url('../img/pack.png');
+            background-size: 100% 100%;
+        }
+
         &__header {
 
         }

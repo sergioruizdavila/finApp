@@ -10,7 +10,10 @@
 
             <div class="col-80">
                 <!-- TITLE CARD -->
-                <div class="cardRewardPopup_container__header__title text-center" translate>
+                <div class="cardRewardPopup_container__header__title text-center"
+                            ng-show="vm._opened || !vm.$scope.popupConfig.withPack"
+                            ng-class="{'animated delay-1s duration-500ms fadeIn': vm._opened}"
+                            translate>
                     {{vm.$scope.popupConfig.cardData.title}}
                 </div>
             </div>
@@ -37,9 +40,16 @@
 
     <!-- POPUP -->
     <div class="cardRewardPopup_container__popup popup">
+        <!-- PACK -->
+        <div class="cardRewardPopup_container__popup__pack"
+             ng-show="vm.$scope.popupConfig.withPack"
+             ng-class="{'animated duration-500ms slideOutDown': vm._opened}"
+             ng-click="vm.openPack()"></div>
         <!-- RIBBON -->
         <div ng-if="vm.$scope.popupConfig.cardData.status"
-         class="ribbon_container">
+             ng-show="vm._opened || !vm.$scope.popupConfig.withPack"
+             class="ribbon_container"
+             ng-class="{'animated delay-750ms duration-500ms fadeInDown': vm._opened}">
             <div class="ribbon_container__ribbon
                         ribbon_container__ribbon--large
                         ribbon_container__ribbon--green">
@@ -69,7 +79,10 @@
     </div>
 
     <!-- SAVE BUTTON AND USE BUTTON -->
-    <div class="cardRewardPopup_container__footer text-center">
+    <div class="cardRewardPopup_container__footer
+                text-center"
+         ng-show="vm._opened || !vm.$scope.popupConfig.withPack"
+         ng-class="{'animated delay-750ms duration-500ms fadeIn': vm._opened}">
         <button class="fa_btn
                        fa_btn--green
                        fa_btn__3d

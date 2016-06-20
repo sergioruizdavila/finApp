@@ -19,7 +19,7 @@ module app.models.card {
         ref: any;
         createNewCard: (card: Card, callback: (err) => void) => void;
         saveUserCard: (card: UserCard, callback: (err) => void) => void;
-        getAllCards: () => angular.IPromise<AngularFireArray>;
+        getAllCards: () => angular.IPromise<Array<app.models.card.Card>>;
         getCardsByUserId: () => angular.IPromise<Array<app.models.card.UserCard>>;
         getCardById: (uid: string) => angular.IPromise<AngularFireObject>;
         getCardDetails: (userCard: UserCard) => angular.IPromise<Card>;
@@ -95,10 +95,15 @@ module app.models.card {
         * @return {angular.IPromise<AngularFireArray>} return a promise with
         * cards list
         */
-        getAllCards(): angular.IPromise<AngularFireArray> {
+        getAllCards(): angular.IPromise<Array<app.models.card.Card>> {
             let url = '/typeOfCard/';
             return this.FirebaseFactory.getArray(url).then(function(data){
-                return data;
+                let cards = [];
+                for (let i = 0; i < data.length; i++) {
+                    let cardInstance = new app.models.card.Card(data[i]);
+                    cards.push(cardInstance);
+                }
+                return cards;
             }).catch(function(err) {
                 console.log(err);
                 return err;
@@ -155,9 +160,6 @@ module app.models.card {
         * @return {angular.IPromise<AngularFireObject>} return a promise with
         * a card details
         */
-        //TODO: IMPORTANTE tomar esto como ejemplo para implementar el parseo de
-        // una Promise de tipo AngularFireArray o AngularFireObject a un modelo especifico
-        // en este caso 'Card'
         getCardDetails(userCard): angular.IPromise<Card> {
             return this.getCardById(userCard.Uid).then(function(details) {
                 let userCardDetails = new app.models.card.Card(_.merge(userCard, details));
@@ -166,7 +168,6 @@ module app.models.card {
                 console.log(err);
                 return err;
             });
-
         }
 
 

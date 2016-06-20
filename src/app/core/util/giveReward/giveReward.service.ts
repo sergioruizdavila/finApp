@@ -11,7 +11,7 @@ module app.core.util.giveReward {
     /*           INTERFACES           */
     /**********************************/
     export interface IGiveRewardService {
-        giveCard: () => void;
+        giveCard: (type: string) => void;
     }
 
     /****************************************/
@@ -57,18 +57,30 @@ module app.core.util.giveReward {
         * @params {string} userId - logged user uid
         * @return {app.models.card.Card} - user card reward
         */
-        giveCard(): any {
+        giveCard(formulaId = '0'): any {
             //VARIABLES
             let self = this;
             let randomCard = new app.models.card.UserCard();
             //CONSTANTS
             const NEW_STATUS = this.$filter('translate')('%reward.card.status.new.text');
             //Get all cards
-            return this.CardService.getAllCards().then(function(cards: any) {
+            return this.CardService.getAllCards().then(function(cards) {
 
-                return self.CardService.getCardsByUserId().then(function(userCards: Array<app.models.card.UserCard>) {
+                return self.CardService.getCardsByUserId().then(function(userCards) {
 
-                    randomCard.Uid = cards[Math.floor(Math.random()*cards.length)].uid;
+                    if(formulaId != '0') {
+
+                        for (let i = 0; i < cards.length; i++) {
+                            if(cards[i].FormulaId == formulaId) {
+                                randomCard.Uid = cards[i].Uid;
+                                break;
+                            }
+                        }
+
+                    } else {
+                        randomCard.Uid = cards[Math.floor(Math.random()*cards.length)].Uid;
+                    }
+
                     //To know if the user already has this card
                     let position = self.FunctionsUtilService.getPositionByUid(userCards, randomCard.Uid);
 

@@ -124,7 +124,8 @@ module app.pages.cardsPage {
         */
         goToDetail(card): void {
             var popupConfig = {
-                cardData: card
+                cardData: card,
+                withPack: false
             };
             //Invoke card reward popup
             this.CustomPopupService.invokeCardRewardPopup(this.$scope, popupConfig);

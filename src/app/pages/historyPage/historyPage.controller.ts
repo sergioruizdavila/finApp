@@ -69,7 +69,7 @@ module app.pages.historyPage {
         /*-- INITIALIZE METHOD --*/
         private _init() {
             /*TODO: TEST, remove when you don't need it*/
-            this.GiveRewardService.giveCard();
+            //this.GiveRewardService.giveCard('1');
             this.historyDataConfig = this.$stateParams;
 
             this.activate();
@@ -85,7 +85,6 @@ module app.pages.historyPage {
             //Validate if user is logged in
             this._isLoggedIn();
 
-            /* TODO: IMPORTANTE No se esta mostrando el historial cuando se abre el popUp*/
             //Get All User's finances in order to draw each block
             this._getFinances().then(function(finances:any) {
                 //grouping by year
@@ -95,10 +94,11 @@ module app.pages.historyPage {
             //Validate if is first time on app
             if(this.$rootScope.User.FirstTime) {
                 //Give Card reward
-                this.GiveRewardService.giveCard().then(
+                this.GiveRewardService.giveCard('1').then(
                     function(card) {
                         let popupConfig = {
-                            cardData: card
+                            cardData: card,
+                            withPack: true
                         };
                         //Invoke card reward popup
                         self.CustomPopupService.invokeCardRewardPopup(self.$scope, popupConfig);
@@ -122,6 +122,7 @@ module app.pages.historyPage {
                 event.preventDefault();
             }
         }
+
         /**
         * _getFinances
         * @description - get all Finances associated to user logged in

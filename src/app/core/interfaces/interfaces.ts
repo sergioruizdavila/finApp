@@ -31,6 +31,8 @@ module app.interfaces {
         subtitle?: string;
         textsList?: Array<string>;
         cardData?: app.models.card.Card;
+        opened?: boolean;
+        withPack?: boolean;
     }
 
 }

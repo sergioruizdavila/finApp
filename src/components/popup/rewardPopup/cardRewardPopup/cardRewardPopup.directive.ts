@@ -89,6 +89,7 @@ module components.popup.rewardPopup.cardRewardPopup {
         /*           PROPERTIES           */
         /**********************************/
         list: Array<string>;
+        private _opened: boolean;
         // --------------------------------
 
         /*-- INJECT DEPENDENCIES --*/
@@ -103,11 +104,11 @@ module components.popup.rewardPopup.cardRewardPopup {
                     public $element: Element,
                     private FunctionsUtilService: app.core.util.functionsUtil.FunctionsUtilService) {
             this.init();
-
         }
 
         /*-- INITIALIZE METHOD --*/
         private init() {
+            this._opened = false;
             this.activate();
         }
 
@@ -119,6 +120,15 @@ module components.popup.rewardPopup.cardRewardPopup {
         /**********************************/
         /*            METHODS             */
         /**********************************/
+
+        /*
+        * open Pack
+        * @description - this method is launched when user press pack,
+        * and active slideOutDown animation
+        */
+        openPack(): void {
+            this._opened = true;
+        }
 
         /*
         * close Popup
