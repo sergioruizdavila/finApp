@@ -68,8 +68,6 @@ module app.pages.historyPage {
 
         /*-- INITIALIZE METHOD --*/
         private _init() {
-            /*TODO: TEST, remove when you don't need it*/
-            //this.GiveRewardService.giveCard('1');
             this.historyDataConfig = this.$stateParams;
 
             this.activate();

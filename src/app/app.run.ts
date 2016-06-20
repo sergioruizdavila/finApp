@@ -34,7 +34,8 @@
 
         $ionicPlatform.ready(function() {
 
-            $cordovaNativeAudio.preloadSimple('win', 'assets/audio/win.mp3');
+            /*TODO: Uncomment when we will deploy to device
+            $cordovaNativeAudio.preloadSimple('win', 'assets/audio/win.mp3'); */
 
             $rootScope.auth = auth;
             $rootScope.session = session;

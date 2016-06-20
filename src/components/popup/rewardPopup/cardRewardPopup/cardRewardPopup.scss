@@ -1,4 +1,10 @@
+.fa_backdrop {
+    z-index: 10;
+}
+
 .cardRewardPopup_container {
+
+    z-index: 10;
 
     /* -- POPUP CONTAINER HEADER -- */
     &__header {

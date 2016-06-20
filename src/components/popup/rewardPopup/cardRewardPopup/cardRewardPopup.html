@@ -1,4 +1,4 @@
-<div class="backdrop visible active"></div>
+<div class="fa_backdrop backdrop visible active"></div>
 
 <div class="click-block click-block-hide"></div>
 
@@ -21,15 +21,25 @@
             <div class="col text-right">
                 <!-- CLOSE BUTTON -->
                 <div class="cardRewardPopup_container__header__close">
-                    <button class="fa_btn fa_btn--red_light
-                                    fa_btn--mini fa_btn__3d
-                                    fa_btn__3d--red_light
-                                    fa_btn__header--mini padding"
-                                    ng-click="vm.close()">
-                                        <i class="fa_btn__header--mini__icon material-icons md-36">
-                                            clear
-                                        </i>
+                    <button class="fa_btn fa_btn__3d
+                                   fa_btn--red_light fa_btn__3d--red_light
+                                   fa_btn--mini"
+                            ng-show="vm._opened || !vm.$scope.popupConfig.withPack"
+                            ng-click="vm.close()">
+                            <i class="fa_btn--mini__icon material-icons md-36">
+                                clear
+                            </i>
                     </button>
+                    <button class="fa_btn fa_btn--round
+                                   fa_btn--red_light_reverse
+                                   fa_btn--mini"
+                            ng-hide="vm._opened || !vm.$scope.popupConfig.withPack"
+                            ng-click="vm.showTipPopup()">
+                            <i class="fa_btn--mini__icon material-icons md-36">
+                                card_giftcard
+                            </i>
+                    </button>
+
                 </div>
             </div>
 

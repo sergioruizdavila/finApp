@@ -132,6 +132,17 @@ body.finApp {
             font-size: 2.2rem;
             padding: 0 8px;
             line-height: 32px;
+
+            &__icon {
+                position: relative;
+                right: 5px;
+                top: 2px;
+            }
+        }
+
+        &--small {
+            width: 1.5em;
+            height: 1.5em;
         }
 
         &--large {
@@ -156,6 +167,11 @@ body.finApp {
         &--red_light {
             background-color: $FA_BTN_ADD;
             color: #FFF;
+        }
+
+        &--red_light_reverse {
+            background-color: #FFF;
+            color: $FA_BTN_ADD;
         }
 
         &--green {
@@ -212,6 +228,12 @@ body.finApp {
                 position: relative;
                 bottom: 2px;
             }
+        }
+
+        &--round {
+            -webkit-border-radius: 30px;
+            -moz-border-radius: 30px;
+            border-radius: 30px;
         }
 
         ///BUTTONS_HEADER

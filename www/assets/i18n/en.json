@@ -30,6 +30,8 @@
     "%popup.tip.example.new_unnecessary_expense.example7.text": "Plan del celular",
     "%popup.tip.example.new_unnecessary_expense.example8.text": "Taxis",
     "%popup.tip.example.ok_button.text": "GRACIAS",
+    "%popup.tip.card.title.text": "Tarjeta Financiera",
+    "%popup.tip.card.body_message.text": "Puedes usar estas tarjetas para recibir alertas o consejos, basados en tu economia actual. Puedes usar cada tarjeta una sola vez, no la desaproveches.",
     "%popup.create_user.ok_button.text": "CREAR",
     "%popup.create_user.title.text": "¿Crear una nueva cuenta?",
     "%popup.create_user.body_message.text": "Vamos a crear una nueva cuenta. Si ya tienes una, cancela e inicia sesión con tu email.",
