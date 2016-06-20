@@ -22,6 +22,7 @@ module app.models.user {
         getAllUsers: () => angular.IPromise<AngularFireArray>;
         bindingUser: (uid: string, $rootScope: app.interfaces.IFinAppRootScope) => any;
         createNewUser: (newUser: app.models.user.User, callback: (err) => void) => void;
+        saveFirstTime: (firstTime: string) => void;
     }
 
 
@@ -74,6 +75,9 @@ module app.models.user {
             let url = '/users/' + uid;
             return this.FirebaseFactory.getObject(url).then(function(data){
                 return data;
+            }).catch(function(err) {
+                console.log(err);
+                return err;
             });
         }
 
@@ -86,7 +90,6 @@ module app.models.user {
         */
         getUserByEmail(email): AngularFireObject {
             let userRef = this.ref.child(email);
-            // return it as a synchronized object
             return this.$firebaseObject(userRef);
         }
 
@@ -101,6 +104,9 @@ module app.models.user {
             let url = '/users/';
             return this.FirebaseFactory.getArray(url).then(function(data){
                 return data;
+            }).catch(function(err) {
+                console.log(err);
+                return err;
             });
         }
 
@@ -120,6 +126,19 @@ module app.models.user {
             userRef.set(newUser, callback); */
         }
 
+        /**
+        * saveFirstTime
+        * @description - update user first time property on firebase
+        * @function
+        * @params {string} firstTime - user first time data
+        * @params {function} callback - function callback required to know if
+        * It updated user first time data
+        */
+        saveFirstTime(firstTime): void {
+            let url = '/users/' + this.$rootScope.User.Uid + '/firstTime';
+            this.FirebaseFactory.addWithPromise(url, firstTime);
+        }
+
 
         /**
         * bindingUser
@@ -133,7 +152,7 @@ module app.models.user {
         bindingUser(uid, $rootScope): any {
             let newUserRef = this.ref.child('users').child(uid);
             return this.$firebaseObject(newUserRef).$bindTo($rootScope, 'User').then(function() {
-                console.log($rootScope.User); // { foo: "bar" }
+                console.log($rootScope.User);
                 $rootScope.User.foo = 'baz';  // will be saved to the database
                 this.ref.set({ foo: 'baz' });  // this would update the database and $scope.data
             });
@@ -154,7 +173,7 @@ module app.models.user {
             let promise = this.$firebaseArray(this.ref).$loaded().then(function(data) {
 
                 for (let i = 0; i < data.length; i++) {
-                    
+
                     if(data[i].$id === 'users') {
                         for (let key in data[i]) {
                             let obj = data[i][key] || { email: null };
@@ -166,8 +185,11 @@ module app.models.user {
                         return false;
                     }
                 }
-
                 return false;
+                
+            }).catch(function(err) {
+                console.log(err);
+                return err;
             });
 
             return promise;

@@ -51,8 +51,6 @@ module app.pages.addSalaryPage {
                           '$ionicHistory',
                           'finApp.models.finance.FinanceService',
                           'finApp.core.util.FunctionsUtilService',
-                          'finApp.core.util.CustomPopupService',
-                          'finApp.core.util.GiveRewardService',
                           '$state',
                           '$stateParams',
                           '$rootScope',
@@ -66,12 +64,10 @@ module app.pages.addSalaryPage {
                     private $ionicHistory: ionic.navigation.IonicHistoryService,
                     private FinanceService: app.models.finance.IFinanceService,
                     private FunctionsUtilService: app.core.util.functionsUtil.FunctionsUtilService,
-                    private customPopup: app.core.util.customPopup.CustomPopupService,
-                    private GiveRewardService: app.core.util.giveReward.GiveRewardService,
                     private $state: ng.ui.IStateService,
                     private $stateParams: IAddSalaryDataConfig,
                     private $rootScope: app.interfaces.IFinAppRootScope,
-                    private auth: any) {
+                    private auth: app.auth.IAuthService) {
             this._init();
         }
 
@@ -136,6 +132,13 @@ module app.pages.addSalaryPage {
         private _saveSalary(): void {
             //Update User model
             this.$rootScope.User.Finance[this._financePos].Income.Salary = this.form.salary;
+            //TODO: IMPORTANT, Analizar si es mejor actualizar cada valor, ya que actualizar
+            // todo el objeto User es un gran lio, ya que tendriamos que hacer una function
+            // que mantenga los key en los array para que no se pierdan. Hasta el momento,
+            // los unicos valores que estan actualizando todo el objeto User son: salary,
+            // investment y business, de resto gastos, firstTime se actualizan solo estas
+            // propiedades
+
             //Save salary on firebase
             this.FinanceService.saveFinance(
                 this.$rootScope.User.Finance[this._financePos],
@@ -153,10 +156,6 @@ module app.pages.addSalaryPage {
         * @description this method is launched when user press OK button
         */
         goToNext(): void {
-
-            /* TODO: REMOVE AFTER TEST: Invocar PopUp personalizado e*/
-            //this.customPopup.invokeCustomPopup({scope: this.$rootScope});
-
             //Save Salary value
             this._saveSalary();
 

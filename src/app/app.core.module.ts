@@ -14,7 +14,8 @@
 
         /*3rd Party*/
         'ionic',
-        'firebase'
+        'firebase',
+        'ngCordova'
     ]);
 
 })();

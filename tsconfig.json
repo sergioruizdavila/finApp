@@ -1,14 +1,17 @@
 {
-   "exclude": [
-    "node_modules",
-    "www/lib",
-    "www/assets",
-    "platforms"
-  ],
-  "compilerOptions": {
-    "target": "es5",
-    "module": "commonjs",
-    "removeComments": true,
-    "noImplicitAny": false
-  }
+    "compileOnSave": true,
+    "compilerOptions": {
+        "target": "es5",
+        "module": "commonjs",
+        "removeComments": true,
+        "noImplicitAny": false,
+        "outDir": "www/js",
+        "sourceMap": true
+    },
+    "exclude": [
+        "node_modules",
+        "www/lib",
+        "www/assets",
+        "platforms"
+    ]
 }

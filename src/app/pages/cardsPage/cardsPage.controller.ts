@@ -10,8 +10,12 @@ module app.pages.cardsPage {
     /**********************************/
     export interface ICardsPageController {
         activate: () => void;
+        goToDetail: (card: app.models.card.Card) => void;
     }
 
+    export interface ICardsPageScope extends angular.IScope {
+        popupConfig: app.interfaces.IPopup;
+    }
 
     /****************************************/
     /*           CLASS DEFINITION           */
@@ -29,15 +33,19 @@ module app.pages.cardsPage {
 
         /*-- INJECT DEPENDENCIES --*/
         static $inject = ['$state',
+                          '$scope',
                           'finApp.models.card.CardService',
-                          'finApp.core.util.GiveRewardService'];
+                          'finApp.core.util.GiveRewardService',
+                          'finApp.core.util.CustomPopupService'];
 
         /**********************************/
         /*           CONSTRUCTOR          */
         /**********************************/
         constructor(private $state: ng.ui.IStateService,
+                    public $scope: ICardsPageScope,
                     private CardService: app.models.card.CardService,
-                    private GiveRewardService: app.core.util.giveReward.GiveRewardService) {
+                    private GiveRewardService: app.core.util.giveReward.GiveRewardService,
+                    private CustomPopupService: app.core.util.customPopup.CustomPopupService) {
             this._init();
         }
 
@@ -68,7 +76,7 @@ module app.pages.cardsPage {
         /**********************************/
         /*            METHODS             */
         /**********************************/
-        private _getUserCardsList(): angular.IPromise<AngularFireArray> {
+        private _getUserCardsList(): angular.IPromise<Array<app.models.card.UserCard>> {
             return this.CardService.getCardsByUserId();
         }
         //TODO: Investigar bien como se gestiona el tipo de dato: Promise, ya que aqui
@@ -77,14 +85,14 @@ module app.pages.cardsPage {
 
             return this.CardService.getAllCards().then(
                 function(cards){
-                    //Saber cuanto es la cantidad total de cartas
+                    //Get cards total
                     let total = cards.length;
-                    //Buscamos si el usuario tiene alguna carta
+                    //Look for If user has any card
                     let album = cards.map(
                         function(card: any){
                             for (let i = 0; i < userCards.length; i++) {
                                 if(card.uid === userCards[i].uid){
-                                    //TODO: Quiere decir que el user tiene esa tarjeta
+                                    //User has this card
                                     var merge = _.merge(card, userCards[i]);
                                     return merge;
                                 } else  {
@@ -109,6 +117,19 @@ module app.pages.cardsPage {
             );
         }
 
+
+        /*
+        * show card detail popup
+        * @description this method is launched when user press one card's block
+        */
+        goToDetail(card): void {
+            var popupConfig = {
+                cardData: card,
+                withPack: false
+            };
+            //Invoke card reward popup
+            this.CustomPopupService.invokeCardRewardPopup(this.$scope, popupConfig);
+        }
 
 
     }

@@ -19,11 +19,11 @@ module app.models.card {
         ref: any;
         createNewCard: (card: Card, callback: (err) => void) => void;
         saveUserCard: (card: UserCard, callback: (err) => void) => void;
-        getAllCards: () => angular.IPromise<AngularFireArray>;
-        getCardsByUserId: () => angular.IPromise<AngularFireArray>;
+        getAllCards: () => angular.IPromise<Array<app.models.card.Card>>;
+        getCardsByUserId: () => angular.IPromise<Array<app.models.card.UserCard>>;
         getCardById: (uid: string) => angular.IPromise<AngularFireObject>;
+        getCardDetails: (userCard: UserCard) => angular.IPromise<Card>;
     }
-
 
     /****************************************/
     /*           CLASS DEFINITION           */
@@ -83,9 +83,9 @@ module app.models.card {
         * @params {function} callback - function callback required to know if
         * It created a new user card
         */
-        saveUserCard(card, callback): void {
+        saveUserCard(card): any {
             let url = '/users/' + this.$rootScope.User.Uid + '/cards/' + card.uid;
-            this.FirebaseFactory.add(url, card, callback);
+            return this.FirebaseFactory.addWithPromise(url, card);
         }
 
         /**
@@ -95,10 +95,18 @@ module app.models.card {
         * @return {angular.IPromise<AngularFireArray>} return a promise with
         * cards list
         */
-        getAllCards(): angular.IPromise<AngularFireArray> {
+        getAllCards(): angular.IPromise<Array<app.models.card.Card>> {
             let url = '/typeOfCard/';
             return this.FirebaseFactory.getArray(url).then(function(data){
-                return data;
+                let cards = [];
+                for (let i = 0; i < data.length; i++) {
+                    let cardInstance = new app.models.card.Card(data[i]);
+                    cards.push(cardInstance);
+                }
+                return cards;
+            }).catch(function(err) {
+                console.log(err);
+                return err;
             });
         }
 
@@ -109,10 +117,18 @@ module app.models.card {
         * @return {angular.IPromise<AngularFireArray>} return a promise with
         * user's cards list
         */
-        getCardsByUserId(): angular.IPromise<AngularFireArray> {
+        getCardsByUserId(): angular.IPromise<Array<app.models.card.UserCard>> {
             let url = '/users/' + this.$rootScope.User.Uid + '/cards/';
             return this.FirebaseFactory.getArray(url).then(function(data){
-                return data;
+                let userCards = [];
+                for (let i = 0; i < data.length; i++) {
+                    let cardInstance = new app.models.card.UserCard(data[i]);
+                    userCards.push(cardInstance);
+                }
+                return userCards;
+            }).catch(function(err) {
+                console.log(err);
+                return err;
             });
         }
 
@@ -126,9 +142,31 @@ module app.models.card {
         * a specific card
         */
         getCardById(uid): angular.IPromise<AngularFireObject> {
-            let url = '/cards/' + uid;
+            let url = '/typeOfCard/' + uid;
             return this.FirebaseFactory.getObject(url).then(function(data){
                 return data;
+            }).catch(function(err) {
+                console.log(err);
+                return err;
+            });
+        }
+
+        /**
+        * getCardDetails
+        * @description - get card details
+        * @use - this.CardService.getCardDetails(userCard);
+        * @function
+        * @params {string} uid - card uid
+        * @return {angular.IPromise<AngularFireObject>} return a promise with
+        * a card details
+        */
+        getCardDetails(userCard): angular.IPromise<Card> {
+            return this.getCardById(userCard.Uid).then(function(details) {
+                let userCardDetails = new app.models.card.Card(_.merge(userCard, details));
+                return userCardDetails;
+            }).catch(function(err) {
+                console.log(err);
+                return err;
             });
         }
 

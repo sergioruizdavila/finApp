@@ -14,8 +14,8 @@ module app.models.card {
         description: string;
         emblem: string;
         formulaId: string;
-        amount: number;
-        status: string;
+        amount?: number;
+        status?: string;
     }
 
     /****************************************/
@@ -30,6 +30,8 @@ module app.models.card {
         private description: string;
         private emblem: string;
         private formulaId: string;
+        private amount: number;
+        private status: string;
 
         /**********************************/
         /*           CONSTRUCTOR          */
@@ -44,6 +46,8 @@ module app.models.card {
             this.description = obj.description || '';
             this.emblem = obj.emblem || '';
             this.formulaId = obj.formulaId || '';
+            this.amount = obj.amount || 0;
+            this.status = obj.status || '';
 
         }
 
@@ -94,6 +98,24 @@ module app.models.card {
         set FormulaId(formulaId: string) {
             if (formulaId === undefined) { throw 'Please supply card formulaId'; }
             this.formulaId = formulaId;
+        }
+
+        get Amount() {
+            return this.amount;
+        }
+
+        set Amount(amount: number) {
+            if (amount === undefined) { throw 'Please supply card amount'; }
+            this.amount = amount;
+        }
+
+        get Status() {
+            return this.status;
+        }
+
+        set Status(status: string) {
+            if (status === undefined) { throw 'Please supply card status'; }
+            this.status = status;
         }
 
     }

@@ -6,9 +6,12 @@
     </description>
   <author email="sergioruizdavila@gmail.com" href="mailto:sergioruizdavila@gmail.com">
       Sergio Ruiz Davila
-    </author>
+  </author>
   <content src="index.html"/>
-  <access origin="*"/>
+  <access origin="*" />
+  <allow-navigation href="*" />
+  <allow-intent href="*.firebaseio.com" />
+  <allow-intent href="auth.firebase.com" />
   <preference name="webviewbounce" value="false"/>
   <preference name="UIWebViewBounce" value="false"/>
   <preference name="DisallowOverscroll" value="true"/>
@@ -16,6 +19,8 @@
   <preference name="BackupWebStorage" value="none"/>
   <preference name="SplashScreen" value="screen"/>
   <preference name="SplashScreenDelay" value="3000"/>
+  <preference name="Fullscreen" value="false" />
+  <preference name="orientation" value="portrait" />
   <feature name="StatusBar">
     <param name="ios-package" value="CDVStatusBar" onload="true"/>
   </feature>

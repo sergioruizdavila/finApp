@@ -1,4 +1,4 @@
-<div class="backdrop visible active"></div>
+<div class="fa_backdrop backdrop visible active"></div>
 
 <div class="click-block click-block-hide"></div>
 
@@ -10,23 +10,36 @@
 
             <div class="col-80">
                 <!-- TITLE CARD -->
-                <div class="cardRewardPopup_container__header__title text-center">
-                    Ganancias previstas
+                <div class="cardRewardPopup_container__header__title text-center"
+                            ng-show="vm._opened || !vm.$scope.popupConfig.withPack"
+                            ng-class="{'animated delay-1s duration-500ms fadeIn': vm._opened}"
+                            translate>
+                    {{vm.$scope.popupConfig.cardData.title}}
                 </div>
             </div>
 
             <div class="col text-right">
                 <!-- CLOSE BUTTON -->
                 <div class="cardRewardPopup_container__header__close">
-                    <button class="fa_btn fa_btn--red_light
-                                    fa_btn--mini fa_btn__3d
-                                    fa_btn__3d--red_light
-                                    fa_btn__header--mini padding"
-                                    ng-click="vm.close()">
-                                        <i class="material-icons md-36">
-                                            clear
-                                        </i>
+                    <button class="fa_btn fa_btn__3d
+                                   fa_btn--red_light fa_btn__3d--red_light
+                                   fa_btn--mini"
+                            ng-show="vm._opened || !vm.$scope.popupConfig.withPack"
+                            ng-click="vm.close()">
+                            <i class="fa_btn--mini__icon material-icons md-36">
+                                clear
+                            </i>
                     </button>
+                    <button class="fa_btn fa_btn--round
+                                   fa_btn--red_light_reverse
+                                   fa_btn--mini"
+                            ng-hide="vm._opened || !vm.$scope.popupConfig.withPack"
+                            ng-click="vm.showTipPopup()">
+                            <i class="fa_btn--mini__icon material-icons md-36">
+                                card_giftcard
+                            </i>
+                    </button>
+
                 </div>
             </div>
 
@@ -37,34 +50,49 @@
 
     <!-- POPUP -->
     <div class="cardRewardPopup_container__popup popup">
+        <!-- PACK -->
+        <div class="cardRewardPopup_container__popup__pack"
+             ng-show="vm.$scope.popupConfig.withPack"
+             ng-class="{'animated duration-500ms slideOutDown': vm._opened}"
+             ng-click="vm.openPack()"></div>
         <!-- RIBBON -->
-        <div class="ribbon_container">
-            <div class="ribbon_container__ribbon ribbon_container__ribbon--green">
-                NUEVO
+        <div ng-if="vm.$scope.popupConfig.cardData.status"
+             ng-show="vm._opened || !vm.$scope.popupConfig.withPack"
+             class="ribbon_container"
+             ng-class="{'animated delay-750ms duration-500ms fadeInDown': vm._opened}">
+            <div class="ribbon_container__ribbon
+                        ribbon_container__ribbon--large
+                        ribbon_container__ribbon--green">
+                {{vm.$scope.popupConfig.cardData.status}}
             </div>
         </div>
         <!-- POPUP HEAD -->
         <div class="cardRewardPopup_container__popup__header popup-head">
             <h3 class="cardRewardPopup_container__popup__header__title popup-title">
-                <span class="fa_label fa_label__round fa_label--large fa_label--red_light">
-                    x2
+                <span ng-if="vm.$scope.popupConfig.cardData.amount > 1"
+                      class="fa_label fa_label__round fa_label--large fa_label--red_light">
+                    x{{vm.$scope.popupConfig.cardData.amount}}
                 </span>
             </h3>
         </div>
         <!-- POPUP BODY -->
         <div class="cardRewardPopup_container__popup__body popup-body text-center">
-            <img class="cardRewardPopup_container__popup__body__emblem" src="img/emblem.png">
+            <img class="cardRewardPopup_container__popup__body__emblem"
+                 ng-src="img/card/{{vm.$scope.popupConfig.cardData.emblem}}">
         </div>
         <!-- POPUP FOOTER -->
         <div class="cardRewardPopup_container__popup__footer">
-            <div class="cardRewardPopup_container__popup__footer__description text-center">
-                Sabrás cuantas ganancias obtendrás este año
+            <div class="cardRewardPopup_container__popup__footer__description text-center" translate>
+                {{vm.$scope.popupConfig.cardData.description}}
             </div>
         </div>
     </div>
 
     <!-- SAVE BUTTON AND USE BUTTON -->
-    <div class="cardRewardPopup_container__footer text-center">
+    <div class="cardRewardPopup_container__footer
+                text-center"
+         ng-show="vm._opened || !vm.$scope.popupConfig.withPack"
+         ng-class="{'animated delay-750ms duration-500ms fadeIn': vm._opened}">
         <button class="fa_btn
                        fa_btn--green
                        fa_btn__3d
@@ -72,8 +100,8 @@
                        cardRewardPopup_container__footer__use_btn
                        padding"
                 ng-click="vm.close()">
-            <span class="button-inner">
-                USAR
+            <span class="button-inner" translate>
+                %reward.card.use.button.text
             </span>
         </button>
         <button class="fa_btn
@@ -83,8 +111,8 @@
                        cardRewardPopup_container__footer__save_btn
                        padding"
                 ng-click="vm.close()">
-            <span class="button-inner">
-                GUARDAR
+            <span class="button-inner" translate>
+                %reward.card.save.button.text
             </span>
         </button>
     </div>

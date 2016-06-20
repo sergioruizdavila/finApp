@@ -65,7 +65,7 @@ module app.pages.addInvestmentPage {
         private $state: ng.ui.IStateService,
         private $stateParams: IAddInvestmentDataConfig,
         private $rootScope: app.interfaces.IFinAppRootScope,
-        private auth: any) {
+        private auth: app.auth.IAuthService) {
             this._init();
         }
 

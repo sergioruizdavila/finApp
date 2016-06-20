@@ -70,6 +70,8 @@ module components.popup.rewardPopup.cardRewardPopup {
     /**********************************/
     export interface ICardRewardPopupController {
         activate: () => void;
+        showTipPopup: () => void;
+        close:() => void;
     }
 
     export interface ICardRewardPopupScope extends angular.IScope {
@@ -88,22 +90,36 @@ module components.popup.rewardPopup.cardRewardPopup {
         /*           PROPERTIES           */
         /**********************************/
         list: Array<string>;
+        private _opened: boolean;
         // --------------------------------
 
         /*-- INJECT DEPENDENCIES --*/
-        static $inject = ['$scope', 'finApp.core.util.FunctionsUtilService'];
+        static $inject = ['$scope',
+                          '$element',
+                          '$filter',
+                          '$ionicPopup',
+                          '$cordovaNativeAudio',
+                          'finApp.core.util.FunctionsUtilService'];
 
         /**********************************/
         /*           CONSTRUCTOR          */
         /**********************************/
         constructor(public $scope: ICardRewardPopupScope,
+                    public $element: Element,
+                    private $filter: angular.IFilterService,
+                    private $ionicPopup: ionic.popup.IonicPopupService,
+                    private $cordovaNativeAudio: any,
                     private FunctionsUtilService: app.core.util.functionsUtil.FunctionsUtilService) {
             this.init();
         }
 
         /*-- INITIALIZE METHOD --*/
         private init() {
-            
+            this._opened = false;
+            /*TODO: Uncomment when we will deploy to device
+            if(this.$scope.popupConfig.withPack){
+                this.$cordovaNativeAudio.play('win');
+            } */
             this.activate();
         }
 
@@ -116,6 +132,54 @@ module components.popup.rewardPopup.cardRewardPopup {
         /*            METHODS             */
         /**********************************/
 
+        /*
+        * Show tip example expenses popup
+        * @description - this method is launched when user press Gift icon in order
+        * to receive more information
+        */
+
+        showTipPopup(): void {
+            //VARIABLES
+            let self = this;
+            //CONSTANTS
+            const POPUP_TITLE = this.$filter('translate')('%popup.tip.card.title.text');
+            const POPUP_BODY_TEXT = this.$filter('translate')('%popup.tip.card.body_message.text');
+            const POPUP_OK_BUTTON_TEXT = this.$filter('translate')('%popup.tip.example.ok_button.text');
+            const POPUP_OK_BUTTON_TYPE = 'button-positive';
+            /********************/
+
+            /*  Show popUp in order to warn the user that if he/she doesn't have account,
+                we are going to create new one */
+            this.$ionicPopup.show({
+                title: POPUP_TITLE,
+                template: POPUP_BODY_TEXT,
+                buttons: [
+                    {
+                        text: POPUP_OK_BUTTON_TEXT,
+                        type: POPUP_OK_BUTTON_TYPE
+                    }
+                ]
+            });
+
+        };
+
+        /*
+        * open Pack
+        * @description - this method is launched when user press pack,
+        * and active slideOutDown animation
+        */
+        openPack(): void {
+            this._opened = true;
+        }
+
+        /*
+        * close Popup
+        * @description this method is launched when user press X button
+        */
+        close(): void {
+            this.$scope.$destroy();
+            this.$element.remove();
+        }
 
     }
 

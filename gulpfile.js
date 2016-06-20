@@ -20,6 +20,7 @@ var karma = require('gulp-karma');
 var paths = {
     htmlTemplates: 'src/**/*.html',
     appTypescript: ['src/**/*.ts', '!src/typings/**/*.*', '!platforms/**/*.*'],
+    appJs: ['src/**/*.js', 'src/**/*.js.map'],
     outputJs: 'www/js/',
     appSass: ['src/**/**/*.scss'],
     inputSass: 'src/app/theme/finApp.scss',
@@ -108,12 +109,15 @@ gulp.task('watch', function() {
     gulp.watch(paths.appSass, ['sass']).on('change', function (event) {
         console.log('File ' + event.path + ' was ' + event.type + ', running tasks...');
     });
-    gulp.watch(paths.appTypescript, ['ts']).on('change', function (event) {
+    /*gulp.watch(paths.appTypescript, ['ts']).on('change', function (event) {
         console.log('File ' + event.path + ' was ' + event.type + ', running tasks...');
-    });
+    });*/
     gulp.watch(paths.htmlTemplates, ['copy-html']).on('change', function (event){
         console.log('File' + event.path + ' was ' + event.type + ', running tasks...');
     });
+    /*gulp.watch(paths.appJs, ['copy-js']).on('change', function (event){
+        console.log('File' + event.path + ' was ' + event.type + ', running tasks...');
+    });*/
     //gulp.watch(paths.sass, ['sass']);
 });
 
@@ -126,6 +130,14 @@ gulp.task('watch', function() {
     .pipe(gulp.dest('www/templates/'));
 });
 
+/*
+ * Copy JS and Paste in www/js folder
+ */
+ gulp.task('copy-js', function() {
+    gulp.src(paths.appJs)
+    // Perform minification tasks, etc here
+    .pipe(gulp.dest(paths.outputJs));
+});
 
 /*
  * Karma Unit Test

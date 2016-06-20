@@ -21,6 +21,7 @@
                    'finApp.auth.AuthService',
                    'finApp.auth.SessionService',
                    'finApp.models.user.UserService',
+                   '$cordovaNativeAudio',
                    '$state'];
 
     function run($ionicPlatform,
@@ -28,9 +29,13 @@
                  auth,
                  session,
                  UserService,
+                 $cordovaNativeAudio,
                  $state): void {
 
         $ionicPlatform.ready(function() {
+
+            /*TODO: Uncomment when we will deploy to device
+            $cordovaNativeAudio.preloadSimple('win', 'assets/audio/win.mp3'); */
 
             $rootScope.auth = auth;
             $rootScope.session = session;
@@ -73,6 +78,7 @@
     }
 
 })();
+
 
 
 (function (angular) {
