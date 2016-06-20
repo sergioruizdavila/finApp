@@ -34,11 +34,11 @@
 
         $ionicPlatform.ready(function() {
 
-            $cordovaNativeAudio.preloadSimple('snare', 'assets/audio/snare.mp3').then(
-                function(){
-                    $cordovaNativeAudio.play('snare');
-                }
-            );
+            // $cordovaNativeAudio.preloadSimple('snare', 'assets/audio/snare.mp3').then(
+            //     function(){
+            //         $cordovaNativeAudio.play('snare');
+            //     }
+            // );
 
             $rootScope.auth = auth;
             $rootScope.session = session;
