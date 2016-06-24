@@ -71,7 +71,8 @@ module components.popup.rewardPopup.cardRewardPopup {
     export interface ICardRewardPopupController {
         activate: () => void;
         showTipPopup: () => void;
-        close:() => void;
+        useCard: () => void;
+        close: () => void;
     }
 
     export interface ICardRewardPopupScope extends angular.IScope {
@@ -97,6 +98,7 @@ module components.popup.rewardPopup.cardRewardPopup {
         static $inject = ['$scope',
                           '$element',
                           '$filter',
+                          '$state',
                           '$ionicPopup',
                           '$cordovaNativeAudio',
                           'finApp.core.util.FunctionsUtilService'];
@@ -107,6 +109,7 @@ module components.popup.rewardPopup.cardRewardPopup {
         constructor(public $scope: ICardRewardPopupScope,
                     public $element: Element,
                     private $filter: angular.IFilterService,
+                    private $state: ng.ui.IStateService,
                     private $ionicPopup: ionic.popup.IonicPopupService,
                     private $cordovaNativeAudio: any,
                     private FunctionsUtilService: app.core.util.functionsUtil.FunctionsUtilService) {
@@ -137,7 +140,6 @@ module components.popup.rewardPopup.cardRewardPopup {
         * @description - this method is launched when user press Gift icon in order
         * to receive more information
         */
-
         showTipPopup(): void {
             //VARIABLES
             let self = this;
@@ -163,6 +165,47 @@ module components.popup.rewardPopup.cardRewardPopup {
 
         };
 
+
+        /*
+        * useCard
+        * @description - this method is launched when user press USE button in order
+        * to use a card.
+        */
+        useCard(): void {
+            //VARIABLES
+            let self = this;
+            //CONSTANTS
+            const POPUP_TITLE = this.$filter('translate')('%popup.use_card.title.text');
+            const POPUP_BODY_TEXT = this.$filter('translate')('%popup.use_card.body_message.text');
+            const POPUP_CANCEL_BUTTON_TEXT = this.$filter('translate')('%popup.use_card.cancel_button.text');
+            const POPUP_OK_BUTTON_TEXT = this.$filter('translate')('%popup.use_card.ok_button.text');
+            const POPUP_OK_BUTTON_TYPE = 'button-positive';
+            /********************/
+
+            this.$ionicPopup.show({
+                title: POPUP_TITLE,
+                template: POPUP_BODY_TEXT,
+                buttons: [
+                    { text: POPUP_CANCEL_BUTTON_TEXT },
+                    {
+                        text: POPUP_OK_BUTTON_TEXT,
+                        type: POPUP_OK_BUTTON_TYPE,
+                        onTap: function(e) {
+                            self.$state.go('page.dataRequired', {
+                                financeId: '',
+                                action: {
+                                    type: '',
+                                    data: {total: {num: null, formatted: ''} }
+                                }
+                            });
+                            self.close();
+                        }
+                    }
+                ]
+            });
+        }
+
+
         /*
         * open Pack
         * @description - this method is launched when user press pack,
@@ -171,6 +214,7 @@ module components.popup.rewardPopup.cardRewardPopup {
         openPack(): void {
             this._opened = true;
         }
+
 
         /*
         * close Popup

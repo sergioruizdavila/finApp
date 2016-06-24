@@ -40,6 +40,10 @@
     "%popup.add_unnecessary_expense.subtitle.text": "Agrega el nombre de tu gasto no obligatorio, y su correspondiente valor",
     "%popup.add_expense.input_expense_name.placeholder.text": "Nombre de tu gasto",
     "%popup.add_expense.add_button.text": "AGREGAR",
+    "%popup.use_card.ok_button.text": "USAR",
+    "%popup.use_card.cancel_button.text": "AÚN NO",
+    "%popup.use_card.title.text": "Usar tarjeta",
+    "%popup.use_card.body_message.text": "Estas seguro que deseas usar esta tarjeta?",
 
     "__TUTORIAL__":"",
     "%tutorial.signup.button.text" : "INGRESAR",

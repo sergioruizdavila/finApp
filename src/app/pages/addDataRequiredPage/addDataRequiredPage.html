@@ -1,0 +1,157 @@
+<div class="bar bar-header navBar dataRequiredPage__navBar">
+    <div class="row row-center">
+
+        <div class="col"></div>
+
+        <div class="col">
+            <div class="h1 navBar__title title" translate>
+                Datos Requeridos
+            </div>
+        </div>
+
+        <div class="col text-right">
+            <i class="material-icons md-24 md-red_light"
+               ng-click="vm.showTipPopup()">card_giftcard</i>
+        </div>
+
+    </div>
+</div>
+
+
+<ion-nav-view>
+
+    <ion-view>
+        <ion-content class="progressivePage__contentPage
+                            dataRequiredPage__contentPage" scroll="true">
+
+            <div class="header_separator"></div>
+
+            <div class="block_title">
+                <div class="row row-center">
+                    <div class="col-80 text-left">
+                        <p class="block_title__text">
+                            Datos faltantes
+                        </p>
+                    </div>
+                    <div class="col-20 text-right">
+                        <i class="material-icons md-24 md-red_light"
+                           ng-click="vm.showTipPopup()">card_giftcard</i>
+                    </div>
+                </div>
+            </div>
+
+            <div class="block_3d block_3d--big block_3d--matrix">
+                <div class="block_3d--matrix__content row row-center">
+                    <div class="block_3d--matrix__content__element col-33">
+                        <span>Arriendo</span>
+                    </div>
+                    <div class="block_3d--matrix__content__element col-33">
+                        <span>Meta</span>
+                    </div>
+                    <div class="block_3d--matrix__content__element col-33">
+                        <span>Hijos</span>
+                    </div>
+                    <div class="block_3d--matrix__content__element col-33">
+                        <span>Vacaciones</span>
+                    </div>
+                    <div class="block_3d--matrix__content__element col-33">
+                        <span>Vacaciones</span>
+                    </div>
+                    <div class="block_3d--matrix__content__element col-33">
+                        <span>Vacaciones</span>
+                    </div>
+                    <div class="block_3d--matrix__content__element col-33">
+                        <span>Vacaciones</span>
+                    </div>
+                    <div class="block_3d--matrix__content__element col-33">
+                        <span>Vacaciones</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="block_title">
+                <div class="row row-center">
+                    <div class="col-80 text-left">
+                        <p class="block_title__text">
+                            Deseas actualizar?
+                        </p>
+                    </div>
+                    <div class="col-20 text-right">
+                        <i class="material-icons md-24 md-red_light"
+                           ng-click="vm.showTipPopup()">card_giftcard</i>
+                    </div>
+                </div>
+            </div>
+
+            <div class="block_3d block_3d--big">
+                <div class="block_3d__content block_3d__content--without_height">
+                    <ion-list class="block_3d__content__list_container">
+
+                        <ion-item class="block_3d__content__list_container__item
+                                         block_3d__content__list_container__item--without_border
+                                         item">
+                            <div class="row row-center">
+                                <div class="block_3d__content__list_container__item__text text-left col-80">
+                                    Gastos Necesarios
+                                </div>
+                                <div class="col-20">
+                                    <div class="block_3d__content__list_container__item__checkbox
+                                                fa_checkbox
+                                                fa_checkbox--small
+                                                fa_checkbox--checked">
+                                        <i class="material-icons
+                                                  fa_checkbox--checked__icon">
+                                            done
+                                        </i>
+                                    </div>
+                                </div>
+                            </div>
+                        </ion-item>
+
+                        <ion-item class="block_3d__content__list_container__item
+                                         block_3d__content__list_container__item--without_border
+                                         item"
+                                  ng-click="vm.testClick()">
+                            <div class="row row-center">
+                                <div class="block_3d__content__list_container__item__text text-left col-80">
+                                    Ahorro
+                                </div>
+                                <div class="col-20">
+                                    <div class="block_3d__content__list_container__item__checkbox
+                                                fa_checkbox
+                                                fa_checkbox--small"
+                                         ng-class="{'fa_checkbox--checked': vm._testClass}">
+                                         <i class="material-icons
+                                                   fa_checkbox--checked__icon"
+                                            ng-show="vm._testClass">
+                                             done
+                                         </i>
+                                    </div>
+                                </div>
+                            </div>
+                        </ion-item>
+
+                    </ion-list>
+                </div>
+            </div>
+
+            <ion-footer-bar class="progressivePage__footer
+                                   progressivePage__footer--relative"
+                            ng-if="vm.addBusinessDataConfig.action.type != 'Edit'">
+                <button class="fa_btn fa_btn--blue
+                               fa_btn--block
+                               fa_btn--large
+                               fa_btn__3d
+                               fa_btn__3d--blue padding"
+                    ng-click="vm.goToNext()">
+                    <span class="button-inner" translate>
+                        %global.continue.button.text
+                    </span>
+                </button>
+            </ion-footer-bar>
+
+        </ion-content>
+
+    </ion-view>
+
+</ion-nav-view>

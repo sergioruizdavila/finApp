@@ -8,6 +8,11 @@
 .text-right {
     text-align: right;
 }
+
+.header_separator {
+    padding: 35px;
+}
+
 /******************** END - MODIFIERS *********************/
 
 
@@ -332,6 +337,34 @@ body.finApp {
         }
     }
 
+    ///CHECKBOX
+    .fa_checkbox {
+        border: 2px solid #9E9E9E;
+        -webkit-border-radius: 2px;
+        -moz-border-radius: 2px;
+        border-radius: 2px;
+
+        &--checked {
+            border: 2px solid #FA7470;
+            background-color: #FA7470;
+
+            &__icon {
+                color: #FFF;
+                font-weight: bold;
+                position: relative;
+                bottom: 2px;
+                right: 2px;
+                font-size: 17px;
+            }
+        }
+
+        &--small {
+            width: 17px;
+            height: 17px;
+        }
+
+    }
+
     /*---------- END -  INPUTS ------------*/
 
 
@@ -516,6 +549,23 @@ body.finApp {
     }
 
     /*---------- END -  RIBBONS -----------*/
+
+
+    /*            BLOCK TITLE              */
+    /*-------------------------------------*/
+    .block_title {
+        margin: 0 auto;
+        overflow: hidden;
+        width: 90%;
+
+        &__text {
+            font-size: 1.7em;
+            margin: 0;
+        }
+    }
+
+    /*-------- END -  BLOCK TITLE ---------*/
+
 
 
     /*              3D BLOCKS              */
@@ -711,6 +761,19 @@ body.finApp {
             }
         }
 
+        &--matrix {
+
+            &__content {
+                padding: 10px;
+                margin-top: 5px;
+                flex-wrap: wrap;
+
+                &__element {
+                    padding: 5px;
+                }
+            }
+        }
+
         &__title {
             color: $FA_TEXT_LIST_VALUE;
             text-align: center;
@@ -733,6 +796,10 @@ body.finApp {
             overflow: scroll;
             max-height: 190px;
 
+            &--without_height {
+                max-height: none;
+            }
+
             &__list_container {
 
                     &__item {
@@ -742,13 +809,20 @@ body.finApp {
                         border-right: none;
                         padding: 10px;
 
+                        &--without_border {
+                            border: 0;
+                        }
+
                         &__text {
                             font-size: 18px;
-                            text-align: center;
                             color: $FA-TEXT-P;
                             overflow:hidden;
                             white-space:nowrap;
                             text-overflow: ellipsis;
+                        }
+
+                        &__checkbox {
+                            float: right;
                         }
 
                         &__value {
@@ -905,6 +979,9 @@ body.finApp {
             padding: 20px;
             height: 100px;
             background-color: $FA_BODY_PAGE;
+            &--relative {
+                position: relative;
+            }
         }
 
     }

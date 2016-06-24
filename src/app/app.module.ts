@@ -29,6 +29,7 @@
             'finApp.pages.addBusinessPage',
             'finApp.pages.addNecessaryExpensePage',
             'finApp.pages.addUnnecessaryExpensePage',
+            'finApp.pages.addDataRequiredPage',
             'finApp.components.tabs',
             'finApp.components.faExpenseDetailPopup',
             'finApp.components.faListPopup',
