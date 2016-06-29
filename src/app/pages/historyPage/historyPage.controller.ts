@@ -77,6 +77,8 @@ module app.pages.historyPage {
         activate(): void {
             //LOG
             console.log('historyPage controller actived');
+            //CONSTANTS
+            const formulaId = '348d4013-4e9f-4869-b478-bbbea7292cea';
             //VARIABLES
             let self = this;
 
@@ -92,7 +94,7 @@ module app.pages.historyPage {
             //Validate if is first time on app
             if(this.$rootScope.User.FirstTime) {
                 //Give Card reward
-                this.GiveRewardService.giveCard('1').then(
+                this.GiveRewardService.giveCard(formulaId).then(
                     function(card) {
                         let popupConfig = {
                             cardData: card,
