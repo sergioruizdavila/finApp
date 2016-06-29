@@ -36,7 +36,9 @@
             'finApp.components.rewardPopup.faCardPopup',
             'finApp.models.user',
             'finApp.models.finance',
-            'finApp.models.card'
+            'finApp.models.card',
+            'finApp.models.formula',
+            'finApp.models.dataGroup'
         ])
         .config(config);
 

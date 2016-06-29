@@ -15,7 +15,7 @@ module app.core.firebase {
         addWithPromise: (url: string, data: any) => angular.IPromise<any>;
         getArray: (url: string) => any;
         getArrayByDate: (url: string, startDate: string, endDate: string) => angular.IPromise<AngularFireArray>;
-        getObject: (url: string) => angular.IPromise<AngularFireObject>;
+        getObject: (url: string) => any;
     }
 
     /****************************************/
@@ -130,9 +130,9 @@ module app.core.firebase {
         * @params {string} url - uri of firebase
         * @params {string} startDate - start specific Date
         * @params {string} endDate - end specific Date
-        * @return {angular.IPromise<AngularFireObject>} data - object gotten from firebase
+        * @return {any} data - object gotten from firebase
         */
-        getObject(url): angular.IPromise<AngularFireObject> {
+        getObject(url): any {
             let ref = new Firebase(this.baseUrl + url);
             return this.$firebaseObject(ref).$loaded().then(function(data) {
                 return data;

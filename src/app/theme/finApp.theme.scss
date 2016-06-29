@@ -116,6 +116,13 @@ body.finApp {
     font-family: $FA_FONT_FAMILY;
     color: $FA_COLORS_DARK;
 
+    /* Slider tutorial */
+    .slider-pager{
+        .slider-pager-page {
+            color: $FA_BTN_FORM;
+        }
+    }
+
 
     /*               BUTTONS               */
     /*-------------------------------------*/
@@ -219,7 +226,7 @@ body.finApp {
 
         &--with_icon {
             text-align: center;
-            font-size: 1.3rem;
+            font-size: 1rem;
             padding: 0;
 
             &__icon {
@@ -453,14 +460,15 @@ body.finApp {
         width: 100%;
 
         &__progressLine {
-            border-top: 6px solid $FA_PROGRESS_BAR;
+            border-top: 8px solid $FA_PROGRESS_BAR;
             border-bottom: 4px solid $FA_PROGRESS_BAR;
             -webkit-border-radius: 100px;
             -moz-border-radius: 100px;
             border-radius: 100px;
             position: absolute;
-            top: -3px;
+            top: -4px;
             left: 0;
+
 
             &--20Percent {
                 width: 20%;
@@ -585,11 +593,6 @@ body.finApp {
                     margin: 5px!important;
                 }
             }
-    }
-
-    .block_3d:nth-of-type(1)
-    {
-        margin-top: 25%;
     }
 
     .block_3d {
@@ -945,6 +948,14 @@ body.finApp {
             background-color: $FA_BODY_PAGE;
             text-align: center;
 
+            &--white {
+                background-color: #FFF;
+            }
+
+            &--block {
+                width: 95%;
+            }
+
             &__title {
                 font-size: 2em;
                 margin-top: 30%;
@@ -970,15 +981,17 @@ body.finApp {
                 }
             }
 
-            &--block {
-                width: 95%;
-            }
         }
 
         &__footer {
             padding: 20px;
             height: 100px;
             background-color: $FA_BODY_PAGE;
+
+            &--white {
+                background-color: #FFF;
+            }
+
             &--relative {
                 position: relative;
             }
@@ -991,9 +1004,13 @@ body.finApp {
         &__contentPage {
             background-color: $FA_BODY_PAGE;
 
+            &__header_separator {
+                padding: 60px;
+            }
+
             &__categories:nth-of-type(1)
             {
-                margin: 110px auto 15px;
+                margin: 0 auto 15px;
             }
 
             &__categories {

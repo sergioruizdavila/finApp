@@ -19,8 +19,8 @@ module app.models.card {
         ref: any;
         createNewCard: (card: Card, callback: (err) => void) => void;
         saveUserCard: (card: UserCard, callback: (err) => void) => void;
-        getAllCards: () => angular.IPromise<Array<app.models.card.Card>>;
-        getCardsByUserId: () => angular.IPromise<Array<app.models.card.UserCard>>;
+        getAllCards: () => angular.IPromise<Array<Card>>;
+        getCardsByUserId: () => angular.IPromise<Array<UserCard>>;
         getCardById: (uid: string) => angular.IPromise<AngularFireObject>;
         getCardDetails: (userCard: UserCard) => angular.IPromise<Card>;
     }
@@ -92,15 +92,15 @@ module app.models.card {
         * getAllCards
         * @description - get all cards
         * @function
-        * @return {angular.IPromise<AngularFireArray>} return a promise with
+        * @return {angular.IPromise<Array<Card>>} return a promise with
         * cards list
         */
-        getAllCards(): angular.IPromise<Array<app.models.card.Card>> {
+        getAllCards(): angular.IPromise<Array<Card>> {
             let url = '/typeOfCard/';
             return this.FirebaseFactory.getArray(url).then(function(data){
                 let cards = [];
                 for (let i = 0; i < data.length; i++) {
-                    let cardInstance = new app.models.card.Card(data[i]);
+                    let cardInstance = new Card(data[i]);
                     cards.push(cardInstance);
                 }
                 return cards;
@@ -117,12 +117,12 @@ module app.models.card {
         * @return {angular.IPromise<AngularFireArray>} return a promise with
         * user's cards list
         */
-        getCardsByUserId(): angular.IPromise<Array<app.models.card.UserCard>> {
+        getCardsByUserId(): angular.IPromise<Array<UserCard>> {
             let url = '/users/' + this.$rootScope.User.Uid + '/cards/';
             return this.FirebaseFactory.getArray(url).then(function(data){
                 let userCards = [];
                 for (let i = 0; i < data.length; i++) {
-                    let cardInstance = new app.models.card.UserCard(data[i]);
+                    let cardInstance = new UserCard(data[i]);
                     userCards.push(cardInstance);
                 }
                 return userCards;
@@ -162,7 +162,7 @@ module app.models.card {
         */
         getCardDetails(userCard): angular.IPromise<Card> {
             return this.getCardById(userCard.Uid).then(function(details) {
-                let userCardDetails = new app.models.card.Card(_.merge(userCard, details));
+                let userCardDetails = new Card(_.merge(userCard, details));
                 return userCardDetails;
             }).catch(function(err) {
                 console.log(err);

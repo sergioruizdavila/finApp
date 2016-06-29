@@ -11,23 +11,19 @@ module app.pages.addDataRequiredPage {
     export interface IAddDataRequiredPageController {
         form: IAddDataRequiredForm;
         activate: () => void;
-        updateValue: () => void;
+        showDataRequiredTipPopup: () => void;
+        showMissingDataTipPopup: () => void;
+        showDataUpdateTipPopup: () => void;
         goToNext: () => void;
         goToBack: () => void;
     }
 
     export interface IAddDataRequiredDataConfig extends ng.ui.IStateParamsService {
-        financeId: string;
-        action: IActionParams;
-    }
-
-    export interface IActionParams {
-        type: string;
-        data: app.models.finance.IMoney;
+        formula: app.models.formula.Formula;
     }
 
     export interface IAddDataRequiredForm {
-        business: app.models.finance.IMoney;
+
     }
 
     /****************************************/
@@ -47,26 +43,26 @@ module app.pages.addDataRequiredPage {
         // --------------------------------
 
         /*-- INJECT DEPENDENCIES --*/
-        static $inject = ['dataConfig',
+        static $inject = ['$filter',
+                          '$ionicPopup',
                           '$ionicHistory',
-                          'finApp.models.finance.FinanceService',
-                          'finApp.core.util.FunctionsUtilService',
                           '$state',
                           '$stateParams',
                           '$rootScope',
-                          'finApp.auth.AuthService'];
+                          'finApp.auth.AuthService',
+                          'finApp.core.util.ManagementFunctionsService'];
 
         /**********************************/
         /*           CONSTRUCTOR          */
         /**********************************/
-        constructor(private dataConfig: IDataConfig,
+        constructor(private $filter: angular.IFilterService,
+                    private $ionicPopup: ionic.popup.IonicPopupService,
                     private $ionicHistory: ionic.navigation.IonicHistoryService,
-                    private FinanceService: app.models.finance.IFinanceService,
-                    private FunctionsUtilService: app.core.util.functionsUtil.FunctionsUtilService,
                     private $state: ng.ui.IStateService,
                     private $stateParams: IAddDataRequiredDataConfig,
                     private $rootScope: app.interfaces.IFinAppRootScope,
-                    private auth: app.auth.IAuthService) {
+                    private auth: app.auth.IAuthService,
+                    private management: app.core.util.ManagementFunctionsService) {
                 this._init();
         }
 
@@ -77,17 +73,14 @@ module app.pages.addDataRequiredPage {
 
             this.addDataRequiredDataConfig = this.$stateParams;
 
-            //Get Finance Position
-            this._financePos = this.FunctionsUtilService.getPositionByUid(this.$rootScope.User.Finance,
-                                                                          this.addDataRequiredDataConfig.financeId);
+            //TODO: Aqui deberia tomar el objeto formula que me envian de cardRewardPopup
+            // Y dibujar dinamicamente el formulario
+            console.log('Llego la data de cardRewardPopup: ', this.addDataRequiredDataConfig.formula);
 
-            //Init form
-            this.form = {
-                business: {
-                    num: this.addDataRequiredDataConfig.action.data.num || null,
-                    formatted: this.addDataRequiredDataConfig.action.data.formatted || ''
-                }
-            };
+            //TODO: TEST remove when it is not neccesary
+            var income:app.models.dataGroup.EnumDataGroup = app.models.dataGroup.EnumDataGroup.income;
+
+            console.log('Ya tengo el uid de income, para obtener sus miembros:', income);
 
             this.activate();
         }
@@ -113,63 +106,95 @@ module app.pages.addDataRequiredPage {
         }
 
         /*
-        * Format Data Required Method
-        * @description Format the business value with default currency
+        * Show data required tip popup
+        * @description - this method is launched when user press Gift icon in order
+        * to receive more information about this page
         */
-        private _formatDataRequired(): void {
-            let currencyObj: app.models.finance.IMoney =
-            this.FunctionsUtilService.formatCurrency(this.form.business.num,
-                                                     this.form.business.formatted);
+        showDataRequiredTipPopup(): void {
+            //VARIABLES
+            let self = this;
+            //CONSTANTS
+            const POPUP_TITLE = this.$filter('translate')('%popup.tip.data_required.main.title.text');
+            const POPUP_BODY_TEXT = this.$filter('translate')('%popup.tip.data_required.main.body_message.text');
+            const POPUP_OK_BUTTON_TEXT = this.$filter('translate')('%popup.tip.example.ok_button.text');
+            const POPUP_OK_BUTTON_TYPE = 'button-positive';
+            /********************/
 
-            this.form.business.num = currencyObj.num;
-            this.form.business.formatted = currencyObj.formatted;
-        }
+            this.$ionicPopup.show({
+                title: POPUP_TITLE,
+                template: POPUP_BODY_TEXT,
+                buttons: [
+                    {
+                        text: POPUP_OK_BUTTON_TEXT,
+                        type: POPUP_OK_BUTTON_TYPE
+                    }
+                ]
+            });
+
+        };
 
         /*
-        * Save Data Required Method
-        * @description Save business value on $rootScope's model and on Firebase
+        * Show missing data tip popup
+        * @description - this method is launched when user press Gift icon in order
+        * to receive more information about missing data
         */
-        private _saveDataRequired(): void {
-            //Update User model
-            this.$rootScope.User.Finance[this._financePos].Income.Business = this.form.business;
-            //Save salary on firebase
-            this.FinanceService.saveFinance(
-                this.$rootScope.User.Finance[this._financePos],
-                function(err) {
-                    if (err) {
-                        //LOG
-                        console.log('Error: Not saved finance after change Data Required value');
+        showMissingDataTipPopup(): void {
+            //VARIABLES
+            let self = this;
+            //CONSTANTS
+            const POPUP_TITLE = this.$filter('translate')('%popup.tip.data_required.missing_data.title.text');
+            const POPUP_BODY_TEXT = this.$filter('translate')('%popup.tip.data_required.missing_data.body_message.text');
+            const POPUP_OK_BUTTON_TEXT = this.$filter('translate')('%popup.tip.example.ok_button.text');
+            const POPUP_OK_BUTTON_TYPE = 'button-positive';
+            /********************/
+
+            this.$ionicPopup.show({
+                title: POPUP_TITLE,
+                template: POPUP_BODY_TEXT,
+                buttons: [
+                    {
+                        text: POPUP_OK_BUTTON_TEXT,
+                        type: POPUP_OK_BUTTON_TYPE
                     }
-                }
-            );
-        }
+                ]
+            });
+
+        };
+
+        /*
+        * Show data update tip popup
+        * @description - this method is launched when user press Gift icon in order
+        * to receive more information about data update
+        */
+        showDataUpdateTipPopup(): void {
+            //VARIABLES
+            let self = this;
+            //CONSTANTS
+            const POPUP_TITLE = this.$filter('translate')('%popup.tip.data_required.data_update.title.text');
+            const POPUP_BODY_TEXT = this.$filter('translate')('%popup.tip.data_required.data_update.body_message.text');
+            const POPUP_OK_BUTTON_TEXT = this.$filter('translate')('%popup.tip.example.ok_button.text');
+            const POPUP_OK_BUTTON_TYPE = 'button-positive';
+            /********************/
+
+            this.$ionicPopup.show({
+                title: POPUP_TITLE,
+                template: POPUP_BODY_TEXT,
+                buttons: [
+                    {
+                        text: POPUP_OK_BUTTON_TEXT,
+                        type: POPUP_OK_BUTTON_TYPE
+                    }
+                ]
+            });
+
+        };
 
         /*
         * Go to necessary expenses page
         * @description this method is launched when user press OK button
         */
         goToNext(): void {
-            //Save Data Required value
-            this._saveDataRequired();
 
-            this.$state.go('page.necessaryExpense', {
-                financeId: this.addDataRequiredDataConfig.financeId,
-                action: {
-                    type: '',
-                    data: {total: {num: null, formatted: ''} }
-                }
-            });
-        }
-
-        /*
-        * Update Value method
-        * @description this method is launched when user is editing salary value
-        */
-        updateValue(): void {
-            //Save Salary value
-            this._saveDataRequired();
-
-            this.$ionicHistory.goBack();
         }
 
         /*
@@ -180,6 +205,7 @@ module app.pages.addDataRequiredPage {
             this.$ionicHistory.goBack();
         }
 
+        //TODO: Refactor this method
         testClick(): void {
             this._testClass = this._testClass ? false : true;
         }

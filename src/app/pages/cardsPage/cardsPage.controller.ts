@@ -100,7 +100,7 @@ module app.pages.cardsPage {
                                     if(i == userCards.length -1){
                                         var gray = {
                                             uid: card.uid,
-                                            formulaId: card.formulaId,
+                                            typeOfFormulaId: card.typeOfFormulaId,
                                             gray: true
                                         };
                                         return gray;

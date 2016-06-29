@@ -103,6 +103,7 @@ module app.models.finance {
 
         /*-- PROPERTIES --*/
         private uid: string;
+        private dataGroupId: string;
         private salary: IMoney;
         private investment: IMoney;
         private business: IMoney;
@@ -116,6 +117,8 @@ module app.models.finance {
 
             //init properties
             this.uid = obj.uid || app.core.util.functionsUtil.FunctionsUtilService.generateGuid();
+
+            this.dataGroupId = obj.dataGroupId || app.models.dataGroup.EnumDataGroup.income.value;
 
             this.salary = {
                 num: obj.salary.num || null ,
@@ -137,12 +140,30 @@ module app.models.finance {
         /*             METHODS            */
         /**********************************/
 
+        get Uid() {
+            return this.uid;
+        }
+
+        set Uid(uid: string) {
+            if (uid === undefined) { throw 'Please supply id (income)'; }
+            this.uid = uid;
+        }
+
+        get DataGroupId() {
+            return this.dataGroupId;
+        }
+
+        set DataGroupId(dataGroupId: string) {
+            if (dataGroupId === undefined) { throw 'Please supply data group Id (income)'; }
+            this.dataGroupId = dataGroupId;
+        }
+
         get Salary() {
             return this.salary;
         }
 
         set Salary(salary: IMoney) {
-            if (salary === undefined) { throw 'Please supply salary value'; }
+            if (salary === undefined) { throw 'Please supply salary value (income)'; }
             this.salary = salary;
         }
 
@@ -151,7 +172,7 @@ module app.models.finance {
         }
 
         set Investment(investment: IMoney) {
-            if (investment === undefined) { throw 'Please supply investment value'; }
+            if (investment === undefined) { throw 'Please supply investment value (income)'; }
             this.investment = investment;
         }
 
@@ -160,7 +181,7 @@ module app.models.finance {
         }
 
         set Business(business: IMoney) {
-            if (business === undefined) { throw 'Please supply business value'; }
+            if (business === undefined) { throw 'Please supply business value (income)'; }
             this.business = business;
         }
     }

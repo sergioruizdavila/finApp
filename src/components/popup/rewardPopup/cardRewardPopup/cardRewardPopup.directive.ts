@@ -101,6 +101,7 @@ module components.popup.rewardPopup.cardRewardPopup {
                           '$state',
                           '$ionicPopup',
                           '$cordovaNativeAudio',
+                          'finApp.models.formula.FormulaService',
                           'finApp.core.util.FunctionsUtilService'];
 
         /**********************************/
@@ -112,6 +113,7 @@ module components.popup.rewardPopup.cardRewardPopup {
                     private $state: ng.ui.IStateService,
                     private $ionicPopup: ionic.popup.IonicPopupService,
                     private $cordovaNativeAudio: any,
+                    private FormulaService: app.models.formula.FormulaService,
                     private FunctionsUtilService: app.core.util.functionsUtil.FunctionsUtilService) {
             this.init();
         }
@@ -136,7 +138,7 @@ module components.popup.rewardPopup.cardRewardPopup {
         /**********************************/
 
         /*
-        * Show tip example expenses popup
+        * Show card reward tip popup
         * @description - this method is launched when user press Gift icon in order
         * to receive more information
         */
@@ -150,8 +152,6 @@ module components.popup.rewardPopup.cardRewardPopup {
             const POPUP_OK_BUTTON_TYPE = 'button-positive';
             /********************/
 
-            /*  Show popUp in order to warn the user that if he/she doesn't have account,
-                we are going to create new one */
             this.$ionicPopup.show({
                 title: POPUP_TITLE,
                 template: POPUP_BODY_TEXT,
@@ -191,14 +191,16 @@ module components.popup.rewardPopup.cardRewardPopup {
                         text: POPUP_OK_BUTTON_TEXT,
                         type: POPUP_OK_BUTTON_TYPE,
                         onTap: function(e) {
-                            self.$state.go('page.dataRequired', {
-                                financeId: '',
-                                action: {
-                                    type: '',
-                                    data: {total: {num: null, formatted: ''} }
+                            let typeOfFormulaId = self.$scope.popupConfig.cardData.TypeOfFormulaId;
+                            self.FormulaService.getFormulaById(typeOfFormulaId).then(
+                                function(formula: app.models.formula.Formula) {
+                                    self.$state.go('page.dataRequired', {
+                                        formula: formula
+                                    });
+                                    self.close();
                                 }
-                            });
-                            self.close();
+                            );
+
                         }
                     }
                 ]

@@ -14,6 +14,7 @@ module app.core.util.functionsUtil {
         dateMonthToString: (date: string, zone: string) => string;
         getPositionByUid: (array: Array<any>, uid: string) => number;
         groupByYear: (array: Array<any>) => any;
+        arrayToObject: (array: Array<any>) => any;
     }
 
 
@@ -123,7 +124,10 @@ module app.core.util.functionsUtil {
         /**
         * getPositionByUid
         * @description - get Position on Array by Uid
+        * @example - this.FunctionsUtilService.getPositionByUid(expenses, expenseId);
         * @function
+        * @params {Array<any>} array - list of data
+        @params {string} uid - data uid
         * @return {number} index - Returns an index position on Array
         */
         getPositionByUid(array, uid): number {
@@ -146,6 +150,33 @@ module app.core.util.functionsUtil {
 
             return newArrayGroupedByYear;
         }
+
+
+        /**
+        * arrayToObject
+        * @description - change an Array to firebase object.
+        * @example - array = [{title: 'text'}, {title: 'text'}]
+                return  firebaseObject = {
+                            367990d1-258b-404a-aa32-b29125fcde3e: {title: 'text'},
+                            e8f703e7-6970-462c-88ae-66d1e9bf4792: {title: 'text'}
+                        }
+        * @function
+        * @params {Array<any>} array - list of data
+        * @return {Array<any>} newArrayGroupedByYear - Returns an array grouped by Year
+        */
+        arrayToObject(array): any {
+            let newObject = {};
+
+            for (let i = 0; i < array.length; ++i) {
+                if (array[i] !== undefined) {
+                    newObject[array[i].uid] = array[i];
+                }
+            }
+
+            return newObject;
+        }
+
+
 
     }
 

@@ -123,7 +123,8 @@ module app.models.finance {
         * saveNecessaryExpense
         * @description - add/update neccesary expense on firebase
         * @function
-        * @params {string} necessaryExpense - new value for user necessary expense property
+        * @params {Expense} necessaryExpense - new value for user necessary
+        * expense property
         * @params {string} financeId - finance uid
         * @params {function} callback - function callback required to know if
         * It saved necessary expense
@@ -137,7 +138,7 @@ module app.models.finance {
         * saveUnnecessaryExpense
         * @description - add/update unneccesary expense on firebase
         * @function
-        * @params {string} unnecessaryExpense - new value for user unnecessary
+        * @params {Expense} unnecessaryExpense - new value for user unnecessary
         * expense property
         * @params {string} financeId - finance uid
         * @params {function} callback - function callback required to know if

@@ -13,7 +13,7 @@ module app.models.card {
         title: string;
         description: string;
         emblem: string;
-        formulaId: string;
+        typeOfFormulaId: string;
         amount?: number;
         status?: string;
     }
@@ -29,7 +29,7 @@ module app.models.card {
         private title: string;
         private description: string;
         private emblem: string;
-        private formulaId: string;
+        private typeOfFormulaId: string;
         private amount: number;
         private status: string;
 
@@ -45,7 +45,7 @@ module app.models.card {
             this.title = obj.title || '';
             this.description = obj.description || '';
             this.emblem = obj.emblem || '';
-            this.formulaId = obj.formulaId || '';
+            this.typeOfFormulaId = obj.typeOfFormulaId || '';
             this.amount = obj.amount || 0;
             this.status = obj.status || '';
 
@@ -91,13 +91,13 @@ module app.models.card {
             this.emblem = emblem;
         }
 
-        get FormulaId() {
-            return this.formulaId;
+        get TypeOfFormulaId() {
+            return this.typeOfFormulaId;
         }
 
-        set FormulaId(formulaId: string) {
-            if (formulaId === undefined) { throw 'Please supply card formulaId'; }
-            this.formulaId = formulaId;
+        set TypeOfFormulaId(typeOfFormulaId: string) {
+            if (typeOfFormulaId === undefined) { throw 'Please supply card typeOfFormulaId'; }
+            this.typeOfFormulaId = typeOfFormulaId;
         }
 
         get Amount() {

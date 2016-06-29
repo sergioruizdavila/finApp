@@ -4,14 +4,14 @@ typeOfCard : [
         "title": "%rewards.title.type1",
         "description": "%rewards.description.type1",
         "emblem": "image.jpg",
-        "formulaId": 1
+        "typeOfFormulaId": 1
     },
     {
         "uid": "uniqueId2",
         "title": "%rewards.title.type2",
         "description": "%rewards.description.type2",
         "emblem": "image2.jpg",
-        "formulaId": 2
+        "typeOfFormulaId": 2
     }
 ],
 

@@ -26,14 +26,7 @@
                 },
                 parent: 'page',
                 params: {
-                    financeId: null,
-                    action: {
-                        type: '',
-                        data: {
-                            num: null,
-                            formatted: ''
-                        }
-                    }
+                    formula: null
                 },
                 cache: false
             });
