@@ -49,10 +49,10 @@ module app.core.cardFormulas {
         * _dispatcher
         * @description - It is responsible for assigning the respective formulation
         * @function
-        * @params {string} typeOfFormulaId - formula unique id
+        * @params {string} formulaId - formula unique id
         */
-        private _dispatcher(typeOfFormulaId: string): void {
-            switch(typeOfFormulaId){
+        private _dispatcher(formulaId: string): void {
+            switch(formulaId){
                 case '1':
                 this.total(230);
                 break;

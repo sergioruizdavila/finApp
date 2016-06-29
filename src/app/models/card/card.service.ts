@@ -71,7 +71,7 @@ module app.models.card {
         * It created a new card
         */
         createNewCard(card, callback): void {
-            let url = '/typeOfCard/' + card.Uid;
+            let url = '/cards/' + card.Uid;
             this.FirebaseFactory.add(url, card, callback);
         }
 
@@ -96,7 +96,7 @@ module app.models.card {
         * cards list
         */
         getAllCards(): angular.IPromise<Array<Card>> {
-            let url = '/typeOfCard/';
+            let url = '/cards/';
             return this.FirebaseFactory.getArray(url).then(function(data){
                 let cards = [];
                 for (let i = 0; i < data.length; i++) {
@@ -142,7 +142,7 @@ module app.models.card {
         * a specific card
         */
         getCardById(uid): angular.IPromise<AngularFireObject> {
-            let url = '/typeOfCard/' + uid;
+            let url = '/cards/' + uid;
             return this.FirebaseFactory.getObject(url).then(function(data){
                 return data;
             }).catch(function(err) {

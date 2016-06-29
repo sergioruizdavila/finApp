@@ -37,7 +37,7 @@ module app.models.finance {
         /*-- PROPERTIES --*/
         private uid: string;
         private income: Income;
-        private typeOfExpense: TypeOfExpense;
+        private expenses: TypeOfExpense;
         private dateCreated: app.interfaces.IDateFormatted;
         private dateUpdated: string;
 
@@ -52,7 +52,7 @@ module app.models.finance {
             //init properties
             this.uid = obj.uid || app.core.util.functionsUtil.FunctionsUtilService.generateGuid();
             this.income = new Income(obj.income);
-            this.typeOfExpense = new TypeOfExpense(obj.typeOfExpense);
+            this.expenses = new TypeOfExpense(obj.expenses);
             this.dateCreated = obj.dateCreated || app.core.util.functionsUtil.FunctionsUtilService.splitDateFormat(new Date().toString());
             this.dateUpdated = new Date().toString();
 
@@ -76,7 +76,7 @@ module app.models.finance {
         }
 
         get TypeOfExpense() {
-            return this.typeOfExpense;
+            return this.expenses;
         }
 
         get DateUpdated() {

@@ -68,7 +68,7 @@ module app.models.formula {
         * It created a new formula
         */
         createNewFormula(formula, callback): void {
-            let url = '/typeOfFormula/' + formula.Uid;
+            let url = '/formulas/' + formula.Uid;
             this.FirebaseFactory.add(url, formula, callback);
         }
 
@@ -80,7 +80,7 @@ module app.models.formula {
         * formulas list
         */
         getAllFormulas(): angular.IPromise<Array<Formula>> {
-            let url = '/typeOfFormula/';
+            let url = '/formulas/';
             return this.FirebaseFactory.getArray(url).then(function(data){
                 let formulas = [];
                 for (let i = 0; i < data.length; i++) {
@@ -105,7 +105,7 @@ module app.models.formula {
         * a specific formula
         */
         getFormulaById(uid): angular.IPromise<Formula> {
-            let url = '/typeOfFormula/' + uid;
+            let url = '/formulas/' + uid;
             return this.FirebaseFactory.getObject(url).then(function(details){
                 let formulaDetails = new Formula(details);
                 return formulaDetails;

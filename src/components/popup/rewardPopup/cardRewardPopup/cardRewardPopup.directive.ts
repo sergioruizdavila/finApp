@@ -191,8 +191,8 @@ module components.popup.rewardPopup.cardRewardPopup {
                         text: POPUP_OK_BUTTON_TEXT,
                         type: POPUP_OK_BUTTON_TYPE,
                         onTap: function(e) {
-                            let typeOfFormulaId = self.$scope.popupConfig.cardData.TypeOfFormulaId;
-                            self.FormulaService.getFormulaById(typeOfFormulaId).then(
+                            let formulaId = self.$scope.popupConfig.cardData.FormulaId;
+                            self.FormulaService.getFormulaById(formulaId).then(
                                 function(formula: app.models.formula.Formula) {
                                     self.$state.go('page.dataRequired', {
                                         formula: formula

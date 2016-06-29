@@ -11,7 +11,7 @@ module app.core.util.giveReward {
     /*           INTERFACES           */
     /**********************************/
     export interface IGiveRewardService {
-        giveCard: (typeOfFormulaId: string) => void;
+        giveCard: (formulaId: string) => void;
     }
 
     /****************************************/
@@ -52,13 +52,13 @@ module app.core.util.giveReward {
         /**
         * giveCard
         * @description - give reward: Card
-        * @use - this.RewardService.giveCard('1'); if user send typeOfFormulaId, give a
+        * @use - this.RewardService.giveCard('1'); if user send formulaId, give a
         * specific card, if not, give a random card.
         * @function
-        * @params {string} typeOfFormulaId - formula id
+        * @params {string} formulaId - formula id
         * @return {app.models.card.Card} - user card reward
         */
-        giveCard(typeOfFormulaId = '0'): any {
+        giveCard(formulaId = '0'): any {
             //VARIABLES
             let self = this;
             let randomCard = new app.models.card.UserCard();
@@ -69,10 +69,10 @@ module app.core.util.giveReward {
 
                 return self.CardService.getCardsByUserId().then(function(userCards) {
 
-                    if(typeOfFormulaId != '0') {
+                    if(formulaId != '0') {
 
                         for (let i = 0; i < cards.length; i++) {
-                            if(cards[i].TypeOfFormulaId == typeOfFormulaId) {
+                            if(cards[i].FormulaId == formulaId) {
                                 randomCard.Uid = cards[i].Uid;
                                 break;
                             }
