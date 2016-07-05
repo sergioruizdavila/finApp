@@ -28,19 +28,16 @@ module app.models.user {
             this.uid = obj.uid;
             this.username = obj.username || '';
             this.email = obj.email || '';
+            this.finances = [];
+            this.cards = [];
 
-            if(_.isEmpty(obj)) {
-                this.finances = [];
-                this.cards = [];
-            } else {
+            if(!_.isEmpty(obj)) {
                 for (let key in obj.finances) {
                     let financeInstance = new app.models.finance.Finance(obj.finances[key]);
-                    this.finances = [];
                     this.addFinance(financeInstance);
                 }
                 for (let key in obj.cards) {
                     let cardInstance = new app.models.card.UserCard(obj.cards[key]);
-                    this.cards = [];
                     this.addCard(cardInstance);
                 }
             }

@@ -221,8 +221,9 @@ module app.pages.addNecessaryExpensePage {
                         type: POPUP_ADD_BUTTON_TYPE,
                         onTap: function(e) {
                             let expenseInstance = angular.copy(this.scope.vm.form.expense);
-
-                            if(this.scope.vm.form.action == 'Add'){
+                            //TODO: Hacer un refactor aqui, separando como esta en Salary, Business y investment.
+                            //Creando un metodo privado _saveNecessaryExpense donde haga toda esta logica ahi.
+                            if(this.scope.vm.form.action == 'Add') {
                                 //Update User model
                                 self.$rootScope.User.Finance[self._financePos].TypeOfExpense.addNecessary(expenseInstance);
                             } else {

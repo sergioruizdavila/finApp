@@ -86,7 +86,7 @@ module app.pages.financeDetailPage {
 
             //Get Finance Details
             this._getFinanceDetail(this.financeDetailDataConfig.financeId)
-            .then(function(finance: any){
+            .then(function(finance: any) {
                 let financeInstance = new app.models.finance.Finance(finance);
                 self._buildFinanceDetailsBlocks(finance);
             });
@@ -101,7 +101,7 @@ module app.pages.financeDetailPage {
         * @description Validate if user is logged in.
         */
         private _isLoggedIn(): void {
-            if(!this.auth.isLoggedIn()){
+            if(!this.auth.isLoggedIn()) {
                 this.$state.go('page.signUp');
                 event.preventDefault();
             }
@@ -167,16 +167,16 @@ module app.pages.financeDetailPage {
         * goToEditSalary
         * @description this method is launched when user press edit salary row,
         * Go to edit salary method
-        * @params {app.models.finance.IMoney} value - user's salary data
+        * @params {app.models.finance.IIncome} salary - user's salary data
         */
-        goToEditSalary(value): void {
+        goToEditSalary(salary): void {
             this.$state.go('page.salary', {
                 financeId: this.financeDetailDataConfig.financeId,
                 action: {
                     type: 'Edit',
                     data: {
-                        num: value.num,
-                        formatted: value.formatted
+                        num: salary.value.num,
+                        formatted: salary.value.formatted
                     }
                 }
             });
@@ -186,16 +186,16 @@ module app.pages.financeDetailPage {
         * goToEditBusiness
         * @description this method is launched when user press edit business row,
         * Go to edit business method
-        * @params {app.models.finance.IMoney} value - user's business data
+        * @params {app.models.finance.IIncome} business - user's business data
         */
-        goToEditBusiness(value): void {
+        goToEditBusiness(business): void {
             this.$state.go('page.business', {
                 financeId: this.financeDetailDataConfig.financeId,
                 action: {
                     type: 'Edit',
                     data: {
-                        num: value.num,
-                        formatted: value.formatted
+                        num: business.value.num,
+                        formatted: business.value.formatted
                     }
                 }
             });
@@ -205,16 +205,16 @@ module app.pages.financeDetailPage {
         * goToEditInvestment
         * @description this method is launched when user press edit investment row
         * Go to edit investment method
-        * @params {app.models.finance.IMoney} value - user's investment data
+        * @params {app.models.finance.IIncome} investment - user's investment data
         */
-        goToEditInvestment(value): void {
+        goToEditInvestment(investment): void {
             this.$state.go('page.investment', {
                 financeId: this.financeDetailDataConfig.financeId,
                 action: {
                     type: 'Edit',
                     data: {
-                        num: value.num,
-                        formatted: value.formatted
+                        num: investment.value.num,
+                        formatted: investment.value.formatted
                     }
                 }
             });

@@ -27,7 +27,7 @@ module app.pages.addBusinessPage {
     }
 
     export interface IAddBusinessForm {
-        business: app.models.finance.IMoney;
+        business: app.models.finance.IIncome;
     }
 
     /****************************************/
@@ -83,8 +83,10 @@ module app.pages.addBusinessPage {
             //Init form
             this.form = {
                 business: {
-                    num: this.addBusinessDataConfig.action.data.num || null,
-                    formatted: this.addBusinessDataConfig.action.data.formatted || ''
+                    value: {
+                        num: this.addBusinessDataConfig.action.data.num || null,
+                        formatted: this.addBusinessDataConfig.action.data.formatted || ''
+                    }
                 }
             };
 
@@ -117,11 +119,11 @@ module app.pages.addBusinessPage {
         */
         private _formatBusiness(): void {
             let currencyObj: app.models.finance.IMoney =
-            this.FunctionsUtilService.formatCurrency(this.form.business.num,
-                                                     this.form.business.formatted);
+            this.FunctionsUtilService.formatCurrency(this.form.business.value.num,
+                                                     this.form.business.value.formatted);
 
-            this.form.business.num = currencyObj.num;
-            this.form.business.formatted = currencyObj.formatted;
+            this.form.business.value.num = currencyObj.num;
+            this.form.business.value.formatted = currencyObj.formatted;
         }
 
         /*
@@ -131,9 +133,11 @@ module app.pages.addBusinessPage {
         private _saveBusiness(): void {
             //Update User model
             this.$rootScope.User.Finance[this._financePos].Income.Business = this.form.business;
-            //Save salary on firebase
-            this.FinanceService.saveFinance(
-                this.$rootScope.User.Finance[this._financePos],
+
+            //Save business on firebase
+            this.FinanceService.saveBusiness(
+                this.$rootScope.User.Finance[this._financePos].Income.Business,
+                this.addBusinessDataConfig.financeId,
                 function(err) {
                     if (err) {
                         //LOG

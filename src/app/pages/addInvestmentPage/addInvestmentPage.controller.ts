@@ -27,7 +27,7 @@ module app.pages.addInvestmentPage {
     }
 
     export interface IAddInvestmentForm {
-        investment: app.models.finance.IMoney;
+        investment: app.models.finance.IIncome;
     }
 
     /****************************************/
@@ -83,8 +83,10 @@ module app.pages.addInvestmentPage {
             //Init form
             this.form = {
                 investment: {
-                    num: this.addInvestmentDataConfig.action.data.num || null,
-                    formatted: this.addInvestmentDataConfig.action.data.formatted || ''
+                    value: {
+                        num: this.addInvestmentDataConfig.action.data.num || null,
+                        formatted: this.addInvestmentDataConfig.action.data.formatted || ''
+                    }
                 }
             };
 
@@ -117,11 +119,11 @@ module app.pages.addInvestmentPage {
         */
         private _formatInvestment(): void {
             let currencyObj: app.models.finance.IMoney =
-            this.FunctionsUtilService.formatCurrency(this.form.investment.num,
-                                                     this.form.investment.formatted);
+            this.FunctionsUtilService.formatCurrency(this.form.investment.value.num,
+                                                     this.form.investment.value.formatted);
 
-            this.form.investment.num = currencyObj.num;
-            this.form.investment.formatted = currencyObj.formatted;
+            this.form.investment.value.num = currencyObj.num;
+            this.form.investment.value.formatted = currencyObj.formatted;
         }
 
         /*
@@ -131,9 +133,11 @@ module app.pages.addInvestmentPage {
         private _saveInvestment(): void {
             //Update User model
             this.$rootScope.User.Finance[this._financePos].Income.Investment = this.form.investment;
+
             //Save investment on firebase
-            this.FinanceService.saveFinance(
-                this.$rootScope.User.Finance[this._financePos],
+            this.FinanceService.saveInvestment(
+                this.$rootScope.User.Finance[this._financePos].Income.Investment,
+                this.addInvestmentDataConfig.financeId,
                 function(err) {
                     if (err) {
                         //LOG
@@ -155,7 +159,7 @@ module app.pages.addInvestmentPage {
                 financeId: this.addInvestmentDataConfig.financeId,
                 action: {
                     type: '',
-                    data: {total: {num: null, formatted: ''} }
+                    data: {num: null, formatted: ''}
                 }
             });
         }

@@ -40,7 +40,7 @@
 
             <div class="progressivePage__contentPage__input">
                 <input  type="text"
-                ng-model="vm.form.salary.formatted"
+                ng-model="vm.form.salary.value.formatted"
                 ng-change="vm._formatSalary()"
                 name="salary"
                 value=""
@@ -59,7 +59,7 @@
                     keyboard-attach>
         <button class="fa_btn fa_btn--blue fa_btn--block fa_btn--large fa_btn__3d fa_btn__3d--blue padding"
             ng-click="vm.goToNext()"
-            ng-disabled="vm.form.salary.num == 0 || vm.form.salary.num == null">
+            ng-disabled="vm.form.salary.value.num == 0 || vm.form.salary.value.num == null">
             <span class="button-inner" translate>
                 %global.continue.button.text
             </span>

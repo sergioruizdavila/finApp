@@ -1,0 +1,235 @@
+{
+  "cards" : {
+    "08884afc-8450-4cea-a2a2-a92e48a5f7a1" : {
+      "description" : "%reward.card.3.description.text",
+      "emblem" : "Bag.svg",
+      "formulaId" : 3,
+      "title" : "%reward.card.3.title.text",
+      "uid" : "08884afc-8450-4cea-a2a2-a92e48a5f7a1"
+    },
+    "1fed8c9f-9846-4e43-b5ff-6bd01c62633b" : {
+      "description" : "%reward.card.6.description.text",
+      "emblem" : "BusinessPlan.svg",
+      "formulaId" : 6,
+      "title" : "%reward.card.6.title.text",
+      "uid" : "1fed8c9f-9846-4e43-b5ff-6bd01c62633b"
+    },
+    "7261aecc-f83b-4321-a515-9f49ca0628cb" : {
+      "description" : "%reward.card.2.description.text",
+      "emblem" : "Approved.svg",
+      "formulaId" : 2,
+      "title" : "%reward.card.2.title.text",
+      "uid" : "7261aecc-f83b-4321-a515-9f49ca0628cb"
+    },
+    "7c347a0f-9ae6-4c56-aab7-a0f13bec8e98" : {
+      "description" : "%reward.card.4.description.text",
+      "emblem" : "Bank.svg",
+      "formulaId" : 4,
+      "title" : "%reward.card.4.title.text",
+      "uid" : "7c347a0f-9ae6-4c56-aab7-a0f13bec8e98"
+    },
+    "8e872685-0c28-4bcc-bb74-0c2f30134b71" : {
+      "description" : "%reward.card.10.description.text",
+      "emblem" : "Funding.svg",
+      "formulaId" : 10,
+      "title" : "%reward.card.10.title.text",
+      "uid" : "8e872685-0c28-4bcc-bb74-0c2f30134b71"
+    },
+    "93a45c08-1916-4eb9-b3b1-1da2304b433d" : {
+      "description" : "%reward.card.5.description.text",
+      "emblem" : "BusinessGraph.svg",
+      "formulaId" : 5,
+      "title" : "%reward.card.5.title.text",
+      "uid" : "93a45c08-1916-4eb9-b3b1-1da2304b433d"
+    },
+    "984ca24d-7cb1-4623-8336-e9b74cec7726" : {
+      "description" : "%reward.card.8.description.text",
+      "emblem" : "BusinessTrip.svg",
+      "formulaId" : 8,
+      "title" : "%reward.card.8.title.text",
+      "uid" : "984ca24d-7cb1-4623-8336-e9b74cec7726"
+    },
+    "9ebe944b-4906-4a20-ac3f-50bbfa38d08a" : {
+      "description" : "%reward.card.1.description.text",
+      "emblem" : "Analysis.svg",
+      "formulaId" : "348d4013-4e9f-4869-b478-bbbea7292cea",
+      "title" : "%reward.card.1.title.text",
+      "uid" : "9ebe944b-4906-4a20-ac3f-50bbfa38d08a"
+    },
+    "b1dc8803-0730-4316-8643-4ce442c876bb" : {
+      "description" : "%reward.card.9.description.text",
+      "emblem" : "Chart.svg",
+      "formulaId" : 9,
+      "title" : "%reward.card.9.title.text",
+      "uid" : "b1dc8803-0730-4316-8643-4ce442c876bb"
+    },
+    "cf23f3c8-b4db-4dc1-a0af-9b950d6dba67" : {
+      "description" : "%reward.card.7.description.text",
+      "emblem" : "BusinessProgress.svg",
+      "formulaId" : 7,
+      "title" : "%reward.card.7.title.text",
+      "uid" : "cf23f3c8-b4db-4dc1-a0af-9b950d6dba67"
+    }
+  },
+  "dataGroups" : {
+    "0948b5f1-ac90-4686-b679-9f32f1b52f5e" : {
+      "members" : {
+        "31713cad-d708-479e-b5d5-adb50632503a" : {
+          "title" : "investment",
+          "uid" : "31713cad-d708-479e-b5d5-adb50632503a"
+        },
+        "7636edd3-0730-4c68-a46d-5c47c9bf6f47" : {
+          "title" : "salary",
+          "uid" : "7636edd3-0730-4c68-a46d-5c47c9bf6f47"
+        },
+        "7d671101-ec13-40fc-b741-619c7d118e93" : {
+          "title" : "business",
+          "uid" : "7d671101-ec13-40fc-b741-619c7d118e93"
+        }
+      },
+      "title" : " income",
+      "uid" : "0948b5f1-ac90-4686-b679-9f32f1b52f5e"
+    }
+  },
+  "formulas" : {
+    "348d4013-4e9f-4869-b478-bbbea7292cea" : {
+      "uid" : "348d4013-4e9f-4869-b478-bbbea7292cea",
+      "variables" : {
+        "942c35a9-d063-4917-96bb-71f4e3dc2e4e" : {
+          "dataGroupId" : "0948b5f1-ac90-4686-b679-9f32f1b52f5e",
+          "memberId" : "7636edd3-0730-4c68-a46d-5c47c9bf6f47",
+          "uid" : "942c35a9-d063-4917-96bb-71f4e3dc2e4e"
+        },
+        "ddc9e6e9-927c-4332-9796-a1bfef70114e" : {
+          "dataGroupId" : "0948b5f1-ac90-4686-b679-9f32f1b52f5e",
+          "memberId" : "7d671101-ec13-40fc-b741-619c7d118e93",
+          "uid" : "ddc9e6e9-927c-4332-9796-a1bfef70114e"
+        },
+        "e407aef8-1142-4230-8700-cb202e562e7a" : {
+          "dataGroupId" : "0948b5f1-ac90-4686-b679-9f32f1b52f5e",
+          "memberId" : "31713cad-d708-479e-b5d5-adb50632503a",
+          "uid" : "e407aef8-1142-4230-8700-cb202e562e7a"
+        }
+      }
+    }
+  },
+  "users" : {
+    "33d69857-aba0-407b-b78e-9c15f1ed7596" : {
+      "cards" : {
+        "9ebe944b-4906-4a20-ac3f-50bbfa38d08a" : {
+          "amount" : 1,
+          "status" : "NUEVO",
+          "uid" : "9ebe944b-4906-4a20-ac3f-50bbfa38d08a"
+        }
+      },
+      "email" : "sergio.ruiz@globant.com",
+      "finances" : {
+        "1cf9a2d5-aa89-42ad-a302-a4c5dd7fff82" : {
+          "dateCreated" : {
+            "complete" : "Thu Jun 30 2016 12:59:10 GMT-0500 (COT)",
+            "day" : "30",
+            "month" : "Jun",
+            "year" : "2016"
+          },
+          "dateUpdated" : "Thu Jun 30 2016 12:59:10 GMT-0500 (COT)",
+          "income" : {
+            "business" : {
+              "formatted" : "$0",
+              "num" : 0
+            },
+            "dataGroupId" : "0948b5f1-ac90-4686-b679-9f32f1b52f5e",
+            "investment" : {
+              "formatted" : "$120,000",
+              "num" : 120000
+            },
+            "salary" : {
+              "formatted" : "$2,030,000",
+              "num" : 2030000
+            },
+            "uid" : "8e8a84d1-c1da-4e3f-b4e0-635cd3fcb9ca"
+          },
+          "uid" : "1cf9a2d5-aa89-42ad-a302-a4c5dd7fff82"
+        }
+      },
+      "firstTime" : false,
+      "provider" : "password",
+      "uid" : "33d69857-aba0-407b-b78e-9c15f1ed7596",
+      "username" : ""
+    },
+    "b29f6327-a8f7-4f68-bd6d-faef79f8d360" : {
+      "cards" : {
+        "9ebe944b-4906-4a20-ac3f-50bbfa38d08a" : {
+          "amount" : 1,
+          "status" : "NUEVO",
+          "uid" : "9ebe944b-4906-4a20-ac3f-50bbfa38d08a"
+        }
+      },
+      "email" : "sergioruizdavila@gmail.com",
+      "finances" : {
+        "76a0bbcf-cfbe-43e1-b7d1-40965f53819b" : {
+          "dateCreated" : {
+            "complete" : "Wed Jun 22 2016 20:20:06 GMT-0500 (COT)",
+            "day" : "22",
+            "month" : "Jun",
+            "year" : "2016"
+          },
+          "dateUpdated" : "Wed Jun 22 2016 20:20:06 GMT-0500 (COT)",
+          "income" : {
+            "business" : {
+              "formatted" : "$0",
+              "num" : 0
+            },
+            "investment" : {
+              "formatted" : "$1,200,000",
+              "num" : 1200000
+            },
+            "salary" : {
+              "formatted" : "$4,700,000",
+              "num" : 4700000
+            },
+            "uid" : "a6dea1cf-4ce2-4f9c-ad0b-064e99ce9de8"
+          },
+          "otherInfo" : [ {
+            "key" : "saving",
+            "value" : 2300000
+          } ],
+          "typeOfExpense" : {
+            "necessaries" : {
+              "39622099-99d5-4849-8278-a778e1fc6bd6" : {
+                "title" : "Arroz con leche",
+                "uid" : "39622099-99d5-4849-8278-a778e1fc6bd6",
+                "value" : {
+                  "formatted" : "$120,000",
+                  "num" : 120000
+                }
+              },
+              "f6d1cf5b-0339-465e-b70a-3d4d0d13ae66" : {
+                "title" : "Arriendo",
+                "uid" : "f6d1cf5b-0339-465e-b70a-3d4d0d13ae66",
+                "value" : {
+                  "formatted" : "$3,400,000",
+                  "num" : 3400000
+                }
+              }
+            },
+            "unnecessaries" : {
+              "0abbe3ee-5344-42e6-af60-0fd48764b4b9" : {
+                "title" : "Arroz con Leche",
+                "uid" : "0abbe3ee-5344-42e6-af60-0fd48764b4b9",
+                "value" : {
+                  "formatted" : "$230,000",
+                  "num" : 230000
+                }
+              }
+            }
+          },
+          "uid" : "76a0bbcf-cfbe-43e1-b7d1-40965f53819b"
+        }
+      },
+      "firstTime" : false,
+      "provider" : "password",
+      "uid" : "b29f6327-a8f7-4f68-bd6d-faef79f8d360",
+      "username" : ""
+    }
+  }
+}

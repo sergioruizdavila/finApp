@@ -13,6 +13,10 @@ module app.models.finance {
         formatted: string;
     }
 
+    export interface IIncome {
+        value: IMoney;
+    }
+
     export interface IExpense {
         uid: string;
         title: string;
@@ -67,7 +71,7 @@ module app.models.finance {
         }
 
         set Uid(uid: string) {
-            if (uid === undefined) { throw 'Please supply id'; }
+            if (uid === undefined) { throw 'Please supply id (finance)'; }
             this.uid = uid;
         }
 
@@ -84,12 +88,12 @@ module app.models.finance {
         }
 
         set DateUpdated(date: string) {
-            if (date === undefined) { throw 'Please supply Updated Date'; }
+            if (date === undefined) { throw 'Please supply Updated Date (finance)'; }
             this.dateUpdated = date;
         }
 
         set DateCreated(date: string) {
-            if (date === undefined) { throw 'Please supply Created Date'; }
+            if (date === undefined) { throw 'Please supply Created Date (finance)'; }
             this.dateCreated = app.core.util.functionsUtil.FunctionsUtilService.splitDateFormat(date);
         }
 
@@ -103,36 +107,39 @@ module app.models.finance {
 
         /*-- PROPERTIES --*/
         private uid: string;
-        private dataGroupId: string;
-        private salary: IMoney;
-        private investment: IMoney;
-        private business: IMoney;
+        private salary: IIncome;
+        private investment: IIncome;
+        private business: IIncome;
 
         /**********************************/
         /*           CONSTRUCTOR          */
         /**********************************/
-        constructor(obj: any = {salary: {}, investment: {}, business: {}}) {
+        constructor(obj: any = {salary: {value: {}}, investment: {value: {}}, business: {value: {}}}) {
             //LOG
             console.log('init income');
 
             //init properties
             this.uid = obj.uid || app.core.util.functionsUtil.FunctionsUtilService.generateGuid();
 
-            this.dataGroupId = obj.dataGroupId || app.models.dataGroup.EnumDataGroup.income.value;
-
             this.salary = {
-                num: obj.salary.num || null ,
-                formatted: obj.salary.formatted || ''
+                value: {
+                    num: obj.salary.value.num || null ,
+                    formatted: obj.salary.value.formatted || ''
+                }
             };
 
             this.investment = {
-                num: obj.investment.num || null,
-                formatted: obj.investment.formatted || ''
+                value: {
+                    num: obj.investment.value.num || null,
+                    formatted: obj.investment.value.formatted || ''
+                }
             };
 
             this.business = {
-                num: obj.business.num || null,
-                formatted: obj.business.formatted || ''
+                value: {
+                    num: obj.business.value.num || null,
+                    formatted: obj.business.value.formatted || ''
+                }
             };
         }
 
@@ -149,20 +156,11 @@ module app.models.finance {
             this.uid = uid;
         }
 
-        get DataGroupId() {
-            return this.dataGroupId;
-        }
-
-        set DataGroupId(dataGroupId: string) {
-            if (dataGroupId === undefined) { throw 'Please supply data group Id (income)'; }
-            this.dataGroupId = dataGroupId;
-        }
-
         get Salary() {
             return this.salary;
         }
 
-        set Salary(salary: IMoney) {
+        set Salary(salary: IIncome) {
             if (salary === undefined) { throw 'Please supply salary value (income)'; }
             this.salary = salary;
         }
@@ -171,7 +169,7 @@ module app.models.finance {
             return this.investment;
         }
 
-        set Investment(investment: IMoney) {
+        set Investment(investment: IIncome) {
             if (investment === undefined) { throw 'Please supply investment value (income)'; }
             this.investment = investment;
         }
@@ -180,7 +178,7 @@ module app.models.finance {
             return this.business;
         }
 
-        set Business(business: IMoney) {
+        set Business(business: IIncome) {
             if (business === undefined) { throw 'Please supply business value (income)'; }
             this.business = business;
         }

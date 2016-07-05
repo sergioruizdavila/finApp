@@ -26,6 +26,7 @@
                 },
                 parent: 'page',
                 params: {
+                    financeId: null,
                     formula: null
                 },
                 cache: false

@@ -46,6 +46,7 @@ module app.pages.signUpPage {
             'finApp.auth.AuthService',
             '$filter',
             'finApp.models.user.UserService',
+            'finApp.models.finance.FinanceService',
             '$scope',
             '$rootScope'];
 
@@ -58,6 +59,7 @@ module app.pages.signUpPage {
             private auth,
             private $filter: angular.IFilterService,
             private UserService: app.models.user.IUserService,
+            private FinanceService: app.models.finance.IFinanceService,
             private $scope: angular.IScope,
             private $rootScope: app.interfaces.IFinAppRootScope) {
 
@@ -179,6 +181,7 @@ module app.pages.signUpPage {
                 email / password combination */
             this.auth.logInPassword(user).then(
                 function(response){
+
                     //Add provider property
                     self.$rootScope.User.Uid = response.uid;
                     self.$rootScope.User.Provider = response.provider;
@@ -187,11 +190,16 @@ module app.pages.signUpPage {
                     self.UserService.createNewUser(self.$rootScope.User, function(err){
                         if (err) {
                             //LOG
-                            console.log('Error: Not created user');
+                            console.log('Error: Not created user', err);
                         } else {
                             //Create User Finance object
                             let newFinance = new app.models.finance.Finance();
                             self.$rootScope.User.addFinance(newFinance);
+                            self.FinanceService.saveFinance(newFinance, function(err){
+                                if(err) {
+                                    console.log('Error: Not saved finance', err);
+                                }
+                            });
                             self.$state.go('page.salary', {
                                 financeId: newFinance.Uid,
                                 action: {

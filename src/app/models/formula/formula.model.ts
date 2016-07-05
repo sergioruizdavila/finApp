@@ -13,10 +13,15 @@ module app.models.formula {
         variables: Array<IVariable>;
     }
 
+    // export interface IVariable {
+    //     uid: string;
+    //     dataGroupId: string;
+    //     memberId: string;
+    // }
     export interface IVariable {
         uid: string;
-        dataGroupId: string;
-        memberId: string;
+        group: string;
+        member: string;
     }
 
 
@@ -40,12 +45,10 @@ module app.models.formula {
 
             //init properties
             this.uid = obj.uid || app.core.util.functionsUtil.FunctionsUtilService.generateGuid();
+            this.variables = [];
 
-            if(_.isEmpty(obj)) {
-                this.variables = [];
-            } else {
+            if(!_.isEmpty(obj)) {
                 for (let key in obj.variables) {
-                    this.variables = [];
                     this.addVariable(obj.variables[key]);
                 }
             }

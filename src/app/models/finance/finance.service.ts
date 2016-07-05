@@ -17,9 +17,9 @@ module app.models.finance {
     export interface IFinanceService {
         ref: any;
         saveFinance: (finance: Finance, callback: (err) => void) => void;
-        saveSalary: (newSalary: IMoney) => void;
-        saveInvestment: (newInvestment: IMoney) => void;
-        saveBusiness: (newBusiness: IMoney) => void;
+        saveSalary: (newSalary: IIncome, financeId: string, callback: (err) => void) => void;
+        saveInvestment: (newInvestment: IIncome, financeId: string, callback: (err) => void) => void;
+        saveBusiness: (newBusiness: IIncome, financeId: string, callback: (err) => void) => void;
         saveNecessaryExpense: (necessaryExpense: Expense, financeId: string, callback: (err) => void) => void;
         saveUnnecessaryExpense: (unnecessaryExpense: Expense, financeId: string, callback: (err) => void) => void;
         getAllFinances: () => angular.IPromise<AngularFireArray>;
@@ -91,10 +91,13 @@ module app.models.finance {
         * @description - save user salary on firebase
         * @function
         * @params {string} newSalary - new value for user salary property
+        * @params {string} financeId - finance uid
+        * @params {function} callback - function callback required to know if
+        * It saved salary income
         */
-        saveSalary(newSalary): void {
-            let url = '/users/' + this.$rootScope.User.Uid + this.dataConfig.salaryIncomeUrl;
-            this.FirebaseFactory.update(url, newSalary);
+        saveSalary(newSalary, financeId, callback): void {
+            let url = '/users/' + this.$rootScope.User.Uid + '/finances/' + financeId + this.dataConfig.salaryIncomeUrl;
+            this.FirebaseFactory.update(url, newSalary, callback);
         }
 
         /**
@@ -102,10 +105,13 @@ module app.models.finance {
         * @description - save user investment income on firebase
         * @function
         * @params {string} newSalary - new value for user investment property
+        * @params {string} financeId - finance uid
+        * @params {function} callback - function callback required to know if
+        * It saved investment income
         */
-        saveInvestment(newInvestment): void {
-            let url = '/users/' + this.$rootScope.User.Uid + this.dataConfig.investmentIncomeUrl;
-            this.FirebaseFactory.update(url, newInvestment);
+        saveInvestment(newInvestment, financeId, callback): void {
+            let url = '/users/' + this.$rootScope.User.Uid + '/finances/' + financeId + this.dataConfig.investmentIncomeUrl;
+            this.FirebaseFactory.update(url, newInvestment, callback);
         }
 
         /**
@@ -113,10 +119,13 @@ module app.models.finance {
         * @description - save user business income on firebase
         * @function
         * @params {string} newBusiness - new value for user business property
+        * @params {string} financeId - finance uid
+        * @params {function} callback - function callback required to know if
+        * It saved business income
         */
-        saveBusiness(newBusiness): void {
-            let url = '/users/' + this.$rootScope.User.Uid + this.dataConfig.businessIncomeUrl;
-            this.FirebaseFactory.update(url, newBusiness);
+        saveBusiness(newBusiness, financeId, callback): void {
+            let url = '/users/' + this.$rootScope.User.Uid + '/finances/' + financeId + this.dataConfig.businessIncomeUrl;
+            this.FirebaseFactory.update(url, newBusiness, callback);
         }
 
         /**
@@ -234,7 +243,9 @@ module app.models.finance {
             let total = 0;
 
             for (let key in incomes) {
-                incomesToArray.push(incomes[key].num || 0);
+                if(incomes[key].value){
+                    incomesToArray.push(incomes[key].value.num || 0);
+                }
             }
 
             total = this.total(incomesToArray);
@@ -255,7 +266,9 @@ module app.models.finance {
             let total = 0;
 
             for (let key in expenses) {
-                expensesToArray.push(expenses[key].value.num || 0);
+                if(expenses[key].value){
+                    expensesToArray.push(expenses[key].value.num || 0);
+                }
             }
 
             total = this.total(expensesToArray);
@@ -278,7 +291,9 @@ module app.models.finance {
             for (let type in expenses) {
 
                 for (let key in expenses[type]) {
-                    expensesToArray.push(expenses[type][key].value.num || 0);
+                    if(expenses[type][key].value){
+                        expensesToArray.push(expenses[type][key].value.num || 0);
+                    }
                 }
 
             }

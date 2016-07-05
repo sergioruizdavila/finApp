@@ -10,7 +10,7 @@ module app.core.firebase {
 
     export interface IFirebaseFactory {
         createFirebase: () => Firebase;
-        update: (url: string, data: any) => void;
+        update: (url: string, data: any, callback: (err) => void) => void;
         add: (url: string, data: any, callback: (err) => void) => void;
         addWithPromise: (url: string, data: any) => angular.IPromise<any>;
         getArray: (url: string) => any;
@@ -61,10 +61,11 @@ module app.core.firebase {
         * @function
         * @params {string} url - uri of firebase
         * @params {any} data - data to send in order to update object on firebase
+        * @params {any} data - callback in order to receive success or error response
         */
-        update(url, data): void {
+        update(url, data, callback): void {
             let ref = new Firebase(this.baseUrl + url);
-            ref.update(data);
+            ref.update(data, callback);
         }
 
         /**
@@ -73,6 +74,7 @@ module app.core.firebase {
         * @function
         * @params {string} url - uri of firebase
         * @params {any} data - item to send in order to add object on firebase
+        * @params {any} data - callback in order to receive success or error response
         */
         add(url, data, callback): void {
             let ref = new Firebase(this.baseUrl + url);

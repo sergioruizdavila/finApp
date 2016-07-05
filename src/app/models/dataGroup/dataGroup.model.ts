@@ -53,13 +53,11 @@ module app.models.dataGroup {
 
             //init properties
             this.uid = obj.uid || app.core.util.functionsUtil.FunctionsUtilService.generateGuid();
+            this.members = [];
 
-            if(_.isEmpty(obj)) {
-                this.members = [];
-            } else {
+            if(!_.isEmpty(obj)) {
                 for (let key in obj.members) {
                     let memberInstance = new Member(obj.members[key]);
-                    this.members = [];
                     this.addMember(memberInstance);
                 }
             }

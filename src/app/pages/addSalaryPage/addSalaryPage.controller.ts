@@ -27,7 +27,7 @@ module app.pages.addSalaryPage {
     }
 
     export interface IAddSalaryForm {
-        salary: app.models.finance.IMoney;
+        salary: app.models.finance.IIncome;
     }
 
     /****************************************/
@@ -85,8 +85,10 @@ module app.pages.addSalaryPage {
             //Init form
             this.form = {
                 salary: {
-                    num: this.addSalaryDataConfig.action.data.num || null,
-                    formatted: this.addSalaryDataConfig.action.data.formatted || ''
+                    value: {
+                        num: this.addSalaryDataConfig.action.data.num || null,
+                        formatted: this.addSalaryDataConfig.action.data.formatted || ''
+                    }
                 }
             };
 
@@ -119,10 +121,10 @@ module app.pages.addSalaryPage {
         */
         private _formatSalary(): void {
             let currencyObj: app.models.finance.IMoney =
-            this.FunctionsUtilService.formatCurrency(this.form.salary.num,
-                                                     this.form.salary.formatted);
-            this.form.salary.num = currencyObj.num;
-            this.form.salary.formatted = currencyObj.formatted;
+            this.FunctionsUtilService.formatCurrency(this.form.salary.value.num,
+                                                     this.form.salary.value.formatted);
+            this.form.salary.value.num = currencyObj.num;
+            this.form.salary.value.formatted = currencyObj.formatted;
         }
 
         /*
@@ -132,16 +134,11 @@ module app.pages.addSalaryPage {
         private _saveSalary(): void {
             //Update User model
             this.$rootScope.User.Finance[this._financePos].Income.Salary = this.form.salary;
-            //TODO: IMPORTANT, Analizar si es mejor actualizar cada valor, ya que actualizar
-            // todo el objeto User es un gran lio, ya que tendriamos que hacer una function
-            // que mantenga los key en los array para que no se pierdan. Hasta el momento,
-            // los unicos valores que estan actualizando todo el objeto User son: salary,
-            // investment y business, de resto gastos, firstTime se actualizan solo estas
-            // propiedades
 
             //Save salary on firebase
-            this.FinanceService.saveFinance(
-                this.$rootScope.User.Finance[this._financePos],
+            this.FinanceService.saveSalary(
+                this.$rootScope.User.Finance[this._financePos].Income.Salary,
+                this.addSalaryDataConfig.financeId,
                 function(err) {
                     if (err) {
                         //LOG
@@ -149,6 +146,7 @@ module app.pages.addSalaryPage {
                     }
                 }
             );
+
         }
 
         /*

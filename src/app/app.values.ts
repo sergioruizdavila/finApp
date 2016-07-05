@@ -24,9 +24,9 @@ interface IDataConfig {
 
     var dataConfig: IDataConfig = {
         baseUrl: 'https://shining-fire-8072.firebaseio.com',
-        salaryIncomeUrl: '/finance/income/salary',
-        investmentIncomeUrl: '/finance/income/investment',
-        businessIncomeUrl: '/finance/income/business',
+        salaryIncomeUrl: '/income/salary',
+        investmentIncomeUrl: '/income/investment',
+        businessIncomeUrl: '/income/business',
         neccesaryExpenseUrl: '/typeOfExpense/necessaries/',
         unneccesaryExpenseUrl: '/typeOfExpense/unnecessaries/',
         userId: ''

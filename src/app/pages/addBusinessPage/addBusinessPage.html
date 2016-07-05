@@ -40,7 +40,7 @@
 
             <div class="progressivePage__contentPage__input">
                 <input  type="text"
-                ng-model="vm.form.business.formatted"
+                ng-model="vm.form.business.value.formatted"
                 ng-change="vm._formatBusiness()"
                 name="business"
                 value=""
@@ -58,7 +58,7 @@
                     ng-if="vm.addBusinessDataConfig.action.type != 'Edit'">
         <button class="fa_btn fa_btn--blue fa_btn--block fa_btn--large fa_btn__3d fa_btn__3d--blue padding"
             ng-click="vm.goToNext()"
-            ng-disabled="vm.form.business.num == null">
+            ng-disabled="vm.form.business.value.num == null">
             <span class="button-inner" translate>
                 %global.continue.button.text
             </span>

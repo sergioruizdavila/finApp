@@ -14,16 +14,25 @@ module app.pages.addDataRequiredPage {
         showDataRequiredTipPopup: () => void;
         showMissingDataTipPopup: () => void;
         showDataUpdateTipPopup: () => void;
+        checkDataUpdate: ($index: number, data: Array<IDataRequired>) => void;
         goToNext: () => void;
         goToBack: () => void;
     }
 
     export interface IAddDataRequiredDataConfig extends ng.ui.IStateParamsService {
+        financeId: string;
         formula: app.models.formula.Formula;
     }
 
     export interface IAddDataRequiredForm {
 
+    }
+
+    export interface IDataRequired {
+        title: string;
+        route: string;
+        update?: boolean;
+        value?: app.models.finance.IMoney;
     }
 
     /****************************************/
@@ -38,8 +47,11 @@ module app.pages.addDataRequiredPage {
         /**********************************/
         form: IAddDataRequiredForm;
         addDataRequiredDataConfig: IAddDataRequiredDataConfig;
+        private _missingDataList: Array<IDataRequired>;
+        private _dataUpdateList: Array<IDataRequired>;
         private _financePos: number;
-        private _testClass: boolean;
+        private _checked: Array<boolean>;
+        private _dataToUpdate: Array<IDataRequired>;
         // --------------------------------
 
         /*-- INJECT DEPENDENCIES --*/
@@ -50,6 +62,8 @@ module app.pages.addDataRequiredPage {
                           '$stateParams',
                           '$rootScope',
                           'finApp.auth.AuthService',
+                          'finApp.models.dataGroup.DataGroupService',
+                          'finApp.core.util.FunctionsUtilService',
                           'finApp.core.util.ManagementFunctionsService'];
 
         /**********************************/
@@ -62,6 +76,8 @@ module app.pages.addDataRequiredPage {
                     private $stateParams: IAddDataRequiredDataConfig,
                     private $rootScope: app.interfaces.IFinAppRootScope,
                     private auth: app.auth.IAuthService,
+                    private DataGroupService: app.models.dataGroup.DataGroupService,
+                    private FunctionsUtilService: app.core.util.functionsUtil.FunctionsUtilService,
                     private management: app.core.util.ManagementFunctionsService) {
                 this._init();
         }
@@ -71,7 +87,24 @@ module app.pages.addDataRequiredPage {
             //Validate if user is logged in
             this._isLoggedIn();
 
+            //Init VARIABLES
+            this._missingDataList = [];
+            this._dataUpdateList = [];
+            this._dataToUpdate = [];
+            this._checked = [];
+
             this.addDataRequiredDataConfig = this.$stateParams;
+
+            //Get Finance Position
+            //TODO: VALIDAR SI NO ENCUENTRA LA POSICION
+            this._financePos = this.FunctionsUtilService.getPositionByUid(this.$rootScope.User.Finance,
+                                                                          '12af9dd9-c1ec-48f1-b70d-9e7b6a37da27');
+
+            let variables = this.addDataRequiredDataConfig.formula.Variable;
+            for (let i = 0; i < variables.length; i++) {
+                let userData = this.$rootScope.User.Finance[this._financePos][variables[i].group];
+                this._buildDataList(userData, variables[i].group, variables[i].member);
+            }
 
             //TODO: Aqui deberia tomar el objeto formula que me envian de cardRewardPopup
             // Y dibujar dinamicamente el formulario
@@ -189,13 +222,122 @@ module app.pages.addDataRequiredPage {
 
         };
 
+        private _buildDataList(userData: any, group: string, member: string): void {
+            let formattedData = this._formatData(member);
+
+            if(userData) {
+                if(userData[member]){
+                    //Get value and adding it on Data Update List
+                    formattedData.value = userData[member].value;
+                    this._dataUpdateList.push(formattedData);
+
+                } else {
+                    //Adding formattedData on Missing Data List
+                    this._missingDataList.push(formattedData);
+                }
+            } else {
+                //Adding formattedData on Missing Data List
+                this._missingDataList.push(formattedData);
+            }
+        }
+
+        /**
+        * _formatData
+        * @description - format data in order to include on data update list or
+        * missing data list
+        * @function
+        * @params {string} member
+        * @return {IDataRequired} formattedData
+        */
+        private _formatData(member: string): IDataRequired {
+            //VARIABLES
+            let formattedData: IDataRequired = {title: '', route: ''};
+            //CONSTANTS
+            const SALARY = 'Salario';
+            const SALARY_ROUTE = 'page.salary';
+            const INVESTMENT = 'Inversión';
+            const INVESTMENT_ROUTE = 'page.investment';
+            const BUSINESS = 'Negocios';
+            const BUSINESS_ROUTE = 'page.business';
+            const NECESSARIES = 'Gastos Necesarios';
+            const NECESSARIES_ROUTE = 'page.necessaryExpense';
+            const UNNECESSARIES = 'Gastos Innecesarios';
+            const UNNECESSARIES_ROUTE = 'page.unnecessaryExpense';
+
+            switch(member) {
+                case 'salary':
+                    formattedData.title =  SALARY;
+                    formattedData.route = SALARY_ROUTE;
+                break;
+                case 'investment':
+                    formattedData.title = INVESTMENT;
+                    formattedData.route = INVESTMENT_ROUTE;
+                break;
+                case 'business':
+                    formattedData.title = BUSINESS;
+                    formattedData.route = BUSINESS_ROUTE;
+                break;
+                case 'necessaries':
+                    formattedData.title = NECESSARIES;
+                    formattedData.route = NECESSARIES_ROUTE;
+                break;
+                case 'unnecessaries':
+                    formattedData.title = UNNECESSARIES;
+                    formattedData.route = UNNECESSARIES_ROUTE;
+                case 'goal':
+                    formattedData.title = 'Meta Proxima';
+                    formattedData.route = 'page.goal';
+                break;
+            }
+
+            return formattedData;
+        }
+
+        private _buildCallsStack(): Array<IDataRequired> {
+            let result = [];
+            let missingData = this._missingDataList;
+            let dataUpdate = this._dataUpdateList;
+
+            for (let i = 0; i < dataUpdate.length; i++) {
+                if(dataUpdate[i].update){
+                    result.push(dataUpdate[i]);
+                }
+            }
+
+            result = result.concat(missingData);
+
+            return result;
+        }
+
         /*
         * Go to necessary expenses page
         * @description this method is launched when user press OK button
         */
         goToNext(): void {
-
+            //Build callsStack array
+            let callsStack: Array<IDataRequired> = this._buildCallsStack();
+            //TODO: Revisar bien aqui ya que funciona para salary, business y investment
+            // pero no va a funcionar con Expenses ya que la propiedad action.data tiene un
+            // 'total', asi que toca ver si funcionaria o es necesario agregar algo.
+            this.$state.go(callsStack[0].route, {
+                financeId: '12af9dd9-c1ec-48f1-b70d-9e7b6a37da27',
+                action: {
+                    type: 'Edit',
+                    data: callsStack[0].value
+                }
+            });
         }
+
+        checkDataUpdate($index, data): void {
+            if(this._checked[$index]){
+                this._checked[$index] = false;
+                this._dataUpdateList[$index].update = false;
+            } else {
+                this._checked[$index] = true;
+                this._dataUpdateList[$index].update = true;
+            }
+        }
+
 
         /*
         * Go to back method
@@ -203,11 +345,6 @@ module app.pages.addDataRequiredPage {
         */
         goToBack(): void {
             this.$ionicHistory.goBack();
-        }
-
-        //TODO: Refactor this method
-        testClick(): void {
-            this._testClass = this._testClass ? false : true;
         }
 
     }

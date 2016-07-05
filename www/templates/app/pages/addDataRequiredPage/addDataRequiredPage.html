@@ -1,7 +1,11 @@
 <div class="bar bar-header navBar dataRequiredPage__navBar">
     <div class="row row-center">
 
-        <div class="col"></div>
+        <div class="col">
+            <button class="button button-icon icon ion-arrow-left-c"
+                    style="color: #8C8C8C;"
+                    ng-click="vm.goToBack()"></button>
+        </div>
 
         <div class="col">
             <div class="h1 navBar__title title" translate>
@@ -26,7 +30,8 @@
 
             <div class="header_separator"></div>
 
-            <div class="block_title">
+            <div ng-if="vm._missingDataList.length > 0"
+                 class="block_title">
                 <div class="row row-center">
                     <div class="col-80 text-left">
                         <p class="block_title__text">
@@ -40,31 +45,12 @@
                 </div>
             </div>
 
-            <div class="block_3d block_3d--big block_3d--matrix">
+            <div ng-if="vm._missingDataList.length > 0"
+                 class="block_3d block_3d--big block_3d--matrix">
                 <div class="block_3d--matrix__content row row-center">
-                    <div class="block_3d--matrix__content__element col-33">
-                        <span>Arriendo</span>
-                    </div>
-                    <div class="block_3d--matrix__content__element col-33">
-                        <span>Meta</span>
-                    </div>
-                    <div class="block_3d--matrix__content__element col-33">
-                        <span>Hijos</span>
-                    </div>
-                    <div class="block_3d--matrix__content__element col-33">
-                        <span>Vacaciones</span>
-                    </div>
-                    <div class="block_3d--matrix__content__element col-33">
-                        <span>Vacaciones</span>
-                    </div>
-                    <div class="block_3d--matrix__content__element col-33">
-                        <span>Vacaciones</span>
-                    </div>
-                    <div class="block_3d--matrix__content__element col-33">
-                        <span>Vacaciones</span>
-                    </div>
-                    <div class="block_3d--matrix__content__element col-33">
-                        <span>Vacaciones</span>
+                    <div ng-repeat="data in vm._missingDataList track by $index"
+                         class="block_3d--matrix__content__element col-33">
+                        <span>{{data.title}}</span>
                     </div>
                 </div>
             </div>
@@ -87,43 +73,24 @@
                 <div class="block_3d__content block_3d__content--without_height">
                     <ion-list class="block_3d__content__list_container">
 
-                        <ion-item class="block_3d__content__list_container__item
-                                         block_3d__content__list_container__item--without_border
-                                         item">
-                            <div class="row row-center">
-                                <div class="block_3d__content__list_container__item__text text-left col-80">
-                                    Gastos Necesarios
-                                </div>
-                                <div class="col-20">
-                                    <div class="block_3d__content__list_container__item__checkbox
-                                                fa_checkbox
-                                                fa_checkbox--small
-                                                fa_checkbox--checked">
-                                        <i class="material-icons
-                                                  fa_checkbox--checked__icon">
-                                            done
-                                        </i>
-                                    </div>
-                                </div>
-                            </div>
-                        </ion-item>
-
-                        <ion-item class="block_3d__content__list_container__item
+                        <ion-item ng-repeat="data in vm._dataUpdateList track by $index"
+                                  class="block_3d__content__list_container__item
                                          block_3d__content__list_container__item--without_border
                                          item"
-                                  ng-click="vm.testClick()">
+                                  ng-click="vm.checkDataUpdate($index, data)">
                             <div class="row row-center">
-                                <div class="block_3d__content__list_container__item__text text-left col-80">
-                                    Ahorro
+                                <div class="block_3d__content__list_container__item__text
+                                            text-left col-80">
+                                    {{data.title}}
                                 </div>
                                 <div class="col-20">
                                     <div class="block_3d__content__list_container__item__checkbox
                                                 fa_checkbox
                                                 fa_checkbox--small"
-                                         ng-class="{'fa_checkbox--checked': vm._testClass}">
+                                         ng-class="{'fa_checkbox--checked': vm._checked[$index]}">
                                          <i class="material-icons
                                                    fa_checkbox--checked__icon"
-                                            ng-show="vm._testClass">
+                                            ng-show="vm._checked[$index]">
                                              done
                                          </i>
                                     </div>
