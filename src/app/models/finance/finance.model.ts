@@ -56,7 +56,7 @@ module app.models.finance {
             //init properties
             this.uid = obj.uid || app.core.util.functionsUtil.FunctionsUtilService.generateGuid();
             this.income = new Income(obj.income);
-            this.expenses = new TypeOfExpense(obj.expenses);
+            this.expenses = new TypeOfExpense(obj.typeOfExpense);
             this.dateCreated = obj.dateCreated || app.core.util.functionsUtil.FunctionsUtilService.splitDateFormat(new Date().toString());
             this.dateUpdated = new Date().toString();
 

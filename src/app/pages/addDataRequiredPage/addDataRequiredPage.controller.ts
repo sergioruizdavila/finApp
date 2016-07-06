@@ -98,7 +98,7 @@ module app.pages.addDataRequiredPage {
             //Get Finance Position
             //TODO: VALIDAR SI NO ENCUENTRA LA POSICION
             this._financePos = this.FunctionsUtilService.getPositionByUid(this.$rootScope.User.Finance,
-                                                                          '12af9dd9-c1ec-48f1-b70d-9e7b6a37da27');
+                                                                          '71746ae6-9bb5-4bcf-9f9c-caa86ef8001d');
 
             let variables = this.addDataRequiredDataConfig.formula.Variable;
             for (let i = 0; i < variables.length; i++) {
@@ -320,7 +320,7 @@ module app.pages.addDataRequiredPage {
             // pero no va a funcionar con Expenses ya que la propiedad action.data tiene un
             // 'total', asi que toca ver si funcionaria o es necesario agregar algo.
             this.$state.go(callsStack[0].route, {
-                financeId: '12af9dd9-c1ec-48f1-b70d-9e7b6a37da27',
+                financeId: '71746ae6-9bb5-4bcf-9f9c-caa86ef8001d',
                 action: {
                     type: 'Edit',
                     data: callsStack[0].value
