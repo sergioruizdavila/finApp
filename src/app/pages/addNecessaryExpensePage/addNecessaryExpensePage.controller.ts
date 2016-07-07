@@ -221,7 +221,7 @@ module app.pages.addNecessaryExpensePage {
                         type: POPUP_ADD_BUTTON_TYPE,
                         onTap: function(e) {
                             let expenseInstance = angular.copy(this.scope.vm.form.expense);
-                            //TODO: Hacer un refactor aqui, separando como esta en Salary, Business y investment.
+                            //TODO: Hacer un refactor aqui, separando como esta en Salary, Business y Investment.
                             //Creando un metodo privado _saveNecessaryExpense donde haga toda esta logica ahi.
                             if(this.scope.vm.form.action == 'Add') {
                                 //Update User model

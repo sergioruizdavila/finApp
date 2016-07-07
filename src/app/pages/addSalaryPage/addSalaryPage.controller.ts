@@ -46,7 +46,6 @@ module app.pages.addSalaryPage {
         // --------------------------------
 
         /*-- INJECT DEPENDENCIES --*/
-        /*TODO: Remover CustomPopupService y GiveRewardService sino se va a usar*/
         static $inject = ['dataConfig',
                           '$ionicHistory',
                           'finApp.models.finance.FinanceService',
@@ -59,7 +58,6 @@ module app.pages.addSalaryPage {
         /**********************************/
         /*           CONSTRUCTOR          */
         /**********************************/
-        /*TODO: Remover CustomPopupService y GiveRewardService sino se va a usar*/
         constructor(private dataConfig: IDataConfig,
                     private $ionicHistory: ionic.navigation.IonicHistoryService,
                     private FinanceService: app.models.finance.IFinanceService,

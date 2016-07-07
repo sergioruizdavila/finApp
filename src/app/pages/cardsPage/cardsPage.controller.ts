@@ -63,7 +63,7 @@ module app.pages.cardsPage {
             let self = this;
             //Get user's cards list
             this._getUserCardsList().then(
-                function(userCards) {
+                function(userCards: Array<app.models.card.UserCard>) {
                     self._buildCardAlbum(userCards).then(
                         function(album) {
                             self._userCardsList = album;
@@ -79,19 +79,20 @@ module app.pages.cardsPage {
         private _getUserCardsList(): angular.IPromise<Array<app.models.card.UserCard>> {
             return this.CardService.getCardsByUserId();
         }
+
         //TODO: Investigar bien como se gestiona el tipo de dato: Promise, ya que aqui
         //deberia recibir un Array<app.models.card.UserCard> no una Promise
-        private _buildCardAlbum(userCards: any): any {
+        private _buildCardAlbum(userCards: Array<app.models.card.UserCard>): any {
 
             return this.CardService.getAllCards().then(
-                function(cards){
+                function(cards: Array<app.models.card.Card>){
                     //Get cards total
                     let total = cards.length;
                     //Look for If user has any card
                     let album = cards.map(
                         function(card: any){
                             for (let i = 0; i < userCards.length; i++) {
-                                if(card.uid === userCards[i].uid){
+                                if(card.uid === userCards[i].Uid){
                                     //User has this card
                                     var merge = _.merge(card, userCards[i]);
                                     return merge;

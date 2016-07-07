@@ -106,15 +106,6 @@ module app.pages.addDataRequiredPage {
                 this._buildDataList(userData, variables[i].group, variables[i].member);
             }
 
-            //TODO: Aqui deberia tomar el objeto formula que me envian de cardRewardPopup
-            // Y dibujar dinamicamente el formulario
-            console.log('Llego la data de cardRewardPopup: ', this.addDataRequiredDataConfig.formula);
-
-            //TODO: TEST remove when it is not neccesary
-            var income:app.models.dataGroup.EnumDataGroup = app.models.dataGroup.EnumDataGroup.income;
-
-            console.log('Ya tengo el uid de income, para obtener sus miembros:', income);
-
             this.activate();
         }
 
