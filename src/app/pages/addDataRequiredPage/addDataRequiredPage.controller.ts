@@ -14,7 +14,7 @@ module app.pages.addDataRequiredPage {
         showDataRequiredTipPopup: () => void;
         showMissingDataTipPopup: () => void;
         showDataUpdateTipPopup: () => void;
-        checkDataUpdate: ($index: number, data: Array<IDataRequired>) => void;
+        checkDataUpdate: ($index: number, data: Array<app.interfaces.ICallsStack>) => void;
         goToNext: () => void;
         goToBack: () => void;
     }
@@ -28,12 +28,6 @@ module app.pages.addDataRequiredPage {
 
     }
 
-    export interface IDataRequired {
-        title: string;
-        route: string;
-        update?: boolean;
-        value?: app.models.finance.IMoney;
-    }
 
     /****************************************/
     /*           CLASS DEFINITION           */
@@ -47,11 +41,11 @@ module app.pages.addDataRequiredPage {
         /**********************************/
         form: IAddDataRequiredForm;
         addDataRequiredDataConfig: IAddDataRequiredDataConfig;
-        private _missingDataList: Array<IDataRequired>;
-        private _dataUpdateList: Array<IDataRequired>;
+        private _missingDataList: Array<app.interfaces.ICallsStack>;
+        private _dataUpdateList: Array<app.interfaces.ICallsStack>;
         private _financePos: number;
         private _checked: Array<boolean>;
-        private _dataToUpdate: Array<IDataRequired>;
+        private _dataToUpdate: Array<app.interfaces.ICallsStack>;
         // --------------------------------
 
         /*-- INJECT DEPENDENCIES --*/
@@ -98,7 +92,7 @@ module app.pages.addDataRequiredPage {
             //Get Finance Position
             //TODO: VALIDAR SI NO ENCUENTRA LA POSICION
             this._financePos = this.FunctionsUtilService.getPositionByUid(this.$rootScope.User.Finance,
-                                                                          '71746ae6-9bb5-4bcf-9f9c-caa86ef8001d');
+                                                                          '7fea105b-7f54-4412-a2e1-85a3fc52e0bf');
 
             let variables = this.addDataRequiredDataConfig.formula.Variable;
             for (let i = 0; i < variables.length; i++) {
@@ -240,9 +234,9 @@ module app.pages.addDataRequiredPage {
         * @params {string} member
         * @return {IDataRequired} formattedData
         */
-        private _formatData(member: string): IDataRequired {
+        private _formatData(member: string): app.interfaces.ICallsStack {
             //VARIABLES
-            let formattedData: IDataRequired = {title: '', route: ''};
+            let formattedData: app.interfaces.ICallsStack = {title: '', route: ''};
             //CONSTANTS
             const SALARY = 'Salario';
             const SALARY_ROUTE = 'page.salary';
@@ -284,7 +278,7 @@ module app.pages.addDataRequiredPage {
             return formattedData;
         }
 
-        private _buildCallsStack(): Array<IDataRequired> {
+        private _buildCallsStack(): Array<app.interfaces.ICallsStack> {
             let result = [];
             let missingData = this._missingDataList;
             let dataUpdate = this._dataUpdateList;
@@ -306,15 +300,16 @@ module app.pages.addDataRequiredPage {
         */
         goToNext(): void {
             //Build callsStack array
-            let callsStack: Array<IDataRequired> = this._buildCallsStack();
+            let callsStack: Array<app.interfaces.ICallsStack> = this._buildCallsStack();
             //TODO: Revisar bien aqui ya que funciona para salary, business y investment
             // pero no va a funcionar con Expenses ya que la propiedad action.data tiene un
             // 'total', asi que toca ver si funcionaria o es necesario agregar algo.
             this.$state.go(callsStack[0].route, {
-                financeId: '71746ae6-9bb5-4bcf-9f9c-caa86ef8001d',
+                financeId: '7fea105b-7f54-4412-a2e1-85a3fc52e0bf',
                 action: {
-                    type: 'Edit',
-                    data: callsStack[0].value
+                    type: 'Progressive',
+                    data: callsStack[0].value,
+                    callsStack: callsStack
                 }
             });
         }

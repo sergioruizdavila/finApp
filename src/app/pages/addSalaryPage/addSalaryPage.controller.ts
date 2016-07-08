@@ -19,6 +19,7 @@ module app.pages.addSalaryPage {
     export interface IAddSalaryDataConfig extends ng.ui.IStateParamsService {
         financeId: string;
         action: IActionParams;
+        callsStack: Array<app.interfaces.ICallsStack>;
     }
 
     export interface IActionParams {

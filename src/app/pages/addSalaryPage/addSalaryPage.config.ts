@@ -33,7 +33,8 @@
                         data: {
                             num: null,
                             formatted: ''
-                        }
+                        },
+                        callsStack: null
                     }
                 },
                 cache: false

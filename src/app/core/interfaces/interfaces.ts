@@ -26,6 +26,14 @@ module app.interfaces {
         year: string;
     }
 
+
+    export interface ICallsStack {
+        title: string;
+        route: string;
+        update?: boolean;
+        value?: app.models.finance.IMoney;
+    }
+
     //Popup interface for all popup on FinApp
     export interface IPopup {
         subtitle?: string;
