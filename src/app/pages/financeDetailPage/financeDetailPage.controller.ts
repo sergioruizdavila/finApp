@@ -232,9 +232,7 @@ module app.pages.financeDetailPage {
                 financeId: this.financeDetailDataConfig.financeId,
                 action: {
                     type: 'Edit',
-                    data: {
-                        total: this._totalNecessariesExpenses
-                    }
+                    data: this._totalNecessariesExpenses
                 }
             });
         }
@@ -251,9 +249,7 @@ module app.pages.financeDetailPage {
                 financeId: this.financeDetailDataConfig.financeId,
                 action: {
                     type: 'Edit',
-                    data: {
-                        total: this._totalUnnecessariesExpenses
-                    }
+                    data: this._totalUnnecessariesExpenses
                 }
             });
         }

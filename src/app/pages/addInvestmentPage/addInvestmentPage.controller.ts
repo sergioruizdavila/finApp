@@ -16,16 +16,6 @@ module app.pages.addInvestmentPage {
         goToBack: () => void;
     }
 
-    export interface IAddInvestmentDataConfig extends ng.ui.IStateParamsService {
-        financeId: string;
-        action: IActionParams;
-    }
-
-    export interface IActionParams {
-        type: string;
-        data: app.models.finance.IMoney;
-    }
-
     export interface IAddInvestmentForm {
         investment: app.models.finance.IIncome;
     }
@@ -41,7 +31,7 @@ module app.pages.addInvestmentPage {
         /*           PROPERTIES           */
         /**********************************/
         form: IAddInvestmentForm;
-        addInvestmentDataConfig: IAddInvestmentDataConfig;
+        addInvestmentDataConfig: app.interfaces.IDataConfig;
         private _financePos: number;
         // --------------------------------
 
@@ -63,7 +53,7 @@ module app.pages.addInvestmentPage {
         private FinanceService: app.models.finance.IFinanceService,
         private FunctionsUtilService: app.core.util.functionsUtil.FunctionsUtilService,
         private $state: ng.ui.IStateService,
-        private $stateParams: IAddInvestmentDataConfig,
+        private $stateParams: app.interfaces.IDataConfig,
         private $rootScope: app.interfaces.IFinAppRootScope,
         private auth: app.auth.IAuthService) {
             this._init();
@@ -84,7 +74,7 @@ module app.pages.addInvestmentPage {
             this.form = {
                 investment: {
                     value: {
-                        num: this.addInvestmentDataConfig.action.data.num || null,
+                        num: this.addInvestmentDataConfig.action.data.num || 0,
                         formatted: this.addInvestmentDataConfig.action.data.formatted || ''
                     }
                 }
@@ -148,20 +138,32 @@ module app.pages.addInvestmentPage {
         }
 
         /*
-        * Go to business page
+        * Go to next page on calls stack
         * @description this method is launched when user press OK button
         */
         goToNext(): void {
-            //Save Investment value
+            // VARIABLES
+            let currentCall = this.addInvestmentDataConfig.action.posOnCallsStack;
+            let nextCall = this.addInvestmentDataConfig.action.posOnCallsStack + 1;
+            let data = this.addInvestmentDataConfig.action.callsStack.length > 0 ? this.addInvestmentDataConfig.action.callsStack[nextCall].value : {num: null, formatted: ''};
+
+            // Save Investment value
             this._saveInvestment();
 
-            this.$state.go('page.business', {
+            // DataConfig object
+            let dataConfigObj: app.interfaces.IDataConfig =
+            {
                 financeId: this.addInvestmentDataConfig.financeId,
                 action: {
-                    type: '',
-                    data: {num: null, formatted: ''}
+                    type: this.addInvestmentDataConfig.action.type,
+                    data: data,
+                    callsStack: this.addInvestmentDataConfig.action.callsStack,
+                    posOnCallsStack: nextCall
                 }
-            });
+            };
+
+            // Go to next page on calls stack
+            this.$state.go(this.addInvestmentDataConfig.action.callsStack[dataConfigObj.action.posOnCallsStack].route, dataConfigObj);
         }
 
         /*

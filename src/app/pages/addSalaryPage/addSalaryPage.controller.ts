@@ -11,20 +11,9 @@ module app.pages.addSalaryPage {
     export interface IAddSalaryPageController {
         form: IAddSalaryForm;
         activate: () => void;
-        goToNext: () => void;
         updateValue: () => void;
+        goToNext: () => void;
         goToBack: () => void;
-    }
-
-    export interface IAddSalaryDataConfig extends ng.ui.IStateParamsService {
-        financeId: string;
-        action: IActionParams;
-        callsStack: Array<app.interfaces.ICallsStack>;
-    }
-
-    export interface IActionParams {
-        type: string;
-        data: app.models.finance.IMoney;
     }
 
     export interface IAddSalaryForm {
@@ -42,7 +31,7 @@ module app.pages.addSalaryPage {
         /*           PROPERTIES           */
         /**********************************/
         form: IAddSalaryForm;
-        addSalaryDataConfig: IAddSalaryDataConfig;
+        addSalaryDataConfig: app.interfaces.IDataConfig;
         private _financePos: number;
         // --------------------------------
 
@@ -64,7 +53,7 @@ module app.pages.addSalaryPage {
                     private FinanceService: app.models.finance.IFinanceService,
                     private FunctionsUtilService: app.core.util.functionsUtil.FunctionsUtilService,
                     private $state: ng.ui.IStateService,
-                    private $stateParams: IAddSalaryDataConfig,
+                    private $stateParams: app.interfaces.IDataConfig,
                     private $rootScope: app.interfaces.IFinAppRootScope,
                     private auth: app.auth.IAuthService) {
             this._init();
@@ -149,20 +138,32 @@ module app.pages.addSalaryPage {
         }
 
         /*
-        * Go to investment page
+        * Go to next page on calls stack
         * @description this method is launched when user press OK button
         */
         goToNext(): void {
-            //Save Salary value
+            // VARIABLES
+            let currentCall = this.addSalaryDataConfig.action.posOnCallsStack;
+            let nextCall = this.addSalaryDataConfig.action.posOnCallsStack + 1;
+            let data = this.addSalaryDataConfig.action.callsStack.length > 0 ? this.addSalaryDataConfig.action.callsStack[nextCall].value : {num: null, formatted: ''};
+
+            // Save Salary value
             this._saveSalary();
 
-            this.$state.go('page.investment', {
+            // DataConfig object
+            let dataConfigObj: app.interfaces.IDataConfig =
+            {
                 financeId: this.addSalaryDataConfig.financeId,
                 action: {
-                    type: '',
-                    data: {num: null, formatted: ''}
+                    type: this.addSalaryDataConfig.action.type,
+                    data: data,
+                    callsStack: this.addSalaryDataConfig.action.callsStack,
+                    posOnCallsStack: nextCall
                 }
-            });
+            };
+
+            // Go to next page on calls stack
+            this.$state.go(this.addSalaryDataConfig.action.callsStack[dataConfigObj.action.posOnCallsStack].route, dataConfigObj);
         }
 
         /*

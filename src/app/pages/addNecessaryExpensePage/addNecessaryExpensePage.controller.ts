@@ -22,16 +22,6 @@ module app.pages.addNecessaryExpensePage {
         popupConfig: app.interfaces.IPopup;
     }
 
-    export interface IAddNecessaryExpenseDataConfig extends ng.ui.IStateParamsService {
-        financeId: string;
-        action: IActionParams;
-    }
-
-    export interface IActionParams {
-        type: string;
-        data: { total: app.models.finance.IMoney };
-    }
-
     export interface IAddNecessaryExpenseForm {
         expense?: any;
         total?: app.models.finance.IMoney;
@@ -50,7 +40,7 @@ module app.pages.addNecessaryExpensePage {
         /**********************************/
         form: IAddNecessaryExpenseForm;
         private _financePos: number;
-        addNecessaryExpenseDataConfig: IAddNecessaryExpenseDataConfig;
+        addNecessaryExpenseDataConfig: app.interfaces.IDataConfig;
         private _expensesList: Array<app.models.finance.Expense>;
         // --------------------------------
 
@@ -77,7 +67,7 @@ module app.pages.addNecessaryExpensePage {
                     private FinanceService: app.models.finance.IFinanceService,
                     private FunctionsUtilService: app.core.util.functionsUtil.FunctionsUtilService,
                     private $state: ng.ui.IStateService,
-                    private $stateParams: IAddNecessaryExpenseDataConfig,
+                    private $stateParams: app.interfaces.IDataConfig,
                     private $scope: IAddNecessaryExpensePageScope,
                     private $rootScope: app.interfaces.IFinAppRootScope,
                     private auth: app.auth.IAuthService) {
@@ -96,8 +86,8 @@ module app.pages.addNecessaryExpensePage {
             //Init form
             this.form = {
                 total: {
-                    num: this.addNecessaryExpenseDataConfig.action.data.total.num || 0,
-                    formatted: this.addNecessaryExpenseDataConfig.action.data.total.formatted || '$0'
+                    num: this.addNecessaryExpenseDataConfig.action.data.num || 0,
+                    formatted: this.addNecessaryExpenseDataConfig.action.data.formatted || '$0'
                 }
             };
 
@@ -256,17 +246,30 @@ module app.pages.addNecessaryExpensePage {
         }
 
         /*
-        * Go to unneccesary page
+        * Go to next page on calls stack
         * @description this method is launched when user press OK button
         */
         goToNext(): void {
-            this.$state.go('page.unnecessaryExpense', {
+            // VARIABLES
+            let currentCall = this.addNecessaryExpenseDataConfig.action.posOnCallsStack;
+            let nextCall = this.addNecessaryExpenseDataConfig.action.posOnCallsStack + 1;
+            let data = this.addNecessaryExpenseDataConfig.action.callsStack.length > 0 ? this.addNecessaryExpenseDataConfig.action.callsStack[nextCall].value : {num: null, formatted: ''};
+
+            // DataConfig object
+            let dataConfigObj: app.interfaces.IDataConfig =
+            {
                 financeId: this.addNecessaryExpenseDataConfig.financeId,
                 action: {
-                    type: '',
-                    data: {total: {num: null, formatted: ''} }
+                    type: this.addNecessaryExpenseDataConfig.action.type,
+                    data: data,
+                    callsStack: this.addNecessaryExpenseDataConfig.action.callsStack,
+                    posOnCallsStack: nextCall
                 }
-            });
+            };
+
+            // Go to next page on calls stack
+            this.$state.go(this.addNecessaryExpenseDataConfig.action.callsStack[dataConfigObj.action.posOnCallsStack].route, dataConfigObj);
+
         }
 
         /*

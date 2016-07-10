@@ -16,16 +16,6 @@ module app.pages.addBusinessPage {
         goToBack: () => void;
     }
 
-    export interface IAddBusinessDataConfig extends ng.ui.IStateParamsService {
-        financeId: string;
-        action: IActionParams;
-    }
-
-    export interface IActionParams {
-        type: string;
-        data: app.models.finance.IMoney;
-    }
-
     export interface IAddBusinessForm {
         business: app.models.finance.IIncome;
     }
@@ -41,7 +31,7 @@ module app.pages.addBusinessPage {
         /*           PROPERTIES           */
         /**********************************/
         form: IAddBusinessForm;
-        addBusinessDataConfig: IAddBusinessDataConfig;
+        addBusinessDataConfig: app.interfaces.IDataConfig;
         private _financePos: number;
         // --------------------------------
 
@@ -63,7 +53,7 @@ module app.pages.addBusinessPage {
                     private FinanceService: app.models.finance.IFinanceService,
                     private FunctionsUtilService: app.core.util.functionsUtil.FunctionsUtilService,
                     private $state: ng.ui.IStateService,
-                    private $stateParams: IAddBusinessDataConfig,
+                    private $stateParams: app.interfaces.IDataConfig,
                     private $rootScope: app.interfaces.IFinAppRootScope,
                     private auth: app.auth.IAuthService) {
                 this._init();
@@ -84,7 +74,7 @@ module app.pages.addBusinessPage {
             this.form = {
                 business: {
                     value: {
-                        num: this.addBusinessDataConfig.action.data.num || null,
+                        num: this.addBusinessDataConfig.action.data.num || 0,
                         formatted: this.addBusinessDataConfig.action.data.formatted || ''
                     }
                 }
@@ -148,20 +138,32 @@ module app.pages.addBusinessPage {
         }
 
         /*
-        * Go to necessary expenses page
+        * Go to next page on calls stack
         * @description this method is launched when user press OK button
         */
         goToNext(): void {
-            //Save Business value
+            // VARIABLES
+            let currentCall = this.addBusinessDataConfig.action.posOnCallsStack;
+            let nextCall = this.addBusinessDataConfig.action.posOnCallsStack + 1;
+            let data = this.addBusinessDataConfig.action.callsStack.length > 0 ? this.addBusinessDataConfig.action.callsStack[nextCall].value : {num: null, formatted: ''};
+
+            // Save Business value
             this._saveBusiness();
 
-            this.$state.go('page.necessaryExpense', {
+            // DataConfig object
+            let dataConfigObj: app.interfaces.IDataConfig =
+            {
                 financeId: this.addBusinessDataConfig.financeId,
                 action: {
-                    type: '',
-                    data: {total: {num: null, formatted: ''} }
+                    type: this.addBusinessDataConfig.action.type,
+                    data: data,
+                    callsStack: this.addBusinessDataConfig.action.callsStack,
+                    posOnCallsStack: nextCall
                 }
-            });
+            };
+
+            // Go to next page on calls stack
+            this.$state.go(this.addBusinessDataConfig.action.callsStack[dataConfigObj.action.posOnCallsStack].route, dataConfigObj);
         }
 
         /*

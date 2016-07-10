@@ -200,16 +200,43 @@ module app.pages.signUpPage {
                                     console.log('Error: Not saved finance', err);
                                 }
                             });
-                            self.$state.go('page.salary', {
+
+                            let dataConfigObj: app.interfaces.IDataConfig = {
                                 financeId: newFinance.Uid,
                                 action: {
                                     type: 'Add',
-                                    data: {
-                                        num: null,
-                                        formatted: ''
-                                    }
+                                    data: {num: null, formatted: ''},
+                                    callsStack: [
+                                        {
+                                            route: 'page.salary',
+                                            value: {num: null, formatted: ''}
+                                        },
+                                        {
+                                            route: 'page.investment',
+                                            value: {num: null, formatted: ''}
+                                        },
+                                        {
+                                            route:'page.business',
+                                            value: {num: null, formatted: ''}
+                                        },
+                                        {
+                                            route:'page.necessaryExpense',
+                                            value: {num: null, formatted: ''}
+                                        },
+                                        {
+                                            route:'page.unnecessaryExpense',
+                                            value: {num: null, formatted: ''}
+                                        },
+                                        {
+                                            route:'tabs.history',
+                                            value: {num: null, formatted: ''}
+                                        }
+                                    ],
+                                    posOnCallsStack: 0
                                 }
-                            });
+                            };
+
+                            self.$state.go('page.salary', dataConfigObj);
                         }
                     });
                 }

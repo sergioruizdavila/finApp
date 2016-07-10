@@ -27,10 +27,12 @@
                 params: {
                     financeId: null,
                     action: {
-                        type: 'Edit',
+                        type: '',
                         data: {
-                            total: {num: null, formatted: ''}
-                        }
+                            num: null,
+                            formatted: ''
+                        },
+                        callsStack: null
                     }
                 },
                 cache: false

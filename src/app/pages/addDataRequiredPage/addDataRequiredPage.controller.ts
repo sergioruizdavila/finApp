@@ -9,7 +9,6 @@ module app.pages.addDataRequiredPage {
     /*           INTERFACES           */
     /**********************************/
     export interface IAddDataRequiredPageController {
-        form: IAddDataRequiredForm;
         activate: () => void;
         showDataRequiredTipPopup: () => void;
         showMissingDataTipPopup: () => void;
@@ -17,15 +16,6 @@ module app.pages.addDataRequiredPage {
         checkDataUpdate: ($index: number, data: Array<app.interfaces.ICallsStack>) => void;
         goToNext: () => void;
         goToBack: () => void;
-    }
-
-    export interface IAddDataRequiredDataConfig extends ng.ui.IStateParamsService {
-        financeId: string;
-        formula: app.models.formula.Formula;
-    }
-
-    export interface IAddDataRequiredForm {
-
     }
 
 
@@ -39,8 +29,7 @@ module app.pages.addDataRequiredPage {
         /**********************************/
         /*           PROPERTIES           */
         /**********************************/
-        form: IAddDataRequiredForm;
-        addDataRequiredDataConfig: IAddDataRequiredDataConfig;
+        addDataRequiredDataConfig: app.interfaces.IDataConfig;
         private _missingDataList: Array<app.interfaces.ICallsStack>;
         private _dataUpdateList: Array<app.interfaces.ICallsStack>;
         private _financePos: number;
@@ -67,7 +56,7 @@ module app.pages.addDataRequiredPage {
                     private $ionicPopup: ionic.popup.IonicPopupService,
                     private $ionicHistory: ionic.navigation.IonicHistoryService,
                     private $state: ng.ui.IStateService,
-                    private $stateParams: IAddDataRequiredDataConfig,
+                    private $stateParams: app.interfaces.IDataConfig,
                     private $rootScope: app.interfaces.IFinAppRootScope,
                     private auth: app.auth.IAuthService,
                     private DataGroupService: app.models.dataGroup.DataGroupService,
@@ -92,7 +81,7 @@ module app.pages.addDataRequiredPage {
             //Get Finance Position
             //TODO: VALIDAR SI NO ENCUENTRA LA POSICION
             this._financePos = this.FunctionsUtilService.getPositionByUid(this.$rootScope.User.Finance,
-                                                                          '7fea105b-7f54-4412-a2e1-85a3fc52e0bf');
+                                                                          '6c6e328b-78e8-4393-9aee-f5143bf82777');
 
             let variables = this.addDataRequiredDataConfig.formula.Variable;
             for (let i = 0; i < variables.length; i++) {
@@ -301,18 +290,21 @@ module app.pages.addDataRequiredPage {
         goToNext(): void {
             //Build callsStack array
             let callsStack: Array<app.interfaces.ICallsStack> = this._buildCallsStack();
-            //TODO: Revisar bien aqui ya que funciona para salary, business y investment
-            // pero no va a funcionar con Expenses ya que la propiedad action.data tiene un
-            // 'total', asi que toca ver si funcionaria o es necesario agregar algo.
-            this.$state.go(callsStack[0].route, {
-                financeId: '7fea105b-7f54-4412-a2e1-85a3fc52e0bf',
+            //DataConfig object
+            let dataConfigObj: app.interfaces.IDataConfig =
+            {
+                financeId: '6c6e328b-78e8-4393-9aee-f5143bf82777',
                 action: {
                     type: 'Progressive',
                     data: callsStack[0].value,
-                    callsStack: callsStack
+                    callsStack: callsStack,
+                    posOnCallsStack: 0
                 }
-            });
+            };
+
+            this.$state.go(callsStack[0].route, dataConfigObj);
         }
+
 
         checkDataUpdate($index, data): void {
             if(this._checked[$index]){

@@ -130,14 +130,14 @@ module app.models.finance {
 
             this.investment = {
                 value: {
-                    num: obj.investment.value.num || null,
+                    num: obj.investment.value.num || 0,
                     formatted: obj.investment.value.formatted || ''
                 }
             };
 
             this.business = {
                 value: {
-                    num: obj.business.value.num || null,
+                    num: obj.business.value.num || 0,
                     formatted: obj.business.value.formatted || ''
                 }
             };
