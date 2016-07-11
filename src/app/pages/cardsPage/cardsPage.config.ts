@@ -24,7 +24,19 @@
                         controller: 'finApp.pages.cardsPage.CardsPageController',
                         controllerAs: 'vm'
                     }
-                }
+                },
+                params: {
+                    financeId: null,
+                    action: {
+                        data: {
+                            num: null,
+                            formatted: ''
+                        },
+                        draw: '',
+                        callsStack: null
+                    }
+                },
+                cache: false
             });
     }
 })();

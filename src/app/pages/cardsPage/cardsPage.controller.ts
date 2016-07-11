@@ -29,10 +29,12 @@ module app.pages.cardsPage {
         /**********************************/
         //TODO: Cambiar el any por app.models.Card guiarse de Gastos
         private _userCardsList: Array<any>;
+        cardsPageDataConfig: app.interfaces.IDataConfig;
         // --------------------------------
 
         /*-- INJECT DEPENDENCIES --*/
         static $inject = ['$state',
+                          '$stateParams',
                           '$scope',
                           'finApp.models.card.CardService',
                           'finApp.core.util.GiveRewardService',
@@ -42,7 +44,8 @@ module app.pages.cardsPage {
         /*           CONSTRUCTOR          */
         /**********************************/
         constructor(private $state: ng.ui.IStateService,
-                    public $scope: ICardsPageScope,
+                    private $stateParams: app.interfaces.IDataConfig,
+                    public  $scope: ICardsPageScope,
                     private CardService: app.models.card.CardService,
                     private GiveRewardService: app.core.util.giveReward.GiveRewardService,
                     private CustomPopupService: app.core.util.customPopup.CustomPopupService) {
@@ -52,6 +55,9 @@ module app.pages.cardsPage {
         /*-- INITIALIZE METHOD --*/
         private _init() {
             //this.GiveRewardService.giveCard();
+
+            this.cardsPageDataConfig = this.$stateParams;
+
             this.activate();
         }
 

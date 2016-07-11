@@ -11,6 +11,7 @@ module app.pages.addInvestmentPage {
     export interface IAddInvestmentPageController {
         form: IAddInvestmentForm;
         activate: () => void;
+        progress: () => Object;
         updateValue: () => void;
         goToNext: () => void;
         goToBack: () => void;
@@ -135,6 +136,19 @@ module app.pages.addInvestmentPage {
                     }
                 }
             );
+        }
+
+        /*
+        * progress
+        * @description take callsStack and figuring the progress on stack
+        * in order to draw the progress bar on view.
+        */
+        progress(): Object {
+            // VARIABLES
+            let callsStack = this.addInvestmentDataConfig.action.callsStack;
+            let currentPos = this.addInvestmentDataConfig.action.posOnCallsStack;
+            let percent = (100 / callsStack.length) * (currentPos + 1);
+            return {width: percent + '%'};
         }
 
         /*

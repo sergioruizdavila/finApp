@@ -81,7 +81,7 @@ module app.pages.addDataRequiredPage {
             //Get Finance Position
             //TODO: VALIDAR SI NO ENCUENTRA LA POSICION
             this._financePos = this.FunctionsUtilService.getPositionByUid(this.$rootScope.User.Finance,
-                                                                          '6c6e328b-78e8-4393-9aee-f5143bf82777');
+                                                                          '0eaa2b3a-2dd7-4bd5-81f4-32836f2e336a');
 
             let variables = this.addDataRequiredDataConfig.formula.Variable;
             for (let i = 0; i < variables.length; i++) {
@@ -138,7 +138,7 @@ module app.pages.addDataRequiredPage {
                 ]
             });
 
-        };
+        }
 
         /*
         * Show missing data tip popup
@@ -165,8 +165,7 @@ module app.pages.addDataRequiredPage {
                     }
                 ]
             });
-
-        };
+        }
 
         /*
         * Show data update tip popup
@@ -193,9 +192,17 @@ module app.pages.addDataRequiredPage {
                     }
                 ]
             });
+        }
 
-        };
-
+        /**
+        * _buildDataList
+        * @description - this private method builds dataUpdateList and missingDataList
+        * @function
+        * @params {any} userData
+        * @params {string} group
+        * @params {string} member
+        * @return {void}
+        */
         private _buildDataList(userData: any, group: string, member: string): void {
             let formattedData = this._formatData(member);
 
@@ -267,6 +274,13 @@ module app.pages.addDataRequiredPage {
             return formattedData;
         }
 
+        /**
+        * _buildCallsStack
+        * @description - this private method builds calls' stack joining missing data
+        * list with data update list.
+        * @function
+        * @return {Array<app.interfaces.ICallsStack>} result
+        */
         private _buildCallsStack(): Array<app.interfaces.ICallsStack> {
             let result = [];
             let missingData = this._missingDataList;
@@ -284,16 +298,18 @@ module app.pages.addDataRequiredPage {
         }
 
         /*
-        * Go to necessary expenses page
+        * Go to next page on calls stack
         * @description this method is launched when user press OK button
         */
         goToNext(): void {
             //Build callsStack array
             let callsStack: Array<app.interfaces.ICallsStack> = this._buildCallsStack();
+            //Add Dashboard Cards Tab on callsStack list
+            callsStack.push({route: 'tabs.cards'});
             //DataConfig object
             let dataConfigObj: app.interfaces.IDataConfig =
             {
-                financeId: '6c6e328b-78e8-4393-9aee-f5143bf82777',
+                financeId: '0eaa2b3a-2dd7-4bd5-81f4-32836f2e336a',
                 action: {
                     type: 'Progressive',
                     data: callsStack[0].value,
@@ -305,7 +321,14 @@ module app.pages.addDataRequiredPage {
             this.$state.go(callsStack[0].route, dataConfigObj);
         }
 
-
+        /**
+        * checkDataUpdate
+        * @description - this method is launched when user press data update checkbox
+        * @function
+        * @params {number} $index
+        * @params {Array<app.interfaces.ICallsStack>} data
+        * @return {void}
+        */
         checkDataUpdate($index, data): void {
             if(this._checked[$index]){
                 this._checked[$index] = false;
@@ -315,7 +338,6 @@ module app.pages.addDataRequiredPage {
                 this._dataUpdateList[$index].update = true;
             }
         }
-
 
         /*
         * Go to back method

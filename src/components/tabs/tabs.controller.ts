@@ -31,6 +31,7 @@ module components.tabs {
 
         /*-- INJECT DEPENDENCIES --*/
         static $inject = ['$state',
+                          '$stateParams',
                           'finApp.auth.AuthService',
                           'finApp.models.user.UserService',
                           '$rootScope'];
@@ -39,6 +40,7 @@ module components.tabs {
         /*           CONSTRUCTOR          */
         /**********************************/
         constructor(private $state: ng.ui.IStateService,
+                    private $stateParams: app.interfaces.IDataConfig,
                     private auth: app.auth.IAuthService,
                     private UserService: app.models.user.UserService,
                     private $rootScope: app.interfaces.IFinAppRootScope) {

@@ -24,6 +24,17 @@
                     }
                 },
                 parent: 'page',
+                params: {
+                    financeId: null,
+                    action: {
+                        data: {
+                            num: null,
+                            formatted: ''
+                        },
+                        draw: '',
+                        callsStack: null
+                    }
+                },
                 abstract: true
             });
     }

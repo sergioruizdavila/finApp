@@ -11,6 +11,7 @@ module app.pages.addUnnecessaryExpensePage {
     export interface IAddUnnecessaryExpensePageController {
         form: IAddUnnecessaryExpenseForm;
         activate: () => void;
+        progress: () => Object;
         showExpenseDetailPopup: (expense: app.models.finance.Expense) => void;
         showTipPopup: () => void;
         goToNext: () => void;
@@ -240,6 +241,18 @@ module app.pages.addUnnecessaryExpensePage {
             });
         }
 
+        /*
+        * progress
+        * @description take callsStack and figuring the progress on stack
+        * in order to draw the progress bar on view.
+        */
+        progress(): Object {
+            // VARIABLES
+            let callsStack = this.addUnnecessaryExpenseDataConfig.action.callsStack;
+            let currentPos = this.addUnnecessaryExpenseDataConfig.action.posOnCallsStack;
+            let percent = (100 / callsStack.length) * (currentPos + 1);
+            return {width: percent + '%'};
+        }
 
         /*
         * Go to next page on calls stack

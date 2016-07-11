@@ -10,7 +10,9 @@
         <div class="col-60">
             <div class="progressBar"
                  ng-if="vm.addInvestmentDataConfig.action.type != 'Edit'">
-                <div class="progressBar__progressLine progressBar__progressLine--40Percent"></div>
+                 <div ng-style="vm.progress()"
+                      class="progressBar__progressLine
+                             progressBar__progressLine--50Percent"></div>
                 <div class="progressBar__innerLine"></div>
                 <div class="progressBar__circle"></div>
             </div>
