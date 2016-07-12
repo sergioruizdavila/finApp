@@ -9,13 +9,11 @@
            href="#" >
             <i class="material-icons">store</i>
         </a>
-        <a class="tab-item faTabs__tabs_container__tab-item"
+        <div class="tab-item faTabs__tabs_container__tab-item"
            ng-class="{active:vm.isSet(2)}"
-           ng-click="vm.setTab(2)"
-           ui-sref="tabs.cards"
-           href="#">
+           ng-click="vm.goToCardsTab(2)">
             <i class="material-icons">style</i>
-        </a>
+        </div>
         <a class="tab-item faTabs__tabs_container__tab-item"
            ng-class="{active:vm.isSet(3)}"
            ng-click="vm.setTab(3)"

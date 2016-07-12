@@ -12,6 +12,7 @@ module components.tabs {
         activate: () => void;
         isSet: (tabId: number) => boolean;
         setTab: (tabId: number) => void;
+        goToCardsTab: (tabId: number) => void;
     }
 
 
@@ -69,7 +70,7 @@ module components.tabs {
         * Is Logged In Method
         * @description Validate if user is logged in.
         */
-        _isLoggedIn(): void {
+        private _isLoggedIn(): void {
             var self = this;
             if(!this.auth.isLoggedIn()) {
                 this.$state.go('page.signUp');
@@ -114,6 +115,30 @@ module components.tabs {
         */
         setTab(tabId): void {
             this.tab = tabId;
+        };
+
+        /*
+        * goToCardsTab Method
+        * @description - when user press Cards Tab, go to Cards section
+        * @params {number} - tab Id selected
+        * @return {void}
+        */
+        goToCardsTab(tabId): void {
+            this.tab = tabId;
+            // DataConfig object
+            let dataConfigObj: app.interfaces.IDataConfig =
+            {
+                financeId: '',
+                action: {
+                    type: '',
+                    data: null,
+                    callsStack: [],
+                    posOnCallsStack: null
+                }
+            };
+
+            // Go to next page on calls stack
+            this.$state.go('tabs.cards', dataConfigObj);
         };
 
     }

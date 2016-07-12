@@ -3,7 +3,6 @@
 * @description - history page config file
 */
 
-
 (function() {
     'use strict';
 
@@ -25,7 +24,18 @@
                         controllerAs: 'vm'
                     }
                 },
+                params: {
+                    financeId: null,
+                    action: {
+                        data: {
+                            num: null,
+                            formatted: ''
+                        },
+                        callsStack: null
+                    }
+                },
                 cache: false
             });
     }
+
 })();

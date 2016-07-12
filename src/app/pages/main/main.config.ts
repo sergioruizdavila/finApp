@@ -19,6 +19,7 @@
             .state('page', {
                 url: '/page',
                 abstract: true,
+                cache: false,
                 template: '<ion-nav-view name="container"></ion-nav-view>',
                 controller: 'finApp.pages.main.MainController',
                 controllerAs: 'vm'

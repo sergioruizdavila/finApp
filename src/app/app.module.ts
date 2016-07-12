@@ -58,6 +58,8 @@
         });
 
         $translateProvider.preferredLanguage('es');
+
+        $ionicConfigProvider.views.maxCache(0);
     }
 
 })();

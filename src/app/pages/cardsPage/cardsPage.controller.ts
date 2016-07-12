@@ -67,6 +67,17 @@ module app.pages.cardsPage {
             console.log('cardsPage controller actived');
             //VARIABLES
             let self = this;
+
+            //Show Card Popup Result
+            if(this.cardsPageDataConfig.action.type == 'Progressive') {
+                var popupConfig = {
+                    cardData: '',
+                    withPack: false
+                };
+                //Invoke card reward popup
+                this.CustomPopupService.invokeCardRewardPopup(this.$scope, popupConfig);
+            }
+
             //Get user's cards list
             this._getUserCardsList().then(
                 function(userCards: Array<app.models.card.UserCard>) {

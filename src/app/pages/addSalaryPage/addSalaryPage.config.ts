@@ -3,15 +3,12 @@
 * @description - add salary page config file
 */
 
-
 (function() {
     'use strict';
 
     angular
         .module('finApp.pages.addSalaryPage', [])
         .config(config);
-
-    //config.$inject = ['ionic'];
 
     function config($stateProvider: angular.ui.IStateProvider) {
 
@@ -39,5 +36,6 @@
                 },
                 cache: false
             });
+
     }
 })();

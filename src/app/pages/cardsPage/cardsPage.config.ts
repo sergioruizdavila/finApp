@@ -32,7 +32,6 @@
                             num: null,
                             formatted: ''
                         },
-                        draw: '',
                         callsStack: null
                     }
                 },
